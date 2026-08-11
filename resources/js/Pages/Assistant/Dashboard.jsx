@@ -1,23 +1,20 @@
-import { Head, Link } from '@inertiajs/react';
+﻿import { Head, Link } from '@inertiajs/react';
 import AssistantLayout from '@/Layouts/AssistantLayout';
 import { useState, useEffect, useRef } from 'react';
 import ReceiptsReviewModal from '@/Components/ReceiptsReviewModal';
 
-<<<<<<< HEAD
 const O = '#31c5ff'; // برتقالي
 const N = '#133052'; // كحلي
 const B = '#DCC9A3'; // ذهبي
 const C = {
     navy: '#14213D', orange: '#31c5ff', gold: '#DCC9A3',
     orangeD: '#0037af', navyL: '#1e2e50',
-=======
 const O = '#F47C20'; // برتقالي
 const N = '#14213D'; // كحلي
 const B = '#DCC9A3'; // ذهبي
 const C = {
     navy: '#14213D', orange: '#F47C20', gold: '#DCC9A3',
     orangeD: '#d96a12', navyL: '#1e2e50',
->>>>>>> a7d621ecce9a27909d6163081c63c5e4d03bd594
 };
 
 /* ─── Stat Card ───────────────────────────────────── */
@@ -359,3 +356,4 @@ export default function AssistantDashboard({ assistant, stats, my_groups = [], r
         </AssistantLayout>
     );
 }
+
