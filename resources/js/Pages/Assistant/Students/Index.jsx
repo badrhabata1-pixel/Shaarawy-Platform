@@ -1,12 +1,8 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { Head, Link, router } from '@inertiajs/react';
 import AssistantLayout from '@/Layouts/AssistantLayout';
 
-<<<<<<< HEAD
 const O = '#208ef4';
-=======
-const O = '#F47C20';
->>>>>>> a7d621ecce9a27909d6163081c63c5e4d03bd594
 const N = '#14213D';
 
 export default function Index({ assistant, students = [], filters = {} }) {
@@ -145,3 +141,4 @@ function GoogleFonts() {
         />
     );
 }
+

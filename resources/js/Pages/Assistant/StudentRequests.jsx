@@ -1,12 +1,8 @@
-import { Head, useForm, router } from '@inertiajs/react';
+﻿import { Head, useForm, router } from '@inertiajs/react';
 import AssistantLayout from '@/Layouts/AssistantLayout';
 import { useState, useEffect } from 'react';
 
-<<<<<<< HEAD
 const C = { navy: '#14213D', orange: '#208ef4', gold: '#DCC9A3', navyL: '#1e2e50' };
-=======
-const C = { navy: '#14213D', orange: '#F47C20', gold: '#DCC9A3', navyL: '#1e2e50' };
->>>>>>> a7d621ecce9a27909d6163081c63c5e4d03bd594
 
 function useAssistantDark() {
     const [dark, setDark] = useState(() => {
@@ -240,3 +236,5 @@ export default function StudentRequests({ assistant, students }) {
         </AssistantLayout>
     );
 }
+
+

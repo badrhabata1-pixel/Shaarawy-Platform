@@ -1,12 +1,8 @@
-import { Head, useForm, router } from '@inertiajs/react';
+﻿import { Head, useForm, router } from '@inertiajs/react';
 import { useState, useEffect } from 'react';
 import AssistantLayout from '@/Layouts/AssistantLayout';
 
-<<<<<<< HEAD
 const O = '#208ef4';
-=======
-const O = '#F47C20';
->>>>>>> a7d621ecce9a27909d6163081c63c5e4d03bd594
 const G = '#059669';
 const R = '#DC2626';
 
@@ -260,3 +256,5 @@ export default function PromoCodes({ assistant, promoCodes, academicYears = [], 
         </AssistantLayout>
     );
 }
+
+

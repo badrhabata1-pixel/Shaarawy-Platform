@@ -1,17 +1,11 @@
-import { Head, Link, useForm } from '@inertiajs/react';
+﻿import { Head, Link, useForm } from '@inertiajs/react';
 import StudentLayout from '@/Layouts/StudentLayout';
 import { useState, useEffect, useRef } from 'react';
 import { teacherReactionImage } from '@/Utils/teacherReaction';
 
-<<<<<<< HEAD
 const O = '#0D9488';
 const N = '#14213D';
 const G = '#2DD4BF';
-=======
-const O = '#F47C20';
-const N = '#14213D';
-const G = '#C9A14A';
->>>>>>> a7d621ecce9a27909d6163081c63c5e4d03bd594
 
 /* ═══════════════════════════════════════════════════════
    EXAM SHOW
@@ -686,3 +680,5 @@ function MetaBadge({ icon, label }) {
         </div>
     );
 }
+
+

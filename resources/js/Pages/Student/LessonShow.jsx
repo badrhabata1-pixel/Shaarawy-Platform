@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+﻿import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Head, Link } from '@inertiajs/react';
 import axios from 'axios';
 import StudentLayout from '@/Layouts/StudentLayout';
@@ -7,15 +7,9 @@ import VideoQuizOverlay from '@/Components/VideoQuizOverlay';
 import AudioRecorder from '@/Components/AudioRecorder';
 import { teacherReactionImage } from '@/Utils/teacherReaction';
 
-<<<<<<< HEAD
 const O = '#0D9488';
 const N = '#14213D';
 const G = '#2DD4BF';
-=======
-const O = '#F47C20';
-const N = '#14213D';
-const G = '#C9A14A';
->>>>>>> a7d621ecce9a27909d6163081c63c5e4d03bd594
 
 /* ── Detect dark mode from the <html class="dark"> toggle in StudentLayout ── */
 function useDarkMode() {
@@ -1116,3 +1110,5 @@ export default function LessonShow({
         </StudentLayout>
     );
 }
+
+

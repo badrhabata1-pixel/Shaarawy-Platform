@@ -1,13 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react';
+﻿import React, { useEffect, useRef, useState } from 'react';
 import { Head, Link, router } from '@inertiajs/react';
 import AssistantLayout from '@/Layouts/AssistantLayout';
 import gsap from 'gsap';
 
-<<<<<<< HEAD
 const O = '#208ef4'; // برتقالي
-=======
-const O = '#F47C20'; // برتقالي
->>>>>>> a7d621ecce9a27909d6163081c63c5e4d03bd594
 const N = '#14213D'; // كحلي
 const B = '#DCC9A3'; // ذهبي
 
@@ -155,3 +151,4 @@ function GoogleFonts() {
         <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
     );
 }
+
