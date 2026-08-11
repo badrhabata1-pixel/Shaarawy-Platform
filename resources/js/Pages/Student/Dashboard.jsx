@@ -3,7 +3,7 @@ import { Head, Link, router } from '@inertiajs/react';
 import StudentLayout from '@/Layouts/StudentLayout';
 
 /* ── Brand Palette ─────────────────────────────────────── */
-const O = '#0D9488';   // كان برتقالي (F47C20) → بقى تركواز غامق (زي لوحة الأدمن)
+const O = '#0D9488';   
 const N = '#14213D';
 const B = '#DCC9A3';
 const W = '#F7F3EB';
@@ -17,7 +17,7 @@ const CARD_BGS = [
     `linear-gradient(145deg,#083344 0%,#0E7490 100%)`,
 ];
 
-/* ── Fixed particles (hero banner) ───────────────────────── */
+/* ── Fixed particles ─────────────────────────────────────── */
 const PARTICLES = [
     { l:'4%',  d:'0s',   dr:'9s',  s:2.5, o:.45 },
     { l:'14%', d:'2.2s', dr:'11s', s:1.5, o:.3  },
@@ -31,45 +31,129 @@ const PARTICLES = [
     { l:'94%', d:'3.2s', dr:'7s',  s:2,   o:.35 },
 ];
 
-/* ── Twinkling dust particles (stat cards) ───────────────── */
+/* ── Twinkling white star particles for the stat cards ──── */
 const CARD_PARTICLES = [
-    { l:'10%', t:'18%', d:'0s',   dr:'2.6s', s:2,   o:.8  },
-    { l:'28%', t:'62%', d:'.6s',  dr:'3.2s', s:1.5, o:.6  },
-    { l:'46%', t:'30%', d:'1.1s', dr:'2.8s', s:2.5, o:.9  },
-    { l:'64%', t:'70%', d:'.3s',  dr:'3.6s', s:1.5, o:.55 },
-    { l:'80%', t:'22%', d:'1.6s', dr:'3s',   s:2,   o:.75 },
-    { l:'92%', t:'55%', d:'.9s',  dr:'2.9s', s:1.5, o:.6  },
+    { x: 8,  y: 24, s: 2.5, d: 0,    t: 5.5 },
+    { x: 22, y: 66, s: 1.6, d: 900,  t: 6.8 },
+    { x: 34, y: 14, s: 2,   d: 400,  t: 7.4 },
+    { x: 47, y: 78, s: 1.4, d: 1500, t: 5.9 },
+    { x: 58, y: 34, s: 2.8, d: 300,  t: 8.2 },
+    { x: 66, y: 60, s: 1.7, d: 1900, t: 6.2 },
+    { x: 74, y: 18, s: 2.1, d: 700,  t: 7.1 },
+    { x: 83, y: 72, s: 1.5, d: 1200, t: 6.5 },
+    { x: 90, y: 40, s: 2.4, d: 200,  t: 7.8 },
+    { x: 95, y: 86, s: 1.3, d: 2200, t: 5.6 },
+    { x: 15, y: 88, s: 1.9, d: 1700, t: 8.6 },
+    { x: 52, y: 52, s: 1.2, d: 2600, t: 6.9 },
 ];
 
-function TwinkleParticles({ color = G }) {
-    return (
-        <div style={{ position:'absolute', inset:0, overflow:'hidden', pointerEvents:'none', zIndex:1 }}>
-            {CARD_PARTICLES.map((p, i) => (
-                <span key={i} style={{
-                    position:'absolute',
-                    top:p.t, left:p.l,
-                    width:p.s, height:p.s, borderRadius:'50%',
-                    background:`radial-gradient(circle,#fff,${color})`,
-                    opacity:0,
-                    '--o':p.o,
-                    animation:`dust ${p.dr} ${p.d} ease-in-out infinite, twinkle ${(parseFloat(p.dr)/2).toFixed(1)}s ${p.d} ease-in-out infinite`,
-                }}/>
-            ))}
-        </div>
-    );
-}
-
-/* ── Quill & Scroll icon (image-based) ───────────────────── */
-function QuillScroll({ size = 64 }) {
+/* ── Scroll + Quill image icon (منظر الريشة والمخطوطة) ──── */
+function QuillScroll() {
     return (
         <img
             src="/images/quill-scroll.png"
-            alt="ريشة وطومار"
-            width={size}
-            height={Math.round(size * 0.875)}
-            style={{ display:'block', objectFit:'contain', userSelect:'none' }}
+            alt=""
+            width={104}
+            height={104}
             draggable={false}
+            style={{ display: 'block', width: 104, height: 104, objectFit: 'contain' }}
         />
+    );
+}
+
+/* ── Flat (unfolded) paper icon — Payment card ───────────── */
+function PaymentIconSVG({ pid, accent }) {
+    return (
+        <svg viewBox="0 0 56 56" width="30" height="30">
+            <defs>
+                <linearGradient id={`pf${pid}`} x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%"   stopColor="#FBF3DD"/>
+                    <stop offset="100%" stopColor="#E4D6A8"/>
+                </linearGradient>
+                <radialGradient id={`coin${pid}`} cx="35%" cy="30%" r="75%">
+                    <stop offset="0%"   stopColor="#F7E568"/>
+                    <stop offset="100%" stopColor="#B8912C"/>
+                </radialGradient>
+            </defs>
+
+            {/* fully flat, unfolded sheet — no dog-ear, no wrinkle */}
+            <rect x="7" y="5" width="32" height="44" rx="3"
+                fill={`url(#pf${pid})`} stroke="rgba(0,0,0,.1)" strokeWidth="1"/>
+
+            {/* printed lines */}
+            {[15, 21, 27, 33, 39].map((y, i) => (
+                <line key={i} x1="13" y1={y} x2={i % 2 ? 33 : 29} y2={y}
+                    stroke="rgba(80,64,34,.42)" strokeWidth="1.4"/>
+            ))}
+
+            {/* coin / payment badge */}
+            <circle cx="41" cy="42" r="11" fill={`url(#coin${pid})`} stroke="#8E6410" strokeWidth="1"/>
+            <text x="41" y="46" textAnchor="middle" fontSize="11" fontWeight="900" fill="#5b4409">$</text>
+            <circle cx="41" cy="42" r="11" fill={accent} opacity=".16"/>
+        </svg>
+    );
+}
+
+/* ── Flat (unfolded) paper + realistic mini quill — Sheets card ── */
+function SheetIconSVG({ pid, accent }) {
+    return (
+        <svg viewBox="0 0 56 56" width="30" height="30">
+            <defs>
+                <linearGradient id={`sf${pid}`} x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%"   stopColor="#FBF3DD"/>
+                    <stop offset="100%" stopColor="#E4D6A8"/>
+                </linearGradient>
+                <linearGradient id={`vaneMini${pid}`} x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%"   stopColor="#F7F3EB"/>
+                    <stop offset="60%"  stopColor="#C9C2B4"/>
+                    <stop offset="100%" stopColor="#8B8378"/>
+                </linearGradient>
+            </defs>
+
+            {/* fully flat, unfolded sheet — no dog-ear, no wrinkle */}
+            <rect x="6" y="5" width="34" height="44" rx="3"
+                fill={`url(#sf${pid})`} stroke="rgba(0,0,0,.1)" strokeWidth="1"/>
+
+            {/* printed lines */}
+            {[13, 19, 25, 31, 37, 43].map((y, i) => (
+                <line key={i} x1="12" y1={y} x2={i % 2 ? 34 : 30} y2={y}
+                    stroke="rgba(80,64,34,.42)" strokeWidth="1.3"/>
+            ))}
+
+            {/* realistic mini feather resting diagonally, with barb texture */}
+            <g transform="translate(30,2) rotate(28)">
+                <line x1="14" y1="0" x2="0" y2="38" stroke="rgba(0,0,0,.3)" strokeWidth=".8"/>
+                <path d="M14,0 C6,2 -2,9 -4,18 C-5,23 -2,27 3,28 C7,24 12,16 15,9 C16,6 15,2 14,0 Z"
+                    fill={`url(#vaneMini${pid})`}/>
+                {[0.25, 0.45, 0.65].map((t, i) => {
+                    const x1 = 14 + (-4 - 14) * t, y1 = 0 + (18 - 0) * t;
+                    return (
+                        <line key={i} x1={x1} y1={y1} x2={x1 - 6} y2={y1 - 2}
+                            stroke="rgba(255,255,255,.35)" strokeWidth=".5"/>
+                    );
+                })}
+                <polygon points="3,28 0,33 -3,38" fill="#C9A24A"/>
+            </g>
+            <circle cx="10" cy="46" r="4" fill={accent} opacity=".18"/>
+        </svg>
+    );
+}
+
+/* ── Arabic reed-pen line-art watermark ──────────────────── */
+function QuillWatermarkSVG() {
+    return (
+        <svg viewBox="0 0 200 200" width="130" height="130" fill="none"
+            stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round">
+            {/* reed pen body */}
+            <line x1="170" y1="20" x2="60" y2="130"/>
+            <line x1="60" y1="130" x2="40" y2="150"/>
+            <line x1="50" y1="140" x2="30" y2="160"/>
+            {/* nib split */}
+            <line x1="55" y1="125" x2="35" y2="155"/>
+            {/* flowing calligraphic swirl beneath */}
+            <path d="M20,175 C50,165 70,185 100,170 C130,155 150,175 180,160"/>
+            <path d="M25,190 C55,180 80,195 110,182"/>
+        </svg>
     );
 }
 
@@ -326,14 +410,6 @@ export default function Dashboard({
                     33%       { transform:translateY(-14px) rotate(4deg); }
                     66%       { transform:translateY(8px) rotate(-3deg); }
                 }
-                @keyframes dust {
-                    0%,100% { transform:translateY(0); }
-                    50%     { transform:translateY(-6px); }
-                }
-                @keyframes twinkle {
-                    0%,100% { opacity:0; }
-                    50%     { opacity:var(--o,.8); }
-                }
                 @keyframes db-up  { from{opacity:0;transform:translateY(22px)} to{opacity:1;transform:none} }
                 @keyframes db-in  { from{opacity:0;transform:translateX(16px)} to{opacity:1;transform:none} }
                 @keyframes db-pop {
@@ -361,6 +437,17 @@ export default function Dashboard({
                 @keyframes sidebarSlideIn {
                     from{opacity:0;transform:translateX(20px)}
                     to  {opacity:1;transform:none}
+                }
+                @keyframes dust {
+                    0%   { transform: translate(0,0) }
+                    25%  { transform: translate(6px,-10px) }
+                    50%  { transform: translate(-4px,-18px) }
+                    75%  { transform: translate(-8px,-8px) }
+                    100% { transform: translate(0,0) }
+                }
+                @keyframes twinkle {
+                    0%,100% { opacity:.15 }
+                    50%     { opacity:1 }
                 }
                 :root { --qn-width: min(33vw, 320px); }
                 @media (max-width: 860px) {
@@ -525,7 +612,7 @@ export default function Dashboard({
                 display:'grid',
                 gridTemplateColumns:'repeat(auto-fit,minmax(170px,1fr))',
                 gap:14, marginBottom:'2rem',
-                paddingTop:28,  /* room for overhanging icon */
+                paddingTop:28,  /* room for overhanging feather icon */
             }}>
                 <AnimStatCard icon={FEATHER_ICONS[0]} label="إجمالي المحاضرات"  value={stats.total_lessons}      color={G}   delay={100} idx={0}/>
                 <AnimStatCard icon={FEATHER_ICONS[1]} label="محاضرات مكتملة"    value={stats.completed}          color={O}   delay={200} idx={1}/>
@@ -576,19 +663,19 @@ export default function Dashboard({
                 marginBottom:'1.75rem',
             }}>
                 <QuickCard icon="🎬" title="جدار المحاضرات" desc="استعرض جميع المحاضرات وابدأ رحلتك التعليمية"
-                    href={route('student.lessons')} accent={O} mark="🏛️" delay={0}/>
+                    href={route('student.lessons')} accent={O} mark={<QuillWatermarkSVG/>} delay={0}/>
                 <QuickCard icon="📝" title="الامتحانات"     desc="اطّلع على جميع امتحاناتك ونتائجك"
                     href={route('student.exams')}   accent={G} mark="⚔️" delay={100}/>
-                <QuickCard icon="📄" title="الشيتات"        desc="حمّل شيتات الدروس وتابع نتائجك"
-                    href={route('student.sheets')}  accent={B} mark="📜" delay={200}/>
+                <QuickCard icon={<SheetIconSVG pid="qs" accent={G}/>} title="الشيتات"        desc="حمّل شيتات الدروس وتابع نتائجك"
+                    href={route('student.sheets')}  accent={G} mark="📜" delay={200}/>
                 {student.mode === 'offline' ? (
                     <>
-                        <LockedQuickCard icon="🧾" title="نظام الدفع"  desc="ارفع إيصال التحويل وتابع حالة اشتراكك"  accent={O} mark="💳" delay={300}/>
+                        <LockedQuickCard icon={<PaymentIconSVG pid="qpl" accent={O}/>} title="نظام الدفع"  desc="ارفع إيصال التحويل وتابع حالة اشتراكك"  accent={O} mark="💳" delay={300}/>
                         <LockedQuickCard icon="📜" title="سجل الدفع"   desc="راجع طلبات الدفع السابقة وحالتها"        accent={G} mark="🧾" delay={400}/>
                     </>
                 ) : (
                     <>
-                        <QuickCard icon="🧾" title="نظام الدفع"     desc="ارفع إيصال التحويل وتابع حالة اشتراكك"
+                        <QuickCard icon={<PaymentIconSVG pid="qp" accent={O}/>} title="نظام الدفع"     desc="ارفع إيصال التحويل وتابع حالة اشتراكك"
                             href={route('student.payment.create')} accent={O} mark="💳" delay={300}/>
                         <QuickCard icon="📜" title="سجل الدفع"      desc="راجع طلبات الدفع السابقة وحالتها"
                             href={route('student.payment.history')} accent={G} mark="🧾" delay={400}/>
@@ -619,36 +706,61 @@ function GlowBadge({ label, color, delay='0s', glow=false }) {
     );
 }
 
+/* ── Floating white star particles (نقط بيضاء متحركة ومتلألئة) ── */
+function TwinkleParticles({ hov }) {
+    return (
+        <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none', overflow: 'hidden' }}>
+            {CARD_PARTICLES.map((p, i) => (
+                <span
+                    key={i}
+                    style={{
+                        position: 'absolute',
+                        left: `${p.x}%`,
+                        top: `${p.y}%`,
+                        width: p.s,
+                        height: p.s,
+                        borderRadius: '50%',
+                        background: '#fff',
+                        opacity: 0,
+                        boxShadow: `0 0 ${p.s * 3}px ${p.s}px rgba(255,255,255,${hov ? 0.8 : 0.5})`,
+                        animation: `dust ${p.t}s ease-in-out ${p.d}ms infinite, twinkle ${(p.t / 2.4).toFixed(2)}s ease-in-out ${p.d}ms infinite`,
+                    }}
+                />
+            ))}
+        </div>
+    );
+}
+
 function AnimStatCard({ icon, label, value, color, delay, idx = 0 }) {
     const [hov, setHov] = useState(false);
     const count = useCount(value, delay);
     const bg    = CARD_BGS[idx % 4];
 
     return (
-        /* Outer wrapper — icon hangs from top-left, partly inside card */
+        /* Outer wrapper — feather hangs from top-left, partly inside card */
         <div
             onMouseEnter={()=>setHov(true)}
             onMouseLeave={()=>setHov(false)}
             style={{
                 position:'relative',
                 animation:`db-up .6s ${delay}ms both`,
-                paddingTop: 12,   /* small — most of the icon is inside card */
+                paddingTop: 12,   /* small — most of icon is inside card */
                 paddingLeft: 4,
                 cursor:'default',
             }}
         >
-            {/* ── Icon — top-left, most of it inside card ── */}
+            {/* ── Icon — top-left, most of it inside card, overhanging slightly ── */}
             <div style={{
                 position:'absolute',
                 top: -14, left: -10,
                 zIndex: 4, pointerEvents:'none',
                 opacity: hov ? 1 : 0.92,
                 filter: hov
-                    ? `drop-shadow(0 0 12px ${color}) drop-shadow(0 8px 22px ${color}90) drop-shadow(0 0 36px ${color}55)`
-                    : `brightness(.45) drop-shadow(0 4px 10px rgba(0,0,0,.7))`,
+                    ? `drop-shadow(0 0 14px ${color}) drop-shadow(0 10px 24px rgba(0,0,0,.6))`
+                    : `drop-shadow(0 6px 14px rgba(0,0,0,.55))`,
                 transform: hov
-                    ? 'rotate(-7deg) scale(1.1) translate(-2px,-5px)'
-                    : 'rotate(-10deg) scale(1)',
+                    ? 'rotate(-4deg) scale(1.07) translate(-2px,-5px)'
+                    : 'rotate(-6deg) scale(1)',
                 transition:'opacity .4s ease, filter .45s ease, transform .42s cubic-bezier(.22,1,.36,1)',
             }}>
                 {icon}
@@ -667,9 +779,8 @@ function AnimStatCard({ icon, label, value, color, delay, idx = 0 }) {
                 transition:'box-shadow .35s, transform .35s, border-color .35s',
                 position:'relative', overflow:'hidden',
             }}>
-                {/* twinkling particles */}
-                <TwinkleParticles color={color}/>
-
+                {/* floating white twinkling particles */}
+                <TwinkleParticles hov={hov}/>
                 {/* shimmer */}
                 <div style={{
                     position:'absolute', top:0, left:0, right:0, height:1,
