@@ -1,0 +1,55 @@
+import defaultTheme from 'tailwindcss/defaultTheme';
+import forms from '@tailwindcss/forms';
+
+/** @type {import('tailwindcss').Config} */
+export default {
+    content: [
+        './vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php',
+        './storage/framework/views/*.php',
+        './resources/views/**/*.blade.php',
+        './resources/js/**/*.jsx',
+    ],
+
+    theme: {
+        extend: {
+            fontFamily: {
+                sans: ['Cairo', 'Figtree', ...defaultTheme.fontFamily.sans],
+                cairo: ['Cairo', 'sans-serif'],
+            },
+            colors: {
+                navy: {
+                    DEFAULT: '#14213D',
+                    deep: '#0d1829',
+                    mid: '#1e3a6e',
+                    light: '#2a4a8a',
+                },
+                brand: {
+                    orange:    '#F47C20',
+                    'orange-dk': '#d96a12',
+                    gold:      '#DCC9A3',
+                    cream:     '#F7F3EB',
+                },
+            },
+            boxShadow: {
+                glow:        '0 0 30px rgba(244,124,32,0.35)',
+                'glow-sm':   '0 0 14px rgba(244,124,32,0.25)',
+                card:        '0 4px 24px rgba(20,33,61,0.08)',
+                'card-hover':'0 14px 44px rgba(20,33,61,0.16)',
+                sidebar:     '4px 0 24px rgba(20,33,61,0.18)',
+            },
+            animation: {
+                'spin-slow':  'spin 8s linear infinite',
+                'ping-slow':  'ping 3s cubic-bezier(0,0,0.2,1) infinite',
+                'float':      'float 6s ease-in-out infinite',
+            },
+            keyframes: {
+                float: {
+                    '0%,100%': { transform: 'translateY(0px)' },
+                    '50%':     { transform: 'translateY(-10px)' },
+                },
+            },
+        },
+    },
+
+    plugins: [forms],
+};
