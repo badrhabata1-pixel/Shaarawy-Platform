@@ -99,7 +99,7 @@ class DashboardController extends Controller
             ],
             'latestStudents' => $latestStudents,
             'monthlyData'    => $monthlyData,
-            'adminName'      => str_replace('السويفي', 'الصيفي', auth()->user()->name ?? 'الأستاذ محمد الصيفي'),
+            'adminName'      => auth()->user()->name ?? 'الأستاذ محمد منصور',
             'receipts'       => $receipts,
             'paymentNumbers' => PaymentSetting::allAsArray(),
         ]);

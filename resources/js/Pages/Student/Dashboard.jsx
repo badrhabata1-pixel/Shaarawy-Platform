@@ -484,23 +484,28 @@ export default function Dashboard({
             `}</style>
 
             {/* ════════════════════════════════════════
-                HERO BANNER
+                HERO BANNER (المُعدّل بنفس تصميم المدرس الشفاف)
             ════════════════════════════════════════ */}
             <div style={{
-                position:'relative',
-                background:`
-                    radial-gradient(ellipse at 70% 50%, rgba(13,148,136,.12) 0%, transparent 55%),
-                    radial-gradient(ellipse at 20% 30%, rgba(45,212,191,.08) 0%, transparent 50%),
-                    linear-gradient(135deg, #060D1E 0%, #0E1B30 40%, ${N} 100%)
-                `,
-                borderRadius: 24,
-                overflow: 'hidden',
+                position: 'relative',
+                background: 'rgba(8, 23, 44, 0.7)',
+                backdropFilter: 'blur(12px)',
+                WebkitBackdropFilter: 'blur(12px)',
+                border: '2px dashed rgba(45, 212, 191, 0.3)',
+                borderRadius: '24px',
+                padding: '24px',
                 marginBottom: '1.75rem',
-                boxShadow: `0 20px 60px rgba(0,0,0,.3), 0 0 0 1px ${G}25`,
+                backgroundImage: 'radial-gradient(circle at 2px 2px, rgba(45, 212, 191, 0.15) 1.5px, transparent 0)',
+                backgroundSize: '40px 40px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                flexWrap: 'wrap',
+                gap: '20px',
+                boxShadow: '0 10px 30px rgba(0,0,0,0.3)',
                 animation: 'db-up .55s ease both',
-                minHeight: 190,
             }}>
-                {/* dot grid */}
+                {/* dot grid overlay for consistency */}
                 <div style={{
                     position:'absolute', inset:0, pointerEvents:'none',
                     backgroundImage:`radial-gradient(circle,${G}09 1px,transparent 1px)`,
@@ -519,88 +524,50 @@ export default function Dashboard({
                     }}/>
                 ))}
 
-                {/* Bottom gold line */}
-                <div style={{
-                    position:'absolute', bottom:0, left:0, right:0, height:1,
-                    background:`linear-gradient(90deg,transparent,${G}80,transparent)`,
-                }}/>
-
-                {/* Teacher image — decorative, right side (RTL start) */}
-                <div className="hero-teacher" style={{
-                    position:'absolute', right:0, bottom:0, top:0,
-                    width: 220,
-                    overflow:'hidden', pointerEvents:'none',
-                }}>
+                {/* Avatar + name (Right Side) */}
+                <div style={{ display:'flex', alignItems:'center', gap:18, zIndex:2 }}>
                     <div style={{
-                        position:'absolute', inset:0,
-                        background:`linear-gradient(to right, #060D1E 0%, transparent 40%)`,
-                        zIndex:1,
-                    }}/>
-                    <img
-                        src="/images/teacher-m.Ali.png"
-                        alt="الأستاذ"
-                        style={{
-                            position:'absolute', bottom:0, right:0,
-                            height:'100%', width:'100%',
-                            objectFit:'contain', objectPosition:'bottom right',
-                            opacity:.85,
-                        }}
-                    />
-                </div>
-
-                {/* Content */}
-                <div className="hero-content-inner" style={{
-                    position:'relative', zIndex:2,
-                    padding:'clamp(1.4rem,3.5vw,2rem) clamp(1.4rem,4vw,2.25rem)',
-                    display:'flex', alignItems:'center', justifyContent:'space-between',
-                    flexWrap:'wrap', gap:16,
-                    paddingRight: 'max(clamp(1.4rem,4vw,2.25rem), 200px)',
-                }}>
-                    {/* Avatar + name */}
-                    <div style={{ display:'flex', alignItems:'center', gap:18 }}>
+                        position:'relative', width:88, height:88, flexShrink:0,
+                        animation:'db-glow 3.5s ease-in-out infinite',
+                    }}>
+                        <Ring pct={stats.completion_pct} size={88} stroke={3} color={G}/>
                         <div style={{
-                            position:'relative', width:88, height:88, flexShrink:0,
-                            animation:'db-glow 3.5s ease-in-out infinite',
+                            position:'absolute', inset:8, borderRadius:'50%',
+                            background:`linear-gradient(135deg,${O},#0b6b62)`,
+                            display:'flex', alignItems:'center', justifyContent:'center',
+                            fontSize:22, fontWeight:900, color:'#fff',
+                            boxShadow:`0 0 22px ${O}55`,
+                            overflow:'hidden',
                         }}>
-                            <Ring pct={stats.completion_pct} size={88} stroke={3} color={G}/>
-                            <div style={{
-                                position:'absolute', inset:8, borderRadius:'50%',
-                                background:`linear-gradient(135deg,${O},#0b6b62)`,
-                                display:'flex', alignItems:'center', justifyContent:'center',
-                                fontSize:22, fontWeight:900, color:'#fff',
-                                boxShadow:`0 0 22px ${O}55`,
-                                overflow:'hidden',
-                            }}>
-                                {student.initials}
-                            </div>
-                        </div>
-
-                        <div>
-                            <div style={{ color:`${G}99`, fontSize:11, letterSpacing:'.06em', marginBottom:4 }}>
-                                مرحباً بك مجدداً ✨
-                            </div>
-                            <div className="hero-name" style={{
-                                color:'#fff',
-                                fontSize:'clamp(1.1rem,3vw,1.5rem)',
-                                fontWeight:900, lineHeight:1.2, marginBottom:4,
-                            }}>
-                                {student.full_name}
-                            </div>
-                            {student.last_login && (
-                                <div style={{ color:'rgba(255,255,255,.3)', fontSize:11 }}>
-                                    ⏱ آخر دخول: {student.last_login}
-                                </div>
-                            )}
+                            {student.initials}
                         </div>
                     </div>
 
-                    {/* Badges */}
-                    <div style={{ display:'flex', flexDirection:'column', gap:12, alignItems:'flex-end', animation:'db-in .7s .2s both' }}>
-                        <div style={{ display:'flex', flexWrap:'wrap', gap:8, justifyContent:'flex-end' }}>
-                            <GlowBadge label={student.grade}                                          color={gc}   delay=".2s"/>
-                            <GlowBadge label={student.mode==='online'?'🌐 أونلاين':'🏫 أوفلاين'}   color={B}    delay=".3s"/>
-                            <GlowBadge label={`🔥 ${stats.completion_pct}% مكتمل`}                  color={O}    delay=".4s" glow/>
+                    <div>
+                        <div style={{ color:`${G}99`, fontSize:11, letterSpacing:'.06em', marginBottom:4 }}>
+                            مرحباً بك مجدداً ✨
                         </div>
+                        <div className="hero-name" style={{
+                            color:'#fff',
+                            fontSize:'clamp(1.1rem,3vw,1.5rem)',
+                            fontWeight:900, lineHeight:1.2, marginBottom:4,
+                        }}>
+                            {student.full_name}
+                        </div>
+                        {student.last_login && (
+                            <div style={{ color:'rgba(255,255,255,.3)', fontSize:11 }}>
+                                ⏱ آخر دخول: {student.last_login}
+                            </div>
+                        )}
+                    </div>
+                </div>
+
+                {/* Badges (Left Side) */}
+                <div style={{ display:'flex', flexDirection:'column', gap:12, alignItems:'flex-end', animation:'db-in .7s .2s both', zIndex:2 }}>
+                    <div style={{ display:'flex', flexWrap:'wrap', gap:8, justifyContent:'flex-end' }}>
+                        <GlowBadge label={student.grade}                                          color={gc}   delay=".2s"/>
+                        <GlowBadge label={student.mode==='online'?'🌐 أونلاين':'🏫 أوفلاين'}   color={B}    delay=".3s"/>
+                        <GlowBadge label={`🔥 ${stats.completion_pct}% مكتمل`}                  color={O}    delay=".4s" glow/>
                     </div>
                 </div>
             </div>

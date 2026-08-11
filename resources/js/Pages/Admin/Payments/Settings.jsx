@@ -76,7 +76,7 @@ export default function PaymentSettings({ settings = {} }) {
                                 type="text"
                                 value={data.vodafone_name}
                                 onChange={e => setData('vodafone_name', e.target.value)}
-                                placeholder="محمد الصيفي"
+                                placeholder="محمد منصور"
                                 style={inputStyle(!!errors.vodafone_name)}
                             />
                         </Field>
@@ -99,7 +99,7 @@ export default function PaymentSettings({ settings = {} }) {
                                 type="text"
                                 value={data.instapay_name}
                                 onChange={e => setData('instapay_name', e.target.value)}
-                                placeholder="محمد الصيفي"
+                                placeholder="محمد منصور"
                                 style={inputStyle(!!errors.instapay_name)}
                             />
                         </Field>
