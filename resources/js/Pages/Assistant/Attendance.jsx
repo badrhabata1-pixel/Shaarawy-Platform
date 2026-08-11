@@ -2,8 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { Head, useForm, router } from '@inertiajs/react';
 import AssistantLayout from '@/Layouts/AssistantLayout';
 
+<<<<<<< HEAD
 const O = '#208ef4'; // برتقالي
 const N = '#152c5f'; // كحلي
+=======
+const O = '#F47C20'; // برتقالي
+const N = '#14213D'; // كحلي
+>>>>>>> a7d621ecce9a27909d6163081c63c5e4d03bd594
 const B = '#DCC9A3'; // ذهبي
 const G = '#E5E5E5';
 

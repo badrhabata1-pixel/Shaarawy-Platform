@@ -2,7 +2,11 @@ import { Head, Link } from '@inertiajs/react';
 import { useState, useEffect } from 'react';
 import StudentLayout from '@/Layouts/StudentLayout';
 
+<<<<<<< HEAD
 const O = '#0D9488';
+=======
+const O = '#F47C20';
+>>>>>>> a7d621ecce9a27909d6163081c63c5e4d03bd594
 const N = '#14213D';
 
 function useStudentDark() {

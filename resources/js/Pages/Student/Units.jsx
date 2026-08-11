@@ -2,9 +2,15 @@ import { Head } from '@inertiajs/react';
 import { useMemo } from 'react';
 import StudentLayout from '@/Layouts/StudentLayout';
 
+<<<<<<< HEAD
 const O  = '#0D9488';
 const N  = '#14213D';
 const G  = '#2DD4BF';
+=======
+const O  = '#F47C20';
+const N  = '#14213D';
+const G  = '#C9A14A';
+>>>>>>> a7d621ecce9a27909d6163081c63c5e4d03bd594
 const B  = '#DCC9A3';
 const DK = '#050a16';
 

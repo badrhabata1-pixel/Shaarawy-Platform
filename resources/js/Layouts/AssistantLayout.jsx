@@ -6,8 +6,13 @@ const C = {
     navy:   '#14213D',
     navyD:  '#0D1829',
     navyL:  '#1e2e50',
+<<<<<<< HEAD
     orange: '#208ef4',
     orangeD:'#0037af',
+=======
+    orange: '#F47C20',
+    orangeD:'#d96a12',
+>>>>>>> a7d621ecce9a27909d6163081c63c5e4d03bd594
     gold:   '#DCC9A3',
     goldD:  '#c9b38e',
 };
