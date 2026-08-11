@@ -6,6 +6,13 @@ const N = '#14213D';
 const B = '#DCC9A3';
 const G = '#2DD4BF';   // تركواز فاتح — بديل اللون الدهبي (C9A14A) في كل الملف
 
+/* ── أسماء صور الخلفية — حطهم في public/images/ ─────────
+   bg-pattern-light.jpg  → تظهر في الوضع النهاري (الفاتح)
+   bg-pattern-dark.jpg   → تظهر في الوضع الليلي (الغامق)
+─────────────────────────────────────────────────────── */
+const BG_IMAGE_LIGHT = '/images/bg-pattern-light.jpg';
+const BG_IMAGE_DARK  = '/images/bg-pattern-dark.jpg';
+
 /* ── History emoji floating layer ─────────────────────── */
 const BG_EMOJIS = [
     { e:'🏛️', x: 2,  y: 7,  s:40, d:0,    dr:14 },
@@ -32,7 +39,7 @@ export default function StudentLayout({ children, title, student: studentProp })
     const [menuOpen, setMenuOpen] = useState(false);
     const [profileMenuOpen, setProfileMenuOpen] = useState(false);
     const [notifMenuOpen, setNotifMenuOpen] = useState(false);
-    
+
     // إعداد الوضع الليلي والنهاري التفاعلي
     const [darkMode, setDarkMode] = useState(() => {
         return localStorage.getItem('student-theme') === 'dark';
@@ -41,7 +48,7 @@ export default function StudentLayout({ children, title, student: studentProp })
     const { url, props } = usePage();
     const dropdownRef = useRef(null);
     const notifRef = useRef(null);
-    
+
     const student = studentProp || props.student || props.auth?.user || props.auth?.student || {
         full_name: 'طالب الصيفي',
         initials:  'ص',
@@ -86,7 +93,6 @@ export default function StudentLayout({ children, title, student: studentProp })
         return () => document.removeEventListener('mousedown', handleClickOutside);
     }, []);
 
-    const bgBody = darkMode ? '#0e1726' : '#FFFFFF';
     const bgCard = darkMode ? '#152238' : '#ffffff';
     const textMain = darkMode ? '#f8f9fa' : '#14213D';
 
@@ -95,9 +101,13 @@ export default function StudentLayout({ children, title, student: studentProp })
             <style>{`
                 body,html{
                     background:${darkMode
-                        ? 'radial-gradient(ellipse 70% 55% at 18% 22%,#0d1f3a 0%,transparent 60%), radial-gradient(ellipse 65% 50% at 82% 78%,#071428 0%,transparent 55%), #08111f'
-                        : 'radial-gradient(ellipse 75% 55% at 16% 20%,#E6FFFA 0%,transparent 58%), radial-gradient(ellipse 65% 50% at 84% 80%,#F0FDFA 0%,transparent 54%), #FFFFFF'
+                        ? `linear-gradient(rgba(8,17,31,0.82),rgba(8,17,31,0.82)), url('${BG_IMAGE_DARK}')`
+                        : `linear-gradient(rgba(255,255,255,0.55),rgba(255,255,255,0.55)), url('${BG_IMAGE_LIGHT}')`
                     }!important;
+                    background-size: cover !important;
+                    background-position: center !important;
+                    background-repeat: no-repeat !important;
+                    background-attachment: fixed !important;
                     margin:0;
                 }
                 @keyframes bgFloat{
@@ -114,38 +124,6 @@ export default function StudentLayout({ children, title, student: studentProp })
                     .nav-mobile-btn { display:flex!important; }
                 }
             `}</style>
-
-            {/* ── Fixed history emoji background ── */}
-            <div style={{
-                position:'fixed', inset:0, zIndex:-1,
-                pointerEvents:'none', overflow:'hidden',
-            }}>
-                {/* Subtle cross-lines (papyrus feel) */}
-                {[...Array(10)].map((_,i)=>(
-                    <div key={i} style={{
-                        position:'absolute', left:0, right:0,
-                        top:`${i*10.5}%`, height:1,
-                        background: darkMode
-                            ? `linear-gradient(90deg,transparent,rgba(45,212,191,.06),transparent)`
-                            : `linear-gradient(90deg,transparent,rgba(13,148,136,.09),transparent)`,
-                    }}/>
-                ))}
-
-                {/* Floating emojis */}
-                {BG_EMOJIS.map((s,i)=>(
-                    <div key={i} style={{
-                        position:'absolute',
-                        left:`${s.x}%`, top:`${s.y}%`,
-                        fontSize: s.s,
-                        opacity: darkMode ? 0.06 : 0.07,
-                        animation:`bgFloat ${s.dr}s ${s.d}s ease-in-out infinite`,
-                        userSelect:'none',
-                        filter: darkMode ? 'grayscale(1) brightness(.6)' : 'grayscale(.35) saturate(.6) brightness(1.05)',
-                    }}>
-                        {s.e}
-                    </div>
-                ))}
-            </div>
 
             <GoogleFonts />
 
@@ -479,6 +457,7 @@ function WhatsAppBtn() {
                 .wa-float { animation: waPulse 2.2s ease-out infinite; }
                 .wa-float:hover { transform: scale(1.1) !important; }
             `}</style>
+
             <a
                 href={`https://wa.me/${WA_NUMBER}`}
                 target="_blank"

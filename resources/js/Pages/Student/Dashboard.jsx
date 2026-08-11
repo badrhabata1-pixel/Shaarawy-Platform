@@ -393,7 +393,7 @@ export default function Dashboard({
                     flexShrink: 0,
                 }}>
                     <div style={{ color: 'rgba(45,212,191,0.4)', fontSize: 10, textAlign: 'center', fontFamily: "'Cairo',sans-serif", letterSpacing: '.1em' }}>
-                        🏛️ منصة الصيفي التعليمية
+                        🪶 منصة التعليمية
                     </div>
                 </div>
             </div>
@@ -625,7 +625,7 @@ export default function Dashboard({
             ════════════════════════════════════════ */}
             {lessons_progress.length > 0 && (
                 <CardSection
-                    title="📜 رحلتك عبر التاريخ"
+                    title="📜 رحلتك التعليمية"
                     linkHref={route('student.lessons')}
                     style={{ marginBottom:'1.75rem', animation:'db-up .6s .3s both' }}
                 >
