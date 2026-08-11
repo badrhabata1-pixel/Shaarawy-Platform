@@ -386,7 +386,7 @@ export default function AdminLayout({ children, title = 'لوحة التحكم' 
         window.addEventListener('pageshow', onPageShow);
         return () => window.removeEventListener('pageshow', onPageShow);
     }, []);
-    const adminName    = auth?.user?.name ?? 'الأستاذ [اسم المدرس]';
+    const adminName    = auth?.user?.name ?? 'الأستاذ محمد منصور';
     const q = searchQuery.trim();
     const searchResults = q.length > 0
         ? ALL_NAV_ITEMS.filter(item =>
@@ -494,23 +494,24 @@ export default function AdminLayout({ children, title = 'لوحة التحكم' 
                     transition: 'all .3s ease',
                     minHeight: 72,
                 }}>
-                    <div style={{
+                    <div role="img" aria-label="شعار منصة منصور" style={{
                         width: 44, height: 44, borderRadius: 12, flexShrink: 0,
-                        background: '#fff',
+                        background: 'linear-gradient(135deg, #1b3a60, #2fbcd4)',
                         boxShadow: '0 0 0 2px rgba(47,188,212,.35),0 0 20px rgba(47,188,212,.3)',
-                        overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                        position: 'relative', overflow: 'hidden',
+                        display: 'flex', alignItems: 'center', justifyContent: 'center',
                     }}>
-                        <img
-                            src="/images/logo-sify.png"
-                            alt="منصة الصيفي"
-                            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                        />
+                        <span style={{ color: '#fff', fontFamily: 'Cairo, sans-serif', fontWeight: 900, fontSize: 24, lineHeight: 1 }}>م</span>
+                        <svg width="13" height="13" viewBox="0 0 14 14" style={{ position: 'absolute', bottom: 4, left: 4, opacity: 0.55 }}>
+                            <rect x="3" y="3" width="8" height="8" transform="rotate(45 7 7)" fill="none" stroke="#fff" strokeWidth="1" />
+                        </svg>
                     </div>
 
                     {!collapsed && (
                         <div style={{ flex: 1, minWidth: 0, overflow: 'hidden' }}>
-                            <p style={{ color: C.textHi, fontWeight: 900, fontSize: 14, lineHeight: 1.2, fontFamily: 'Cairo,sans-serif', whiteSpace: 'nowrap' }}>منصة الصيفي</p>
-                            <p style={{ color: '#2fbcd4', fontSize: 9.5, fontWeight: 600, letterSpacing: '.15em', opacity: .85, marginTop: 2, whiteSpace: 'nowrap' }}>EL-SWAFY PLATFORM</p>
+                            <p style={{ color: C.textHi, fontWeight: 900, fontSize: 14, lineHeight: 1.2, fontFamily: 'Cairo,sans-serif', whiteSpace: 'nowrap' }}>منصة منصور</p>
+                            <p style={{ color: '#2fbcd4', fontSize: 9.5, fontWeight: 600, letterSpacing: '.15em', opacity: .85, marginTop: 2, whiteSpace: 'nowrap' }}>MANSOUR PLATFORM</p>
+                            <p style={{ color: C.textMuted, fontSize: 9.5, fontWeight: 600, marginTop: 2, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>أستاذ اللغة العربية للثانوية العامة</p>
                         </div>
                     )}
 
@@ -927,7 +928,7 @@ export default function AdminLayout({ children, title = 'لوحة التحكم' 
 
                 <footer style={{ padding: '12px 24px', borderTop: '1px solid var(--a-border)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: 'var(--a-footer)' }}>
                     <p style={{ color: 'var(--a-text-4)', fontSize: 11, fontFamily: 'Cairo,sans-serif' }}>
-                        © {new Date().getFullYear()} منصة الصيفي — جميع الحقوق محفوظة
+                        © {new Date().getFullYear()} منصة منصور — جميع الحقوق محفوظة
                     </p>
                     <p style={{ color: '#2fbcd4', fontSize: 11, fontWeight: 700, fontFamily: 'Cairo,sans-serif' }}>
                         Powered by KABOx / Mindly

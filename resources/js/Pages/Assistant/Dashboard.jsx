@@ -3,12 +3,6 @@ import AssistantLayout from '@/Layouts/AssistantLayout';
 import { useState, useEffect, useRef } from 'react';
 import ReceiptsReviewModal from '@/Components/ReceiptsReviewModal';
 
-const O = '#31c5ff'; // برتقالي
-const N = '#133052'; // كحلي
-const B = '#DCC9A3'; // ذهبي
-const C = {
-    navy: '#14213D', orange: '#31c5ff', gold: '#DCC9A3',
-    orangeD: '#0037af', navyL: '#1e2e50',
 const O = '#F47C20'; // برتقالي
 const N = '#14213D'; // كحلي
 const B = '#DCC9A3'; // ذهبي

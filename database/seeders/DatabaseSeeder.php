@@ -20,14 +20,14 @@ class DatabaseSeeder extends Seeder
         // ── 1. Admin user (Laravel web guard) ───────────────────────────────
         User::updateOrCreate(
             ['email' => 'admin@sweefy.com'],
-            ['name' => 'الأستاذ محمد الصيفي', 'password' => Hash::make('password')]
+            ['name' => 'الأستاذ محمد منصور', 'password' => Hash::make('password')]
         );
 
         // ── 2. Teacher record in admins table (used by admin PHP panel) ─────
         AdminModel::updateOrCreate(
             ['email' => 'teacher@sweefy.com'],
             [
-                'name'     => 'الأستاذ محمد الصيفي',
+                'name'     => 'الأستاذ محمد منصور',
                 'password' => password_hash('password', PASSWORD_DEFAULT),
                 'role'     => 'teacher',
                 'phone'    => '01000000000',

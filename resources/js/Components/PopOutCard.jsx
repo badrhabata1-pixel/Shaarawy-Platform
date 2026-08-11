@@ -1,13 +1,13 @@
 import { useState } from 'react';
 
-const GOLD  = '#C9A14A';
-const AMBER = '#F47C20';
-const NAVY  = '#14213D';
+const GOLD  = '#2fbcd4';
+const AMBER = '#8dc63f';
+const NAVY  = '#1b3a60';
 const EASE  = 'cubic-bezier(.22,1,.36,1)';
 
-export default function PopOutCard({ hero, title, text, zoom = 1, num = '01', featured = false, dark = true, screenBlend = false }) {
+export default function PopOutCard({ hero, icon, title, text, zoom = 1, num = '01', featured = false, dark = true, screenBlend = false }) {
     const [hovered, setHovered] = useState(false);
-    const imgH = featured ? 540 : 460;
+    const imgH = hero ? (featured ? 540 : 460) : (featured ? 240 : 210);
 
     /* ── Theme-aware tokens ── */
     const card = {
@@ -50,22 +50,44 @@ export default function PopOutCard({ hero, title, text, zoom = 1, num = '01', fe
                     <div style={{ position:'absolute', right:0, top:'20%', width:2, height:'60%', background:`linear-gradient(180deg,transparent,${featured ? AMBER : GOLD},transparent)`, opacity: dark ? .35 : .2, borderRadius:2 }}/>
                 </>}
 
-                <img
-                    src={hero}
-                    alt={title}
-                    style={{
-                        width:'100%', height:'100%',
-                        objectFit:'contain', objectPosition:'bottom center',
-                        transform:`scale(${hovered ? zoom * 1.06 : zoom}) translateY(${hovered ? -14 : 0}px)`,
-                        transformOrigin:'bottom center',
-                        transition:`transform 0.65s ${EASE}, filter 0.5s ease`,
-                        filter: hovered
-                            ? `drop-shadow(0 34px 65px rgba(0,0,0,${dark?.9:.55})) drop-shadow(0 0 48px rgba(201,161,74,.28)) brightness(1.09)`
-                            : `drop-shadow(0 20px 44px rgba(0,0,0,${dark?.75:.35})) brightness(1.0)`,
-                        mixBlendMode: screenBlend ? 'screen' : undefined,
-                        pointerEvents:'none', willChange:'transform',
-                    }}
-                />
+                {hero ? (
+                    <img
+                        src={hero}
+                        alt={title}
+                        style={{
+                            width:'100%', height:'100%',
+                            objectFit:'contain', objectPosition:'bottom center',
+                            transform:`scale(${hovered ? zoom * 1.06 : zoom}) translateY(${hovered ? -14 : 0}px)`,
+                            transformOrigin:'bottom center',
+                            transition:`transform 0.65s ${EASE}, filter 0.5s ease`,
+                            filter: hovered
+                                ? `drop-shadow(0 34px 65px rgba(0,0,0,${dark?.9:.55})) drop-shadow(0 0 48px rgba(47,188,212,.28)) brightness(1.09)`
+                                : `drop-shadow(0 20px 44px rgba(0,0,0,${dark?.75:.35})) brightness(1.0)`,
+                            mixBlendMode: screenBlend ? 'screen' : undefined,
+                            pointerEvents:'none', willChange:'transform',
+                        }}
+                    />
+                ) : icon && (
+                    <div style={{
+                        position:'relative', margin:'auto',
+                        transform:`scale(${hovered ? 1.08 : 1}) translateY(${hovered ? -10 : 0}px)`,
+                        transition:`transform 0.65s ${EASE}`,
+                    }}>
+                        {/* حلقة زخرفية */}
+                        <svg width="150" height="150" viewBox="0 0 150 150" style={{ position:'absolute', inset:0 }}>
+                            <circle cx="75" cy="75" r="70" fill="none" stroke={featured ? AMBER : GOLD} strokeWidth="1.4" opacity={hovered ? .7 : .4}/>
+                            <circle cx="75" cy="75" r="60" fill="none" stroke={featured ? AMBER : GOLD} strokeWidth=".7" opacity={hovered ? .4 : .22}/>
+                            <rect x="55" y="55" width="40" height="40" transform="rotate(45 75 75)" fill="none" stroke={featured ? AMBER : GOLD} strokeWidth="1" opacity={hovered ? .55 : .3}/>
+                        </svg>
+                        <div style={{
+                            width:150, height:150, borderRadius:'50%',
+                            display:'flex', alignItems:'center', justifyContent:'center',
+                            fontSize:56,
+                            filter: hovered ? `drop-shadow(0 0 26px rgba(47,188,212,.5))` : `drop-shadow(0 0 14px rgba(47,188,212,.25))`,
+                            transition:`filter 0.5s ease`,
+                        }}>{icon}</div>
+                    </div>
+                )}
             </div>
 
             {/* ── Glass info card ── */}

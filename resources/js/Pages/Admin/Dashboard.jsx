@@ -6,11 +6,55 @@ import ReceiptsReviewModal from '@/Components/ReceiptsReviewModal';
 import PaymentNumbersEditor from '@/Components/PaymentNumbersEditor';
 
 /* ═══════════════════════════════════════════════════
-   زخارف عربية — هوية بصرية مستوحاة من فن العمارة
-   والزخرفة الإسلامية (عِوَضًا عن الأعمدة اليونانية القديمة)
+   هوية بصرية عربية — زخرفة هندسية إسلامية أصيلة
 ═══════════════════════════════════════════════════ */
 
-/** قوس نصف دائري متدرّج — بديل الشريط المستقيم أعلى الكروت */
+function EightPointStar({ size = 16, color = '#2fbcd4', filled = false, opacity = 1 }) {
+    return (
+        <svg width={size} height={size} viewBox="0 0 20 20" style={{ flexShrink: 0, opacity }}>
+            <g stroke={color} strokeWidth={filled ? 0 : 1.5} fill={filled ? color : 'none'} strokeLinejoin="round">
+                <rect x="3.2" y="3.2" width="13.6" height="13.6" />
+                <rect x="3.2" y="3.2" width="13.6" height="13.6" transform="rotate(45 10 10)" />
+            </g>
+        </svg>
+    );
+}
+
+/** نسيج "النجمة والصليب" — تطعيم هندسي إسلامي أصيل بيتلاقى عند حواف كل بلاطة
+    فيكوّن نجوم ثمانية متصلة ببعضها (مش مربعات منعزلة زي أي وقت فات) */
+function IslamicPatternOverlay({ opacity = 0.12, color = '#c9a227', size = 56, style = {} }) {
+    const patId = useRef(`ip-${Math.random().toString(36).slice(2)}`).current;
+    return (
+        <svg style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', pointerEvents: 'none', ...style }}>
+            <defs>
+                <pattern id={patId} width={size} height={size} patternUnits="userSpaceOnUse">
+                    <g stroke={color} fill="none" opacity={opacity}>
+                        {/* شبكة الصليب الرابطة بين النجوم */}
+                        <rect x="0" y="0" width={size} height={size} strokeWidth="1.1" />
+                        {/* النجمة الثمانية — أطرافها بتلمس البلاطات المجاورة فتتصل بيها */}
+                        <rect x={size * 0.12} y={size * 0.12} width={size * 0.76} height={size * 0.76}
+                            transform={`rotate(45 ${size / 2} ${size / 2})`} strokeWidth="1.3" />
+                        {/* نجمة داخلية أصغر لعمق زخرفي إضافي */}
+                        <rect x={size * 0.30} y={size * 0.30} width={size * 0.40} height={size * 0.40}
+                            transform={`rotate(45 ${size / 2} ${size / 2})`} strokeWidth="0.9" opacity="0.65" />
+                    </g>
+                </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill={`url(#${patId})`} />
+        </svg>
+    );
+}
+
+function ManuscriptEdge({ position = 'top', color = '#c9a227' }) {
+    return (
+        <div style={{
+            position: 'absolute', [position]: 10, left: 24, right: 24, height: 1,
+            background: `repeating-linear-gradient(90deg, ${color}88 0 6px, transparent 6px 14px)`,
+            pointerEvents: 'none',
+        }} />
+    );
+}
+
 function ArchAccent({ id, accent, height = 16 }) {
     return (
         <svg viewBox="0 0 100 16" preserveAspectRatio="none"
@@ -26,31 +70,19 @@ function ArchAccent({ id, accent, height = 16 }) {
     );
 }
 
-/** فاصلة زخرفية على هيئة معينة (فاصل الفصول في المخطوطات العربية) */
-function SectionMark({ color = '#2fbcd4', size = 17 }) {
-    return (
-        <svg width={size} height={size} viewBox="0 0 18 18" fill="none" style={{ flexShrink: 0 }}>
-            <rect x="4" y="4" width="10" height="10" transform="rotate(45 9 9)" stroke={color} strokeWidth="1.6" />
-            <circle cx="9" cy="9" r="1.8" fill={color} />
-        </svg>
-    );
-}
-
-/** عنوان قسم بطراز "فاصل الفصول" — معينة + عنوان + خط ممتد */
 function SectionHeading({ title, action, color = '#2fbcd4' }) {
     return (
         <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 13 }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 10, flex: 1, minWidth: 0 }}>
-                <SectionMark color={color} />
-                <h2 style={{ color: 'var(--a-text)', fontWeight: 900, fontSize: 16, fontFamily: 'Cairo, sans-serif', whiteSpace: 'nowrap' }}>{title}</h2>
-                <div style={{ flex: 1, height: 1, minWidth: 20, background: 'linear-gradient(90deg, var(--a-border), transparent)' }} />
+                <EightPointStar color={color} size={15} filled />
+                <h2 style={{ color: 'var(--a-text)', fontWeight: 900, fontSize: 16, fontFamily: "'Cairo', sans-serif", whiteSpace: 'nowrap' }}>{title}</h2>
+                <div style={{ flex: 1, height: 1, minWidth: 20, background: `linear-gradient(90deg, var(--a-border), rgba(201,162,39,0.35), transparent)` }} />
             </div>
             {action}
         </div>
     );
 }
 
-/** مسّة قلم — زخرفة خطّية مستوحاة من الخط العربي */
 function PenFlourish({ width = 46, height = 12, color = '#2fbcd4', strokeWidth = 1.8 }) {
     return (
         <svg width={width} height={height} viewBox="0 0 46 12" fill="none">
@@ -60,8 +92,7 @@ function PenFlourish({ width = 46, height = 12, color = '#2fbcd4', strokeWidth =
     );
 }
 
-/** أقواس متداخلة بطراز "المحراب" + نجمة ثمانية — واجهة الهيرو */
-function MihrabMotif({ opacity = 0.1 }) {
+function MihrabMotif({ opacity = 0.13 }) {
     return (
         <svg style={{ position: 'absolute', left: 0, bottom: 0, height: '100%', width: 'auto', opacity, pointerEvents: 'none' }}
             viewBox="0 0 320 155" preserveAspectRatio="xMinYMax meet" xmlns="http://www.w3.org/2000/svg">
@@ -69,9 +100,9 @@ function MihrabMotif({ opacity = 0.1 }) {
             <path d="M20 155 L20 95 Q20 25 90 25 Q160 25 160 95 L160 155" fill="none" stroke="white" strokeWidth="2" opacity="0.55" />
             <path d="M45 155 L45 98 Q45 45 90 45 Q135 45 135 98 L135 155" fill="none" stroke="white" strokeWidth="1.4" opacity="0.4" />
             <path d="M68 155 L68 100 Q68 62 90 62 Q112 62 112 100 L112 155" fill="none" stroke="white" strokeWidth="1" opacity="0.3" />
-            <g transform="translate(90,38)" opacity="0.5">
-                <rect x="-7" y="-7" width="14" height="14" transform="rotate(45 0 0)" fill="none" stroke="white" strokeWidth="1" />
-                <rect x="-7" y="-7" width="14" height="14" fill="none" stroke="white" strokeWidth="1" />
+            <g transform="translate(90,38)" opacity="0.85">
+                <rect x="-6" y="-6" width="12" height="12" transform="rotate(45 0 0)" fill="none" stroke="#c9a227" strokeWidth="1.2" />
+                <rect x="-6" y="-6" width="12" height="12" fill="none" stroke="#c9a227" strokeWidth="1.2" />
             </g>
             <path d="M190 155 L190 115 Q190 75 225 75 Q260 75 260 115 L260 155" fill="none" stroke="white" strokeWidth="1.2" opacity="0.28" />
             <path d="M270 155 L270 120 Q270 90 295 90 Q320 90 320 120 L320 155" fill="none" stroke="white" strokeWidth="1" opacity="0.2" />
@@ -97,7 +128,7 @@ function useCountUp(target, duration = 1.6, delay = 0) {
 }
 
 /* ═══════════════════════════════════════════════════
-   STAT CARD  — white in light / dark card in dark
+   STAT CARD
 ═══════════════════════════════════════════════════ */
 function StatCard({ svgContent, label, value, sub, accent, delay = 0, suffix = '' }) {
     const numRef  = useCountUp(value, 1.6, delay);
@@ -117,30 +148,31 @@ function StatCard({ svgContent, label, value, sub, accent, delay = 0, suffix = '
 
     return (
         <div ref={cardRef} onMouseEnter={onEnter} onMouseLeave={onLeave} style={{
-            background: 'var(--a-card)', borderRadius: 20, padding: '22px 20px',
+            background: 'var(--a-card)', borderRadius: '26px 26px 18px 18px', padding: '22px 20px',
             position: 'relative', overflow: 'hidden', cursor: 'default',
             boxShadow: '0 2px 12px var(--a-shadow), 0 0 0 1px var(--a-border)',
             transition: 'box-shadow 0.22s ease',
         }}>
-            {/* قوس زخرفي أعلى الكرت — بديل الشريط المستقيم */}
             <ArchAccent id={archId} accent={accent} />
-            {/* BG orb */}
+            <IslamicPatternOverlay opacity={0.07} color={accent} size={36} />
+            <div style={{ position: 'absolute', top: 12, left: 12, opacity: 0.14 }}>
+                <EightPointStar color={accent} size={13} />
+            </div>
             <div style={{ position: 'absolute', bottom: -20, left: -20, width: 90, height: 90, borderRadius: '50%', background: `radial-gradient(circle, ${accent}10, transparent)`, pointerEvents: 'none' }} />
 
             <div style={{ display: 'flex', alignItems: 'flex-start', gap: 14, position: 'relative' }}>
-                {/* Icon */}
                 <div style={{ width: 46, height: 46, borderRadius: 14, flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', background: `linear-gradient(135deg, ${accent}20, ${accent}0d)`, boxShadow: `0 0 0 1px ${accent}30, 0 4px 16px ${accent}18` }}>
                     <svg viewBox="0 0 24 24" fill="none" stroke={accent} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" width={21} height={21}
                         dangerouslySetInnerHTML={{ __html: svgContent }} />
                 </div>
                 <div style={{ flex: 1 }}>
-                    <p style={{ color: 'var(--a-text-4)', fontSize: 12, fontWeight: 600, fontFamily: 'Cairo, sans-serif' }}>{label}</p>
+                    <p style={{ color: 'var(--a-text-4)', fontSize: 12, fontWeight: 600, fontFamily: "'Cairo', sans-serif" }}>{label}</p>
                     <div style={{ display: 'flex', alignItems: 'baseline', gap: 4, marginTop: 5 }}>
-                        <span ref={numRef} style={{ color: 'var(--a-text)', fontSize: 28, fontWeight: 900, fontFamily: 'Cairo, sans-serif', lineHeight: 1 }}>0</span>
-                        {suffix && <span style={{ color: 'var(--a-text-4)', fontSize: 12, fontWeight: 600, fontFamily: 'Cairo, sans-serif' }}>{suffix}</span>}
+                        <span ref={numRef} style={{ color: 'var(--a-text)', fontSize: 28, fontWeight: 900, fontFamily: "'Cairo', sans-serif", lineHeight: 1 }}>0</span>
+                        {suffix && <span style={{ color: 'var(--a-text-4)', fontSize: 12, fontWeight: 600, fontFamily: "'Cairo', sans-serif" }}>{suffix}</span>}
                     </div>
                     {sub && (
-                        <p style={{ color: 'var(--a-text-4)', fontSize: 10.5, marginTop: 4, fontFamily: 'Cairo, sans-serif', display: 'flex', alignItems: 'center', gap: 3 }}>
+                        <p style={{ color: 'var(--a-text-4)', fontSize: 10.5, marginTop: 4, fontFamily: "'Cairo', sans-serif", display: 'flex', alignItems: 'center', gap: 3 }}>
                             <span style={{ color: accent, fontWeight: 800 }}>↑</span>{sub}
                         </p>
                     )}
@@ -151,114 +183,71 @@ function StatCard({ svgContent, label, value, sub, accent, delay = 0, suffix = '
 }
 
 /* ═══════════════════════════════════════════════════
-   AREA CHART
+   REVENUE BARS — أعمدة ذهبية-فيروزية داخل لوحة ليلية
+   (بديل جذري لمخطط الخط الرفيع القديم)
 ═══════════════════════════════════════════════════ */
-function AreaChart({ data }) {
-    const [tooltip, setTooltip] = useState(null);
-    const pathRef = useRef(null);
-    const W = 780, H = 180, pad = { t: 18, r: 16, b: 28, l: 8 };
-
-    const vals = data.map(d => d.revenue ?? 0);
-    const maxV = Math.max(...vals, 1);
-    const pts  = vals.map((v, i) => ({
-        x: pad.l + (i / (Math.max(vals.length - 1, 1))) * (W - pad.l - pad.r),
-        y: pad.t + (1 - v / maxV) * (H - pad.t - pad.b),
-    }));
-
-    const curve = (ps) => {
-        if (!ps.length) return '';
-        let d = `M ${ps[0].x} ${ps[0].y}`;
-        for (let i = 0; i < ps.length - 1; i++) {
-            const mx = (ps[i].x + ps[i + 1].x) / 2;
-            d += ` C ${mx} ${ps[i].y} ${mx} ${ps[i + 1].y} ${ps[i + 1].x} ${ps[i + 1].y}`;
-        }
-        return d;
-    };
-
-    const line = curve(pts);
-    const area = line + ` L ${pts[pts.length - 1]?.x ?? W} ${H - pad.b} L ${pts[0]?.x ?? 0} ${H - pad.b} Z`;
+function RevenueBars({ data }) {
+    const [hover, setHover] = useState(null);
+    const barsRef = useRef(null);
+    const vals  = data.map(d => d.revenue ?? 0);
+    const maxV  = Math.max(...vals, 1);
+    const total = vals.reduce((a, b) => a + b, 0);
 
     useEffect(() => {
-        if (!pathRef.current) return;
-        const len = pathRef.current.getTotalLength?.() || 900;
-        gsap.fromTo(pathRef.current,
-            { strokeDasharray: len, strokeDashoffset: len },
-            { strokeDashoffset: 0, duration: 1.6, delay: 0.4, ease: 'power2.out' }
-        );
+        if (!barsRef.current) return;
+        const bars = barsRef.current.querySelectorAll('.rb-bar');
+        gsap.from(bars, { scaleY: 0, transformOrigin: 'bottom', duration: 0.9, stagger: 0.08, delay: 0.3, ease: 'power3.out' });
     }, [data]);
 
     return (
-        <div style={{ position: 'relative' }}>
-            <svg viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="none"
-                style={{ width: '100%', height: 180, display: 'block', overflow: 'visible' }}>
-                <defs>
-                    <linearGradient id="ag" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%"   stopColor="#2fbcd4" stopOpacity="0.28" />
-                        <stop offset="65%"  stopColor="#2fbcd4" stopOpacity="0.06" />
-                        <stop offset="100%" stopColor="#2fbcd4" stopOpacity="0" />
-                    </linearGradient>
-                    <filter id="glow">
-                        <feGaussianBlur stdDeviation="2.5" result="b"/>
-                        <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-                    </filter>
-                </defs>
-
-                {[0.25, 0.5, 0.75].map(f => {
-                    const y = pad.t + (1 - f) * (H - pad.t - pad.b);
-                    return <line key={f} x1={pad.l} y1={y} x2={W - pad.r} y2={y}
-                        stroke="var(--a-chart-grid)" strokeWidth="0.5" strokeDasharray="5 5" />;
+        <div>
+            <div style={{ display: 'flex', alignItems: 'baseline', gap: 8, marginBottom: 20 }}>
+                <span style={{ fontSize: 30, fontWeight: 900, color: '#fff', fontFamily: "'Cairo', sans-serif" }}>{total.toLocaleString('ar-EG')}</span>
+                <span style={{ fontSize: 12, fontWeight: 700, color: '#c9a227' }}>ج.م — إجمالي آخر {data.length} أشهر</span>
+            </div>
+            <div ref={barsRef} style={{ display: 'flex', alignItems: 'flex-end', gap: 12, height: 150, position: 'relative' }}>
+                {data.map((d, i) => {
+                    const h = Math.max(6, ((d.revenue ?? 0) / maxV) * 100);
+                    const isLast = i === data.length - 1;
+                    return (
+                        <div key={i}
+                            style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 7, height: '100%', justifyContent: 'flex-end', position: 'relative', cursor: 'pointer' }}
+                            onMouseEnter={() => setHover(i)} onMouseLeave={() => setHover(null)}>
+                            {hover === i && (
+                                <div style={{
+                                    position: 'absolute', bottom: `calc(${h}% + 16px)`, background: '#0d1829', color: '#fff',
+                                    fontSize: 11, fontWeight: 700, padding: '5px 11px', borderRadius: 9, whiteSpace: 'nowrap',
+                                    border: '1px solid rgba(201,162,39,0.45)', zIndex: 5, fontFamily: "'Cairo', sans-serif",
+                                }}>
+                                    {(d.revenue ?? 0).toLocaleString('ar-EG')} ج.م
+                                </div>
+                            )}
+                            <EightPointStar color={isLast ? '#c9a227' : '#2fbcd4'} size={9} filled opacity={isLast ? 1 : 0.5} />
+                            <div className="rb-bar" style={{
+                                width: '100%', maxWidth: 30, height: `${h}%`, borderRadius: '9px 9px 3px 3px',
+                                background: isLast ? 'linear-gradient(180deg,#e2c25a,#c9a227 55%,#8a6d1a)' : 'linear-gradient(180deg,#4fd8ec,#2fbcd4 55%,#0f6e7c)',
+                                boxShadow: isLast ? '0 0 16px rgba(201,162,39,0.4)' : '0 0 10px rgba(47,188,212,0.22)',
+                            }} />
+                            <span style={{ fontSize: 10, color: 'rgba(226,232,240,0.55)', fontWeight: 700, fontFamily: "'Cairo', sans-serif" }}>{d.month}</span>
+                        </div>
+                    );
                 })}
-
-                <path d={area} fill="url(#ag)" />
-                <path ref={pathRef} d={line} fill="none" stroke="#2fbcd4" strokeWidth="2.5"
-                    strokeLinecap="round" filter="url(#glow)" />
-
-                {data.map((d, i) => (
-                    <text key={i} x={pts[i]?.x ?? 0} y={H - 5}
-                        textAnchor="middle" fontSize="9" fill="var(--a-chart-label)"
-                        fontFamily="Cairo, sans-serif">{d.month}</text>
-                ))}
-
-                {pts.map((pt, i) => (
-                    <g key={i} onMouseEnter={() => setTooltip({ ...data[i], x: pt.x, y: pt.y })}
-                        onMouseLeave={() => setTooltip(null)} style={{ cursor: 'crosshair' }}>
-                        <circle cx={pt.x} cy={pt.y} r={14} fill="transparent" />
-                        <rect x={pt.x - 4.2} y={pt.y - 4.2} width={8.4} height={8.4}
-                            transform={`rotate(45 ${pt.x} ${pt.y})`}
-                            fill="var(--a-card)" stroke="#2fbcd4" strokeWidth="2.2"
-                            style={{ filter: 'drop-shadow(0 0 5px rgba(47,188,212,0.7))' }} />
-                    </g>
-                ))}
-            </svg>
-
-            {tooltip && (
-                <div style={{
-                    position: 'absolute',
-                    left: `${(tooltip.x / W) * 100}%`, top: `${(tooltip.y / H) * 100}%`,
-                    transform: 'translate(-50%, -130%)',
-                    background: '#0d1829', color: '#fff',
-                    padding: '7px 13px', borderRadius: 11, fontSize: 12, fontWeight: 700,
-                    fontFamily: 'Cairo, sans-serif', whiteSpace: 'nowrap', pointerEvents: 'none', zIndex: 10,
-                    boxShadow: '0 6px 20px rgba(0,0,0,0.4)', border: '1px solid rgba(47,188,212,0.4)',
-                }}>
-                    <div style={{ color: '#2fbcd4', marginBottom: 2 }}>{tooltip.month}</div>
-                    <div>{(tooltip.revenue ?? 0).toLocaleString('ar-EG')} ج.م</div>
-                    <div style={{ position: 'absolute', bottom: -5, left: '50%', transform: 'translateX(-50%)', borderLeft: '5px solid transparent', borderRight: '5px solid transparent', borderTop: '5px solid #0d1829' }} />
-                </div>
-            )}
+            </div>
         </div>
     );
 }
 
 /* ═══════════════════════════════════════════════════
-   DONUT CHART
+   ATTENDANCE GAUGE — مقياس نصف-دائري (بديل جذري للدونات)
 ═══════════════════════════════════════════════════ */
-function DonutChart({ online, offline }) {
+function AttendanceGauge({ online, offline }) {
     const total  = (online || 0) + (offline || 0) || 1;
     const pct    = online / total;
-    const r = 52, cx = 68, cy = 68, circ = 2 * Math.PI * r;
+    const r = 58, cx = 70, cy = 68;
+    const circ   = Math.PI * r;
     const dash   = pct * circ;
     const arcRef = useRef(null);
+    const gradId = useRef(`gg-${Math.random().toString(36).slice(2)}`).current;
 
     useEffect(() => {
         if (!arcRef.current) return;
@@ -268,126 +257,158 @@ function DonutChart({ online, offline }) {
         );
     }, [online, offline]);
 
-    return (
-        <div style={{ display: 'flex', alignItems: 'center', gap: 18 }}>
-            <svg width={136} height={136} viewBox="0 0 136 136" style={{ flexShrink: 0 }}>
-                <defs>
-                    <linearGradient id="dg" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stopColor="#2fbcd4" /><stop offset="100%" stopColor="#009688" />
-                    </linearGradient>
-                </defs>
-                <circle cx={cx} cy={cy} r={r} fill="none" stroke="var(--a-donut-track)" strokeWidth={15} />
-                <circle ref={arcRef} cx={cx} cy={cy} r={r} fill="none" stroke="url(#dg)" strokeWidth={15}
-                    strokeLinecap="round" strokeDasharray={`${dash} ${circ - dash}`} strokeDashoffset={circ}
-                    transform={`rotate(-90 ${cx} ${cy})`}
-                    style={{ filter: 'drop-shadow(0 0 6px rgba(47,188,212,0.45))' }} />
-                <text x={cx} y={cy - 5} textAnchor="middle" fontSize="17" fontWeight="900"
-                    fill="var(--a-text)" fontFamily="Cairo, sans-serif">{Math.round(pct * 100)}%</text>
-                <text x={cx} y={cy + 12} textAnchor="middle" fontSize="8.5" fill="var(--a-text-4)"
-                    fontFamily="Cairo, sans-serif">متصل الآن</text>
-            </svg>
+    const path = `M 10 ${cy} A ${r} ${r} 0 0 1 ${cx * 2 - 10} ${cy}`;
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-                {[
-                    { label: 'متصلون',      val: online  ?? 0, color: '#2fbcd4', glow: true  },
-                    { label: 'غير متصلين',  val: offline ?? 0, color: 'var(--a-border)', glow: false },
-                ].map(item => (
-                    <div key={item.label} style={{ display: 'flex', alignItems: 'center', gap: 9 }}>
-                        <div style={{ width: 9, height: 9, borderRadius: '50%', flexShrink: 0, background: item.color, boxShadow: item.glow ? `0 0 8px ${item.color}` : 'none' }} />
-                        <div>
-                            <p style={{ color: 'var(--a-text-4)', fontSize: 10.5, fontFamily: 'Cairo, sans-serif' }}>{item.label}</p>
-                            <p style={{ color: 'var(--a-text)', fontSize: 17, fontWeight: 900, lineHeight: 1, fontFamily: 'Cairo, sans-serif' }}>{item.val}</p>
-                        </div>
-                    </div>
-                ))}
+    return (
+        <div>
+            <div style={{ position: 'relative', width: 140, margin: '0 auto' }}>
+                <svg width={140} height={78} viewBox="0 0 140 78">
+                    <defs>
+                        <linearGradient id={gradId} x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" stopColor="#2fbcd4" /><stop offset="100%" stopColor="#c9a227" />
+                        </linearGradient>
+                    </defs>
+                    <path d={path} fill="none" stroke="var(--a-donut-track)" strokeWidth={13} strokeLinecap="round" />
+                    <path ref={arcRef} d={path} fill="none" stroke={`url(#${gradId})`} strokeWidth={13} strokeLinecap="round"
+                        strokeDasharray={`${circ} ${circ}`} strokeDashoffset={circ}
+                        style={{ filter: 'drop-shadow(0 0 6px rgba(47,188,212,0.4))' }} />
+                </svg>
+                <div style={{ position: 'absolute', bottom: -4, left: 0, right: 0, textAlign: 'center' }}>
+                    <p style={{ fontSize: 25, fontWeight: 900, color: 'var(--a-text)', fontFamily: "'Cairo', sans-serif", lineHeight: 1 }}>{Math.round(pct * 100)}%</p>
+                    <p style={{ fontSize: 9.5, color: 'var(--a-text-4)', fontWeight: 700, marginTop: 3, fontFamily: "'Cairo', sans-serif" }}>حضور اليوم</p>
+                </div>
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'center', gap: 8, marginTop: 12, flexWrap: 'wrap' }}>
+                <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6, background: 'rgba(47,188,212,0.1)', padding: '5px 12px', borderRadius: 20, fontSize: 11, fontWeight: 800, color: '#2fbcd4', fontFamily: "'Cairo', sans-serif" }}>
+                    <span style={{ width: 7, height: 7, borderRadius: '50%', background: '#2fbcd4' }} /> {online ?? 0} حاضر
+                </span>
+                <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6, background: 'var(--a-card-2)', padding: '5px 12px', borderRadius: 20, fontSize: 11, fontWeight: 800, color: 'var(--a-text-4)', fontFamily: "'Cairo', sans-serif" }}>
+                    <span style={{ width: 7, height: 7, borderRadius: '50%', background: 'var(--a-border)' }} /> {offline ?? 0} غائب
+                </span>
             </div>
         </div>
     );
 }
 
 /* ═══════════════════════════════════════════════════
-   MINI BARS
+   REGISTRATION SPARK — عمود تسجيل الطلاب المصغّر
 ═══════════════════════════════════════════════════ */
-function MiniBars({ data }) {
+function RegistrationSpark({ data }) {
     const vals = data.map(d => d.students ?? 0);
     const maxV = Math.max(...vals, 1);
     return (
-        <div style={{ display: 'flex', alignItems: 'flex-end', gap: 5, height: 52 }}>
-            {vals.map((v, i) => (
-                <div key={i} title={`${data[i].month}: ${v}`} style={{
-                    flex: 1, borderRadius: '4px 4px 0 0', cursor: 'pointer',
-                    height: `${Math.max(12, (v / maxV) * 100)}%`,
-                    background: i === vals.length - 1 ? 'linear-gradient(180deg, #2fbcd4, #009688)' : 'var(--a-border)',
-                    transition: 'background 0.2s',
-                }}
-                    onMouseEnter={e => { if (i !== vals.length - 1) e.currentTarget.style.background = 'rgba(47,188,212,0.3)'; }}
-                    onMouseLeave={e => { if (i !== vals.length - 1) e.currentTarget.style.background = 'var(--a-border)'; }}
-                />
-            ))}
+        <div style={{ display: 'flex', alignItems: 'flex-end', gap: 6, height: 52 }}>
+            {vals.map((v, i) => {
+                const isLast = i === vals.length - 1;
+                return (
+                    <div key={i} title={`${data[i].month}: ${v}`} style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', height: '100%', justifyContent: 'flex-end' }}>
+                        <div style={{
+                            width: '100%', borderRadius: '7px 7px 2px 2px', cursor: 'pointer',
+                            height: `${Math.max(14, (v / maxV) * 100)}%`,
+                            background: isLast ? 'linear-gradient(180deg,#e2c25a,#c9a227)' : 'rgba(47,188,212,0.32)',
+                            boxShadow: isLast ? '0 0 10px rgba(201,162,39,0.35)' : 'none',
+                            transition: 'opacity .2s',
+                        }} />
+                    </div>
+                );
+            })}
         </div>
     );
 }
 
 /* ═══════════════════════════════════════════════════
-   QUICK ACTIONS
+   QUICK ACTIONS — بطاقات ميدالية دائرية (بديل جذري للتخطيط القديم)
 ═══════════════════════════════════════════════════ */
 const ACTIONS = [
     { svg: '<path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>',                                                                                                          label: 'إضافة درس',       sub: 'رفع محتوى جديد',  href: '/admin/lessons/create', accent: '#2fbcd4' },
     { svg: '<path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="2"/><path d="M9 12h6"/><path d="M9 16h4"/>',                   label: 'إنشاء امتحان',    sub: 'بنك الأسئلة',      href: '/admin/exams/create',   accent: '#1b3a60' },
     { svg: '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>',        label: 'رفع شيت',         sub: 'ملفات PDF',        href: '/admin/sheets/create',  accent: '#009688' },
-    { svg: '<line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>',                                                                                           label: 'الاشتراكات',      sub: 'اشتراكات معلّقة',  href: '/admin/subscriptions',  accent: '#8dc63f' },
+    { svg: '<line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>',                                                                                           label: 'الاشتراكات',      sub: 'اشتراكات معلّقة',  href: '/admin/subscriptions',  accent: '#c9a227' },
     { svg: '<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>',                                                                              label: 'الطلاب الأوائل',  sub: 'نتائج ودرجات',     href: '/admin/top-students',   accent: '#a4db32' },
     { svg: '<path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/>',                                                             label: 'أكواد التفعيل',   sub: 'إنشاء وتفعيل',     href: '/admin/promo-codes',    accent: '#204080' },
 ];
 
-/* ═══════════════════════════════════════════════════
-   STUDENTS TABLE
-═══════════════════════════════════════════════════ */
-function StudentsTable({ students }) {
+function QuickActionCard({ a }) {
     return (
-        <div style={{ overflowX: 'auto' }}>
-            <table style={{ width: '100%', borderCollapse: 'collapse', fontFamily: 'Cairo, sans-serif' }}>
-                <thead>
-                    <tr style={{ background: 'var(--a-card-2)' }}>
-                        {['الطالب', 'الصف', 'المجموعة', 'تاريخ التسجيل'].map(h => (
-                            <th key={h} style={{ padding: '10px 16px', textAlign: 'right', fontSize: 11, fontWeight: 700, color: 'var(--a-text-4)', borderBottom: '1px solid var(--a-border)' }}>{h}</th>
-                        ))}
-                    </tr>
-                </thead>
-                <tbody>
-                    {!students?.length && (
-                        <tr><td colSpan={4} style={{ textAlign: 'center', padding: 36, color: 'var(--a-text-4)', fontSize: 13 }}>لا يوجد طلاب مسجلون حتى الآن</td></tr>
-                    )}
-                    {students?.map((s) => (
-                        <tr key={s.id} style={{ borderBottom: '1px solid var(--a-border-2)', transition: 'background 0.12s' }}
-                            onMouseEnter={e => e.currentTarget.style.background = 'var(--a-row-hover)'}
-                            onMouseLeave={e => e.currentTarget.style.background = ''}>
-                            <td style={{ padding: '11px 16px' }}>
-                                <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                                    <div style={{ width: 34, height: 34, borderRadius: 10, flexShrink: 0, background: 'linear-gradient(135deg, #2fbcd4, #009688)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontWeight: 900, fontSize: 13, boxShadow: '0 2px 8px rgba(47,188,212,0.3)' }}>{s.name?.charAt(0)}</div>
-                                    <div>
-                                        <p style={{ color: 'var(--a-text)', fontWeight: 700, fontSize: 13, lineHeight: 1.2 }}>{s.name}</p>
-                                        <p style={{ color: 'var(--a-text-4)', fontSize: 11 }}>{s.phone ?? '—'}</p>
-                                    </div>
-                                </div>
-                            </td>
-                            <td style={{ padding: '11px 16px' }}>
-                                {s.school_class?.name
-                                    ? <span style={{ background: 'var(--a-badge-navy-bg)', color: 'var(--a-text)', padding: '3px 10px', borderRadius: 20, fontSize: 11, fontWeight: 700 }}>{s.school_class.name}</span>
-                                    : <span style={{ color: 'var(--a-text-4)', fontSize: 12 }}>—</span>}
-                            </td>
-                            <td style={{ padding: '11px 16px' }}>
-                                {s.group?.name
-                                    ? <span style={{ background: 'rgba(47,188,212,0.1)', color: '#2fbcd4', padding: '3px 10px', borderRadius: 20, fontSize: 11, fontWeight: 700 }}>{s.group.name}</span>
-                                    : <span style={{ color: 'var(--a-text-4)', fontSize: 12 }}>—</span>}
-                            </td>
-                            <td style={{ padding: '11px 16px', color: 'var(--a-text-4)', fontSize: 11 }}>
-                                {s.created_at ? new Date(s.created_at).toLocaleDateString('ar-EG') : '—'}
-                            </td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
+        <Link href={a.href} style={{
+            display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', gap: 11,
+            background: `linear-gradient(165deg, ${a.accent}14, transparent 65%)`,
+            borderRadius: 24, padding: '24px 12px', border: `1px solid ${a.accent}28`,
+            textDecoration: 'none', position: 'relative', overflow: 'hidden', cursor: 'pointer',
+            transition: 'transform 0.22s ease, box-shadow 0.22s ease',
+        }}
+            onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-5px)'; e.currentTarget.style.boxShadow = `0 14px 30px ${a.accent}22`; }}
+            onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'none'; }}>
+            <IslamicPatternOverlay opacity={0.12} color={a.accent} size={34} />
+            <div style={{ position: 'absolute', top: 10, left: 12, opacity: 0.16 }}>
+                <EightPointStar color={a.accent} size={11} />
+            </div>
+            <div style={{
+                width: 58, height: 58, borderRadius: '50%', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center',
+                background: 'var(--a-card)', boxShadow: `0 0 0 3px ${a.accent}22, 0 0 0 7px ${a.accent}0d`, position: 'relative',
+            }}>
+                <svg viewBox="0 0 24 24" fill="none" stroke={a.accent} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" width={22} height={22}
+                    dangerouslySetInnerHTML={{ __html: a.svg }} />
+            </div>
+            <div style={{ position: 'relative' }}>
+                <p style={{ color: 'var(--a-text)', fontWeight: 800, fontSize: 12.5, fontFamily: "'Cairo', sans-serif", lineHeight: 1.3 }}>{a.label}</p>
+                <p style={{ color: 'var(--a-text-4)', fontSize: 10, marginTop: 3, fontFamily: "'Cairo', sans-serif" }}>{a.sub}</p>
+            </div>
+        </Link>
+    );
+}
+
+/* ═══════════════════════════════════════════════════
+   STUDENTS LIST — بطاقات أفقية (بديل جذري للجدول القديم)
+═══════════════════════════════════════════════════ */
+function StudentsList({ students }) {
+    if (!students?.length) {
+        return (
+            <div style={{ textAlign: 'center', padding: '42px 16px', color: 'var(--a-text-4)', fontSize: 13, fontFamily: "'Cairo', sans-serif" }}>
+                لا يوجد طلاب مسجلون حتى الآن
+            </div>
+        );
+    }
+    return (
+        <div>
+            {students.map((s, i) => (
+                <div key={s.id} style={{
+                    display: 'flex', alignItems: 'center', gap: 14, padding: '14px 20px',
+                    borderBottom: i !== students.length - 1 ? '1px dashed var(--a-border-2)' : 'none',
+                    transition: 'background 0.15s', fontFamily: "'Cairo', sans-serif",
+                }}
+                    onMouseEnter={e => e.currentTarget.style.background = 'var(--a-row-hover)'}
+                    onMouseLeave={e => e.currentTarget.style.background = ''}>
+
+                    <div style={{
+                        width: 40, height: 40, borderRadius: '50%', flexShrink: 0,
+                        background: 'linear-gradient(135deg, #2fbcd4, #c9a227)',
+                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                        color: '#fff', fontWeight: 900, fontSize: 14,
+                        boxShadow: '0 0 0 3px var(--a-card), 0 0 0 4.5px rgba(47,188,212,0.22)',
+                    }}>
+                        {s.name?.charAt(0)}
+                    </div>
+
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                        <p style={{ color: 'var(--a-text)', fontWeight: 800, fontSize: 13, lineHeight: 1.2 }}>{s.name}</p>
+                        <p style={{ color: 'var(--a-text-4)', fontSize: 10.5, marginTop: 2 }}>{s.phone ?? '—'}</p>
+                    </div>
+
+                    <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', justifyContent: 'flex-end', flexShrink: 0 }}>
+                        {s.school_class?.name && (
+                            <span style={{ background: 'var(--a-badge-navy-bg)', color: 'var(--a-text)', padding: '3px 11px', borderRadius: 20, fontSize: 10.5, fontWeight: 700, whiteSpace: 'nowrap' }}>{s.school_class.name}</span>
+                        )}
+                        {s.group?.name && (
+                            <span style={{ background: 'rgba(201,162,39,0.12)', color: '#c9a227', padding: '3px 11px', borderRadius: 20, fontSize: 10.5, fontWeight: 700, whiteSpace: 'nowrap' }}>{s.group.name}</span>
+                        )}
+                    </div>
+
+                    <span style={{ color: 'var(--a-text-4)', fontSize: 10.5, minWidth: 66, textAlign: 'left', flexShrink: 0 }}>
+                        {s.created_at ? new Date(s.created_at).toLocaleDateString('ar-EG') : '—'}
+                    </span>
+                </div>
+            ))}
         </div>
     );
 }
@@ -409,41 +430,46 @@ export default function Dashboard({ stats, latestStudents, monthlyData, adminNam
     const s   = stats          || {};
     const mo  = monthlyData?.length ? monthlyData : Array.from({ length: 6 }, (_, i) => ({ month: `ش${i + 1}`, revenue: 0, students: 0 }));
     const stu = latestStudents || [];
-    const nm  = adminName      || 'الأستاذ [اسم المدرس]';
+    const nm  = adminName      || 'الأستاذ محمد منصور';
 
     const cards = [
         { svgContent: '<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>', label: 'إجمالي الطلاب',   value: s.students    ?? 0, sub: 'طالب مسجل',           accent: '#2fbcd4', delay: 0.1 },
         { svgContent: '<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>', label: 'المجموعات',        value: s.groups      ?? 0, sub: 'مجموعة نشطة',          accent: '#1b3a60', delay: 0.2 },
         { svgContent: '<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>',                                          label: 'الدروس المنشورة', value: s.lessons     ?? 0, sub: 'درس متاح',             accent: '#204080', delay: 0.3 },
         { svgContent: '<line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>',                                                             label: 'الإيرادات',        value: s.revenue     ?? 0, sub: 'إجمالي الاشتراكات',    accent: '#009688', delay: 0.4, suffix: 'ج.م' },
-        { svgContent: '<path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/>',                                             label: 'اشتراكات معلّقة',  value: s.pendingSubs ?? 0, sub: 'بانتظار المراجعة',     accent: '#8dc63f', delay: 0.5 },
+        { svgContent: '<path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/>',                                             label: 'اشتراكات معلّقة',  value: s.pendingSubs ?? 0, sub: 'بانتظار المراجعة',     accent: '#c9a227', delay: 0.5 },
         { svgContent: '<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>',                                               label: 'الطلاب الأوائل',  value: s.topStudents ?? 0, sub: 'في قوائم الشرف',        accent: '#a4db32', delay: 0.6 },
     ];
 
     return (
         <AdminLayout title="لوحة التحكم">
-            <div ref={pageRef} dir="rtl" style={{ fontFamily: 'Cairo, sans-serif', display: 'flex', flexDirection: 'column', gap: 22 }}>
+            <div ref={pageRef} dir="rtl" style={{ fontFamily: "'Cairo', sans-serif", display: 'flex', flexDirection: 'column', gap: 22, position: 'relative' }}>
 
-                {/* ═══ HERO BANNER — intentionally dark in both modes ══ */}
+                <IslamicPatternOverlay opacity={0.03} color="#2fbcd4" size={64} style={{ position: 'fixed' }} />
+
+                {/* ═══ HERO BANNER ══ */}
                 <div className="da" style={{
                     borderRadius: 24, overflow: 'hidden', position: 'relative',
                     background: 'linear-gradient(135deg, #060D1E 0%, #1b3a60 45%, #1c2f50 75%, #0d1828 100%)',
-                    padding: '30px 34px', minHeight: 155,
+                    padding: '32px 34px', minHeight: 160,
                     boxShadow: '0 8px 40px rgba(27,58,96,0.22)',
+                    border: '1px solid rgba(201,162,39,0.18)',
                 }}>
                     <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none', background: 'linear-gradient(100deg, transparent 30%, rgba(47,188,212,0.065) 50%, transparent 70%)' }} />
+                    <ManuscriptEdge position="top" />
+                    <ManuscriptEdge position="bottom" />
+                    <IslamicPatternOverlay opacity={0.16} color="#c9a227" size={62} />
+                    <MihrabMotif opacity={0.14} />
 
-                    {/* أقواس المحراب — الهوية البصرية العربية بديل الأعمدة اليونانية */}
-                    <MihrabMotif opacity={0.13} />
-
-                    {/* بصمة "لغة الضاد" — توقيع مائي يوضّح هوية المنصة كمنصة لغة عربية */}
                     <div aria-hidden="true" style={{
                         position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center',
                         pointerEvents: 'none', overflow: 'hidden', zIndex: 0,
                     }}>
                         <span style={{
-                            fontSize: 74, fontWeight: 900, fontFamily: 'Cairo, sans-serif',
-                            color: 'rgba(47,188,212,0.09)', whiteSpace: 'nowrap', letterSpacing: '0.01em',
+                            fontSize: 76, fontWeight: 900, fontFamily: "'Cairo', sans-serif",
+                            background: 'linear-gradient(120deg, rgba(47,188,212,0.16), rgba(201,162,39,0.13))',
+                            WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text',
+                            whiteSpace: 'nowrap', letterSpacing: '0.02em',
                         }}>لغة الضاد</span>
                     </div>
 
@@ -451,15 +477,16 @@ export default function Dashboard({ stats, latestStudents, monthlyData, adminNam
 
                     <div style={{ position: 'relative', zIndex: 2, display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 14 }}>
                         <div>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 9 }}>
-                                <PenFlourish width={26} height={10} color="#2fbcd4" strokeWidth={1.6} />
-                                <p style={{ color: '#2fbcd4', fontSize: 10.5, fontWeight: 700, letterSpacing: '0.2em' }}>DASHBOARD — لوحة التحكم</p>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: 9, marginBottom: 9 }}>
+                                <EightPointStar color="#c9a227" size={13} filled />
+                                <p style={{ color: '#c9a227', fontSize: 10.5, fontWeight: 700, letterSpacing: '0.2em' }}>DASHBOARD — لوحة التحكم</p>
                             </div>
-                            <h1 style={{ color: '#fff', fontSize: 24, fontWeight: 900, lineHeight: 1.25, fontFamily: 'Cairo, sans-serif' }}>أهلاً بك، {nm}</h1>
-                            <div style={{ margin: '8px 0 2px' }}>
-                                <PenFlourish width={70} height={12} color="#8dc63f" strokeWidth={1.8} />
+                            <h1 style={{ color: '#fff', fontSize: 25, fontWeight: 900, lineHeight: 1.25, fontFamily: "'Cairo', sans-serif" }}>أهلاً بك، {nm}</h1>
+                            <div style={{ margin: '9px 0 2px', display: 'flex', alignItems: 'center', gap: 8 }}>
+                                <PenFlourish width={56} height={12} color="#8dc63f" strokeWidth={1.8} />
+                                <EightPointStar color="#c9a227" size={9} filled opacity={0.85} />
                             </div>
-                            <p style={{ color: 'rgba(226,232,240,0.65)', fontSize: 12.5, marginTop: 5, fontFamily: 'Cairo, sans-serif' }}>
+                            <p style={{ color: 'rgba(226,232,240,0.65)', fontSize: 12.5, marginTop: 5, fontFamily: "'Cairo', sans-serif" }}>
                                 {new Date().toLocaleDateString('ar-EG', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
                             </p>
                         </div>
@@ -470,31 +497,25 @@ export default function Dashboard({ stats, latestStudents, monthlyData, adminNam
                             ].map(p => (
                                 <div key={p.label} style={{ display: 'flex', alignItems: 'center', gap: 7, background: 'rgba(255,255,255,0.08)', border: '1px dashed rgba(255,255,255,0.22)', borderRadius: 30, padding: '5px 13px', backdropFilter: 'blur(8px)' }}>
                                     <span style={{ width: 7, height: 7, borderRadius: '50%', background: p.dot, boxShadow: `0 0 7px ${p.dot}` }} />
-                                    <span style={{ color: '#fff', fontSize: 12, fontWeight: 700, fontFamily: 'Cairo, sans-serif' }}>{p.label}</span>
+                                    <span style={{ color: '#fff', fontSize: 12, fontWeight: 700, fontFamily: "'Cairo', sans-serif" }}>{p.label}</span>
                                 </div>
                             ))}
-
-                            {/* زرار إيصالات الدفع */}
                             <button
                                 onClick={() => setShowReceipts(true)}
                                 style={{
-                                    position: 'relative',
-                                    display: 'flex', alignItems: 'center', gap: 7,
-                                    background: 'rgba(47,188,212,0.16)',
-                                    border: '1px solid rgba(47,188,212,0.4)',
-                                    borderRadius: 30, padding: '5px 13px',
-                                    color: '#fff', fontSize: 12, fontWeight: 700,
-                                    fontFamily: 'Cairo, sans-serif', cursor: 'pointer',
-                                    backdropFilter: 'blur(8px)',
+                                    position: 'relative', display: 'flex', alignItems: 'center', gap: 7,
+                                    background: 'rgba(201,162,39,0.16)', border: '1px solid rgba(201,162,39,0.4)',
+                                    borderRadius: 30, padding: '5px 13px', color: '#fff', fontSize: 12, fontWeight: 700,
+                                    fontFamily: "'Cairo', sans-serif", cursor: 'pointer', backdropFilter: 'blur(8px)',
                                     transition: 'background 0.15s',
                                 }}
-                                onMouseEnter={e => e.currentTarget.style.background = 'rgba(47,188,212,0.28)'}
-                                onMouseLeave={e => e.currentTarget.style.background = 'rgba(47,188,212,0.16)'}
+                                onMouseEnter={e => e.currentTarget.style.background = 'rgba(201,162,39,0.28)'}
+                                onMouseLeave={e => e.currentTarget.style.background = 'rgba(201,162,39,0.16)'}
                             >
                                 🧾 إيصالات الدفع
                                 {pendingReceiptsCount > 0 && (
                                     <span style={{
-                                        background: '#2fbcd4', color: '#fff', borderRadius: 99,
+                                        background: '#c9a227', color: '#fff', borderRadius: 99,
                                         minWidth: 18, height: 18, display: 'inline-flex',
                                         alignItems: 'center', justifyContent: 'center',
                                         fontSize: 10.5, fontWeight: 900, padding: '0 5px',
@@ -512,106 +533,97 @@ export default function Dashboard({ stats, latestStudents, monthlyData, adminNam
                     {cards.map((c, i) => <StatCard key={i} {...c} />)}
                 </div>
 
-                {/* ═══ CHARTS ROW ═══ */}
+                {/* ═══ CHARTS ROW — إعادة تصميم جذرية ═══ */}
                 <div className="da grid grid-cols-1 lg:grid-cols-3 gap-5">
-                    {/* Area chart */}
-                    <div style={{ background: 'var(--a-card)', borderRadius: 22, overflow: 'hidden', position: 'relative', boxShadow: '0 2px 12px var(--a-shadow)', border: '1px solid var(--a-border)' }}
-                        className="lg:col-span-2">
-                        <ArchAccent id="chart-arch-1" accent="#2fbcd4" />
-                        <div style={{ padding: '18px 22px 6px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+
+                    {/* لوحة الإيرادات — أعمدة داخل لوحة ليلية (بديل خط الرسم البياني الرفيع) */}
+                    <div className="lg:col-span-2" style={{
+                        background: 'linear-gradient(135deg, #0d1828 0%, #1b3a60 55%, #14243f 100%)',
+                        borderRadius: '28px 28px 18px 18px', padding: '22px 24px', position: 'relative',
+                        overflow: 'hidden', border: '1px solid rgba(201,162,39,0.18)',
+                        boxShadow: '0 8px 30px rgba(13,24,40,0.35)',
+                    }}>
+                        <IslamicPatternOverlay opacity={0.15} color="#c9a227" size={54} />
+                        <ManuscriptEdge position="top" />
+                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', position: 'relative', zIndex: 1 }}>
                             <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                                <SectionMark color="#2fbcd4" size={14} />
-                                <div>
-                                    <p style={{ color: 'var(--a-text)', fontWeight: 900, fontSize: 15, fontFamily: 'Cairo, sans-serif' }}>الإيرادات الشهرية</p>
-                                    <p style={{ color: 'var(--a-text-4)', fontSize: 10.5, marginTop: 2, fontFamily: 'Cairo, sans-serif' }}>آخر {mo.length} أشهر</p>
-                                </div>
+                                <EightPointStar color="#c9a227" size={14} filled />
+                                <p style={{ color: '#fff', fontWeight: 900, fontSize: 15, fontFamily: "'Cairo', sans-serif" }}>الإيرادات الشهرية</p>
                             </div>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: 5, background: 'rgba(47,188,212,0.1)', borderRadius: 20, padding: '4px 11px' }}>
-                                <span style={{ width: 7, height: 7, borderRadius: '50%', background: '#2fbcd4' }} />
-                                <span style={{ color: '#2fbcd4', fontSize: 10.5, fontWeight: 700, fontFamily: 'Cairo, sans-serif' }}>ج.م</span>
-                            </div>
+                            <span style={{ color: 'rgba(226,232,240,0.5)', fontSize: 10.5, fontWeight: 700, fontFamily: "'Cairo', sans-serif" }}>آخر {mo.length} أشهر</span>
                         </div>
-                        <div style={{ padding: '4px 14px 14px' }}>
-                            <AreaChart data={mo} />
+                        <div style={{ position: 'relative', zIndex: 1, marginTop: 16 }}>
+                            <RevenueBars data={mo} />
                         </div>
                     </div>
 
-                    {/* Donut + Mini bars */}
+                    {/* حضور + تسجيل — لوحتان بخلفية دافئة خفيفة (بديل الكروت البيضاء المسطّحة) */}
                     <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
-                        <div style={{ background: 'var(--a-card)', borderRadius: 22, padding: 20, flex: 1, position: 'relative', overflow: 'hidden', boxShadow: '0 2px 12px var(--a-shadow)', border: '1px solid var(--a-border)' }}>
-                            <ArchAccent id="chart-arch-2" accent="#8dc63f" />
-                            <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 14 }}>
-                                <SectionMark color="#8dc63f" size={14} />
-                                <p style={{ color: 'var(--a-text)', fontWeight: 900, fontSize: 14, fontFamily: 'Cairo, sans-serif' }}>حضور الطلاب</p>
+                        <div style={{
+                            background: 'linear-gradient(160deg, rgba(47,188,212,0.07), rgba(201,162,39,0.05))',
+                            borderRadius: '26px 26px 18px 18px', padding: 20, flex: 1, position: 'relative', overflow: 'hidden',
+                            boxShadow: '0 2px 12px var(--a-shadow)', border: '1px solid var(--a-border)',
+                        }}>
+                            <IslamicPatternOverlay opacity={0.11} color="#2fbcd4" size={40} />
+                            <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6, position: 'relative' }}>
+                                <EightPointStar color="#2fbcd4" size={13} />
+                                <p style={{ color: 'var(--a-text)', fontWeight: 900, fontSize: 14, fontFamily: "'Cairo', sans-serif" }}>حضور الطلاب</p>
                             </div>
-                            <DonutChart online={s.online ?? 0} offline={s.offline ?? 0} />
+                            <div style={{ position: 'relative' }}>
+                                <AttendanceGauge online={s.online ?? 0} offline={s.offline ?? 0} />
+                            </div>
                         </div>
-                        <div style={{ background: 'var(--a-card)', borderRadius: 22, padding: '14px 18px', position: 'relative', overflow: 'hidden', boxShadow: '0 2px 12px var(--a-shadow)', border: '1px solid var(--a-border)' }}>
-                            <ArchAccent id="chart-arch-3" accent="#1b3a60" height={12} />
-                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 }}>
+                        <div style={{
+                            background: 'linear-gradient(160deg, rgba(201,162,39,0.06), rgba(47,188,212,0.04))',
+                            borderRadius: '20px 20px 16px 16px', padding: '14px 18px', position: 'relative', overflow: 'hidden',
+                            boxShadow: '0 2px 12px var(--a-shadow)', border: '1px solid var(--a-border)',
+                        }}>
+                            <IslamicPatternOverlay opacity={0.1} color="#c9a227" size={36} />
+                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10, position: 'relative' }}>
                                 <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                                    <SectionMark color="#1b3a60" size={14} />
-                                    <p style={{ color: 'var(--a-text)', fontWeight: 900, fontSize: 13, fontFamily: 'Cairo, sans-serif' }}>تسجيل الطلاب</p>
+                                    <EightPointStar color="#c9a227" size={13} />
+                                    <p style={{ color: 'var(--a-text)', fontWeight: 900, fontSize: 13, fontFamily: "'Cairo', sans-serif" }}>تسجيل الطلاب</p>
                                 </div>
-                                <span style={{ color: 'var(--a-text-4)', fontSize: 10, fontFamily: 'Cairo, sans-serif' }}>شهرياً</span>
+                                <span style={{ color: 'var(--a-text-4)', fontSize: 10, fontFamily: "'Cairo', sans-serif" }}>شهرياً</span>
                             </div>
-                            <MiniBars data={mo} />
+                            <div style={{ position: 'relative' }}>
+                                <RegistrationSpark data={mo} />
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                {/* ═══ QUICK ACTIONS ═══ */}
+                {/* ═══ QUICK ACTIONS — بطاقات ميدالية دائرية ═══ */}
                 <div className="da">
                     <SectionHeading title="إجراءات سريعة" color="#2fbcd4" />
                     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(155px, 1fr))', gap: 12 }}>
-                        {ACTIONS.map((a, i) => (
-                            <Link key={i} href={a.href} style={{
-                                display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 10,
-                                background: 'var(--a-card)', borderRadius: 18, padding: '17px 15px',
-                                boxShadow: '0 2px 10px var(--a-shadow)', border: '1px solid var(--a-border)',
-                                textDecoration: 'none', cursor: 'pointer', position: 'relative', overflow: 'hidden',
-                                transition: 'transform 0.22s ease, box-shadow 0.22s ease',
-                            }}
-                                onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-4px)'; e.currentTarget.style.boxShadow = `0 12px 30px var(--a-shadow-lg), 0 0 0 1.5px ${a.accent}35`; }}
-                                onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 2px 10px var(--a-shadow)'; }}>
-                                <ArchAccent id={`act-arch-${i}`} accent={a.accent} height={12} />
-                                <div style={{ width: 38, height: 38, borderRadius: 11, flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', background: `${a.accent}14`, boxShadow: `0 0 0 1px ${a.accent}28` }}>
-                                    <svg viewBox="0 0 24 24" fill="none" stroke={a.accent} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" width={18} height={18}
-                                        dangerouslySetInnerHTML={{ __html: a.svg }} />
-                                </div>
-                                <div>
-                                    <p style={{ color: 'var(--a-text)', fontWeight: 800, fontSize: 12.5, fontFamily: 'Cairo, sans-serif', lineHeight: 1.2 }}>{a.label}</p>
-                                    <p style={{ color: 'var(--a-text-4)', fontSize: 10, marginTop: 3, fontFamily: 'Cairo, sans-serif' }}>{a.sub}</p>
-                                </div>
-                            </Link>
-                        ))}
+                        {ACTIONS.map((a, i) => <QuickActionCard key={i} a={a} />)}
                     </div>
                 </div>
 
-                {/* ═══ PAYMENT NUMBERS — المدرس فقط ═══ */}
+                {/* ═══ PAYMENT NUMBERS ═══ */}
                 <div className="da">
-                    <SectionHeading title="إعدادات الدفع" color="#8dc63f" />
+                    <SectionHeading title="إعدادات الدفع" color="#c9a227" />
                     <PaymentNumbersEditor numbers={paymentNumbers} />
                 </div>
 
-                {/* ═══ LATEST STUDENTS ═══ */}
+                {/* ═══ LATEST STUDENTS — بطاقات أفقية بدل الجدول ═══ */}
                 <div className="da">
                     <SectionHeading title="آخر الطلاب المسجلين" color="#2fbcd4" action={
-                        <Link href="/admin/students" style={{ color: '#2fbcd4', fontSize: 11.5, fontWeight: 700, fontFamily: 'Cairo, sans-serif', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 3, padding: '4px 11px', borderRadius: 20, background: 'rgba(47,188,212,0.08)', transition: 'background 0.15s' }}
+                        <Link href="/admin/students" style={{ color: '#2fbcd4', fontSize: 11.5, fontWeight: 700, fontFamily: "'Cairo', sans-serif", textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 3, padding: '4px 11px', borderRadius: 20, background: 'rgba(47,188,212,0.08)', transition: 'background 0.15s' }}
                             onMouseEnter={e => e.currentTarget.style.background = 'rgba(47,188,212,0.15)'}
                             onMouseLeave={e => e.currentTarget.style.background = 'rgba(47,188,212,0.08)'}>
                             عرض الكل
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" width={12} height={12}><polyline points="15 18 9 12 15 6" /></svg>
                         </Link>
                     } />
-                    <div style={{ background: 'var(--a-card)', borderRadius: 22, boxShadow: '0 2px 12px var(--a-shadow)', border: '1px solid var(--a-border)', overflow: 'hidden' }}>
-                        <StudentsTable students={stu} />
+                    <div style={{ background: 'var(--a-card)', borderRadius: '26px 26px 18px 18px', boxShadow: '0 2px 12px var(--a-shadow)', border: '1px solid var(--a-border)', overflow: 'hidden' }}>
+                        <StudentsList students={stu} />
                     </div>
                 </div>
 
             </div>
 
-            {/* ═══ RECEIPTS MODAL ═══ */}
             <ReceiptsReviewModal
                 open={showReceipts}
                 onClose={() => setShowReceipts(false)}
