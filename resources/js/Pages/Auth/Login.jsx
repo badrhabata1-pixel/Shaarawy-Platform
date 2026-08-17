@@ -30,15 +30,15 @@ export default function Login({ status, canResetPassword }) {
     const inputStyle = (hasError) => ({
         width: '100%', padding: '12px 16px', borderRadius: 12,
         border: `1.5px solid ${hasError ? '#ef4444' : '#E2E8F0'}`,
-        background: '#F8FAFC', fontSize: 14, color: '#14213D',
+        background: '#F8FAFC', fontSize: 14, color: '#1b3a60',
         fontFamily: 'Cairo, sans-serif', outline: 'none',
         transition: 'border-color .2s, box-shadow .2s',
         boxSizing: 'border-box',
     });
 
     const onFocus = (e) => {
-        e.target.style.borderColor = '#F47C20';
-        e.target.style.boxShadow = '0 0 0 3px rgba(244,124,32,.12)';
+        e.target.style.borderColor = '#2fbcd4';
+        e.target.style.boxShadow = '0 0 0 3px rgba(47,188,212,.12)';
         e.target.style.background = '#fff';
     };
     const onBlur = (e) => {
@@ -52,39 +52,45 @@ export default function Login({ status, canResetPassword }) {
             <Head title="دخول الأستاذ" />
 
             <style>{`
-                @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap');
+                @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Rakkas&display=swap');
                 * { box-sizing: border-box; }
                 body { margin: 0; font-family: 'Cairo', sans-serif; }
                 ::placeholder { color: #94a3b8; font-family: 'Cairo', sans-serif; }
-                .sb-btn:hover { opacity: .92; transform: translateY(-1px); box-shadow: 0 8px 24px rgba(244,124,32,.4) !important; }
+                .sb-btn:hover { opacity: .92; transform: translateY(-1px); box-shadow: 0 8px 24px rgba(47,188,212,.4) !important; }
                 .sb-btn:active { transform: translateY(0); }
-                .pass-toggle:hover { color: #F47C20 !important; }
+                .pass-toggle:hover { color: #2fbcd4 !important; }
             `}</style>
 
             {/* Background */}
             <div dir="rtl" style={{
                 minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center',
-                background: 'linear-gradient(135deg, #060B16 0%, #0D1829 45%, #14213D 75%, #0A1422 100%)',
+                background: 'linear-gradient(135deg, #060B16 0%, #0D1829 45%, #1b3a60 75%, #0A1422 100%)',
                 padding: '24px',
                 position: 'relative', overflow: 'hidden',
             }}>
                 {/* Decorative orbs */}
-                <div style={{ position: 'absolute', top: -80, right: -80, width: 360, height: 360, borderRadius: '50%', background: 'radial-gradient(circle, rgba(244,124,32,.18) 0%, transparent 70%)', pointerEvents: 'none' }} />
-                <div style={{ position: 'absolute', bottom: -100, left: -100, width: 400, height: 400, borderRadius: '50%', background: 'radial-gradient(circle, rgba(20,33,61,.8) 0%, transparent 70%)', pointerEvents: 'none' }} />
+                <div style={{ position: 'absolute', top: -80, right: -80, width: 360, height: 360, borderRadius: '50%', background: 'radial-gradient(circle, rgba(47,188,212,.18) 0%, transparent 70%)', pointerEvents: 'none' }} />
+                <div style={{ position: 'absolute', bottom: -100, left: -100, width: 400, height: 400, borderRadius: '50%', background: 'radial-gradient(circle, rgba(27,58,96,.8) 0%, transparent 70%)', pointerEvents: 'none' }} />
 
-                {/* Columns watermark */}
-                <svg style={{ position: 'absolute', left: 0, bottom: 0, height: '55%', opacity: .04, pointerEvents: 'none' }}
-                    viewBox="0 0 540 155" preserveAspectRatio="xMinYMax meet">
-                    {[65,145,225,305,385,465].map((x,i) => (
-                        <g key={i} transform={`translate(${x},0)`}>
-                            <rect x="-15" y="8" width="30" height="8" rx="1.5" fill="white"/>
-                            <rect x="-9" y="20" width="18" height="105" rx="2" fill="white"/>
-                            <rect x="-15" y="129" width="30" height="8" rx="1.5" fill="white"/>
-                        </g>
-                    ))}
-                    <rect x="36" y="2" width="478" height="9" rx="2" fill="white"/>
-                    <rect x="36" y="137" width="478" height="5" rx="1" fill="white" opacity=".4"/>
+                {/* نسيج نجمة ثمانية هندسي — هوية عربية إسلامية بديل الأعمدة اليونانية */}
+                <svg style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', opacity: .05, pointerEvents: 'none' }}>
+                    <defs>
+                        <pattern id="loginStarPat" width="52" height="52" patternUnits="userSpaceOnUse">
+                            <g stroke="#2fbcd4" fill="none" strokeWidth="1">
+                                <rect x="6" y="6" width="40" height="40"/>
+                                <rect x="6" y="6" width="40" height="40" transform="rotate(45 26 26)"/>
+                            </g>
+                        </pattern>
+                    </defs>
+                    <rect width="100%" height="100%" fill="url(#loginStarPat)"/>
                 </svg>
+
+                {/* توقيع "لغة الضاد" المائي */}
+                <span aria-hidden="true" style={{
+                    position: 'absolute', bottom: '4%', left: '50%', transform: 'translateX(-50%)',
+                    fontFamily: "'Rakkas',serif", fontSize: 'clamp(60px,10vw,110px)', lineHeight: 1,
+                    color: 'rgba(47,188,212,.07)', whiteSpace: 'nowrap', pointerEvents: 'none', userSelect: 'none',
+                }}>لغة الضاد</span>
 
                 {/* Card */}
                 <div ref={cardRef} style={{
@@ -94,27 +100,30 @@ export default function Login({ status, canResetPassword }) {
                     overflow: 'hidden', position: 'relative', zIndex: 1,
                 }}>
                     {/* Card top accent */}
-                    <div style={{ height: 4, background: 'linear-gradient(90deg, #F47C20, #d96a12, #F47C20)' }} />
+                    <div style={{ height: 4, background: 'linear-gradient(90deg, #2fbcd4, #009688, #2fbcd4)' }} />
 
                     <div style={{ padding: '36px 36px 32px' }}>
                         {/* Logo + title */}
                         <div style={{ textAlign: 'center', marginBottom: 32 }}>
-                            <div style={{
+                            <div role="img" aria-label="شعار منصة منصور" style={{
                                 width: 60, height: 60, borderRadius: 18, margin: '0 auto 14px',
-                                background: 'linear-gradient(135deg, #F47C20, #d96a12)',
-                                boxShadow: '0 0 0 4px rgba(244,124,32,.15), 0 8px 24px rgba(244,124,32,.35)',
+                                background: 'linear-gradient(150deg, #1b3a60, #2fbcd4)',
+                                boxShadow: '0 0 0 4px rgba(47,188,212,.15), 0 8px 24px rgba(47,188,212,.35)',
                                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                             }}>
-                                <svg viewBox="0 0 32 32" width="28" height="28" fill="none">
-                                    <path d="M16 4L20 12L28 13L22 19L24 27L16 23L8 27L10 19L4 13L12 12Z" fill="white" opacity=".95"/>
-                                </svg>
+                                <span style={{ fontFamily: "'Rakkas',serif", fontSize: 30, color: '#fff' }}>ض</span>
                             </div>
-                            <h1 style={{ color: '#14213D', fontSize: 22, fontWeight: 900, margin: '0 0 4px', fontFamily: 'Cairo,sans-serif' }}>
+                            <h1 style={{ color: '#1b3a60', fontSize: 22, fontWeight: 900, margin: '0 0 4px', fontFamily: 'Cairo,sans-serif' }}>
                                 بوابة الأستاذ
                             </h1>
                             <p style={{ color: '#94a3b8', fontSize: 13, margin: 0, fontFamily: 'Cairo,sans-serif' }}>
-                                منصة الصيفي التعليمية
+                                منصة منصور التعليمية
                             </p>
+                            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, marginTop: 10 }}>
+                                <div style={{ width: 28, height: 1, background: 'linear-gradient(90deg,transparent,#2fbcd4)' }}/>
+                                <svg width="10" height="10" viewBox="0 0 18 18" fill="none"><rect x="4" y="4" width="10" height="10" transform="rotate(45 9 9)" stroke="#2fbcd4" strokeWidth="1.6"/></svg>
+                                <div style={{ width: 28, height: 1, background: 'linear-gradient(90deg,#2fbcd4,transparent)' }}/>
+                            </div>
                         </div>
 
                         {/* Status message */}
@@ -207,7 +216,7 @@ export default function Login({ status, canResetPassword }) {
                                         type="checkbox"
                                         checked={data.remember}
                                         onChange={e => setData('remember', e.target.checked)}
-                                        style={{ width: 16, height: 16, accentColor: '#F47C20', cursor: 'pointer' }}
+                                        style={{ width: 16, height: 16, accentColor: '#2fbcd4', cursor: 'pointer' }}
                                     />
                                     <span style={{ color: '#64748b', fontSize: 12, fontFamily: 'Cairo,sans-serif' }}>تذكرني</span>
                                 </label>
@@ -220,11 +229,11 @@ export default function Login({ status, canResetPassword }) {
                                 className="sb-btn"
                                 style={{
                                     width: '100%', padding: '13px',
-                                    background: processing ? '#94a3b8' : 'linear-gradient(135deg, #F47C20, #d96a12)',
+                                    background: processing ? '#94a3b8' : 'linear-gradient(135deg, #2fbcd4, #009688)',
                                     color: '#fff', border: 'none', borderRadius: 12,
                                     fontSize: 15, fontWeight: 800, fontFamily: 'Cairo,sans-serif',
                                     cursor: processing ? 'not-allowed' : 'pointer',
-                                    boxShadow: '0 4px 16px rgba(244,124,32,.35)',
+                                    boxShadow: '0 4px 16px rgba(47,188,212,.35)',
                                     transition: 'all .2s ease', marginTop: 4,
                                 }}
                             >
@@ -234,7 +243,7 @@ export default function Login({ status, canResetPassword }) {
 
                         {/* Footer */}
                         <p style={{ textAlign: 'center', marginTop: 22, color: '#94a3b8', fontSize: 11, fontFamily: 'Cairo,sans-serif' }}>
-                            منصة الصيفي © {new Date().getFullYear()} — جميع الحقوق محفوظة
+                            منصة منصور © {new Date().getFullYear()} — جميع الحقوق محفوظة
                         </p>
                     </div>
                 </div>

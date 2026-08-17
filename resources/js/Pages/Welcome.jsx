@@ -9,7 +9,7 @@ gsap.registerPlugin(ScrollTrigger);
 /* ── Brand palette ───────────────────────────────────────────── */
 const C = {
     gold:   '#2fbcd4',
-    amber:  '#8dc63f',
+    amber:  '#009688',
     dark:   '#050b15',
     mid:    '#0c1929',
     navy:   '#1b3a60',
@@ -38,7 +38,7 @@ const FEATURES = [
 ];
 
 /* ألوان متدرّجة لشارات الأرقام وزخرفة البلاطات — بالتبادل */
-const TILE_ACCENTS = ['#2fbcd4', '#8dc63f', '#1b3a60', '#204080', '#009688'];
+const TILE_ACCENTS = ['#2fbcd4', '#1b8fa8', '#1b3a60', '#204080', '#009688'];
 
 /* COURSES: populated dynamically from DB (passed as Inertia prop) */
 
@@ -132,9 +132,10 @@ const PARTICLES = [
 function PageStyles() {
     return (
         <style>{`
-            @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Cairo:wght@400;600;700;800;900&family=Rakkas&display=swap');
+            @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Cairo:wght@400;600;700;800;900&family=Ruwudu:wght@400;700&family=Aref+Ruqaa:wght@400;700&display=swap');
             *, *::before, *::after { box-sizing: border-box; }
-            h1, h2, h3 { font-family: 'Rakkas', serif !important; letter-spacing: .04em; }
+            h1, h2, h3 { font-family: 'Ruwudu', serif !important; letter-spacing: .04em; }
+            .hero-welcome-img { font-family: 'Aref Ruqaa', serif !important; letter-spacing: .01em; }
             ::-webkit-scrollbar { width:6px; }
             ::-webkit-scrollbar-track { background:#050b15; }
             ::-webkit-scrollbar-thumb { background:rgba(47,188,212,.35); border-radius:3px; }
@@ -158,6 +159,7 @@ function PageStyles() {
             @keyframes rayRotate     { to{transform:rotate(360deg)} }
             @keyframes orbitBob      { 0%,100%{transform:translateY(0) scale(1)} 50%{transform:translateY(-10px) scale(1.06)} }
             @keyframes badgeShimmer  { 0%,100%{box-shadow:0 6px 24px rgba(0,0,0,.35),0 0 0 1px rgba(47,188,212,.14),inset 0 1px 0 rgba(47,188,212,.2)} 50%{box-shadow:0 8px 32px rgba(0,0,0,.45),0 0 16px rgba(47,188,212,.18),0 0 0 1px rgba(47,188,212,.22),inset 0 1px 0 rgba(47,188,212,.28)} }
+            @keyframes waveGlowPulse { 0%,100%{filter:drop-shadow(0 0 5px rgba(47,188,212,.65))} 50%{filter:drop-shadow(0 0 18px rgba(47,188,212,1))} }
 
             /* Navbar border glow pulse */
             @keyframes navGlow { 0%,100%{opacity:.6} 50%{opacity:1} }
@@ -175,28 +177,47 @@ function PageStyles() {
                 to   { opacity:1; transform:translateY(0);    }
             }
 
-            /* أسباب الاختيار — رقم 1 يمين، رقم 2 شمال، تحت بعض، وزخارف خفيفة تنوّر عند المرور */
-            @keyframes tlFromRight { from{opacity:0;transform:translateX(80px)} to{opacity:1;transform:translateX(0)} }
-            @keyframes tlFromLeft  { from{opacity:0;transform:translateX(-80px)} to{opacity:1;transform:translateX(0)} }
-            .tl-wrap        { position:relative; max-width:900px; margin:0 auto; direction:ltr; }
-            .tl-item        { position:relative; width:47%; margin-bottom:36px; opacity:0;
-                              display:flex; align-items:center; gap:14px; }
-            .tl-item.right  { margin-left:53%; animation:tlFromRight .7s cubic-bezier(.22,1,.36,1) forwards; }
-            .tl-item.left   { margin-left:0;    animation:tlFromLeft  .7s cubic-bezier(.22,1,.36,1) forwards; }
-            @media(max-width:768px){
-                .tl-item,.tl-item.right,.tl-item.left { width:100%; margin-left:0 !important;
-                    animation:tlFromRight .7s cubic-bezier(.22,1,.36,1) forwards !important; }
+            /* أسباب الاختيار — شبكة "بينتو" متفاوتة الأحجام بدل الشبكة المتساوية المملة */
+            .feat-grid      { display:grid; grid-template-columns:repeat(4,1fr); grid-auto-rows:1fr; gap:24px; max-width:1180px; margin:0 auto;
+                              grid-template-areas:
+                                "a0 a0 a1 a2"
+                                "a0 a0 a3 a4"
+                                "a5 a6 a6 a7"; }
+            .feat-item      { position:relative; height:100%; }
+            .feat-item-0 { grid-area:a0; } .feat-item-1 { grid-area:a1; } .feat-item-2 { grid-area:a2; }
+            .feat-item-3 { grid-area:a3; } .feat-item-4 { grid-area:a4; } .feat-item-5 { grid-area:a5; }
+            .feat-item-6 { grid-area:a6; } .feat-item-7 { grid-area:a7; }
+            @media(max-width:1180px){
+                .feat-grid { grid-template-columns:repeat(2,1fr); grid-template-areas:none; grid-auto-rows:auto; max-width:640px; }
+                .feat-item-0,.feat-item-1,.feat-item-2,.feat-item-3,.feat-item-4,.feat-item-5,.feat-item-6,.feat-item-7 { grid-area:auto; }
+                .feat-item-0 { grid-column:span 2; }
+                .feat-item-6 { grid-column:span 2; }
             }
-            .feat-num-outside { flex-shrink:0; font-family:'Rakkas',serif; font-size:40px; line-height:1;
-                                 user-select:none; opacity:.4; transition:opacity .4s ease, filter .4s ease; }
-            .tl-item:hover .feat-num-outside { opacity:1; filter:drop-shadow(0 0 8px currentColor); }
+            @media(max-width:600px) {
+                .feat-grid { grid-template-columns:1fr; max-width:380px; gap:20px; }
+                .feat-item-0,.feat-item-6 { grid-column:span 1; }
+            }
+            .feat-num-outside { position:absolute; top:-16px; right:-6px; z-index:4;
+                                 font-family:'Ruwudu',serif; font-size:26px; line-height:1;
+                                 user-select:none; opacity:.45; transition:opacity .4s ease, filter .4s ease; pointer-events:none; }
+            .feat-item:hover .feat-num-outside { opacity:1; filter:drop-shadow(0 0 8px currentColor); }
 
             /* بطاقة على طراز تذهيب المخطوطات — إطار مزدوج، شمسة نجمية، زخارف أركان رفيعة */
-            .feat-card  { position:relative; direction:rtl; cursor:default;
+            .feat-card  { position:relative; direction:rtl; cursor:default; height:100%;
                           transition:transform .45s cubic-bezier(.22,1,.36,1); }
             .feat-card:hover { transform:translateY(-8px); }
             .feat-card-inner { position:relative; overflow:hidden; border-radius:16px; padding:40px 26px 26px;
+                                height:100%; display:flex; flex-direction:column; justify-content:center;
                                 border:1px solid var(--frame-c, rgba(47,188,212,.4)); }
+            .feat-card-wide .feat-card-inner { flex-direction:row; align-items:center; gap:22px; padding:26px 30px; text-align:right; }
+            .feat-card-wide .feat-medal-wrap { margin-bottom:0; flex-shrink:0; }
+            .feat-card-wide .feat-body-wrap  { text-align:right; }
+            .feat-card-wide .feat-div        { justify-content:flex-start; }
+            .feat-card-big .feat-medal       { width:96px; height:96px; }
+            .feat-card-big .feat-medal svg.feat-icon-svg { width:30px; height:30px; }
+            .feat-card-big .feat-medal-deco  { width:96px !important; height:96px !important; }
+            .feat-card-big .feat-title       { font-size:20px; }
+            .feat-card-big .feat-body        { font-size:14px; }
             .feat-card-inner::before {
                 content:''; position:absolute; inset:7px; border-radius:9px;
                 border:1px solid var(--frame-c, rgba(47,188,212,.4)); opacity:.55;
@@ -234,6 +255,38 @@ function PageStyles() {
             .foot-grid  { display:grid; grid-template-columns:1.6fr 1fr 1fr 1fr; gap:40px; }
             .nav-links  { display:flex; }
             .hero-right { flex:0 0 60%; max-width:60%; }
+
+            /* روابط الناف بار — خط سفلي متحرك عند المرور */
+            .nav-link-item { position:relative; }
+            .nav-link-item::after {
+                content:''; position:absolute; bottom:3px; right:14px; left:14px; height:2px; border-radius:2px;
+                background:linear-gradient(90deg,#2fbcd4,#009688); transform:scaleX(0); transform-origin:center;
+                transition:transform .35s cubic-bezier(.22,1,.36,1);
+            }
+            .nav-link-item:hover::after { transform:scaleX(1); }
+
+            /* زر تسجيل الدخول — إطار شفاف يمتلئ بلطف عند المرور */
+            .nav-login-btn { position:relative; overflow:hidden; }
+            .nav-login-btn:hover {
+                color:#2fbcd4 !important; border-color:#2fbcd4 !important;
+                background:rgba(47,188,212,.1) !important; transform:translateY(-1px);
+                box-shadow:0 4px 16px rgba(47,188,212,.18);
+            }
+            .nav-login-btn:active { transform:translateY(0) scale(.97); }
+
+            /* زر حساب جديد / لوحة التحكم — بريق متحرك عند المرور */
+            .nav-cta-btn { position:relative; overflow:hidden; }
+            .nav-cta-btn::after {
+                content:''; position:absolute; inset:0;
+                background:linear-gradient(115deg,transparent 35%,rgba(255,255,255,.55) 50%,transparent 65%);
+                transform:translateX(-120%); transition:transform .7s ease;
+            }
+            .nav-cta-btn:hover::after { transform:translateX(120%); }
+            .nav-cta-btn:hover {
+                transform:translateY(-2px) scale(1.025) !important;
+                box-shadow:0 10px 30px rgba(47,188,212,.55), 0 0 0 1px rgba(255,255,255,.12), inset 0 1px 0 rgba(255,255,255,.4) !important;
+            }
+            .nav-cta-btn:active { transform:translateY(0) scale(.98) !important; }
             @media(max-width:1024px){
                 .foot-grid { grid-template-columns:repeat(2,1fr); }
             }
@@ -299,7 +352,7 @@ function HistoryBackground({ dark = true }) {
 
             {/* Color gradient orbs — navy in dark mode, warm gold-tinted in light mode */}
             <div style={{ position:'absolute', width:900, height:900, right:'-10%', top:'0%',    borderRadius:'50%', background: dark ? 'radial-gradient(circle, rgba(27,58,96,.9) 0%, transparent 70%)'  : 'radial-gradient(circle, rgba(47,188,212,.16) 0%, transparent 70%)', animation:'orbPulse1 18s ease-in-out infinite' }}/>
-            <div style={{ position:'absolute', width:700, height:700, left:'0%',   bottom:'5%',  borderRadius:'50%', background: dark ? 'radial-gradient(circle, rgba(141,198,63,.06) 0%, transparent 70%)' : 'radial-gradient(circle, rgba(141,198,63,.10) 0%, transparent 70%)', animation:'orbPulse2 22s ease-in-out infinite' }}/>
+            <div style={{ position:'absolute', width:700, height:700, left:'0%',   bottom:'5%',  borderRadius:'50%', background: dark ? 'radial-gradient(circle, rgba(0,150,136,.06) 0%, transparent 70%)' : 'radial-gradient(circle, rgba(0,150,136,.10) 0%, transparent 70%)', animation:'orbPulse2 22s ease-in-out infinite' }}/>
             <div style={{ position:'absolute', width:500, height:500, left:'38%',  top:'30%',    borderRadius:'50%', background: dark ? 'radial-gradient(circle, rgba(47,188,212,.07) 0%, transparent 70%)' : 'radial-gradient(circle, rgba(47,188,212,.12) 0%, transparent 70%)', animation:'orbPulse3 26s ease-in-out infinite' }}/>
             <div style={{ position:'absolute', width:400, height:400, right:'20%', bottom:'20%', borderRadius:'50%', background: dark ? 'radial-gradient(circle, rgba(12,25,41,.8) 0%, transparent 70%)'  : 'radial-gradient(circle, rgba(226,232,240,.4) 0%, transparent 70%)' }}/>
 
@@ -322,7 +375,7 @@ function HistoryBackground({ dark = true }) {
                     fontSize:   s,
                     color:      dark ? C.gold : C.navy,
                     opacity:    (dark ? 0.055 : 0.07) + (i % 4) * 0.012,
-                    fontFamily: "'Rakkas', serif",
+                    fontFamily: "'Ruwudu', serif",
                     fontWeight: 400,
                     letterSpacing: 1,
                     willChange: 'transform',
@@ -338,77 +391,100 @@ function HistoryBackground({ dark = true }) {
 ═══════════════════════════════════════════════════════════════ */
 function LocationCard({ name, num, icon, address, detail, featured, dark }) {
     const [hovered, setHovered] = useState(false);
-    const active = hovered || featured;
+    const active  = hovered || featured;
+    const accent  = featured ? C.amber : C.gold;
+    const arNum   = { '01':'١', '02':'٢', '03':'٣', '04':'٤' }[num] ?? num;
+    const patId   = `locPat-${num}`;
+
     return (
         <div
             onMouseEnter={() => setHovered(true)}
             onMouseLeave={() => setHovered(false)}
-            style={{
-                position:'relative', borderRadius:22, overflow:'hidden',
-                padding: featured ? '32px 28px 30px' : '26px 24px 26px',
-                background: dark
-                    ? (active ? 'rgba(12,20,42,.98)' : 'rgba(7,13,28,.82)')
-                    : (active ? 'rgba(255,252,240,.97)' : 'rgba(255,248,230,.78)'),
-                border:`1.5px solid ${active ? (featured ? 'rgba(141,198,63,.55)' : 'rgba(47,188,212,.5)') : (dark ? 'rgba(47,188,212,.13)' : 'rgba(47,188,212,.28)')}`,
-                boxShadow: active
-                    ? `0 20px 60px rgba(0,0,0,${dark?'.55':'.14'}), 0 0 0 1px ${featured ? 'rgba(141,198,63,.2)' : 'rgba(47,188,212,.18)'}, inset 0 1px 0 rgba(47,188,212,.18)`
-                    : `0 4px 20px rgba(0,0,0,${dark?'.3':'.06'})`,
-                transform: active ? 'translateY(-6px)' : 'translateY(0)',
-                backdropFilter:'blur(20px)',
-                transition:'all 0.45s cubic-bezier(.22,1,.36,1)',
-                cursor:'default',
-            }}
+            style={{ position:'relative', direction:'rtl', cursor:'default', transform: active ? 'translateY(-6px)' : 'none', transition:'transform .45s cubic-bezier(.22,1,.36,1)' }}
         >
-            {/* Featured amber glow */}
-            {featured && <div style={{ position:'absolute', inset:0, background:'radial-gradient(ellipse at center bottom, rgba(141,198,63,.07) 0%, transparent 65%)', pointerEvents:'none' }}/>}
+            {/* زخارف أركان رفيعة بجوهرة صغيرة — طراز تذهيب المخطوطات */}
+            {['tl','tr','bl','br'].map(pos => {
+                const hFlip = pos[1] === 'r', vFlip = pos[0] === 'b';
+                return (
+                    <div key={pos} style={{
+                        position:'absolute', width:24, height:24, zIndex:3, color:accent,
+                        opacity: active ? 1 : .55, transition:'opacity .4s ease',
+                        top: pos[0]==='t' ? 6 : 'auto', bottom: pos[0]==='b' ? 6 : 'auto',
+                        right: pos[1]==='r' ? 6 : 'auto', left: pos[1]==='l' ? 6 : 'auto',
+                        transform:`scale(${hFlip?-1:1},${vFlip?-1:1})`,
+                    }}>
+                        <svg viewBox="0 0 30 30" width="24" height="24">
+                            <path d="M3,19 L3,3 L19,3" stroke="currentColor" strokeWidth="1.4" fill="none" strokeLinecap="round"/>
+                            <rect x="0" y="0" width="7" height="7" transform="rotate(45 3.2 3.2)" fill="currentColor"/>
+                        </svg>
+                    </div>
+                );
+            })}
 
-            {/* Top shimmer */}
-            <div style={{ position:'absolute', top:0, left:'12%', right:'12%', height:1.5, background:`linear-gradient(90deg,transparent,${featured ? 'rgba(141,198,63,.6)' : 'rgba(47,188,212,.45)'},transparent)`, opacity: active ? 1 : 0.3, transition:'opacity 0.4s ease' }}/>
-
-            {/* Number badge */}
             <div style={{
-                display:'inline-flex', alignItems:'center', justifyContent:'center',
-                width:38, height:22, borderRadius:99, marginBottom:18,
-                background: dark ? 'rgba(47,188,212,.08)' : 'rgba(47,188,212,.12)',
-                border:`1px solid ${featured ? 'rgba(141,198,63,.4)' : 'rgba(47,188,212,.3)'}`,
-                fontSize:9, fontFamily:'Cinzel,serif', letterSpacing:'.2em',
-                color: featured ? C.amber : C.gold,
-            }}>{num}</div>
-
-            {/* Icon */}
-            <div style={{
-                width:52, height:52, borderRadius:14, marginBottom:18,
+                position:'relative', overflow:'hidden', borderRadius:18, textAlign:'center',
+                padding: featured ? '36px 26px 30px' : '30px 24px 26px',
                 background: dark
-                    ? (active ? `rgba(${featured?'244,124,32':'201,161,74'},.1)` : 'rgba(47,188,212,.05)')
-                    : (active ? `rgba(${featured?'244,124,32':'201,161,74'},.14)` : 'rgba(47,188,212,.08)'),
-                border:`1.5px solid ${active ? (featured ? 'rgba(141,198,63,.4)' : 'rgba(47,188,212,.38)') : 'rgba(47,188,212,.16)'}`,
-                display:'flex', alignItems:'center', justifyContent:'center',
-                transition:'all 0.4s ease',
-                boxShadow: active ? `0 0 18px rgba(${featured?'244,124,32':'201,161,74'},.18)` : 'none',
+                    ? (active ? 'linear-gradient(155deg,#101f36,#0a1524)' : 'linear-gradient(155deg,#0c1929,#080f1c)')
+                    : (active ? 'linear-gradient(155deg,#f4f8fb,#e9f1f6)' : '#ffffff'),
+                border:`1px solid ${active ? accent+'99' : dark ? 'rgba(47,188,212,.16)' : 'rgba(47,188,212,.25)'}`,
+                boxShadow: active
+                    ? `0 18px 48px rgba(0,0,0,${dark?'.5':'.1'}), inset 0 1px 0 ${accent}22`
+                    : dark ? '0 4px 20px rgba(0,0,0,.3)' : '0 2px 16px rgba(27,58,96,.06)',
+                transition:'all .45s cubic-bezier(.22,1,.36,1)',
             }}>
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={featured ? C.amber : C.gold} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                    <path d={icon}/>
+                {/* إطار داخلي مزدوج */}
+                <div style={{ position:'absolute', inset:7, borderRadius:11, border:`1px solid ${accent}`, opacity: active?.5:.2, pointerEvents:'none', transition:'opacity .5s ease' }}/>
+
+                {/* نسيج نجمة ثمانية */}
+                <svg style={{ position:'absolute', inset:0, width:'100%', height:'100%', opacity: active?.14:.05, transition:'opacity .5s ease', pointerEvents:'none' }}>
+                    <defs>
+                        <pattern id={patId} width="30" height="30" patternUnits="userSpaceOnUse">
+                            <g stroke={accent} fill="none" strokeWidth="1">
+                                <rect x="3" y="3" width="24" height="24"/>
+                                <rect x="3" y="3" width="24" height="24" transform="rotate(45 15 15)"/>
+                            </g>
+                        </pattern>
+                    </defs>
+                    <rect width="100%" height="100%" fill={`url(#${patId})`}/>
                 </svg>
+
+                {/* رقم عربي صغير */}
+                <div style={{ position:'relative', zIndex:2, fontSize:11, fontWeight:800, color:accent, opacity:.65, letterSpacing:'.14em', marginBottom:14 }}>{arNum}</div>
+
+                {/* شمسة الأيقونة */}
+                <div style={{ position:'relative', width:66, height:66, margin:'0 auto 18px', display:'flex', alignItems:'center', justifyContent:'center', transform: active?'scale(1.06)':'scale(1)', transition:'transform .4s cubic-bezier(.22,1,.36,1)', zIndex:2 }}>
+                    <svg width="66" height="66" viewBox="0 0 66 66" style={{ position:'absolute', inset:0 }}>
+                        <circle cx="33" cy="33" r="30" fill="none" stroke={accent} strokeWidth=".7" opacity={active?.7:.4}/>
+                        <g stroke={accent} strokeWidth="1" fill="none" opacity={active?.9:.5}>
+                            <rect x="14" y="14" width="38" height="38"/>
+                            <rect x="14" y="14" width="38" height="38" transform="rotate(45 33 33)"/>
+                        </g>
+                        <circle cx="33" cy="33" r="20" fill={dark ? '#0c1929' : '#ffffff'} stroke={accent} strokeWidth="1.3"/>
+                    </svg>
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={accent} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" style={{ position:'relative', zIndex:1 }}>
+                        <path d={icon}/>
+                    </svg>
+                </div>
+
+                {/* الاسم */}
+                <div style={{
+                    fontSize: featured ? 20 : 17, fontWeight:800, position:'relative', zIndex:2,
+                    color: active ? accent : (dark ? 'rgba(226,232,240,.8)' : C.navy),
+                    marginBottom:10, transition:'color .3s ease',
+                }}>{name}</div>
+
+                {/* فاصل ماسي */}
+                <div style={{ display:'flex', alignItems:'center', justifyContent:'center', gap:7, marginBottom:12, position:'relative', zIndex:2 }}>
+                    <div style={{ width: active?30:18, height:1, background:`linear-gradient(90deg,transparent,${accent})`, transition:'width .4s ease' }}/>
+                    <svg width="8" height="8" viewBox="0 0 18 18"><rect x="4" y="4" width="10" height="10" transform="rotate(45 9 9)" fill={accent}/></svg>
+                    <div style={{ width: active?30:18, height:1, background:`linear-gradient(90deg,${accent},transparent)`, transition:'width .4s ease' }}/>
+                </div>
+
+                {/* العنوان والتفاصيل */}
+                <div style={{ fontSize:13, fontWeight:700, color: dark ? 'rgba(226,232,240,.75)' : C.navy, marginBottom:5, lineHeight:1.55, position:'relative', zIndex:2 }}>{address}</div>
+                <div style={{ fontSize:12, color: dark ? 'rgba(226,232,240,.44)' : 'rgba(27,58,96,.55)', lineHeight:1.8, position:'relative', zIndex:2 }}>{detail}</div>
             </div>
-
-            {/* Name */}
-            <div style={{
-                fontSize: featured ? 22 : 18, fontFamily:'Rakkas,serif',
-                color: active ? (featured ? C.amber : C.gold) : (dark ? 'rgba(226,232,240,.75)' : C.navy),
-                marginBottom:10, letterSpacing:'.04em',
-                transition:'color 0.3s ease',
-                textShadow: active ? `0 0 20px rgba(${featured?'244,124,32':'201,161,74'},.3)` : 'none',
-            }}>{name}</div>
-
-            {/* Divider */}
-            <div style={{ height:1, width: active ? 44 : 22, background:`linear-gradient(90deg,${featured?C.amber:C.gold},transparent)`, marginBottom:12, transition:'width 0.4s ease' }}/>
-
-            {/* Address */}
-            <div style={{ fontSize:13, fontWeight:700, color: dark ? 'rgba(226,232,240,.75)' : C.navy, marginBottom:5, lineHeight:1.55 }}>{address}</div>
-            <div style={{ fontSize:12, color: dark ? 'rgba(226,232,240,.44)' : 'rgba(27,58,96,.55)', lineHeight:1.8 }}>{detail}</div>
-
-            {/* Bottom accent line */}
-            <div style={{ position:'absolute', bottom:0, left:0, right:0, height:3, borderRadius:'0 0 22px 22px', background: active ? `linear-gradient(90deg,transparent,${featured?C.amber:C.gold},transparent)` : 'transparent', transition:'background 0.4s ease', opacity:.7 }}/>
         </div>
     );
 }
@@ -418,19 +494,18 @@ function LocationCard({ name, num, icon, address, detail, featured, dark }) {
 ═══════════════════════════════════════════════════════════════ */
 function SocialCard({ href, label, handle, glow, borderHover, icon, dark = true }) {
     const [hovered, setHovered] = useState(false);
+    const accent = borderHover;
 
-    const cardBg     = dark
-        ? (hovered ? 'rgba(14,22,42,.95)' : 'rgba(8,14,28,.7)')
-        : (hovered ? 'rgba(27,58,96,.05)' : '#ffffff');
-    const cardBorder = hovered ? borderHover : (dark ? 'rgba(47,188,212,.14)' : 'rgba(27,58,96,.1)');
-    const cardShadow = hovered
-        ? `0 0 0 1px ${borderHover}, 0 16px 48px rgba(0,0,0,${dark?'.55':'.12'}), 0 0 40px ${glow}`
-        : (dark ? '0 4px 20px rgba(0,0,0,.3)' : '0 2px 16px rgba(27,58,96,.07)');
-    const labelColor = dark
-        ? (hovered ? '#2fbcd4' : 'rgba(226,232,240,.65)')
-        : (hovered ? '#8dc63f' : 'rgba(27,58,96,.7)');
-    const handleColor = dark ? 'rgba(226,232,240,.35)' : 'rgba(27,58,96,.38)';
-    const ctaColor   = hovered ? '#8dc63f' : (dark ? 'rgba(47,188,212,.35)' : 'rgba(27,58,96,.3)');
+    const cardBg = dark
+        ? (hovered ? 'linear-gradient(155deg,#101f36,#0a1524)' : 'linear-gradient(155deg,#0c1929,#080f1c)')
+        : (hovered ? 'linear-gradient(155deg,#f4f8fb,#e9f1f6)' : '#ffffff');
+    const cardBorder  = hovered ? accent : (dark ? 'rgba(47,188,212,.16)' : 'rgba(27,58,96,.13)');
+    const cardShadow  = hovered
+        ? `0 16px 44px rgba(0,0,0,${dark?'.5':'.1'}), 0 0 30px ${glow}`
+        : (dark ? '0 4px 20px rgba(0,0,0,.3)' : '0 2px 16px rgba(27,58,96,.06)');
+    const labelColor  = hovered ? '#009688' : (dark ? 'rgba(226,232,240,.85)' : C.navy);
+    const handleColor = dark ? 'rgba(226,232,240,.35)' : 'rgba(27,58,96,.4)';
+    const ctaColor    = hovered ? '#009688' : (dark ? 'rgba(47,188,212,.42)' : 'rgba(27,58,96,.38)');
 
     return (
         <a
@@ -440,9 +515,9 @@ function SocialCard({ href, label, handle, glow, borderHover, icon, dark = true 
             onMouseEnter={() => setHovered(true)}
             onMouseLeave={() => setHovered(false)}
             style={{
-                display:'flex', flexDirection:'column', alignItems:'center', gap:14,
-                padding:'28px 20px 24px',
-                borderRadius:20,
+                display:'flex', flexDirection:'column', alignItems:'center', gap:12,
+                padding:'30px 20px 24px',
+                borderRadius:18,
                 background: cardBg,
                 border:`1px solid ${cardBorder}`,
                 boxShadow: cardShadow,
@@ -450,65 +525,59 @@ function SocialCard({ href, label, handle, glow, borderHover, icon, dark = true 
                 transform: hovered ? 'translateY(-6px)' : 'translateY(0)',
                 transition:'all 0.4s cubic-bezier(.22,1,.36,1)',
                 cursor:'pointer', position:'relative', overflow:'hidden',
-                backdropFilter:'blur(20px)',
             }}
         >
-            {/* Glow blob inside */}
+            {/* إطار داخلي مزدوج */}
+            <div style={{ position:'absolute', inset:6, borderRadius:12, border:`1px solid ${accent}`, opacity: hovered?.5:.16, transition:'opacity .5s ease', pointerEvents:'none' }}/>
+
+            {/* توهج */}
             <div style={{
                 position:'absolute', bottom:-30, left:'50%', transform:'translateX(-50%)',
-                width:160, height:80,
+                width:160, height:90,
                 background:`radial-gradient(ellipse, ${glow} 0%, transparent 70%)`,
                 filter:'blur(18px)',
                 opacity: hovered ? 1 : 0,
                 transition:'opacity 0.4s ease',
                 pointerEvents:'none',
             }}/>
-            {/* Top shimmer line */}
-            <div style={{
-                position:'absolute', top:0, left:'15%', right:'15%', height:1,
-                background:`linear-gradient(90deg,transparent,${borderHover},transparent)`,
-                opacity: hovered ? 0.9 : 0.2,
-                transition:'opacity 0.4s ease',
-            }}/>
 
-            {/* Icon circle */}
-            <div style={{
-                width:64, height:64, borderRadius:'50%',
-                background: hovered ? `rgba(47,188,212,.12)` : (dark ? 'rgba(47,188,212,.06)' : 'rgba(27,58,96,.05)'),
-                border:`1.5px solid ${hovered ? 'rgba(47,188,212,.4)' : (dark ? 'rgba(47,188,212,.18)' : 'rgba(27,58,96,.15)')}`,
-                display:'flex', alignItems:'center', justifyContent:'center',
-                color: hovered ? '#8dc63f' : '#2fbcd4',
-                transition:'all 0.4s ease',
-                boxShadow: hovered ? `0 0 20px ${glow}` : 'none',
-                position:'relative', zIndex:1,
-            }}>
-                {icon}
+            {/* شمسة الأيقونة */}
+            <div style={{ position:'relative', width:64, height:64, display:'flex', alignItems:'center', justifyContent:'center', transform: hovered?'scale(1.07)':'scale(1)', transition:'transform .4s cubic-bezier(.22,1,.36,1)', zIndex:1 }}>
+                <svg width="64" height="64" viewBox="0 0 64 64" style={{ position:'absolute', inset:0 }}>
+                    <circle cx="32" cy="32" r="29" fill="none" stroke={accent} strokeWidth=".7" opacity={hovered?.75:.35}/>
+                    <g stroke={accent} strokeWidth="1" fill="none" opacity={hovered?.9:.4}>
+                        <rect x="13" y="13" width="38" height="38"/>
+                        <rect x="13" y="13" width="38" height="38" transform="rotate(45 32 32)"/>
+                    </g>
+                    <circle cx="32" cy="32" r="19" fill={dark?'rgba(47,188,212,.06)':'rgba(27,58,96,.04)'} stroke={accent} strokeWidth="1.2"/>
+                </svg>
+                <div style={{ position:'relative', zIndex:1, color: hovered ? '#009688' : '#2fbcd4', display:'flex', transition:'color .3s ease' }}>
+                    {icon}
+                </div>
             </div>
 
             {/* Label */}
             <div style={{ textAlign:'center', position:'relative', zIndex:1 }}>
                 <div style={{
-                    fontSize:17, fontFamily:'Rakkas,serif',
+                    fontSize:16, fontWeight:800,
                     color: labelColor,
-                    letterSpacing:'.06em', marginBottom:4,
+                    marginBottom:4,
                     transition:'color 0.3s ease',
                 }}>{label}</div>
                 <div style={{
                     fontSize:11, color: handleColor,
-                    letterSpacing:'.04em', fontFamily:'Cinzel,serif',
+                    letterSpacing:'.02em',
                     direction:'ltr',
                 }}>{handle}</div>
             </div>
 
-            {/* CTA */}
-            <div style={{
-                fontSize:11, letterSpacing:'.14em',
-                color: ctaColor,
-                fontFamily:'Cinzel,serif',
-                transition:'color 0.3s ease',
-                position:'relative', zIndex:1,
-            }}>
-                {hovered ? 'VISIT NOW ↗' : 'FOLLOW US'}
+            {/* فاصل ماسي + CTA */}
+            <div style={{ display:'flex', alignItems:'center', gap:7, marginTop:2, position:'relative', zIndex:1 }}>
+                <div style={{ width:16, height:1, background:`linear-gradient(90deg,transparent,${ctaColor})` }}/>
+                <span style={{ fontSize:11, fontWeight:700, color: ctaColor, letterSpacing:'.03em', transition:'color 0.3s ease' }}>
+                    {hovered ? 'زوروا الصفحة ←' : 'تابعنا'}
+                </span>
+                <div style={{ width:16, height:1, background:`linear-gradient(90deg,${ctaColor},transparent)` }}/>
             </div>
         </a>
     );
@@ -518,26 +587,31 @@ function SocialCard({ href, label, handle, glow, borderHover, icon, dark = true 
    HISTORY FLOATING ICONS — decorative background elements
 ═══════════════════════════════════════════════════════════════ */
 const HIST_ICONS = [
-    { x:'4%',  y:'8%',  rot:-14, sz:58, d:'4.2s', dl:'0s',   type:'book'    },
-    { x:'82%', y:'6%',  rot:10,  sz:48, d:'3.7s', dl:'0.6s', type:'scroll'  },
-    { x:'2%',  y:'44%', rot:-6,  sz:54, d:'5.0s', dl:'1.1s', type:'star'    },
-    { x:'89%', y:'42%', rot:12,  sz:46, d:'3.9s', dl:'0.4s', type:'inkwell' },
-    { x:'72%', y:'74%', rot:-9,  sz:50, d:'4.6s', dl:'1.6s', type:'book'    },
-    { x:'10%', y:'72%', rot:7,   sz:44, d:'4.4s', dl:'0.9s', type:'star'    },
-    { x:'44%', y:'3%',  rot:0,   sz:40, d:'3.4s', dl:'1.9s', type:'quill'   },
-    { x:'90%', y:'22%', rot:-16, sz:40, d:'5.2s', dl:'0.2s', type:'book'    },
-    { x:'54%', y:'80%', rot:5,   sz:42, d:'4.0s', dl:'1.3s', type:'scroll'  },
-    { x:'22%', y:'12%', rot:8,   sz:48, d:'4.8s', dl:'0.7s', type:'inkwell' },
-    { x:'62%', y:'18%', rot:-12, sz:40, d:'3.5s', dl:'1.4s', type:'star'    },
-    { x:'18%', y:'56%', rot:15,  sz:44, d:'4.1s', dl:'0.3s', type:'quill'   },
-    { x:'76%', y:'58%', rot:-4,  sz:48, d:'4.7s', dl:'1.0s', type:'scroll'  },
-    { x:'36%', y:'68%', rot:10,  sz:44, d:'3.8s', dl:'1.7s', type:'inkwell' },
-    { x:'93%', y:'62%', rot:-8,  sz:40, d:'5.3s', dl:'0.5s', type:'star'    },
-    { x:'6%',  y:'88%', rot:5,   sz:38, d:'4.3s', dl:'1.2s', type:'book'    },
-    { x:'48%', y:'54%', rot:-3,  sz:36, d:'6.0s', dl:'2.1s', type:'quill'   },
-    { x:'30%', y:'30%', rot:18,  sz:42, d:'4.5s', dl:'0.8s', type:'scroll'  },
-    { x:'64%', y:'88%', rot:-11, sz:46, d:'3.6s', dl:'1.5s', type:'star'    },
-    { x:'84%', y:'84%', rot:6,   sz:36, d:'5.5s', dl:'0.4s', type:'book'    },
+    { x:'4%',  y:'8%',  rot:-14, sz:50, d:'4.2s', dl:'0s',   type:'book'    },
+    { x:'89%', y:'42%', rot:12,  sz:42, d:'3.9s', dl:'0.4s', type:'inkwell' },
+    { x:'10%', y:'72%', rot:7,   sz:40, d:'4.4s', dl:'0.9s', type:'star'    },
+    { x:'44%', y:'3%',  rot:0,   sz:36, d:'3.4s', dl:'1.9s', type:'quill'   },
+    { x:'82%', y:'6%',  rot:10,  sz:40, d:'3.7s', dl:'0.6s', type:'scroll'  },
+    { x:'6%',  y:'88%', rot:5,   sz:34, d:'4.3s', dl:'1.2s', type:'book'    },
+];
+
+/* حروف عربية عائمة — بأصل الحروف اللي فوقها نقطة (ن، ب، ث، ي، ذ) */
+const ARABIC_GLYPHS = [
+    { ch:'ن', x:'2%',  y:'20%', rot:-8,  sz:38, d:'4.6s', dl:'.2s' },
+    { ch:'ب', x:'90%', y:'16%', rot:9,   sz:32, d:'4.1s', dl:'.7s' },
+    { ch:'ث', x:'0%',  y:'66%', rot:6,   sz:34, d:'5.0s', dl:'1.1s' },
+    { ch:'ي', x:'92%', y:'62%', rot:-10, sz:30, d:'3.8s', dl:'.4s' },
+    { ch:'ذ', x:'46%', y:'0%',  rot:0,   sz:28, d:'4.4s', dl:'1.5s' },
+];
+
+/* نقاط الحروف العائمة — زخرفة مستوحاة من نقطة الحروف العربية */
+const DOT_ACCENTS = [
+    { x:'16%', y:'32%', sz:6,  amber:false },
+    { x:'80%', y:'28%', sz:5,  amber:true  },
+    { x:'12%', y:'80%', sz:5,  amber:false },
+    { x:'84%', y:'78%', sz:7,  amber:true  },
+    { x:'50%', y:'6%',  sz:4,  amber:false },
+    { x:'96%', y:'46%', sz:5,  amber:true  },
 ];
 
 function HistIcon({ type, sz, color }) {
@@ -644,7 +718,7 @@ function TeacherHero({ dark }) {
             <div className="th-deco" style={{
                 position:'absolute', top:'50%', left:'50%', transform:'translate(-50%,-50%)',
                 width:560, height:660,
-                background:'radial-gradient(ellipse at center, rgba(141,198,63,.26) 0%, rgba(47,188,212,.12) 38%, transparent 68%)',
+                background:'radial-gradient(ellipse at center, rgba(0,150,136,.26) 0%, rgba(47,188,212,.12) 38%, transparent 68%)',
                 filter:'blur(40px)',
                 animation:'teacherGlow 4.5s ease-in-out infinite',
                 pointerEvents:'none',
@@ -654,57 +728,38 @@ function TeacherHero({ dark }) {
             <div className="th-deco" style={{
                 position:'absolute', top:'50%', left:'50%',
                 width:780, height:780, marginLeft:-390, marginTop:-390,
-                background:'conic-gradient(from 0deg, transparent 0deg, rgba(47,188,212,.045) 5deg, transparent 10deg, transparent 22deg, rgba(141,198,63,.03) 27deg, transparent 32deg, transparent 44deg, rgba(47,188,212,.04) 49deg, transparent 54deg, transparent 66deg, rgba(47,188,212,.03) 71deg, transparent 76deg, transparent 88deg, rgba(141,198,63,.04) 93deg, transparent 98deg, transparent 110deg, rgba(47,188,212,.03) 115deg, transparent 120deg)',
+                background:'conic-gradient(from 0deg, transparent 0deg, rgba(47,188,212,.045) 5deg, transparent 10deg, transparent 22deg, rgba(0,150,136,.03) 27deg, transparent 32deg, transparent 44deg, rgba(47,188,212,.04) 49deg, transparent 54deg, transparent 66deg, rgba(47,188,212,.03) 71deg, transparent 76deg, transparent 88deg, rgba(0,150,136,.04) 93deg, transparent 98deg, transparent 110deg, rgba(47,188,212,.03) 115deg, transparent 120deg)',
                 animation:'rayRotate 48s linear infinite',
                 pointerEvents:'none',
                 opacity: dark ? 1 : 0.4,
             }}/>
 
-            {/* Decorative arch */}
+            {/* حلقة مدارية متقطعة — هوية هندسية عربية بديلة عن القوس اليوناني */}
             <svg className="th-deco" viewBox="0 0 400 400" fill="none"
-                style={{ position:'absolute', top:'-4%', left:'50%', transform:'translateX(-50%)', width:560, height:560, pointerEvents:'none', opacity: dark ? 0.65 : 0.38 }}>
-                <defs>
-                    <linearGradient id="ag1" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%"   stopColor="#2fbcd4" stopOpacity=".9"/>
-                        <stop offset="50%"  stopColor="#8dc63f" stopOpacity=".6"/>
-                        <stop offset="100%" stopColor="#2fbcd4" stopOpacity=".2"/>
-                    </linearGradient>
-                </defs>
-                {/* Outer arc */}
-                <path d="M 45 398 A 158 158 0 0 1 355 398" stroke="url(#ag1)" strokeWidth="1.8" fill="none"/>
-                {/* Inner arc */}
-                <path d="M 68 398 A 135 135 0 0 1 332 398" stroke="#2fbcd4" strokeWidth=".7" fill="none" opacity=".35"/>
-                {/* Tick marks */}
-                {Array.from({length:15}, (_,i) => {
-                    const a  = Math.PI + (i / 14) * Math.PI;
-                    const cx = 200, cy = 398;
-                    return <line key={i}
-                        x1={cx + Math.cos(a)*156} y1={cy + Math.sin(a)*156}
-                        x2={cx + Math.cos(a)*164} y2={cy + Math.sin(a)*164}
-                        stroke="#2fbcd4" strokeWidth="1.1" opacity=".5"/>;
+                style={{ position:'absolute', top:'50%', left:'50%', transform:'translate(-50%,-50%)', width:640, height:640, pointerEvents:'none', opacity: dark ? 0.6 : 0.4, animation:'rayRotate 90s linear infinite' }}>
+                <circle cx="200" cy="200" r="188" stroke="#2fbcd4" strokeWidth="1.4" strokeDasharray="1 11" fill="none" opacity=".85"/>
+                <circle cx="200" cy="200" r="164" stroke="#009688" strokeWidth=".7" fill="none" opacity=".3"/>
+                {/* شمسات صغيرة على الحلقة */}
+                {[0, 90, 180, 270].map(deg => {
+                    const a = (deg * Math.PI) / 180;
+                    const cx = 200 + Math.cos(a) * 188, cy = 200 + Math.sin(a) * 188;
+                    return (
+                        <g key={deg} transform={`translate(${cx} ${cy})`} opacity=".7">
+                            <rect x="-5" y="-5" width="10" height="10" transform="rotate(45)" fill="none" stroke="#2fbcd4" strokeWidth="1"/>
+                        </g>
+                    );
                 })}
-                {/* Crown ornament */}
-                <circle cx="200" cy="240" r="5"  fill="#2fbcd4" opacity=".55"/>
-                <circle cx="200" cy="240" r="10" stroke="#2fbcd4" strokeWidth=".8" fill="none" opacity=".25"/>
-                <line x1="176" y1="240" x2="224" y2="240" stroke="#2fbcd4" strokeWidth=".7" opacity=".25"/>
-                {/* Side pillars */}
-                <line x1="45"  y1="280" x2="45"  y2="398" stroke="url(#ag1)" strokeWidth="2.2" opacity=".55"/>
-                <line x1="355" y1="280" x2="355" y2="398" stroke="url(#ag1)" strokeWidth="2.2" opacity=".55"/>
-                {/* Pillar capitals */}
-                <rect x="35"  y="276" width="20" height="5" rx="1" fill="#2fbcd4" opacity=".45"/>
-                <rect x="345" y="276" width="20" height="5" rx="1" fill="#2fbcd4" opacity=".45"/>
             </svg>
 
             {/* Orbit particles */}
             {ORBIT_PARTICLES.map(({ sym, x, y, d, dl, sz, amber }, i) => (
                 <div key={i} className="th-deco" style={{
                     position:'absolute', left:x, top:y,
-                    fontSize:sz, color: amber ? '#8dc63f' : '#2fbcd4',
+                    fontSize:sz, color: amber ? '#009688' : '#2fbcd4',
                     opacity: dark ? 0.42 : 0.28,
-                    fontFamily:'Cinzel,serif',
                     animation:`orbitBob ${d} ${dl} ease-in-out infinite`,
                     pointerEvents:'none',
-                    textShadow: amber ? '0 0 10px rgba(141,198,63,.5)' : '0 0 10px rgba(47,188,212,.45)',
+                    textShadow: amber ? '0 0 10px rgba(0,150,136,.5)' : '0 0 10px rgba(47,188,212,.45)',
                 }}>{sym}</div>
             ))}
 
@@ -718,11 +773,51 @@ function TeacherHero({ dark }) {
                     transform:`rotate(${rot}deg)`,
                     filter: dark
                         ? 'drop-shadow(0 0 6px rgba(47,188,212,.35))'
-                        : 'drop-shadow(0 0 4px rgba(138,104,32,.25))',
+                        : 'drop-shadow(0 0 4px rgba(27,58,96,.25))',
                 }}>
-                    <HistIcon type={type} sz={sz} color={dark ? '#2fbcd4' : '#8a6820'}/>
+                    <HistIcon type={type} sz={sz} color={dark ? '#2fbcd4' : '#1b3a60'}/>
                 </div>
             ))}
+
+            {/* حروف عربية عائمة بطراز شبحي — تبرز جماليات نقطة الحرف العربي */}
+            {ARABIC_GLYPHS.map(({ ch, x, y, rot, sz, d, dl }, i) => (
+                <div key={`ag-${i}`} className="th-deco" style={{
+                    position:'absolute', left:x, top:y,
+                    fontFamily:"'Ruwudu',serif", fontSize:sz, lineHeight:1,
+                    color: dark ? 'rgba(47,188,212,.5)' : 'rgba(27,58,96,.32)',
+                    opacity: dark ? 0.7 : 0.55,
+                    animation:`orbitBob ${d} ${dl} ease-in-out infinite`,
+                    transform:`rotate(${rot}deg)`,
+                    pointerEvents:'none', userSelect:'none',
+                    textShadow: dark ? '0 0 14px rgba(47,188,212,.3)' : 'none',
+                }}>{ch}</div>
+            ))}
+
+            {/* نقاط الحروف العائمة */}
+            {DOT_ACCENTS.map(({ x, y, sz, amber }, i) => (
+                <div key={`dot-${i}`} className="th-deco" style={{
+                    position:'absolute', left:x, top:y,
+                    width:sz, height:sz, borderRadius:'50%',
+                    background: amber ? '#009688' : '#2fbcd4',
+                    boxShadow: `0 0 8px ${amber ? 'rgba(0,150,136,.7)' : 'rgba(47,188,212,.7)'}`,
+                    opacity: dark ? 0.75 : 0.5,
+                    animation:`orbitBob ${3.2 + i*.4}s ${i*.3}s ease-in-out infinite`,
+                    pointerEvents:'none',
+                }}/>
+            ))}
+
+            {/* أشكال معينة مدوّرة الحواف — زخرفة أركان هندسية */}
+            <div className="th-deco" style={{
+                position:'absolute', bottom:'8%', left:'0%', width:52, height:52, borderRadius:16,
+                border:`1.5px solid ${dark ? 'rgba(47,188,212,.5)' : 'rgba(27,58,96,.3)'}`,
+                transform:'rotate(45deg)', pointerEvents:'none',
+            }}/>
+            <div className="th-deco" style={{
+                position:'absolute', top:'10%', right:'4%', width:30, height:30, borderRadius:9,
+                background: dark ? 'rgba(0,150,136,.18)' : 'rgba(0,150,136,.14)',
+                border:`1.5px solid ${dark ? 'rgba(0,150,136,.55)' : 'rgba(0,150,136,.4)'}`,
+                transform:'rotate(45deg)', pointerEvents:'none',
+            }}/>
 
             {/* Main image + float wrapper — framed portrait medallion */}
             <div className="th-img" style={{
@@ -730,70 +825,29 @@ function TeacherHero({ dark }) {
                 display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center', gap:20,
                 animation:'teacherFloat 5.5s ease-in-out infinite',
             }}>
-                <div ref={imgRef} className="teacher-hero-img" style={{ width:'100%', maxWidth:600, position:'relative' }}>
-                    {/* Thin ring hugging the medallion edge */}
-                    <div style={{
-                        position:'absolute', inset:'6%', borderRadius:'50%',
-                        border:'1px solid rgba(47,188,212,.4)',
-                        boxShadow:'0 0 0 1px rgba(141,198,63,.08), inset 0 0 40px rgba(47,188,212,.06)',
-                        pointerEvents:'none', zIndex:1,
-                    }}/>
-
-                    {/* مدالية "لغة الضاد" — هوية تصميمية بديلة عن الصورة الشخصية */}
-                    <div style={{
-                        width:'100%', aspectRatio:'1', borderRadius:'50%', position:'relative', zIndex:2,
-                        display:'flex', alignItems:'center', justifyContent:'center', overflow:'hidden',
-                        background: dark
-                            ? 'radial-gradient(circle at 50% 38%, #16304f 0%, #0c1929 60%, #050b15 100%)'
-                            : 'radial-gradient(circle at 50% 38%, #eaf7fa 0%, #dcecf3 60%, #cfe3ee 100%)',
-                        filter: dark
-                            ? 'drop-shadow(0 34px 70px rgba(0,0,0,.6)) drop-shadow(0 0 46px rgba(141,198,63,.22))'
-                            : 'drop-shadow(0 24px 50px rgba(0,0,0,.18)) drop-shadow(0 0 34px rgba(141,198,63,.14))',
-                    }}>
-                        {/* نجمة ثمانية خلفية */}
-                        <svg width="72%" height="72%" viewBox="0 0 100 100" style={{ position:'absolute', opacity:.14 }}>
-                            <rect x="18" y="18" width="64" height="64" fill="none" stroke="#2fbcd4" strokeWidth="1.2"/>
-                            <rect x="18" y="18" width="64" height="64" transform="rotate(45 50 50)" fill="none" stroke="#2fbcd4" strokeWidth="1.2"/>
-                        </svg>
-                        {/* حرف الضاد */}
-                        <span style={{
-                            fontFamily:"'Rakkas',serif", fontSize:'clamp(140px,20vw,220px)', lineHeight:1,
-                            background:'linear-gradient(160deg,#2fbcd4,#8dc63f)',
-                            WebkitBackgroundClip:'text', WebkitTextFillColor:'transparent', backgroundClip:'text',
-                            filter:'drop-shadow(0 8px 30px rgba(47,188,212,.35))',
-                            position:'relative', zIndex:1,
-                        }}>ض</span>
-                        {/* مسّة قلم أسفل الحرف */}
-                        <svg width="46%" height="40" viewBox="0 0 200 40" style={{ position:'absolute', bottom:'18%', opacity:.85 }}>
-                            <path d="M10,30 C 60,5 120,5 190,20" stroke="#8dc63f" strokeWidth="3" fill="none" strokeLinecap="round"/>
-                            <circle cx="190" cy="20" r="4.5" fill="#8dc63f"/>
-                        </svg>
-                    </div>
+                <div ref={imgRef} className="teacher-hero-img" style={{ width:'100%', maxWidth:600, position:'relative', display:'flex', justifyContent:'center' }}>
+                    {/* صورة الأستاذ محمد منصور */}
+                    <img
+                        src="/images/hero-mansour.png.png"
+                        alt="الأستاذ محمد منصور"
+                        style={{
+                            width:'86%', height:'auto', position:'relative', zIndex:2,
+                            filter: dark
+                                ? 'drop-shadow(0 34px 70px rgba(0,0,0,.6)) drop-shadow(0 0 46px rgba(0,150,136,.22))'
+                                : 'drop-shadow(0 24px 50px rgba(0,0,0,.18)) drop-shadow(0 0 34px rgba(0,150,136,.14))',
+                            maskImage: 'radial-gradient(ellipse 10% 6% at 25% 90%, transparent 60%, black 100%)',
+                            WebkitMaskImage: 'radial-gradient(ellipse 10% 6% at 25% 90%, transparent 60%, black 100%)',
+                        }}
+                    />
 
                     {/* Ground glow */}
                     <div style={{
-                        position:'absolute', bottom:'8%', left:'10%', right:'10%', height:55,
+                        position:'absolute', bottom:'6%', left:'10%', right:'10%', height:55,
                         background:`radial-gradient(ellipse at center, rgba(47,188,212,.${dark?'22':'10'}) 0%, transparent 72%)`,
                         filter:'blur(10px)', pointerEvents:'none', zIndex:0,
                     }}/>
                 </div>
 
-                {/* Name badge — now flows directly under the medallion */}
-                <div style={{ position:'relative', zIndex:6, whiteSpace:'nowrap' }}>
-                    <div style={{
-                        padding:'9px 24px', borderRadius:999,
-                        background: dark ? 'rgba(5,10,24,.88)' : 'rgba(255,252,240,.90)',
-                        border:`1px solid rgba(47,188,212,.6)`,
-                        backdropFilter:'blur(18px)',
-                        boxShadow:`0 6px 24px rgba(0,0,0,.35), 0 0 0 1px rgba(47,188,212,.14), inset 0 1px 0 rgba(47,188,212,.2)`,
-                        display:'flex', alignItems:'center', gap:10,
-                        animation:'badgeShimmer 3.5s ease-in-out infinite',
-                    }}>
-                        <span style={{ width:7, height:7, borderRadius:'50%', background:'#8dc63f', boxShadow:'0 0 9px rgba(141,198,63,.75)', display:'inline-block' }}/>
-                        <span style={{ fontSize:13, fontFamily:'Rakkas,serif', color:'#2fbcd4', letterSpacing:'.07em' }}>الأستاذ محمد منصور</span>
-                        <span style={{ width:7, height:7, borderRadius:'50%', background:'#8dc63f', boxShadow:'0 0 9px rgba(141,198,63,.75)', display:'inline-block' }}/>
-                    </div>
-                </div>
             </div>
         </div>
     );
@@ -818,7 +872,7 @@ function Preloader({ visible }) {
                     animation:`pingRing 2s ease-out ${i*.5}s infinite`,
                 }}/>
             ))}
-            <span style={{ fontFamily:'Rakkas,serif', fontSize:'clamp(26px,4.5vw,42px)', color:C.gold, letterSpacing:'.18em' }}>
+            <span style={{ fontFamily:'Ruwudu,serif', fontSize:'clamp(26px,4.5vw,42px)', color:C.gold, letterSpacing:'.18em' }}>
                 منصور
             </span>
         </div>
@@ -902,40 +956,16 @@ function NavLogo({ dark = true }) {
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                 boxShadow: '0 0 0 1px rgba(47,188,212,.4), 0 4px 16px rgba(0,0,0,.25)',
             }}>
-                <span style={{ fontFamily: "'Rakkas',serif", fontSize: 22, color: '#fff' }}>ض</span>
+                <span style={{ fontFamily: "'Ruwudu',serif", fontSize: 22, color: '#fff' }}>ض</span>
             </div>
             <span style={{
-                fontFamily: "'Rakkas',serif", fontSize: 18, letterSpacing: '.03em',
+                fontFamily: "'Ruwudu',serif", fontSize: 18, letterSpacing: '.03em',
                 color: dark ? '#eef2f7' : '#1b3a60', transition: 'color .4s ease',
             }}>منصة منصور</span>
         </div>
     );
 }
 
-/* ── Hieroglyph → Arabic welcome morph ───────────────────────── */
-const LETTER_GLYPHS = ['ا','ل','ض','ا','د'];
-function HieroglyphIntro({ dark = true }) {
-    const [showArabic, setShowArabic] = useState(false);
-    useEffect(() => {
-        const t = setTimeout(() => setShowArabic(true), 1800);
-        return () => clearTimeout(t);
-    }, []);
-    return (
-        <div style={{ minHeight:48, marginBottom:18, display:'flex', alignItems:'center' }}>
-            {!showArabic ? (
-                <div style={{ display:'flex', gap:10, animation:'hieroOut .6s 1.2s ease forwards' }}>
-                    {LETTER_GLYPHS.map((g,i)=>(
-                        <span key={i} style={{ fontSize:28, color:C.gold, opacity:.85, fontFamily:"'Rakkas',serif", textShadow:'0 0 12px rgba(47,188,212,.4)' }}>{g}</span>
-                    ))}
-                </div>
-            ) : (
-                <div style={{ animation:'arabicIn .7s ease both', fontFamily:"'Rakkas',serif", fontSize:14, letterSpacing:'.1em', color: dark ? C.stone : C.navy }}>
-                    أهلاً بك في رحاب الضاد
-                </div>
-            )}
-        </div>
-    );
-}
 
 /* ═══════════════════════════════════════════════════════════════
    فروع اللغة العربية — بطاقات متمددة (Accordion)
@@ -997,7 +1027,7 @@ function LanguageBranches({ dark }) {
                                 <div style={{ position:'absolute', inset:0, display:'flex', alignItems:'center', justifyContent:'center', paddingTop:70 }}>
                                     <span style={{
                                         transform:'rotate(-90deg)', whiteSpace:'nowrap',
-                                        fontFamily:"'Rakkas',serif", fontSize:19,
+                                        fontFamily:"'Ruwudu',serif", fontSize:19,
                                         color: dark ? 'rgba(226,232,240,.75)' : '#1b3a60',
                                     }}>{b.title}</span>
                                 </div>
@@ -1030,15 +1060,15 @@ function LanguageBranches({ dark }) {
                                     </div>
                                 </div>
 
-                                <h3 style={{ fontFamily:"'Rakkas',serif", fontSize:'clamp(24px,2.6vw,34px)', color:'#eef2f7', margin:'0 0 14px' }}>{b.title}</h3>
+                                <h3 style={{ fontFamily:"'Ruwudu',serif", fontSize:'clamp(24px,2.6vw,34px)', color:'#eef2f7', margin:'0 0 14px' }}>{b.title}</h3>
 
                                 <p style={{ fontSize:14, lineHeight:2, color:'rgba(226,232,240,.65)', maxWidth:640, margin:'0 0 20px' }}>{b.desc}</p>
 
-                                <div style={{ fontSize:12.5, color:'#8dc63f', fontWeight:700, marginBottom:10 }}>أبرز محاور الدراسة:</div>
+                                <div style={{ fontSize:12.5, color:'#009688', fontWeight:700, marginBottom:10 }}>أبرز محاور الدراسة:</div>
                                 <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(220px,1fr))', gap:'6px 24px', marginBottom:'auto' }}>
                                     {b.points.map((pt, pi) => (
                                         <div key={pi} style={{ display:'flex', alignItems:'flex-start', gap:8, padding:'6px 0' }}>
-                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8dc63f" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink:0, marginTop:3 }}>
+                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#009688" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink:0, marginTop:3 }}>
                                                 <polyline points="20 6 9 17 4 12"/>
                                             </svg>
                                             <span style={{ fontSize:13, color:'rgba(226,232,240,.8)', lineHeight:1.6 }}>{pt}</span>
@@ -1190,13 +1220,13 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
                 {/* Center: nav links (hidden on mobile via CSS) */}
                 <div className="nav-links" style={{ gap:4, position:'absolute', left:'50%', transform:'translateX(-50%)' }}>
                     {[{label:'الرئيسية',href:'#'},{label:'المقررات',href:'#courses'},{label:'عن المنصة',href:'#about'}].map(({label,href})=>(
-                        <a key={label} href={href} style={{
+                        <a key={label} href={href} className="nav-link-item" style={{
                             color:T.navLink, textDecoration:'none',
                             fontSize:13, fontWeight:600, padding:'8px 14px', borderRadius:8,
-                            transition:'color .2s, background .2s',
+                            transition:'color .2s ease',
                         }}
-                        onMouseEnter={e=>{e.currentTarget.style.color=C.gold;e.currentTarget.style.background='rgba(47,188,212,.08)';}}
-                        onMouseLeave={e=>{e.currentTarget.style.color=T.navLink;e.currentTarget.style.background='transparent';}}
+                        onMouseEnter={e=>{e.currentTarget.style.color=C.gold;}}
+                        onMouseLeave={e=>{e.currentTarget.style.color=T.navLink;}}
                         >{label}</a>
                     ))}
                 </div>
@@ -1204,33 +1234,42 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
                 {/* Left group: auth buttons */}
                 <div className="nav-ctas" style={{ display:'flex', alignItems:'center', gap:10 }}>
                     {auth?.user ? (
-                        <Link href="/student/dashboard" style={{
-                            padding:'9px 22px', borderRadius:10,
+                        <Link href="/student/dashboard" className="nav-cta-btn" style={{
+                            display:'inline-flex', alignItems:'center', gap:7,
+                            padding:'9px 24px', borderRadius:999,
                             background:`linear-gradient(135deg,${C.gold},${C.amber})`,
-                            color:C.dark, fontWeight:700, fontSize:13, textDecoration:'none',
-                        }}>لوحة التحكم</Link>
+                            color:C.dark, fontWeight:800, fontSize:13, textDecoration:'none',
+                            boxShadow:`0 4px 18px rgba(47,188,212,.4), inset 0 1px 0 rgba(255,255,255,.3)`,
+                            transition:'transform .3s cubic-bezier(.22,1,.36,1), box-shadow .3s cubic-bezier(.22,1,.36,1)',
+                        }}>
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>
+                            لوحة التحكم
+                        </Link>
                     ) : (<>
-                        <Link href="/student/login" style={{
-                            padding:'9px 20px', borderRadius:10,
+                        <Link href="/student/login" className="nav-login-btn" style={{
+                            display:'inline-flex', alignItems:'center', gap:7,
+                            padding:'9px 20px', borderRadius:999,
                             border:`1.5px solid ${T.authBorder}`,
-                            color:T.authText, fontSize:13, fontWeight:600,
-                            textDecoration:'none', transition:'border-color .2s',
-                        }}
-                        onMouseEnter={e=>e.currentTarget.style.borderColor=C.gold}
-                        onMouseLeave={e=>e.currentTarget.style.borderColor=T.authBorder}
-                        >تسجيل الدخول</Link>
+                            background:'transparent',
+                            color:T.authText, fontSize:13, fontWeight:700,
+                            textDecoration:'none', transition:'all .3s cubic-bezier(.22,1,.36,1)',
+                        }}>
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+                            تسجيل الدخول
+                        </Link>
 
-                        <Link href="/register" style={{
-                            padding:'9px 22px', borderRadius:10,
-                            background:`linear-gradient(135deg,${C.amber},#6ea82d)`,
-                            color:'#fff', fontWeight:700, fontSize:13,
+                        <Link href="/register" className="nav-cta-btn" style={{
+                            display:'inline-flex', alignItems:'center', gap:7,
+                            padding:'9px 24px', borderRadius:999,
+                            background:`linear-gradient(135deg,${C.gold},${C.amber})`,
+                            color:C.dark, fontWeight:800, fontSize:13,
                             textDecoration:'none',
-                            boxShadow:`0 4px 18px rgba(141,198,63,.4)`,
-                            transition:'box-shadow .2s, transform .2s',
-                        }}
-                        onMouseEnter={e=>{e.currentTarget.style.boxShadow=`0 6px 24px rgba(141,198,63,.6)`;e.currentTarget.style.transform='translateY(-1px)';}}
-                        onMouseLeave={e=>{e.currentTarget.style.boxShadow=`0 4px 18px rgba(141,198,63,.4)`;e.currentTarget.style.transform='none';}}
-                        >حساب جديد</Link>
+                            boxShadow:`0 4px 18px rgba(47,188,212,.4), inset 0 1px 0 rgba(255,255,255,.3)`,
+                            transition:'transform .3s cubic-bezier(.22,1,.36,1), box-shadow .3s cubic-bezier(.22,1,.36,1)',
+                        }}>
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="16" y1="11" x2="22" y2="11"/></svg>
+                            حساب جديد
+                        </Link>
                     </>)}
                 </div>
             </nav>  
@@ -1238,46 +1277,65 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
                 HERO
             ══════════════════════════════════════════════════════ */}
             <section className="hero-section" style={{
-                minHeight:'100vh', display:'flex', alignItems:'center',
-                paddingTop:`clamp(48px,9vh,110px)`,
+                minHeight:'92vh', display:'flex', alignItems:'center',
+                paddingTop:`clamp(20px,4vh,56px)`,
                 paddingBottom:`clamp(48px,9vh,110px)`,
                 paddingRight:`clamp(24px,5vw,72px)`,
                 paddingLeft:`clamp(160px,13vw,240px)`,
                 position:'relative', zIndex:10, gap:40,
             }}>
-                <div className="hero-right" data-reveal>
-                    <HieroglyphIntro dark={darkMode}/>
-
-                    <div style={{ display:'inline-flex', alignItems:'center', gap:10, padding:'7px 18px', borderRadius:999, border:`1px solid rgba(47,188,212,.32)`, background:'rgba(47,188,212,.07)', marginBottom:28 }}>
-                        <span style={{ width:7, height:7, borderRadius:'50%', background:C.gold, display:'inline-block' }}/>
-                        <span style={{ fontSize:13, color:C.gold, letterSpacing:'.12em' }}>منصة اللغة العربية الأولى</span>
-                    </div>
-
-                    {/* ── Brand welcome wordmark — نص بدل الصورة القديمة ── */}
+                <div className="hero-right" data-reveal style={{ display:'flex', flexDirection:'column', justifyContent:'center', minHeight:'80vh' }}>
+                    {/* ── Brand welcome wordmark — سطر ترحيب + لوجو جنب بعض + خواطر ── */}
                     <h1 className="hero-welcome-img" style={{
-                        fontFamily:"'Rakkas',serif", fontWeight:400,
-                        fontSize:'clamp(38px,5.5vw,64px)', lineHeight:1.3,
-                        margin:'0 0 36px', maxWidth:520,
-                        color: T.text,
+                        fontFamily:"'Aref Ruqaa',serif", fontWeight:700,
+                        fontSize:'clamp(30px,4.2vw,44px)', lineHeight:1.2,
+                        margin:'0', color: T.text,
                     }}>
-                        أهلاً بيك في{' '}
-                        <span style={{
-                            background:'linear-gradient(135deg,#2fbcd4,#8dc63f)',
-                            WebkitBackgroundClip:'text', WebkitTextFillColor:'transparent', backgroundClip:'text',
-                        }}>منصة منصور</span> التعليمية
+                        أهلاً بيك في
                     </h1>
 
+                    <img
+                        src="/images/manasety.png.png"
+                        alt="منصتي"
+                        style={{ display:'block', width:'clamp(260px,30vw,360px)', height:'auto', margin:'-58px 0 -46px', filter: darkMode ? 'drop-shadow(0 6px 24px rgba(47,188,212,.35))' : 'drop-shadow(0 4px 16px rgba(27,58,96,.2))' }}
+                    />
+
+                    <div style={{ marginBottom:36, display:'flex', alignItems:'flex-start', gap:14 }}>
+                        <svg width="22" height="22" viewBox="0 0 18 18" style={{ flexShrink:0, opacity:.75, marginTop:14 }}>
+                            <rect x="4" y="4" width="10" height="10" rx="3" fill="#2fbcd4" transform="rotate(45 9 9)"/>
+                        </svg>
+                        <div style={{ width:'fit-content' }}>
+                            <span style={{
+                                fontFamily:"'Aref Ruqaa',serif", fontWeight:700,
+                                fontSize:'clamp(56px,8vw,92px)', color: T.text, letterSpacing:'.01em', lineHeight:1.1,
+                                textShadow: darkMode ? '0 0 34px rgba(47,188,212,.45)' : 'none',
+                                whiteSpace:'nowrap',
+                            }}>
+                                خواطر{' '}
+                                <span style={{
+                                    background:'linear-gradient(135deg,#2fbcd4,#009688)',
+                                    WebkitBackgroundClip:'text', WebkitTextFillColor:'transparent', backgroundClip:'text',
+                                }}>المنصور</span>
+                            </span>
+                            <svg width="100%" viewBox="0 0 230 34" style={{ display:'block', marginTop:10, aspectRatio:'230/34', animation:'waveGlowPulse 1.8s ease-in-out infinite' }}>
+                                <path d="M15,17 Q35,2 55,17 T95,17 T135,17 T175,17 T215,17" stroke="#2fbcd4" strokeWidth="4.5" fill="none" strokeLinecap="round"/>
+                                <rect x="5"   y="7" width="20" height="20" rx="6" fill="#2fbcd4" transform="rotate(45 15 17)"/>
+                                <rect x="205" y="7" width="20" height="20" rx="6" fill="#2fbcd4" transform="rotate(45 215 17)"/>
+                            </svg>
+                        </div>
+                    </div>
+
                     <p style={{ fontSize:'clamp(14px,1.6vw,18px)', color:T.textDim2, maxWidth:520, lineHeight:2, margin:'0 0 36px' }}>
-                        <span style={{ fontFamily:'Rakkas,serif', fontSize:'1.35em', color:'#8dc63f', letterSpacing:'.04em' }}>يا مولانا</span>، أهلاً بيك في بيتك التاني — مع الأستاذ محمد منصور هتذاكر اللغة العربية بطريقة عمرك ما جربتها.
+                        <span style={{ fontFamily:'Ruwudu,serif', fontSize:'1.35em', color:'#009688', letterSpacing:'.04em' }}>يا مولانا</span>، أهلاً بيك في بيتك التاني — مع الأستاذ محمد منصور هتذاكر اللغة العربية بطريقة عمرك ما جربتها.
                         شرح واضح، فيديوهات تفاعلية، ومتابعة مستمرة لحد ما تلم المنهج.
                     </p>
 
                     <div style={{ display:'flex', gap:14, flexWrap:'wrap', marginBottom:52 }}>
                         <Link
                             href={auth?.user ? '/student/dashboard' : '/register'}
-                            style={{ padding:'14px 36px', borderRadius:12, background:`linear-gradient(135deg,${C.gold},${C.amber})`, color:C.dark, fontWeight:800, fontSize:16, textDecoration:'none', boxShadow:`0 8px 32px rgba(141,198,63,.35)`, transition:'transform .2s,box-shadow .2s' }}
-                            onMouseEnter={e=>{e.currentTarget.style.transform='translateY(-2px)';e.currentTarget.style.boxShadow=`0 14px 44px rgba(141,198,63,.55)`;}}
-                            onMouseLeave={e=>{e.currentTarget.style.transform='none';e.currentTarget.style.boxShadow=`0 8px 32px rgba(141,198,63,.35)`;}}
+                            style={{ padding:'14px 36px', borderRadius:12, background:`linear-gradient(135deg,${C.gold},${C.amber})`, color:C.dark, fontWeight:800, fontSize:16, textDecoration:'none', boxShadow:`0 8px 32px rgba(0,150,136,.35)`, transition:'transform .2s,box-shadow .2s' }}
+                            onMouseEnter={e=>{e.currentTarget.style.transform='translateY(-2px)';e.currentTarget.style.boxShadow=`0 14px 44px rgba(0,150,136,.55)`;}}
+                            onMouseLeave={e=>{e.currentTarget.style.transform='none';e.currentTarget.style.boxShadow=`0 8px 32px rgba(0,150,136,.35)`;}}
                         >اشترك دلوقتي !</Link>
                         <a href="#features" style={{ padding:'14px 28px', borderRadius:12, border:`1px solid rgba(47,188,212,.35)`, color:T.text, fontSize:15, textDecoration:'none' }}>اعرف أكتر ←</a>
                     </div>
@@ -1301,8 +1359,8 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
                 <div style={{ textAlign:'center', marginBottom:56, position:'relative' }}>
                     <span aria-hidden="true" style={{
                         position:'absolute', top:-46, left:'50%', transform:'translateX(-50%)',
-                        fontFamily:"'Rakkas',serif", fontSize:'clamp(120px,16vw,220px)', lineHeight:1,
-                        color:C.gold, opacity:0.055, whiteSpace:'nowrap', pointerEvents:'none',
+                        fontFamily:"'Ruwudu',serif", fontSize:'clamp(120px,16vw,220px)', lineHeight:1,
+                        color: darkMode ? C.gold : C.navy, opacity: darkMode ? 0.16 : 0.14, whiteSpace:'nowrap', pointerEvents:'none',
                         userSelect:'none', zIndex:0,
                     }}>ض</span>
 
@@ -1315,19 +1373,16 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
                         <div style={{ width:40, height:1, background:`linear-gradient(90deg,${C.gold},transparent)` }}/>
                     </div>
                 </div>
-                <div className="tl-wrap">
+                <div className="feat-grid">
                     {FEATURES.map(({n,title,text,icon}, i)=>{
-                        const side   = i % 2 === 0 ? 'right' : 'left';
-                        const delay  = `${i * 0.1}s`;
                         const accent = TILE_ACCENTS[i % TILE_ACCENTS.length];
                         const numAr  = ['١','٢','٣','٤','٥','٦','٧','٨'][i] ?? (i+1);
                         const patId  = `feat-pat-${i}`;
+                        const tileRole = i === 0 ? ' feat-card-big' : i === 6 ? ' feat-card-wide' : '';
                         return (
-                        <div key={n} className={`tl-item ${side}`} style={{ animationDelay: delay }}>
-                            {side === 'left' && (
-                                <div className="feat-num-outside" style={{ color: accent }}>{numAr}</div>
-                            )}
-                            <div className="feat-card" data-reveal>
+                        <div key={n} className={`feat-item feat-item-${i}`}>
+                            <div className="feat-num-outside" style={{ color: accent }}>{numAr}</div>
+                            <div className={`feat-card${tileRole}`} data-reveal style={{ animationDelay: `${i * 0.06}s` }}>
                                 {/* زخارف أركان رفيعة بجوهرة صغيرة — طراز تذهيب المخطوطات */}
                                 {['tl','tr','bl','br'].map(pos => (
                                     <div key={pos} className={`feat-corner feat-corner-${pos}`} style={{ color: accent }}>
@@ -1339,9 +1394,9 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
                                 ))}
 
                                 <div className="feat-card-inner" style={{
-                                    background: darkMode ? 'linear-gradient(155deg,#0f1f36,#0a1524)' : '#ffffff',
-                                    boxShadow: darkMode ? '0 4px 20px rgba(0,0,0,.3)' : '0 2px 16px rgba(27,58,96,.08)',
-                                    '--frame-c': darkMode ? `${accent}66` : `${accent}55`,
+                                    background: darkMode ? 'linear-gradient(155deg,#0f1f36,#0a1524)' : 'linear-gradient(155deg,#f4f8fb,#e9f1f6)',
+                                    boxShadow: darkMode ? '0 4px 20px rgba(0,0,0,.3)' : '0 6px 24px rgba(27,58,96,.12)',
+                                    '--frame-c': darkMode ? `${accent}66` : `${accent}99`,
                                 }}>
                                     {/* نسيج نجمة ثمانية يغطي الكارت كله — بينوّر عند المرور */}
                                     <svg className="feat-pattern" style={{ position:'absolute', inset:0, width:'100%', height:'100%' }}>
@@ -1385,9 +1440,6 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
                                     </div>
                                 </div>
                             </div>
-                            {side === 'right' && (
-                                <div className="feat-num-outside" style={{ color: accent }}>{numAr}</div>
-                            )}
                         </div>
                         );
                     })}
@@ -1462,7 +1514,7 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
                 </div>
                 <div style={{ display:'flex', gap:10, flexWrap:'wrap', marginBottom:32 }} data-reveal>
                     {filters.map(f=>(
-                        <button key={f} onClick={()=>setActiveFilter(f)} style={{ padding:'9px 20px', borderRadius:999, cursor:'pointer', fontFamily:'Cairo,sans-serif', fontSize:13, fontWeight:600, transition:'all .2s', border:`1.5px solid ${activeFilter===f ? C.amber : 'rgba(47,188,212,.28)'}`, background:activeFilter===f ? `linear-gradient(135deg,rgba(141,198,63,.18),rgba(47,188,212,.1))` : 'rgba(12,25,41,.5)', color:activeFilter===f ? C.amber : 'rgba(245,240,232,.65)' }}>{f}</button>
+                        <button key={f} onClick={()=>setActiveFilter(f)} style={{ padding:'9px 20px', borderRadius:999, cursor:'pointer', fontFamily:'Cairo,sans-serif', fontSize:13, fontWeight:600, transition:'all .2s', border:`1.5px solid ${activeFilter===f ? C.amber : 'rgba(47,188,212,.28)'}`, background:activeFilter===f ? `linear-gradient(135deg,rgba(0,150,136,.18),rgba(47,188,212,.1))` : 'rgba(12,25,41,.5)', color:activeFilter===f ? C.amber : 'rgba(245,240,232,.65)' }}>{f}</button>
                     ))}
                 </div>
 
@@ -1551,87 +1603,66 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
                 position:'relative', zIndex:10,
                 background: darkMode
                     ? 'linear-gradient(180deg,#06101e 0%,#0b1827 50%,#06101e 100%)'
-                    : 'linear-gradient(180deg,#ece0c8 0%,#e0ceaa 50%,#ece0c8 100%)',
+                    : 'linear-gradient(180deg,#eef4f8 0%,#e4edf3 50%,#eef4f8 100%)',
                 overflow:'hidden', transition:'background .4s'
             }}>
-                {/* Stone grid texture */}
-                <div style={{ position:'absolute', inset:0, backgroundImage:`repeating-linear-gradient(0deg,transparent,transparent 59px,rgba(47,188,212,.02) 59px,rgba(47,188,212,.02) 60px),repeating-linear-gradient(90deg,transparent,transparent 59px,rgba(47,188,212,.02) 59px,rgba(47,188,212,.02) 60px)`, pointerEvents:'none' }}/>
-                <div style={{ position:'absolute', top:'40%', left:'50%', transform:'translate(-50%,-50%)', width:'65%', height:'65%', background:'radial-gradient(ellipse,rgba(47,188,212,.055) 0%,transparent 70%)', pointerEvents:'none' }}/>
+                {/* نسيج نجمة ثمانية خفيف يغطي الخلفية بالكامل */}
+                <svg style={{ position:'absolute', inset:0, width:'100%', height:'100%', opacity: darkMode?.05:.06, pointerEvents:'none' }}>
+                    <defs>
+                        <pattern id="honorStarPat" width="52" height="52" patternUnits="userSpaceOnUse">
+                            <g stroke={C.gold} fill="none" strokeWidth="1">
+                                <rect x="5" y="5" width="42" height="42"/>
+                                <rect x="5" y="5" width="42" height="42" transform="rotate(45 26 26)"/>
+                            </g>
+                        </pattern>
+                    </defs>
+                    <rect width="100%" height="100%" fill="url(#honorStarPat)"/>
+                </svg>
+                <div style={{ position:'absolute', top:'40%', left:'50%', transform:'translate(-50%,-50%)', width:'65%', height:'65%', background:'radial-gradient(ellipse,rgba(47,188,212,.06) 0%,transparent 70%)', pointerEvents:'none' }}/>
 
-                {/* Border lines */}
+                {/* Border hairlines */}
                 <div style={{ position:'absolute', top:0, left:0, right:0, height:2, background:`linear-gradient(90deg,transparent,${C.gold} 20%,${C.gold} 80%,transparent)` }}/>
                 <div style={{ position:'absolute', bottom:0, left:0, right:0, height:2, background:`linear-gradient(90deg,transparent,${C.gold} 20%,${C.gold} 80%,transparent)` }}/>
 
-                {/* SVG columns left & right */}
-                {[true,false].map(isLeft => (
-                    <div key={String(isLeft)} style={{ position:'absolute', [isLeft?'left':'right']:0, top:0, bottom:0, width:52, display:'flex', alignItems:'center', justifyContent:'center', pointerEvents:'none', opacity: darkMode?.14:.1 }}>
-                        <svg width="26" height="340" viewBox="0 0 26 340" fill="none">
-                            <circle cx="13" cy="4" r="3" fill={C.gold}/>
-                            <rect x="5" y="6" width="16" height="5" rx="2" fill={C.gold}/>
-                            <rect x="2" y="10" width="22" height="5" rx="1" fill={C.gold}/>
-                            <rect x="10" y="15" width="6" height="268" fill={C.gold}/>
-                            <line x1="11.5" y1="15" x2="11.5" y2="283" stroke="rgba(0,0,0,.25)" strokeWidth="1"/>
-                            <line x1="14.5" y1="15" x2="14.5" y2="283" stroke="rgba(0,0,0,.25)" strokeWidth="1"/>
-                            <rect x="2" y="283" width="22" height="5" rx="1" fill={C.gold}/>
-                            <rect x="0" y="288" width="26" height="7" rx="2" fill={C.gold}/>
-                        </svg>
-                    </div>
-                ))}
-
                 {/* ── Header ── */}
                 <div style={{ textAlign:'center', marginBottom:52, position:'relative' }}>
-                    {/* Mini temple arch */}
-                    <div style={{ marginBottom:10 }}>
-                        <svg width="150" height="54" viewBox="0 0 150 54" fill="none" style={{ opacity: darkMode?.42:.3 }}>
-                            <path d="M12,54 L12,26 Q12,4 34,4 L116,4 Q138,4 138,26 L138,54" stroke={C.gold} strokeWidth="1.5" fill="none" strokeLinecap="round"/>
-                            <line x1="34"  y1="4" x2="34"  y2="54" stroke={C.gold} strokeWidth=".9" opacity=".5"/>
-                            <line x1="75"  y1="4" x2="75"  y2="54" stroke={C.gold} strokeWidth=".9" opacity=".5"/>
-                            <line x1="116" y1="4" x2="116" y2="54" stroke={C.gold} strokeWidth=".9" opacity=".5"/>
-                            <rect x="12" y="47" width="126" height="7" fill={C.gold} opacity=".28" rx="1"/>
-                            <circle cx="75" cy="4" r="3.5" fill={C.gold} opacity=".6"/>
+                    <span aria-hidden="true" style={{
+                        position:'absolute', top:-46, left:'50%', transform:'translateX(-50%)',
+                        fontFamily:"'Ruwudu',serif", fontSize:'clamp(120px,16vw,220px)', lineHeight:1,
+                        color:C.gold, opacity:0.05, whiteSpace:'nowrap', pointerEvents:'none',
+                        userSelect:'none', zIndex:0,
+                    }}>ش</span>
+
+                    {/* شمسة صغيرة أعلى العنوان */}
+                    <div style={{ display:'flex', justifyContent:'center', marginBottom:14, position:'relative' }}>
+                        <svg width="44" height="44" viewBox="0 0 44 44" style={{ opacity: darkMode?.6:.5 }}>
+                            <circle cx="22" cy="22" r="20" fill="none" stroke={C.gold} strokeWidth=".8" opacity=".6"/>
+                            <g stroke={C.gold} strokeWidth="1.1" fill="none">
+                                <rect x="9" y="9" width="26" height="26"/>
+                                <rect x="9" y="9" width="26" height="26" transform="rotate(45 22 22)"/>
+                            </g>
+                            <circle cx="22" cy="22" r="4.5" fill={C.amber}/>
                         </svg>
                     </div>
 
-                    {/* Eyebrow label */}
-                    <div style={{ display:'inline-flex', alignItems:'center', gap:14, marginBottom:16 }}>
-                        <div style={{ width:36, height:1, background:`linear-gradient(90deg,transparent,${C.gold})` }}/>
-                        <span style={{ fontSize:10, color:C.gold, letterSpacing:'.3em', fontWeight:600 }} data-reveal>📖 &nbsp; طلابنا الأوائل &nbsp; 📖</span>
-                        <div style={{ width:36, height:1, background:`linear-gradient(90deg,${C.gold},transparent)` }}/>
-                    </div>
+                    <p style={{ fontSize:12, color:C.gold, letterSpacing:'.22em', marginBottom:12, position:'relative' }} data-reveal>▸ نجوم المنصة</p>
+                    <h2 style={{ fontSize:'clamp(28px,3.5vw,52px)', fontWeight:800, margin:'0 0 14px', color: darkMode?'#f5f0e8':C.navy, position:'relative' }} data-reveal>لوحة الشرف</h2>
+                    <p style={{ fontSize:15, color:T.textDim4, maxWidth:480, margin:'0 auto 18px', position:'relative' }} data-reveal>تكريماً لاجتهادهم وتفوقهم — الأبطال اللي وصلوا لقمة الترتيب الشهري</p>
 
-                    {/* Papyrus scroll banner */}
-                    <div data-reveal style={{ display:'inline-block', position:'relative', marginBottom:20 }}>
-                        <svg viewBox="0 0 380 62" width="380" height="62" style={{ position:'absolute', inset:0, width:'100%', height:'100%' }} preserveAspectRatio="none">
-                            <path d="M26,4 L354,4 Q374,4 374,31 Q374,58 354,58 L26,58 Q6,58 6,31 Q6,4 26,4Z" fill={`${C.amber}dd`} stroke={C.gold} strokeWidth="1.5"/>
-                            <ellipse cx="13" cy="31" rx="11" ry="27" fill={C.amber} stroke={C.gold} strokeWidth="1.2"/>
-                            <ellipse cx="13" cy="31" rx="5"  ry="20" fill={C.gold} opacity=".35"/>
-                            <ellipse cx="367" cy="31" rx="11" ry="27" fill={C.amber} stroke={C.gold} strokeWidth="1.2"/>
-                            <ellipse cx="367" cy="31" rx="5"  ry="20" fill={C.gold} opacity=".35"/>
-                        </svg>
-                        <div style={{ position:'relative', zIndex:1, padding:'15px 58px', fontSize:17, fontWeight:800, color:'#1a0e00', letterSpacing:'.07em', whiteSpace:'nowrap' }}>
-                            ♛ &nbsp; طلابنا الأوائل &nbsp; ♛
-                        </div>
-                    </div>
-
-                    <h2 style={{ fontSize:'clamp(28px,3.5vw,52px)', fontWeight:800, margin:'0 0 10px', color: darkMode?'#f5f0e8':C.navy }} data-reveal>لوحة الشرف</h2>
-
-                    {/* Star divider */}
-                    <div style={{ display:'flex', alignItems:'center', justifyContent:'center', gap:10, marginTop:8 }} data-reveal>
-                        <div style={{ width:50, height:1, background:`linear-gradient(90deg,transparent,${C.gold})` }}/>
-                        <svg width="18" height="18" viewBox="0 0 20 20" style={{ opacity:.7 }}><path d="M10,1 L12.2,7.6 L19.5,7.6 L13.6,11.8 L15.8,18.4 L10,14.2 L4.2,18.4 L6.4,11.8 L0.5,7.6 L7.8,7.6 Z" fill={C.gold}/></svg>
-                        <span style={{ fontSize:14, color:C.amber, fontWeight:700, letterSpacing:'.1em' }}>الأبطال</span>
-                        <svg width="18" height="18" viewBox="0 0 20 20" style={{ opacity:.7 }}><path d="M10,1 L12.2,7.6 L19.5,7.6 L13.6,11.8 L15.8,18.4 L10,14.2 L4.2,18.4 L6.4,11.8 L0.5,7.6 L7.8,7.6 Z" fill={C.gold}/></svg>
-                        <div style={{ width:50, height:1, background:`linear-gradient(90deg,${C.gold},transparent)` }}/>
+                    <div style={{ display:'flex', alignItems:'center', justifyContent:'center', gap:10, position:'relative' }} data-reveal>
+                        <div style={{ width:40, height:1, background:`linear-gradient(90deg,transparent,${C.gold})` }}/>
+                        <svg width="14" height="14" viewBox="0 0 18 18" fill="none"><rect x="4" y="4" width="10" height="10" transform="rotate(45 9 9)" stroke={C.gold} strokeWidth="1.6"/></svg>
+                        <div style={{ width:40, height:1, background:`linear-gradient(90deg,${C.gold},transparent)` }}/>
                     </div>
                 </div>
 
                 {/* ── Month filters ── */}
-                <div style={{ display:'flex', gap:10, flexWrap:'wrap', justifyContent:'center', marginBottom:44 }} data-reveal>
+                <div style={{ display:'flex', gap:10, flexWrap:'wrap', justifyContent:'center', marginBottom:44, position:'relative' }} data-reveal>
                     {[{ key:null, label:'الكل' }, ...topMonths.map(m => ({ key:m, label:monthLabel(m) }))].map(({ key, label }) => {
                         const active = activeTopMonth === key;
                         return (
                             <button key={String(key)} onClick={() => setActiveTopMonth(key)}
-                                style={{ padding:'9px 22px', borderRadius:8, cursor:'pointer', fontFamily:'Cairo,sans-serif', fontSize:13, fontWeight:700, transition:'all .2s',
+                                style={{ padding:'9px 24px', borderRadius:999, cursor:'pointer', fontFamily:'Cairo,sans-serif', fontSize:13, fontWeight:700, transition:'all .2s',
                                     border:`1px solid ${active ? C.amber : darkMode ? 'rgba(47,188,212,.22)' : 'rgba(47,188,212,.38)'}`,
                                     background: active ? `linear-gradient(135deg,${C.amber}30,${C.gold}18)` : darkMode ? 'rgba(47,188,212,.04)' : 'rgba(47,188,212,.06)',
                                     color: active ? C.amber : darkMode ? 'rgba(245,240,232,.5)' : 'rgba(27,58,96,.5)',
@@ -1643,19 +1674,25 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
                     })}
                 </div>
 
-                {/* ── Stone tablet cards ── */}
+                {/* ── قائمة الأبطال ── */}
                 {filteredTop.length === 0 ? (
-                    <div style={{ textAlign:'center', padding:'60px 20px', color: darkMode?'rgba(226,232,240,.3)':'rgba(27,58,96,.25)', fontSize:16 }}>
-                        <div style={{ fontSize:44, marginBottom:14, opacity:.4 }}>📖</div>
+                    <div style={{ textAlign:'center', padding:'60px 20px', color: darkMode?'rgba(226,232,240,.3)':'rgba(27,58,96,.25)', fontSize:16, position:'relative' }}>
+                        <svg width="44" height="44" viewBox="0 0 44 44" style={{ margin:'0 auto 14px', opacity:.35, display:'block' }}>
+                            <g stroke="currentColor" strokeWidth="1" fill="none">
+                                <rect x="9" y="9" width="26" height="26"/>
+                                <rect x="9" y="9" width="26" height="26" transform="rotate(45 22 22)"/>
+                            </g>
+                        </svg>
                         لا توجد بيانات للطلاب الأوائل لهذا الشهر.
                     </div>
                 ) : (
-                    <div style={{ maxWidth:860, margin:'0 auto', display:'flex', flexDirection:'column', gap:14 }}>
+                    <div style={{ maxWidth:860, margin:'0 auto', display:'flex', flexDirection:'column', gap:14, position:'relative' }}>
                         {filteredTop.map((s) => {
-                            const roman  = { 1:'١', 2:'٢', 3:'٣', 4:'٤', 5:'٥', 6:'٦', 7:'٧', 8:'٨', 9:'٩', 10:'١٠' };
+                            const arNum  = { 1:'١', 2:'٢', 3:'٣', 4:'٤', 5:'٥', 6:'٦', 7:'٧', 8:'٨', 9:'٩', 10:'١٠' };
                             const medal  = medalColors[s.rank-1] ?? C.gold;
                             const isTop3 = s.rank <= 3;
                             const hov    = hoveredStudent === s.id;
+                            const badgeSz = isTop3 ? 60 : 48;
                             return (
                                 <div key={s.id} data-reveal
                                     onMouseEnter={() => setHoveredStudent(s.id)}
@@ -1664,33 +1701,46 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
                                         position:'relative', overflow:'hidden',
                                         display:'flex', alignItems:'center', gap:22,
                                         padding: isTop3 ? '22px 28px' : '15px 24px',
-                                        borderRadius:10,
+                                        borderRadius:14,
                                         background: hov
-                                            ? darkMode ? `linear-gradient(120deg,${medal}1c,rgba(12,22,38,.98))` : `linear-gradient(120deg,${medal}22,rgba(235,220,195,.98))`
-                                            : darkMode ? 'linear-gradient(120deg,rgba(14,24,40,.95),rgba(10,18,32,.95))' : 'linear-gradient(120deg,rgba(238,225,200,.92),rgba(228,212,180,.92))',
-                                        border:`1px solid ${hov ? medal+'88' : isTop3 ? medal+'38' : darkMode ? 'rgba(47,188,212,.1)' : 'rgba(47,188,212,.22)'}`,
+                                            ? darkMode ? `linear-gradient(120deg,${medal}1c,rgba(12,22,38,.98))` : `linear-gradient(120deg,${medal}14,#ffffff)`
+                                            : darkMode ? 'linear-gradient(120deg,rgba(14,24,40,.95),rgba(10,18,32,.95))' : 'linear-gradient(120deg,#ffffff,#f6f9fb)',
+                                        border:`1px solid ${hov ? medal+'88' : isTop3 ? medal+'38' : darkMode ? 'rgba(47,188,212,.1)' : 'rgba(47,188,212,.18)'}`,
                                         boxShadow: hov ? `0 8px 36px ${medal}30, inset 0 1px 0 ${medal}33` : isTop3 ? `0 3px 16px ${medal}14` : 'none',
                                         transform: hov ? 'translateY(-3px) scale(1.004)' : 'none',
                                         transition:'all .28s cubic-bezier(.22,1,.36,1)',
                                     }}>
 
-                                    {/* Corner decorations for top 3 */}
-                                    {isTop3 && <>
-                                        <div style={{ position:'absolute', top:6, right:6,  width:13, height:13, borderTop:`1.5px solid ${medal}66`, borderRight:`1.5px solid ${medal}66` }}/>
-                                        <div style={{ position:'absolute', top:6, left:6,   width:13, height:13, borderTop:`1.5px solid ${medal}66`, borderLeft:`1.5px solid ${medal}66` }}/>
-                                        <div style={{ position:'absolute', bottom:6, right:6, width:13, height:13, borderBottom:`1.5px solid ${medal}66`, borderRight:`1.5px solid ${medal}66` }}/>
-                                        <div style={{ position:'absolute', bottom:6, left:6,  width:13, height:13, borderBottom:`1.5px solid ${medal}66`, borderLeft:`1.5px solid ${medal}66` }}/>
-                                    </>}
+                                    {/* زخارف أركان رفيعة بجوهرة صغيرة — لأصحاب المراكز الثلاثة الأولى */}
+                                    {isTop3 && ['tl','tr','bl','br'].map(pos => {
+                                        const vFlip = pos[0] === 'b', hFlip = pos[1] === 'l' ? false : true;
+                                        const scale = `scale(${hFlip?-1:1},${vFlip?-1:1})`;
+                                        return (
+                                            <div key={pos} style={{
+                                                position:'absolute', width:22, height:22, zIndex:3, color: medal,
+                                                opacity: hov ? 1 : .7, transition:'opacity .3s',
+                                                top: pos[0]==='t' ? 6 : 'auto', bottom: pos[0]==='b' ? 6 : 'auto',
+                                                right: pos[1]==='r' ? 6 : 'auto', left: pos[1]==='l' ? 6 : 'auto',
+                                                transform: scale,
+                                            }}>
+                                                <svg viewBox="0 0 30 30" width="22" height="22">
+                                                    <path d="M3,19 L3,3 L19,3" stroke="currentColor" strokeWidth="1.4" fill="none" strokeLinecap="round"/>
+                                                    <rect x="0" y="0" width="6" height="6" transform="rotate(45 3.2 3.2)" fill="currentColor"/>
+                                                </svg>
+                                            </div>
+                                        );
+                                    })}
 
-                                    {/* Ancient coin SVG badge */}
-                                    <svg width={isTop3?56:46} height={isTop3?56:46} viewBox="0 0 56 56" fill="none" style={{ flexShrink:0, filter: hov?`drop-shadow(0 0 10px ${medal}99)`:'none', transition:'filter .28s' }}>
-                                        <circle cx="28" cy="28" r="26" fill={hov?`${medal}22`:`${medal}0d`} stroke={medal} strokeWidth="1.5" opacity={hov?1:.65}/>
-                                        <circle cx="28" cy="28" r="21" fill="none" stroke={medal} strokeWidth=".8" opacity={hov?.5:.28}/>
-                                        {[0,60,120,180,240,300].map((deg,di) => (
-                                            <circle key={di} cx={28+23*Math.cos((deg-90)*Math.PI/180)} cy={28+23*Math.sin((deg-90)*Math.PI/180)} r="1.2" fill={medal} opacity={hov?.7:.3}/>
-                                        ))}
-                                        <text x="28" y="34" textAnchor="middle" fontSize={isTop3?14:12} fontWeight="900" fill={medal} fontFamily="Cairo,sans-serif" opacity={hov?1:.85}>
-                                            {roman[s.rank] ?? s.rank}
+                                    {/* شمسة الترتيب — بدلاً من العملة القديمة */}
+                                    <svg width={badgeSz} height={badgeSz} viewBox="0 0 60 60" fill="none" style={{ flexShrink:0, filter: hov?`drop-shadow(0 0 10px ${medal}99)`:'none', transition:'filter .28s' }}>
+                                        <circle cx="30" cy="30" r="27" fill="none" stroke={medal} strokeWidth=".7" opacity={hov?.7:.4}/>
+                                        <g stroke={medal} strokeWidth="1.1" fill="none" opacity={hov?.9:.55}>
+                                            <rect x="12" y="12" width="36" height="36"/>
+                                            <rect x="12" y="12" width="36" height="36" transform="rotate(45 30 30)"/>
+                                        </g>
+                                        <circle cx="30" cy="30" r="18" fill={hov?`${medal}22`:`${medal}0d`} stroke={medal} strokeWidth="1.4"/>
+                                        <text x="30" y="37" textAnchor="middle" fontSize={isTop3?17:14} fontWeight="900" fill={medal} fontFamily="Cairo,sans-serif" opacity={hov?1:.9}>
+                                            {arNum[s.rank] ?? s.rank}
                                         </text>
                                     </svg>
 
@@ -1701,11 +1751,11 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
                                             transition:'color .2s' }}>
                                             {s.student?.name ?? '—'}
                                         </div>
-                                        {s.academic_year?.name && <div style={{ fontSize:12, color: darkMode?'rgba(47,188,212,.55)':'rgba(130,90,10,.7)', marginTop:3 }}>{s.academic_year.name}</div>}
-                                        {s.notes && <div style={{ fontSize:12, color: darkMode?'rgba(245,240,232,.36)':'rgba(27,58,96,.36)', marginTop:4, fontStyle:'italic' }}>{s.notes}</div>}
+                                        {s.academic_year?.name && <div style={{ fontSize:12, color: darkMode?'rgba(47,188,212,.6)':'rgba(27,58,96,.55)', marginTop:3 }}>{s.academic_year.name}</div>}
+                                        {s.notes && <div style={{ fontSize:12, color: darkMode?'rgba(245,240,232,.36)':'rgba(27,58,96,.4)', marginTop:4, fontStyle:'italic' }}>{s.notes}</div>}
                                     </div>
 
-                                    {/* Big glowing rank — Roman numeral */}
+                                    {/* الرقم المتوهج بالخلفية */}
                                     <div className="ts-rank-num" style={{
                                         fontSize: isTop3?100:76, fontWeight:900, fontFamily:'Cairo,sans-serif',
                                         lineHeight:1, userSelect:'none', pointerEvents:'none',
@@ -1713,7 +1763,7 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
                                         textShadow: hov ? `0 0 30px ${medal}cc, 0 0 70px ${medal}66` : 'none',
                                         transition:'opacity .3s, text-shadow .3s', letterSpacing:'-.02em',
                                     }}>
-                                        {roman[s.rank] ?? s.rank}
+                                        {arNum[s.rank] ?? s.rank}
                                     </div>
                                 </div>
                             );
@@ -1724,151 +1774,177 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
             )}
 
             {/* ══════════════════════════════════════════════════════
-                ABOUT THE TEACHER
+                عن الأستاذ
             ══════════════════════════════════════════════════════ */}
-            <section id="about" style={{ padding:'clamp(80px,12vh,140px) 0', position:'relative', zIndex:10 }}>
-                <div style={{
-                    display: 'grid',
-                    gridTemplateColumns: '52% 48%',
-                    direction: 'ltr',
-                    minHeight: '90vh',
-                    maxHeight: 800,
-                }} className="about-full-grid" data-reveal>
+            <section id="about" style={{ padding:'clamp(80px,12vh,140px) clamp(20px,4vw,60px)', position:'relative', zIndex:10 }}>
+                <div style={{ maxWidth:1180, margin:'0 auto', position:'relative' }} data-reveal>
 
-                    {/* ── Decorative panel (left in LTR grid = visually left) ── */}
-                    <div className="about-photo-side" style={{
-                        position:'relative', overflow:'hidden',
-                        background:'radial-gradient(circle at 45% 35%, #16304f 0%, #0c1929 55%, #050b15 100%)',
-                        display:'flex', alignItems:'center', justifyContent:'center',
-                    }}>
-                        {/* نسيج نجمة ثمانية */}
-                        <svg style={{ position:'absolute', inset:0, width:'100%', height:'100%', opacity:.07 }}>
-                            <defs>
-                                <pattern id="aboutStarPat" width="56" height="56" patternUnits="userSpaceOnUse">
-                                    <g stroke="#2fbcd4" fill="none" strokeWidth="1">
-                                        <rect x="6" y="6" width="44" height="44"/>
-                                        <rect x="6" y="6" width="44" height="44" transform="rotate(45 28 28)"/>
-                                    </g>
-                                </pattern>
-                            </defs>
-                            <rect width="100%" height="100%" fill="url(#aboutStarPat)"/>
-                        </svg>
-                        {/* حرف الضاد */}
-                        <span style={{
-                            fontFamily:"'Rakkas',serif", fontSize:'clamp(220px,26vw,340px)', lineHeight:1,
-                            background:'linear-gradient(160deg,#2fbcd4,#8dc63f)',
-                            WebkitBackgroundClip:'text', WebkitTextFillColor:'transparent', backgroundClip:'text',
-                            opacity:.9, position:'relative',
-                        }}>ض</span>
-                        {/* Right-side fade into content panel */}
-                        <div style={{ position:'absolute', inset:0, background:'linear-gradient(to right, transparent 55%, #060e1c 100%)', pointerEvents:'none' }}/>
-                        {/* Bottom fade */}
-                        <div style={{ position:'absolute', bottom:0, left:0, right:0, height:'30%', background:'linear-gradient(to top, #060e1c 0%, transparent 100%)', pointerEvents:'none' }}/>
-                    </div>
-
-                    {/* ── Content side (right in LTR grid) ── */}
-                    <div className="about-text-side" style={{
-                        background:'#060e1c',
-                        padding:'clamp(40px,5vw,72px) clamp(32px,4vw,60px) clamp(40px,5vw,72px) 0',
-                        display:'flex', flexDirection:'column', justifyContent:'center', gap:24,
-                        position:'relative', overflow:'hidden', direction:'rtl',
-                    }}>
-
-                        {/* Huge watermark number */}
-                        <div style={{ position:'absolute', top:-30, right:-10, fontSize:260, fontWeight:900, fontFamily:'Cinzel,serif', color:C.gold, opacity:.028, lineHeight:1, userSelect:'none', pointerEvents:'none' }}>٠٣</div>
-
-                        {/* Gold orb */}
-                        <div style={{ position:'absolute', bottom:-100, left:-100, width:400, height:400, borderRadius:'50%', background:`radial-gradient(circle, rgba(47,188,212,.06) 0%, transparent 65%)`, pointerEvents:'none' }}/>
-
-                        {/* Tag */}
-                        <div style={{ display:'inline-flex', alignItems:'center', gap:10, alignSelf:'flex-start' }}>
-                            <div style={{ width:36, height:1.5, background:`linear-gradient(90deg,${C.gold},transparent)` }}/>
-                            <span style={{ fontSize:11, color:C.gold, letterSpacing:'.24em', fontFamily:'Cinzel,serif', opacity:.85 }}>ABOUT THE TEACHER</span>
-                        </div>
-
-                        {/* Name block */}
-                        <div>
-                            <h2 style={{ fontSize:'clamp(40px,4.5vw,64px)', fontFamily:'Rakkas,serif', color:'#f5ede0', lineHeight:1.1, margin:'0 0 6px' }}>
-                                محمد منصور
-                            </h2>
-                            <div style={{ display:'flex', alignItems:'center', gap:10 }}>
-                                <div style={{ width:5, height:5, borderRadius:'50%', background:C.amber }}/>
-                                <span style={{ fontSize:13, color:C.amber, fontWeight:600, letterSpacing:'.06em' }}>أستاذ اللغة العربية — الثانوية العامة</span>
-                            </div>
-                        </div>
-
-                        {/* Divider */}
-                        <div style={{ display:'flex', alignItems:'center', gap:10 }}>
-                            <div style={{ height:1, width:48, background:C.gold }}/>
-                            <div style={{ height:1, flex:1, background:`linear-gradient(90deg,rgba(47,188,212,.3),transparent)` }}/>
-                        </div>
-
-                        {/* Quote */}
-                        <div style={{ position:'relative', paddingRight:20, borderRight:`2px solid rgba(47,188,212,.35)` }}>
-                            <p style={{ fontSize:'clamp(14px,1.5vw,18px)', fontWeight:600, color:'rgba(240,232,213,.75)', lineHeight:2.1, margin:0 }}>
-                                <span style={{ fontFamily:'Rakkas,serif', fontSize:'1.35em', color:'#8dc63f', letterSpacing:'.04em' }}>يا مولانا</span>، ركّز معايا وجهّز نفسك...<br/>
-                                هنذاكر بأسلوب مختلف خالص — فاهم مش حافظ<br/>
-                                لحد ما <span style={{ color:C.amber, fontWeight:900 }}>الدرجة الكاملة تبقى حقك</span>
-                            </p>
-                        </div>
-
-                        {/* Stats */}
-                        <div style={{ display:'grid', gridTemplateColumns:'repeat(3,1fr)', gap:0, borderTop:'1px solid rgba(47,188,212,.15)', borderBottom:'1px solid rgba(47,188,212,.15)', padding:'20px 0' }}>
-                            {[
-                                { count:98,      suffix:'٪',  label:'نسبة النجاح' },
-                                { count:2000000, prefix:'+',  label:'طالب مسجل'  },
-                                { count:500,     prefix:'+',  label:'ساعة محتوى' },
-                            ].map(({count,prefix='',suffix='',label}, i) => (
-                                <div key={label} style={{ textAlign:'center', padding:'0 4px', borderLeft: i>0 ? '1px solid rgba(47,188,212,.15)' : 'none' }}>
-                                    <div style={{ fontSize:'clamp(22px,2.4vw,34px)', fontWeight:900, color:C.gold, lineHeight:1.1 }}>
-                                        {prefix}<span data-count={count}>٠</span>{suffix}
-                                    </div>
-                                    <div style={{ fontSize:11, color:'rgba(47,188,212,.5)', marginTop:5, letterSpacing:'.05em' }}>{label}</div>
-                                </div>
-                            ))}
-                        </div>
-
-                        {/* Features — minimal line style */}
-                        <div style={{ display:'flex', flexDirection:'column', gap:0 }}>
-                            {[
-                                'شروحات فيديو تفصيلية لكل درس ووحدة',
-                                'خرائط ذهنية ونماذج إعراب تثبّت المعلومة',
-                                'اختبارات بنظام الوزارة ومتابعة مستمرة',
-                                'دعم مباشر للطالب وولي الأمر طوال الأسبوع',
-                            ].map((label, i) => (
-                                <div key={i} style={{ display:'flex', alignItems:'center', gap:14, padding:'12px 0', borderBottom:'1px solid rgba(255,255,255,.04)' }}>
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={C.gold} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink:0 }}>
-                                        <polyline points="20 6 9 17 4 12"/>
-                                    </svg>
-                                    <span style={{ fontSize:13.5, color:'rgba(245,240,232,.65)', fontWeight:500 }}>{label}</span>
-                                </div>
-                            ))}
-                        </div>
-
-                        {/* CTA */}
-                        <div style={{ display:'flex', gap:14, alignItems:'center', paddingTop:8 }}>
-                            <Link
-                                href={auth?.user ? '/student/dashboard' : '/register'}
-                                style={{
-                                    display:'inline-flex', alignItems:'center', gap:10,
-                                    padding:'13px 30px', borderRadius:10,
-                                    background:`linear-gradient(135deg,${C.amber},#6ea82d)`,
-                                    color:'#fff', fontWeight:800, fontSize:14, textDecoration:'none',
-                                    boxShadow:`0 8px 28px rgba(141,198,63,.35)`,
-                                    transition:'transform .2s, box-shadow .2s',
-                                }}
-                                onMouseEnter={e=>{e.currentTarget.style.transform='translateY(-2px)';e.currentTarget.style.boxShadow=`0 14px 36px rgba(141,198,63,.55)`;}}
-                                onMouseLeave={e=>{e.currentTarget.style.transform='none';e.currentTarget.style.boxShadow=`0 8px 28px rgba(141,198,63,.35)`;}}
-                            >
-                                اشترك دلوقتي
-                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                                    <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+                    {/* زخارف أركان رفيعة بجوهرة صغيرة — طراز تذهيب المخطوطات */}
+                    {['tl','tr','bl','br'].map(pos => {
+                        const hFlip = pos[1] === 'r', vFlip = pos[0] === 'b';
+                        return (
+                            <div key={pos} style={{
+                                position:'absolute', width:32, height:32, zIndex:6, color:C.gold, opacity:.6,
+                                top: pos[0]==='t' ? -12 : 'auto', bottom: pos[0]==='b' ? -12 : 'auto',
+                                right: pos[1]==='r' ? -12 : 'auto', left: pos[1]==='l' ? -12 : 'auto',
+                                transform:`scale(${hFlip?-1:1},${vFlip?-1:1})`,
+                            }}>
+                                <svg viewBox="0 0 32 32" width="32" height="32">
+                                    <path d="M4,20 L4,4 L20,4" stroke="currentColor" strokeWidth="1.5" fill="none" strokeLinecap="round"/>
+                                    <rect x="0" y="0" width="7.5" height="7.5" transform="rotate(45 4 4)" fill="currentColor"/>
                                 </svg>
-                            </Link>
-                            <a href="#courses" style={{ fontSize:13, color:'rgba(47,188,212,.7)', textDecoration:'none', fontWeight:600, transition:'color .2s' }}
-                                onMouseEnter={e=>e.currentTarget.style.color=C.gold}
-                                onMouseLeave={e=>e.currentTarget.style.color='rgba(47,188,212,.7)'}
-                            >شوف الكورسات ←</a>
+                            </div>
+                        );
+                    })}
+
+                    <div className="about-full-grid" style={{
+                        display:'grid', gridTemplateColumns:'42% 58%', direction:'ltr',
+                        borderRadius:26, overflow:'hidden', position:'relative',
+                        border:`1px solid ${darkMode ? 'rgba(47,188,212,.25)' : 'rgba(47,188,212,.3)'}`,
+                        boxShadow: darkMode ? '0 24px 64px rgba(0,0,0,.45)' : '0 14px 44px rgba(27,58,96,.12)',
+                    }}>
+                        {/* إطار داخلي مزدوج */}
+                        <div style={{ position:'absolute', inset:8, borderRadius:18, border:`1px solid ${darkMode?'rgba(47,188,212,.16)':'rgba(47,188,212,.22)'}`, pointerEvents:'none', zIndex:5 }}/>
+
+                        {/* ── لوحة الشمسة (يسار) ── */}
+                        <div className="about-photo-side" style={{
+                            position:'relative', overflow:'hidden', display:'flex', alignItems:'center', justifyContent:'center',
+                            padding:'56px 30px',
+                            background: darkMode
+                                ? 'radial-gradient(circle at 50% 40%, #142b47 0%, #0a1626 60%, #050b15 100%)'
+                                : 'radial-gradient(circle at 50% 40%, #e4eef5 0%, #d7e6ee 60%, #cfe0ea 100%)',
+                        }}>
+                            {/* نسيج نجمة ثمانية */}
+                            <svg style={{ position:'absolute', inset:0, width:'100%', height:'100%', opacity: darkMode?.07:.09 }}>
+                                <defs>
+                                    <pattern id="aboutStarPat2" width="48" height="48" patternUnits="userSpaceOnUse">
+                                        <g stroke={C.gold} fill="none" strokeWidth="1">
+                                            <rect x="5" y="5" width="38" height="38"/>
+                                            <rect x="5" y="5" width="38" height="38" transform="rotate(45 24 24)"/>
+                                        </g>
+                                    </pattern>
+                                </defs>
+                                <rect width="100%" height="100%" fill="url(#aboutStarPat2)"/>
+                            </svg>
+
+                            {/* الشمسة الكبيرة — حرف الضاد */}
+                            <div style={{ position:'relative', width:'clamp(200px,24vw,300px)', height:'clamp(200px,24vw,300px)' }}>
+                                <svg width="100%" height="100%" viewBox="0 0 300 300" style={{ position:'absolute', inset:0 }}>
+                                    <circle cx="150" cy="150" r="140" fill="none" stroke={C.gold} strokeWidth=".8" opacity=".45"/>
+                                    <circle cx="150" cy="150" r="118" fill="none" stroke={C.gold} strokeWidth=".6" opacity=".3"/>
+                                    <g stroke={C.gold} strokeWidth="1.2" fill="none" opacity=".55">
+                                        <rect x="55" y="55" width="190" height="190"/>
+                                        <rect x="55" y="55" width="190" height="190" transform="rotate(45 150 150)"/>
+                                    </g>
+                                    <circle cx="150" cy="150" r="92" fill={darkMode ? '#0a1626' : '#eef4f8'} stroke={C.gold} strokeWidth="1.6"/>
+                                </svg>
+                                <div style={{ position:'absolute', inset:0, display:'flex', alignItems:'center', justifyContent:'center' }}>
+                                    <span style={{
+                                        fontFamily:"'Ruwudu',serif", fontSize:'clamp(90px,11vw,130px)', lineHeight:1,
+                                        background:`linear-gradient(160deg,${C.gold},${C.amber})`,
+                                        WebkitBackgroundClip:'text', WebkitTextFillColor:'transparent', backgroundClip:'text',
+                                    }}>ض</span>
+                                </div>
+                            </div>
+
+                            {/* توهج أرضي */}
+                            <div style={{ position:'absolute', bottom:'8%', left:'50%', transform:'translateX(-50%)', width:'70%', height:70, background:`radial-gradient(ellipse, rgba(47,188,212,.16) 0%, transparent 70%)`, filter:'blur(14px)', pointerEvents:'none' }}/>
+                        </div>
+
+                        {/* ── لوحة المحتوى (يمين) ── */}
+                        <div className="about-text-side" style={{
+                            background: darkMode ? '#0a1424' : '#ffffff',
+                            padding:'clamp(40px,5vw,64px)',
+                            display:'flex', flexDirection:'column', justifyContent:'center', gap:22,
+                            position:'relative', direction:'rtl',
+                        }}>
+                            {/* Tag */}
+                            <div style={{ display:'inline-flex', alignItems:'center', gap:10, alignSelf:'flex-start' }}>
+                                <svg width="12" height="12" viewBox="0 0 18 18" fill="none"><rect x="4" y="4" width="10" height="10" transform="rotate(45 9 9)" stroke={C.gold} strokeWidth="1.6"/></svg>
+                                <span style={{ fontSize:11, color:C.gold, letterSpacing:'.24em', fontWeight:700 }}>عن الأستاذ</span>
+                            </div>
+
+                            {/* الاسم */}
+                            <div>
+                                <h2 style={{ fontSize:'clamp(34px,4vw,54px)', fontFamily:"'Ruwudu',serif", color: darkMode ? '#f5f0e8' : C.navy, lineHeight:1.15, margin:'0 0 8px' }}>
+                                    محمد منصور
+                                </h2>
+                                <div style={{ display:'flex', alignItems:'center', gap:9 }}>
+                                    <svg width="9" height="9" viewBox="0 0 18 18"><rect x="4" y="4" width="10" height="10" transform="rotate(45 9 9)" fill={C.amber}/></svg>
+                                    <span style={{ fontSize:13, color:C.amber, fontWeight:700, letterSpacing:'.04em' }}>أستاذ اللغة العربية — الثانوية العامة</span>
+                                </div>
+                            </div>
+
+                            {/* اقتباس */}
+                            <div style={{ position:'relative', paddingRight:20, borderRight:`2px solid ${darkMode?'rgba(47,188,212,.35)':'rgba(47,188,212,.4)'}` }}>
+                                <p style={{ fontSize:'clamp(14px,1.4vw,17px)', fontWeight:600, color: darkMode ? 'rgba(240,232,213,.78)' : 'rgba(27,58,96,.78)', lineHeight:2.05, margin:0 }}>
+                                    <span style={{ fontFamily:"'Ruwudu',serif", fontSize:'1.3em', color:C.amber, letterSpacing:'.03em' }}>يا مولانا</span>، ركّز معايا وجهّز نفسك...<br/>
+                                    هنذاكر بأسلوب مختلف خالص — فاهم مش حافظ<br/>
+                                    لحد ما <span style={{ color:C.amber, fontWeight:900 }}>الدرجة الكاملة تبقى حقك</span>
+                                </p>
+                            </div>
+
+                            {/* إحصائيات */}
+                            <div style={{ display:'flex', alignItems:'center', padding:'18px 0', borderTop:`1px solid ${darkMode?'rgba(47,188,212,.14)':'rgba(47,188,212,.18)'}`, borderBottom:`1px solid ${darkMode?'rgba(47,188,212,.14)':'rgba(47,188,212,.18)'}` }}>
+                                {[
+                                    { count:98,      suffix:'٪',  label:'نسبة النجاح' },
+                                    { count:2000000, prefix:'+',  label:'طالب مسجل'  },
+                                    { count:500,     prefix:'+',  label:'ساعة محتوى' },
+                                ].map(({count,prefix='',suffix='',label}, i) => (
+                                    <React.Fragment key={label}>
+                                        {i>0 && (
+                                            <svg width="8" height="8" viewBox="0 0 18 18" style={{ flexShrink:0, margin:'0 clamp(8px,1.4vw,18px)' }}><rect x="4" y="4" width="10" height="10" transform="rotate(45 9 9)" fill={C.gold} opacity=".5"/></svg>
+                                        )}
+                                        <div style={{ textAlign:'center', flex:1 }}>
+                                            <div style={{ fontSize:'clamp(20px,2.2vw,30px)', fontWeight:900, color:C.gold, lineHeight:1.1 }}>
+                                                {prefix}<span data-count={count}>٠</span>{suffix}
+                                            </div>
+                                            <div style={{ fontSize:11, color: darkMode?'rgba(47,188,212,.55)':'rgba(27,58,96,.5)', marginTop:5, letterSpacing:'.04em' }}>{label}</div>
+                                        </div>
+                                    </React.Fragment>
+                                ))}
+                            </div>
+
+                            {/* مميزات */}
+                            <div style={{ display:'flex', flexDirection:'column', gap:2 }}>
+                                {[
+                                    'شروحات فيديو تفصيلية لكل درس ووحدة',
+                                    'خرائط ذهنية ونماذج إعراب تثبّت المعلومة',
+                                    'اختبارات بنظام الوزارة ومتابعة مستمرة',
+                                    'دعم مباشر للطالب وولي الأمر طوال الأسبوع',
+                                ].map((label, i) => (
+                                    <div key={i} style={{ display:'flex', alignItems:'center', gap:13, padding:'10px 0' }}>
+                                        <svg width="15" height="15" viewBox="0 0 18 18" style={{ flexShrink:0 }}><rect x="4" y="4" width="10" height="10" transform="rotate(45 9 9)" fill="none" stroke={C.gold} strokeWidth="1.6"/></svg>
+                                        <span style={{ fontSize:13.5, color: darkMode ? 'rgba(245,240,232,.68)' : 'rgba(27,58,96,.68)', fontWeight:500 }}>{label}</span>
+                                    </div>
+                                ))}
+                            </div>
+
+                            {/* CTA */}
+                            <div style={{ display:'flex', gap:14, alignItems:'center', flexWrap:'wrap', paddingTop:6 }}>
+                                <Link
+                                    href={auth?.user ? '/student/dashboard' : '/register'}
+                                    style={{
+                                        display:'inline-flex', alignItems:'center', gap:10,
+                                        padding:'13px 30px', borderRadius:10,
+                                        background:`linear-gradient(135deg,${C.gold},${C.amber})`,
+                                        color:C.dark, fontWeight:800, fontSize:14, textDecoration:'none',
+                                        boxShadow:`0 8px 28px rgba(47,188,212,.35)`,
+                                        transition:'transform .2s, box-shadow .2s',
+                                    }}
+                                    onMouseEnter={e=>{e.currentTarget.style.transform='translateY(-2px)';e.currentTarget.style.boxShadow=`0 14px 36px rgba(47,188,212,.55)`;}}
+                                    onMouseLeave={e=>{e.currentTarget.style.transform='none';e.currentTarget.style.boxShadow=`0 8px 28px rgba(47,188,212,.35)`;}}
+                                >
+                                    اشترك دلوقتي
+                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                                        <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+                                    </svg>
+                                </Link>
+                                <a href="#courses" style={{ fontSize:13, color: darkMode ? 'rgba(47,188,212,.7)' : 'rgba(27,58,96,.6)', textDecoration:'none', fontWeight:600, transition:'color .2s' }}
+                                    onMouseEnter={e=>e.currentTarget.style.color=C.gold}
+                                    onMouseLeave={e=>e.currentTarget.style.color= darkMode ? 'rgba(47,188,212,.7)' : 'rgba(27,58,96,.6)'}
+                                >شوف الكورسات ←</a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1892,17 +1968,18 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
 
                 {/* ── Header ── */}
                 <div style={{ textAlign:'center', marginBottom:'clamp(44px,7vh,72px)', position:'relative' }} data-reveal>
-                    <div style={{ display:'inline-flex', alignItems:'center', gap:12, marginBottom:18 }}>
-                        <div style={{ height:1, width:48, background:`linear-gradient(90deg,transparent,${darkMode?'rgba(47,188,212,.55)':'rgba(27,58,96,.4)'})` }}/>
-                        <span style={{ fontSize:10, letterSpacing:'.28em', fontFamily:'Cinzel,serif', color: darkMode ? 'rgba(47,188,212,.6)' : 'rgba(27,58,96,.55)' }}>OUR CENTERS</span>
-                        <div style={{ height:1, width:48, background:`linear-gradient(90deg,${darkMode?'rgba(47,188,212,.55)':'rgba(27,58,96,.4)'},transparent)` }}/>
-                    </div>
-                    <h2 style={{ fontSize:'clamp(28px,3.5vw,50px)', fontFamily:'Rakkas,serif', margin:'0 0 14px', color: darkMode ? C.white : C.navy }}>
+                    <p style={{ fontSize:12, color:C.gold, letterSpacing:'.22em', marginBottom:12 }}>▸ تواجدنا</p>
+                    <h2 style={{ fontSize:'clamp(28px,3.5vw,50px)', fontWeight:800, margin:'0 0 14px', color: darkMode ? C.white : C.navy }}>
                         أماكن تواجدنا
                     </h2>
-                    <p style={{ fontSize:13, color: darkMode ? 'rgba(226,232,240,.42)' : 'rgba(27,58,96,.5)', letterSpacing:'.05em' }}>
+                    <p style={{ fontSize:14, color: darkMode ? 'rgba(226,232,240,.5)' : 'rgba(27,58,96,.55)', maxWidth:440, margin:'0 auto 18px' }}>
                         اختار الفرع القريب منك وابدأ رحلتك مع الأستاذ محمد منصور
                     </p>
+                    <div style={{ display:'flex', alignItems:'center', justifyContent:'center', gap:10 }}>
+                        <div style={{ width:40, height:1, background:`linear-gradient(90deg,transparent,${C.gold})` }}/>
+                        <svg width="14" height="14" viewBox="0 0 18 18" fill="none"><rect x="4" y="4" width="10" height="10" transform="rotate(45 9 9)" stroke={C.gold} strokeWidth="1.6"/></svg>
+                        <div style={{ width:40, height:1, background:`linear-gradient(90deg,${C.gold},transparent)` }}/>
+                    </div>
                 </div>
 
                 {/* ── Location cards — عنوان placeholder، يتحدّث ببيانات الفروع الحقيقية ── */}
@@ -1965,7 +2042,7 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
                         <div style={{ height:1, width:80, background:'linear-gradient(90deg,transparent,rgba(47,188,212,.5))' }}/>
                         <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
                             <path d="M14 2 L16.5 11.5 L26 14 L16.5 16.5 L14 26 L11.5 16.5 L2 14 L11.5 11.5 Z" fill="#2fbcd4" opacity=".8"/>
-                            <circle cx="14" cy="14" r="3" fill="#8dc63f" opacity=".9"/>
+                            <circle cx="14" cy="14" r="3" fill="#009688" opacity=".9"/>
                         </svg>
                         <div style={{ height:1, width:80, background:'linear-gradient(90deg,rgba(47,188,212,.5),transparent)' }}/>
                     </div>
@@ -1988,13 +2065,13 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
                                 position:'relative',
                                 boxShadow:'0 0 0 1px rgba(47,188,212,.4), 0 10px 40px rgba(0,0,0,.4)',
                             }}>
-                                <span style={{ fontFamily:"'Rakkas',serif", fontSize:'clamp(38px,5vw,52px)', color:'#fff' }}>ض</span>
+                                <span style={{ fontFamily:"'Ruwudu',serif", fontSize:'clamp(38px,5vw,52px)', color:'#fff' }}>ض</span>
                             </div>
                         </div>
                     </div>
 
-                    <div style={{ fontFamily:'Cinzel,serif', fontSize:10, color: darkMode ? 'rgba(47,188,212,.45)' : 'rgba(27,58,96,.4)', letterSpacing:'0.34em', marginBottom:14 }}>
-                        LUGHAT AD-DAD
+                    <div style={{ fontSize:10, color: darkMode ? 'rgba(47,188,212,.45)' : 'rgba(27,58,96,.4)', letterSpacing:'0.34em', marginBottom:14 }}>
+                        لغة الضاد
                     </div>
                     <p style={{ fontSize:14, color: darkMode ? 'rgba(226,232,240,.42)' : 'rgba(27,58,96,.5)', maxWidth:400, margin:'0 auto', lineHeight:2 }}>
                         نصنع لسانًا فصيحًا يصنع مستقبلك — العربية مش حفظ، دي ذوق وفهم
@@ -2002,9 +2079,14 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
                 </div>
 
                 {/* ── Social cards ── */}
+                <div style={{ display:'flex', alignItems:'center', justifyContent:'center', gap:10, margin:'clamp(36px,5vh,56px) auto 0' }}>
+                    <div style={{ width:36, height:1, background:'linear-gradient(90deg,transparent,rgba(47,188,212,.5))' }}/>
+                    <span style={{ fontSize:11, color: darkMode ? 'rgba(47,188,212,.6)' : 'rgba(27,58,96,.5)', letterSpacing:'.24em', fontWeight:700 }}>تابعونا</span>
+                    <div style={{ width:36, height:1, background:'linear-gradient(90deg,rgba(47,188,212,.5),transparent)' }}/>
+                </div>
                 <div className="foot-social-grid" style={{
                     display:'grid', gridTemplateColumns:'repeat(3,1fr)',
-                    gap:20, maxWidth:960, margin:'clamp(36px,5vh,56px) auto 0',
+                    gap:20, maxWidth:960, margin:'clamp(22px,3vh,30px) auto 0',
                     padding:'0 clamp(24px,5vw,72px)',
                 }}>
                     {/* Facebook */}

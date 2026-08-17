@@ -18,6 +18,7 @@ export default function Form({ item, units, exams = [] }) {
         price:            item?.price            || '',
         description:      item?.description      || '',
         video_url:        item?.video_url        || '',
+        video_file:       null,
         video_label:      item?.video_label      || 'الفيديو الرئيسي',
         extra_video_urls: existingExtraVideos,
         image:            null,
@@ -33,6 +34,7 @@ export default function Form({ item, units, exams = [] }) {
     });
 
     const [hasGateExam, setHasGateExam] = useState(!!item?.gate_exam_id);
+    const [primaryVideoMode, setPrimaryVideoMode] = useState('link');
 
     // فلترة الامتحانات بناءً على الصف الدراسي للوحدة المختارة
     const selectedUnit    = units.find(u => String(u.id) === String(data.unit_id));
@@ -42,7 +44,9 @@ export default function Form({ item, units, exams = [] }) {
 
     // Local state for extra video inputs with labels
     const [extraVideoInputs, setExtraVideoInputs] = useState(
-        existingExtraVideos.length > 0 ? existingExtraVideos : []
+        existingExtraVideos.length > 0
+            ? existingExtraVideos.map(v => ({ url: v.url || '', label: v.label || '', file: null, mode: 'link' }))
+            : []
     );
 
     // Local state for extra PDF file inputs with labels
@@ -51,22 +55,26 @@ export default function Form({ item, units, exams = [] }) {
     );
 
     /* ── Extra videos handlers ─────────────────────── */
+    const syncVideoData = (next) => {
+        setData('extra_video_urls', next.map(({ url, label, file }) => ({ url, label, file })));
+    };
+
     const addVideoUrl = () => {
-        const next = [...extraVideoInputs, { url: '', label: '' }];
+        const next = [...extraVideoInputs, { url: '', label: '', file: null, mode: 'link' }];
         setExtraVideoInputs(next);
-        setData('extra_video_urls', next);
+        syncVideoData(next);
     };
 
     const updateVideoData = (i, field, val) => {
         const next = extraVideoInputs.map((v, idx) => idx === i ? { ...v, [field]: val } : v);
         setExtraVideoInputs(next);
-        setData('extra_video_urls', next);
+        syncVideoData(next);
     };
 
     const removeVideoUrl = (i) => {
         const next = extraVideoInputs.filter((_, idx) => idx !== i);
         setExtraVideoInputs(next);
-        setData('extra_video_urls', next);
+        syncVideoData(next);
     };
 
     /* ── Extra PDFs handlers ───────────────────────── */
@@ -98,7 +106,8 @@ export default function Form({ item, units, exams = [] }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const hasFile = data.image || data.pdf_file || data.pdf_file_2 || (data.extra_pdfs && data.extra_pdfs.length > 0);
+        const hasVideoFile = !!data.video_file || (data.extra_video_urls || []).some(v => v && v.file);
+        const hasFile = data.image || data.pdf_file || data.pdf_file_2 || (data.extra_pdfs && data.extra_pdfs.length > 0) || hasVideoFile;
         if (item) {
             if (hasFile) {
                 transform(d => ({ ...d, _method: 'PUT' }));
@@ -140,9 +149,14 @@ export default function Form({ item, units, exams = [] }) {
                     label="الفيديو الرئيسي"
                     labelValue={data.video_label}
                     onLabelChange={e => setData('video_label', e.target.value)}
-                    value={data.video_url}
-                    onChange={e => setData('video_url', e.target.value)}
-                    error={errors.video_url}
+                    mode={primaryVideoMode}
+                    onModeChange={setPrimaryVideoMode}
+                    urlValue={data.video_url}
+                    onUrlChange={e => setData('video_url', e.target.value)}
+                    urlError={errors.video_url}
+                    onFileChange={e => setData('video_file', e.target.files[0])}
+                    fileError={errors.video_file}
+                    existingFile={!!item?.video_url}
                     removable={false}
                 />
 
@@ -153,8 +167,14 @@ export default function Form({ item, units, exams = [] }) {
                         label={`فيديو إضافي ${i + 1}`}
                         labelValue={v.label}
                         onLabelChange={e => updateVideoData(i, 'label', e.target.value)}
-                        value={v.url}
-                        onChange={e => updateVideoData(i, 'url', e.target.value)}
+                        mode={v.mode}
+                        onModeChange={m => updateVideoData(i, 'mode', m)}
+                        urlValue={v.url}
+                        onUrlChange={e => updateVideoData(i, 'url', e.target.value)}
+                        urlError={errors[`extra_video_urls.${i}.url`]}
+                        onFileChange={e => updateVideoData(i, 'file', e.target.files[0])}
+                        fileError={errors[`extra_video_urls.${i}.file`]}
+                        existingFile={!!v.url}
                         onRemove={() => removeVideoUrl(i)}
                         removable
                     />
@@ -322,7 +342,8 @@ function DynamicSection({ label, icon, onAdd, addLabel, children }) {
 }
 
 /* ── VideoRow ────────────────────────────────────────── */
-function VideoRow({ label, labelValue, onLabelChange, value, onChange, error, onRemove, removable }) {
+function VideoRow({ label, labelValue, onLabelChange, mode, onModeChange, urlValue, onUrlChange, urlError, onFileChange, fileError, existingFile, onRemove, removable }) {
+    const error = mode === 'file' ? fileError : urlError;
     return (
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12, alignItems: 'flex-end', borderBottom: removable ? '1px solid rgba(255,255,255,0.03)' : 'none', paddingBottom: removable ? 12 : 0 }}>
             {/* عنوان الفيديو */}
@@ -336,22 +357,54 @@ function VideoRow({ label, labelValue, onLabelChange, value, onChange, error, on
                     style={{ width: '100%', boxSizing: 'border-box', border: '1.5px solid rgba(47,188,212,.2)', borderRadius: 8, padding: '9px 12px', fontSize: 13, outline: 'none', background: 'rgba(255,255,255,.03)', color: 'white' }}
                 />
             </div>
-            {/* رابط الفيديو */}
+            {/* رابط / رفع ملف الفيديو */}
             <div style={{ flex: '2 1 300px' }}>
-                <label style={{ display: 'block', fontSize: 11, fontWeight: 600, color: 'rgba(226,232,240,.7)', marginBottom: 4 }}>{label}</label>
-                <input
-                    type="url"
-                    value={value}
-                    onChange={onChange}
-                    placeholder="https://..."
-                    dir="ltr"
-                    style={{ width: '100%', boxSizing: 'border-box', border: `1.5px solid ${error ? '#f87171' : 'rgba(47,188,212,.2)'}`, borderRadius: 8, padding: '9px 12px', fontSize: 13, outline: 'none', background: 'rgba(255,255,255,.03)', color: 'inherit', fontFamily: 'monospace', transition: 'border-color .2s' }}
-                />
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 4, flexWrap: 'wrap', gap: 6 }}>
+                    <label style={{ fontSize: 11, fontWeight: 600, color: 'rgba(226,232,240,.7)' }}>{label}</label>
+                    <div style={{ display: 'flex', gap: 4, background: 'rgba(255,255,255,.04)', borderRadius: 8, padding: 3 }}>
+                        <button
+                            type="button"
+                            onClick={() => onModeChange('link')}
+                            style={{ padding: '4px 10px', borderRadius: 6, border: 'none', cursor: 'pointer', fontSize: 11, fontWeight: 700, fontFamily: 'inherit', background: mode !== 'file' ? O : 'transparent', color: mode !== 'file' ? '#04222b' : 'rgba(226,232,240,.6)', transition: 'all .15s' }}
+                        >رابط يوتيوب/فيميو</button>
+                        <button
+                            type="button"
+                            onClick={() => onModeChange('file')}
+                            style={{ padding: '4px 10px', borderRadius: 6, border: 'none', cursor: 'pointer', fontSize: 11, fontWeight: 700, fontFamily: 'inherit', background: mode === 'file' ? O : 'transparent', color: mode === 'file' ? '#04222b' : 'rgba(226,232,240,.6)', transition: 'all .15s' }}
+                        >رفع ملف فيديو</button>
+                    </div>
+                </div>
+
+                {mode === 'file' ? (
+                    <>
+                        {existingFile && (
+                            <div style={{ fontSize: 11, color: G, marginBottom: 5, display: 'flex', alignItems: 'center', gap: 5 }}>
+                                <span>📎</span>
+                                <span style={{ opacity: .7 }}>يوجد فيديو مرفوع مسبقاً — اختر ملفاً جديداً لاستبداله</span>
+                            </div>
+                        )}
+                        <input
+                            type="file"
+                            accept="video/*"
+                            onChange={onFileChange}
+                            style={{ width: '100%', boxSizing: 'border-box', border: `1.5px dashed ${error ? '#f87171' : 'rgba(47,188,212,.2)'}`, borderRadius: 8, padding: '8px 10px', fontSize: 12, cursor: 'pointer', background: 'rgba(255,255,255,.02)', color: 'white' }}
+                        />
+                    </>
+                ) : (
+                    <input
+                        type="url"
+                        value={urlValue}
+                        onChange={onUrlChange}
+                        placeholder="https://..."
+                        dir="ltr"
+                        style={{ width: '100%', boxSizing: 'border-box', border: `1.5px solid ${error ? '#f87171' : 'rgba(47,188,212,.2)'}`, borderRadius: 8, padding: '9px 12px', fontSize: 13, outline: 'none', background: 'rgba(255,255,255,.03)', color: 'inherit', fontFamily: 'monospace', transition: 'border-color .2s' }}
+                    />
+                )}
                 {error && <p style={{ color: '#f87171', fontSize: 11, marginTop: 4 }}>{error}</p>}
             </div>
             {removable && (
                 <button type="button" onClick={onRemove}
-                    style={{ width: 32, height: 32, borderRadius: 8, flexShrink: 0, background: 'rgba(248,113,113,.1)', border: '1px solid rgba(248,113,113,.25)', color: '#f87171', cursor: 'pointer', fontSize: 14, display: 'flex', alignItems: 'center', justifyContext: 'center', transition: 'all .15s', height: 38 }}
+                    style={{ width: 32, height: 32, borderRadius: 8, flexShrink: 0, background: 'rgba(248,113,113,.1)', border: '1px solid rgba(248,113,113,.25)', color: '#f87171', cursor: 'pointer', fontSize: 14, display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all .15s', height: 38 }}
                     onMouseEnter={e => e.currentTarget.style.background = 'rgba(248,113,113,.22)'}
                     onMouseLeave={e => e.currentTarget.style.background = 'rgba(248,113,113,.1)'}
                     title="حذف"

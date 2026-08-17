@@ -103,6 +103,7 @@ const NAV = [
                 { label: 'كل الحجوزات', href: '/admin/reservations',        inertia: true },
                 { label: 'حجز جديد',    href: '/admin/reservations/create', inertia: true },
             ]},
+            { label: 'طلبات حجز المقاعد', icon: 'bell', href: '/admin/booking-requests', inertia: true },
             { label: 'أكواد التفعيل', icon: 'tag',   href: '/admin/promo-codes', inertia: true },
             { label: 'طلبات الدفع', icon: 'money', href: '/admin/payments', inertia: true },
             { label: 'إيصالات الدفع', icon: 'sheet', href: '/admin/payment-receipts', inertia: true }, // الزرار المضاف حديثاً كالمساعد تماماً!

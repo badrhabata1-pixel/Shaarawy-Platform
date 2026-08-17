@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\BookingRequestController;
+use App\Http\Controllers\Admin\BookingRequestAdminController;
 use App\Http\Controllers\Student\AuthController         as StudentAuthController;
 use App\Http\Controllers\Student\DashboardController    as StudentDashboardController;
 use App\Http\Controllers\Student\LessonController       as StudentLessonController;
@@ -54,6 +56,10 @@ Route::get('/home', fn() => Inertia::render('Home'))->name('home.legacy');
 /* ── Student Registration (إنشاء حساب طالب جديد) ──────────────────────── */
 Route::get('/register',  [StudentController::class, 'create'])->name('register');
 Route::post('/register', [StudentController::class, 'store'])->name('register.store');
+
+/* ── Booking Requests (رابط حجز مقعد عام — بدون تسجيل دخول) ─────────────── */
+Route::get('/booking',  [BookingRequestController::class, 'create'])->name('booking-requests.create');
+Route::post('/booking', [BookingRequestController::class, 'store'])->name('booking-requests.store');
 
 /* ── Student Auth (دخول وخروج الطلاب) ─────────────────────────────────── */
 Route::get('/student/login',  [StudentAuthController::class, 'showLogin'])->name('student.login');
@@ -213,6 +219,12 @@ Route::middleware(['auth', 'no.cache'])->prefix('admin')->name('admin.')->group(
     Route::get('/student-requests',               [StudentAdminController::class, 'requests'])->name('students.requests');
     Route::post('/student-requests/{id}/approve', [StudentAdminController::class, 'approve'])->name('students.approve');
     Route::post('/student-requests/{id}/reject',  [StudentAdminController::class, 'reject'])->name('students.reject');
+
+    /* مراجعة طلبات حجز المقاعد الواردة من صفحة الحجز العامة */
+    Route::get('/booking-requests',                     [BookingRequestAdminController::class, 'index'])->name('booking-requests.index');
+    Route::post('/booking-requests/{bookingRequest}/accept', [BookingRequestAdminController::class, 'accept'])->name('booking-requests.accept');
+    Route::post('/booking-requests/{bookingRequest}/reject', [BookingRequestAdminController::class, 'reject'])->name('booking-requests.reject');
+    Route::delete('/booking-requests/{bookingRequest}',      [BookingRequestAdminController::class, 'destroy'])->name('booking-requests.destroy');
 
     /* تصفح تقارير الدرجات والتعليقات واللوحات الصامتة */
     Route::get('/comments',          [CommentAdminController::class,   'index'])->name('comments.index');

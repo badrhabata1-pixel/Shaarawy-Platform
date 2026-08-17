@@ -39,7 +39,9 @@ class LessonAdminController extends Controller
             'is_locked'          => ['boolean'],
             'is_published'       => ['boolean'],
             'video_url'          => ['nullable', 'url'],
+            'video_file'         => ['nullable', 'file', 'mimes:mp4,mov,avi,webm,mkv,m4v', 'max:512000'],
             'extra_video_urls'   => ['nullable', 'array'],
+            'extra_video_urls.*.file' => ['nullable', 'file', 'mimes:mp4,mov,avi,webm,mkv,m4v', 'max:512000'],
             'image'              => ['nullable', 'image', 'max:3072'],
             'pdf_file'           => ['nullable', 'file', 'mimes:pdf', 'max:20480'],
             'pdf_file_2'         => ['nullable', 'file', 'mimes:pdf', 'max:20480'],
@@ -58,6 +60,10 @@ class LessonAdminController extends Controller
         if ($request->hasFile('pdf_file_2')) {
             $data['pdf_file_2'] = $this->saveFile($request->file('pdf_file_2'), 'uploads/lessons/pdfs');
         }
+        if ($request->hasFile('video_file')) {
+            $data['video_url'] = asset($this->saveFile($request->file('video_file'), 'uploads/lessons/videos'));
+        }
+        unset($data['video_file']);
 
         $extraPdfPaths = [];
         if ($request->hasFile('extra_pdfs')) {
@@ -68,6 +74,16 @@ class LessonAdminController extends Controller
             }
         }
         $data['extra_pdfs'] = $extraPdfPaths ?: null;
+
+        foreach ($data['extra_video_urls'] ?? [] as $i => &$v) {
+            if (is_array($v)) {
+                if ($request->hasFile("extra_video_urls.$i.file")) {
+                    $v['url'] = asset($this->saveFile($request->file("extra_video_urls.$i.file"), 'uploads/lessons/videos'));
+                }
+                unset($v['file']);
+            }
+        }
+        unset($v);
 
         $extraVideos = array_values(array_filter(
             $data['extra_video_urls'] ?? [],
@@ -101,7 +117,9 @@ class LessonAdminController extends Controller
             'is_locked'          => ['boolean'],
             'is_published'       => ['boolean'],
             'video_url'          => ['nullable', 'url'],
+            'video_file'         => ['nullable', 'file', 'mimes:mp4,mov,avi,webm,mkv,m4v', 'max:512000'],
             'extra_video_urls'   => ['nullable', 'array'],
+            'extra_video_urls.*.file' => ['nullable', 'file', 'mimes:mp4,mov,avi,webm,mkv,m4v', 'max:512000'],
             'image'              => ['nullable', 'image', 'max:3072'],
             'pdf_file'           => ['nullable', 'file', 'mimes:pdf', 'max:20480'],
             'pdf_file_2'         => ['nullable', 'file', 'mimes:pdf', 'max:20480'],
@@ -126,6 +144,10 @@ class LessonAdminController extends Controller
         } else {
             unset($data['pdf_file_2']);
         }
+        if ($request->hasFile('video_file')) {
+            $data['video_url'] = asset($this->saveFile($request->file('video_file'), 'uploads/lessons/videos'));
+        }
+        unset($data['video_file']);
 
         $existingPdfs = $lesson->extra_pdfs ?? [];
         $newPdfs = [];
@@ -138,6 +160,16 @@ class LessonAdminController extends Controller
         }
         $mergedPdfs = array_values(array_filter(array_merge($existingPdfs, $newPdfs)));
         $data['extra_pdfs'] = $mergedPdfs ?: null;
+
+        foreach ($data['extra_video_urls'] ?? [] as $i => &$v) {
+            if (is_array($v)) {
+                if ($request->hasFile("extra_video_urls.$i.file")) {
+                    $v['url'] = asset($this->saveFile($request->file("extra_video_urls.$i.file"), 'uploads/lessons/videos'));
+                }
+                unset($v['file']);
+            }
+        }
+        unset($v);
 
         $extraVideos = array_values(array_filter(
             $data['extra_video_urls'] ?? [],
