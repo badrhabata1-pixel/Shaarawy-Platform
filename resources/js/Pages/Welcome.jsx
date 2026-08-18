@@ -319,7 +319,6 @@ function PageStyles() {
                 .hero-stats        { gap:20px !important; flex-wrap:wrap; }
                 .port-grid > div   { max-width:100%; margin:0 auto; width:100%; }
                 .hero-welcome-img  { max-width:100% !important; margin-bottom:20px !important; }
-                .course-scroll > div { flex:0 0 88vw !important; max-width:88vw !important; }
                 .branches-row      { height:auto !important; flex-direction:column !important; }
                 .branches-row .branch-collapsed { min-width:0 !important; flex:0 0 auto !important; height:64px !important; }
                 .branches-row .branch-active    { min-width:0 !important; flex:0 0 auto !important; height:520px !important; }
@@ -339,8 +338,13 @@ function PageStyles() {
                 .hero-stats > div { flex:1 0 auto; min-width:80px; }
             }
 
-            .course-scroll::-webkit-scrollbar { height:4px; }
-            .course-scroll::-webkit-scrollbar-thumb { background:rgba(47,188,212,.3); border-radius:2px; }
+            /* بطاقات الكورسات — شبكة متجاوبة بدل التمرير الأفقي */
+            .courses-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:30px; max-width:1200px; margin:0 auto; }
+            .course-desc-clamp {
+                display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;
+                overflow:hidden; text-overflow:ellipsis;
+            }
+            @media(max-width:520px){ .courses-grid { grid-template-columns:1fr; } }
         `}</style>
     );
 }
@@ -657,6 +661,157 @@ function HistIcon({ type, sz, color }) {
         </svg>
     );
     return null;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   COURSE CARD — بطاقة وحدة دراسية بطراز شمسة/مخطوطة موحّد مع باقي الموقع
+═══════════════════════════════════════════════════════════════ */
+function CourseCard({ unit, dark, auth }) {
+    const [hovered, setHovered] = useState(false);
+
+    const imgSrc     = unit.image ? `/storage/${unit.image}` : null;
+    const gradeName  = unit.academic_year?.name ?? '';
+    const isFree     = Boolean(unit.is_free) || !unit.price || Number(unit.price) === 0;
+    const priceLabel = isFree ? 'مجاني' : `${unit.price} جنيه`;
+    const accent     = isFree ? '#22c55e' : C.gold;
+    const ctaHref    = isFree
+        ? (auth?.user ? '/student/dashboard' : '/student/login')
+        : (auth?.user ? '/student/dashboard' : '/register');
+    const ctaLabel   = isFree ? 'شوف الوحدة مجاناً' : (auth?.user ? 'الدخول للوحدة' : 'اشترك للدخول');
+
+    return (
+        <div
+            data-reveal
+            onMouseEnter={() => setHovered(true)}
+            onMouseLeave={() => setHovered(false)}
+            style={{
+                position:'relative', direction:'rtl', display:'flex', flexDirection:'column',
+                borderRadius:22, overflow:'hidden',
+                background: dark ? 'linear-gradient(165deg,#101f36 0%,#0a1524 60%,#080f1c 100%)' : '#ffffff',
+                border:`1px solid ${hovered ? accent+'88' : dark ? 'rgba(47,188,212,.16)' : 'rgba(27,58,96,.12)'}`,
+                boxShadow: hovered
+                    ? `0 22px 50px rgba(0,0,0,${dark?'.55':'.14'}), 0 0 30px ${accent}26`
+                    : dark ? '0 6px 24px rgba(0,0,0,.35)' : '0 3px 18px rgba(27,58,96,.08)',
+                transform: hovered ? 'translateY(-8px)' : 'translateY(0)',
+                transition:'all .45s cubic-bezier(.22,1,.36,1)',
+            }}
+        >
+            {/* ── الوسائط / الشمسة الزخرفية ── */}
+            <div style={{ position:'relative', height:190, overflow:'hidden', flexShrink:0 }}>
+                {imgSrc ? (
+                    <img src={imgSrc} alt={unit.title} style={{
+                        width:'100%', height:'100%', objectFit:'cover',
+                        transform: hovered ? 'scale(1.07)' : 'scale(1)',
+                        transition:'transform .6s cubic-bezier(.22,1,.36,1)',
+                    }}/>
+                ) : (
+                    <div style={{
+                        position:'absolute', inset:0,
+                        background:'linear-gradient(160deg,#16304f 0%,#0c1929 60%,#050b15 100%)',
+                        display:'flex', alignItems:'center', justifyContent:'center',
+                    }}>
+                        {/* نسيج نجمة ثمانية */}
+                        <svg style={{ position:'absolute', inset:0, width:'100%', height:'100%', opacity:.08 }}>
+                            <defs>
+                                <pattern id={`courseStarPat-${unit.id}`} width="30" height="30" patternUnits="userSpaceOnUse">
+                                    <g stroke="#2fbcd4" fill="none" strokeWidth="1">
+                                        <rect x="3" y="3" width="24" height="24"/>
+                                        <rect x="3" y="3" width="24" height="24" transform="rotate(45 15 15)"/>
+                                    </g>
+                                </pattern>
+                            </defs>
+                            <rect width="100%" height="100%" fill={`url(#courseStarPat-${unit.id})`}/>
+                        </svg>
+
+                        {/* شمسة الأيقونة المركزية */}
+                        <div style={{ position:'relative', width:78, height:78, display:'flex', alignItems:'center', justifyContent:'center', transform: hovered?'scale(1.08)':'scale(1)', transition:'transform .4s cubic-bezier(.22,1,.36,1)' }}>
+                            <svg width="78" height="78" viewBox="0 0 78 78" style={{ position:'absolute', inset:0 }}>
+                                <circle cx="39" cy="39" r="35" fill="none" stroke="#2fbcd4" strokeWidth=".8" opacity={hovered?.75:.45}/>
+                                <g stroke="#2fbcd4" strokeWidth="1" fill="none" opacity={hovered?.9:.5}>
+                                    <rect x="16" y="16" width="46" height="46"/>
+                                    <rect x="16" y="16" width="46" height="46" transform="rotate(45 39 39)"/>
+                                </g>
+                                <circle cx="39" cy="39" r="24" fill="#0c1929" stroke="#2fbcd4" strokeWidth="1.3"/>
+                            </svg>
+                            <div style={{ position:'relative', zIndex:1 }}>
+                                <HistIcon type="book" sz={30} color="#2fbcd4"/>
+                            </div>
+                        </div>
+                    </div>
+                )}
+
+                {/* تدرّج سفلي لدمج الصورة بالبطاقة */}
+                <div style={{ position:'absolute', inset:0, background:'linear-gradient(180deg,transparent 45%, rgba(5,11,21,.88) 100%)', pointerEvents:'none' }}/>
+
+                {/* شارة الصف */}
+                {gradeName && (
+                    <span style={{
+                        position:'absolute', top:14, insetInlineStart:14,
+                        fontSize:11, fontWeight:700, color:'#f5f0e8',
+                        background:'rgba(5,11,21,.55)', backdropFilter:'blur(6px)',
+                        border:'1px solid rgba(47,188,212,.35)', borderRadius:999,
+                        padding:'5px 12px',
+                    }}>{gradeName}</span>
+                )}
+
+                {/* شارة السعر */}
+                <span style={{
+                    position:'absolute', top:14, insetInlineEnd:14,
+                    fontSize:11, fontWeight:800,
+                    color: isFree ? '#eafff2' : C.dark,
+                    background: isFree ? 'linear-gradient(135deg,#22c55e,#16a34a)' : `linear-gradient(135deg,${C.amber},${C.gold})`,
+                    borderRadius:999, padding:'5px 14px', boxShadow:'0 4px 14px rgba(0,0,0,.3)',
+                }}>{priceLabel}</span>
+
+                {/* عنوان الوحدة فوق الصورة */}
+                <div style={{ position:'absolute', bottom:14, insetInlineStart:18, insetInlineEnd:18 }}>
+                    <div style={{ fontSize:17, fontWeight:800, color:'#f5f0e8', lineHeight:1.4 }}>{unit.title}</div>
+                </div>
+            </div>
+
+            {/* ── الجسم ── */}
+            <div style={{ padding:'18px 20px 20px', display:'flex', flexDirection:'column', flex:1 }}>
+                <p className="course-desc-clamp" style={{
+                    fontSize:13, lineHeight:1.85, margin:'0 0 18px',
+                    color: dark ? 'rgba(245,240,232,.56)' : 'rgba(27,58,96,.6)',
+                    minHeight: unit.description ? 'auto' : 0,
+                }}>{unit.description || 'وحدة دراسية كاملة — شرح، تمارين، ومراجعات.'}</p>
+
+                <Link href={ctaHref} style={{
+                    marginTop:'auto', position:'relative', overflow:'hidden',
+                    display:'flex', alignItems:'center', justifyContent:'center', gap:8,
+                    padding:'12px', borderRadius:11, textAlign:'center', textDecoration:'none',
+                    background: isFree ? 'linear-gradient(135deg,#22c55e,#16a34a)' : `linear-gradient(135deg,${C.amber},${C.gold})`,
+                    color: isFree ? '#fff' : C.dark, fontWeight:800, fontSize:14,
+                    boxShadow: hovered ? `0 10px 26px ${accent}40` : 'none',
+                    transition:'box-shadow .35s ease',
+                }}>
+                    {ctaLabel}
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" style={{ transform: hovered ? 'translateX(-3px)' : 'none', transition:'transform .3s ease' }}>
+                        <line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/>
+                    </svg>
+                </Link>
+            </div>
+
+            {/* زخارف أركان رفيعة */}
+            {['tl','tr'].map(pos => {
+                const hFlip = pos[1] === 'r';
+                return (
+                    <div key={pos} style={{
+                        position:'absolute', width:22, height:22, zIndex:2, color:accent,
+                        opacity: hovered ? .9 : 0, transition:'opacity .4s ease',
+                        top:6, right: pos[1]==='r' ? 6 : 'auto', left: pos[1]==='l' ? 6 : 'auto',
+                        transform:`scale(${hFlip?-1:1},1)`, pointerEvents:'none',
+                    }}>
+                        <svg viewBox="0 0 30 30" width="22" height="22">
+                            <path d="M3,19 L3,3 L19,3" stroke="currentColor" strokeWidth="1.4" fill="none" strokeLinecap="round"/>
+                            <rect x="0" y="0" width="7" height="7" transform="rotate(45 3.2 3.2)" fill="currentColor"/>
+                        </svg>
+                    </div>
+                );
+            })}
+        </div>
+    );
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -1144,7 +1299,6 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
     const filteredCourses = activeFilter === 'الكل'
         ? units
         : units.filter(u => u.academic_year?.name === activeFilter);
-    const [hoveredCourse,   setHoveredCourse]   = useState(null);
 
     const pageBg = darkMode
         ? `linear-gradient(160deg, #050b15 0%, #0a1628 35%, #1b3a60 65%, #090e1a 100%)`
@@ -1524,71 +1678,10 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
                         لا توجد وحدات دراسية متاحة حالياً — تابعنا قريباً!
                     </div>
                 ) : (
-                <div className="course-scroll" style={{ display:'flex', alignItems:'center', justifyContent:'center', gap:24, overflowX:'auto', paddingBottom:12, scrollSnapType:'x mandatory', WebkitOverflowScrolling:'touch', flexWrap:'wrap' }}>
-                    {filteredCourses.map((unit) => {
-                        const isHovered  = hoveredCourse === unit.id;
-                        const imgSrc     = unit.image ? `/storage/${unit.image}` : null;
-                        const priceLabel = unit.is_free ? 'مجاني ✓' : (unit.price ? `${unit.price} جنيه` : '—');
-                        const gradeName  = unit.academic_year?.name ?? '';
-                        const ctaHref    = unit.is_free
-                            ? (auth?.user ? '/student/dashboard' : '/student/login')
-                            : (auth?.user ? '/student/dashboard' : '/register');
-                        const ctaLabel   = unit.is_free ? 'شوف الوحدة مجاناً ←' : (auth?.user ? 'الدخول للوحدة ←' : 'اشترك للدخول ←');
-                        return (
-                        <div key={unit.id} data-reveal
-                            style={{ flex:'0 0 340px', scrollSnapAlign:'start', transition:'transform .25s', cursor:'pointer' }}
-                            onMouseEnter={e=>{e.currentTarget.style.transform='translateY(-6px)'; setHoveredCourse(unit.id);}}
-                            onMouseLeave={e=>{e.currentTarget.style.transform='none'; setHoveredCourse(null);}}>
-                            {imgSrc ? (
-                                <img src={imgSrc} alt={unit.title}
-                                    style={{ width:'100%', display:'block', maxHeight:320, objectFit:'contain',
-                                             filter:'drop-shadow(0 14px 30px rgba(0,0,0,.45))' }} />
-                            ) : (
-                                <div style={{
-                                    width:'100%', height:260, borderRadius:20, position:'relative', overflow:'hidden',
-                                    background:'linear-gradient(160deg,#16304f 0%,#0c1929 60%,#050b15 100%)',
-                                    border:'1px solid rgba(47,188,212,.25)',
-                                    display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', gap:12,
-                                    filter:'drop-shadow(0 14px 30px rgba(0,0,0,.35))',
-                                }}>
-                                    <svg width="80%" height="80%" viewBox="0 0 100 100" style={{ position:'absolute', opacity:.08 }}>
-                                        <rect x="18" y="18" width="64" height="64" fill="none" stroke="#2fbcd4" strokeWidth="1.2"/>
-                                        <rect x="18" y="18" width="64" height="64" transform="rotate(45 50 50)" fill="none" stroke="#2fbcd4" strokeWidth="1.2"/>
-                                    </svg>
-                                    <svg width="54" height="42" viewBox="0 0 52 40" fill="none" style={{ position:'relative' }}>
-                                        <path d="M26,8 Q14,2 4,6 L4,34 Q14,30 26,36 Q38,30 48,34 L48,6 Q38,2 26,8 Z" stroke="#2fbcd4" strokeWidth="1.6" fill="none"/>
-                                        <line x1="26" y1="8" x2="26" y2="36" stroke="#2fbcd4" strokeWidth="1.6" opacity=".4"/>
-                                    </svg>
-                                    <span style={{ fontSize:13, color:'rgba(226,232,240,.5)', fontWeight:600, position:'relative', padding:'0 16px', textAlign:'center' }}>{unit.title}</span>
-                                </div>
-                            )}
-                            <div style={{
-                                maxHeight: isHovered ? 300 : 0,
-                                opacity: isHovered ? 1 : 0,
-                                overflow:'hidden',
-                                transition:'max-height .55s cubic-bezier(.22,1,.36,1), opacity .4s ease',
-                                background:'rgba(12,25,41,.7)',
-                                backdropFilter: isHovered ? 'blur(14px)' : 'none',
-                                borderRadius:16,
-                                marginTop: isHovered ? 12 : 0,
-                            }}>
-                                <div style={{ padding:'18px 18px 22px' }}>
-                                    <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:6, gap:8 }}>
-                                        <span style={{ fontSize:15, fontWeight:700, color:C.white, flex:1 }}>{unit.title}</span>
-                                        <span style={{ fontSize:12, fontWeight:800, color: unit.is_free ? '#4ade80' : C.amber, whiteSpace:'nowrap' }}>{priceLabel}</span>
-                                    </div>
-                                    {gradeName && (
-                                        <div style={{ fontSize:11.5, color:C.gold, marginBottom:10 }}>{gradeName}</div>
-                                    )}
-                                    {unit.description && (
-                                        <div style={{ fontSize:13, color:'rgba(245,240,232,.58)', lineHeight:1.8, marginBottom:18 }}>{unit.description}</div>
-                                    )}
-                                    <Link href={ctaHref} style={{ display:'block', textAlign:'center', padding:'11px', borderRadius:10, background: unit.is_free ? 'linear-gradient(135deg,#22c55e,#16a34a)' : `linear-gradient(135deg,${C.amber},${C.gold})`, color: unit.is_free ? '#fff' : C.dark, fontWeight:700, fontSize:14, textDecoration:'none' }}>{ctaLabel}</Link>
-                                </div>
-                            </div>
-                        </div>
-                        );
-                    })}
+                <div className="courses-grid">
+                    {filteredCourses.map((unit) => (
+                        <CourseCard key={unit.id} unit={unit} dark={darkMode} auth={auth} />
+                    ))}
                 </div>
                 )}
             </section>
