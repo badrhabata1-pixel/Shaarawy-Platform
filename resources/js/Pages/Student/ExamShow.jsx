@@ -1,4 +1,4 @@
-﻿import { Head, Link, useForm } from '@inertiajs/react';
+import { Head, Link, useForm } from '@inertiajs/react';
 import StudentLayout from '@/Layouts/StudentLayout';
 import { useState, useEffect, useRef } from 'react';
 import { teacherReactionImage } from '@/Utils/teacherReaction';
@@ -15,7 +15,7 @@ export default function ExamShow({ exam, result }) {
 
     return (
         <StudentLayout>
-            <Head title={`${exam.title} — منصة الصيفي`} />
+            <Head title={`${exam.title} — منصة منصور`} />
 
             <style>{`
                 @keyframes fadeUp  { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }

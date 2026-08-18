@@ -76,7 +76,7 @@ export default function PromoCodes({ assistant, promo_codes = [], lessons = [] }
                         <button 
                             type="submit"
                             disabled={processing}
-                            className="bg-[#14213D] text-white py-4 rounded-xl font-black text-sm hover:bg-[#F47C20] transition duration-300 shadow-md transform active:scale-[0.99] disabled:opacity-50"
+                            className="brand-cta py-4 text-sm disabled:opacity-50"
                         >
                             {processing ? 'جاري توليد الأكواد...' : 'توليد الأكواد العشوائية ⚡'}
                         </button>

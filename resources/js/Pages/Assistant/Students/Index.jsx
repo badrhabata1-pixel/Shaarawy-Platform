@@ -45,7 +45,7 @@ export default function Index({ assistant, students = [], filters = {} }) {
                         </div>
                         <button 
                             type="submit"
-                            className="w-full md:w-auto bg-[#14213D] text-white px-8 py-3 rounded-xl font-black text-sm hover:bg-[#F47C20] transition shadow-md self-end"
+                            className="brand-cta w-full md:w-auto px-8 py-3 text-sm self-end"
                         >
                             البحث الفوري 🔍
                         </button>

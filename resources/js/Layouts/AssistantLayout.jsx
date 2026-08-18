@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link, usePage, useForm } from '@inertiajs/react';
 
 /* ─── Brand Tokens ───────────────────────────────── */
@@ -163,6 +163,10 @@ export default function AssistantLayout({ children, assistant, title }) {
 
     const sidebarW = collapsed ? 72 : 260;
 
+    useEffect(() => {
+        if (mobileOpen && window.innerWidth <= 768) setCollapsed(false);
+    }, [mobileOpen]);
+
     // ألوان تفاعلية بناءً على الوضع الليلي المختار
     const bgBody = darkMode ? '#0e1726' : '#f0f3fa';
     const bgHeader = darkMode ? '#101c2c' : '#ffffff';
@@ -179,9 +183,92 @@ export default function AssistantLayout({ children, assistant, title }) {
                 ::-webkit-scrollbar-track { background: rgba(0,0,0,.15); }
                 ::-webkit-scrollbar-thumb { background: rgba(244,124,32,.4); border-radius: 4px; }
                 .sb-link { text-decoration: none !important; }
+                .assistant-shell {
+                    position: relative;
+                    overflow: hidden;
+                    isolation: isolate;
+                }
+                .assistant-shell::before {
+                    content: '';
+                    position: fixed;
+                    inset: 0;
+                    z-index: 0;
+                    pointer-events: none;
+                    opacity: ${darkMode ? '.22' : '.16'};
+                    background-image:
+                        radial-gradient(circle at 18% 16%, rgba(47,188,212,.16), transparent 24%),
+                        radial-gradient(circle at 82% 76%, rgba(13,148,136,.13), transparent 28%),
+                        linear-gradient(135deg, transparent 0 48%, rgba(47,188,212,.07) 49%, transparent 51% 100%);
+                }
+                .assistant-ornaments {
+                    position: fixed;
+                    inset: 0;
+                    z-index: 1;
+                    pointer-events: none;
+                    overflow: hidden;
+                }
+                .assistant-ornament {
+                    position: absolute;
+                    opacity: ${darkMode ? '.24' : '.14'};
+                    color: ${darkMode ? '#2DD4BF' : '#0D9488'};
+                    filter: drop-shadow(0 0 14px rgba(45,212,191,.22));
+                }
+                .assistant-ornament.diamond {
+                    width: 18px;
+                    height: 18px;
+                    border: 2px solid currentColor;
+                    transform: rotate(45deg);
+                    border-radius: 3px;
+                }
+                .assistant-ornament.ring {
+                    width: 92px;
+                    height: 92px;
+                    border: 1px solid currentColor;
+                    border-radius: 50%;
+                }
+                .assistant-ornament.star {
+                    width: 14px;
+                    height: 14px;
+                    background: currentColor;
+                    clip-path: polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%);
+                }
+                .sidebar-desktop::before {
+                    content: '';
+                    position: absolute;
+                    inset: 0;
+                    pointer-events: none;
+                    opacity: ${darkMode ? '.11' : '.07'};
+                    background-image:
+                        repeating-linear-gradient(135deg, transparent 0 22px, rgba(45,212,191,.65) 23px, transparent 24px),
+                        radial-gradient(circle at 28% 18%, rgba(220,201,163,.45), transparent 22%),
+                        radial-gradient(circle at 70% 86%, rgba(47,188,212,.5), transparent 24%);
+                    z-index: 0;
+                }
+                .sidebar-desktop > * {
+                    position: relative;
+                    z-index: 1;
+                }
                 @media (max-width: 768px) {
-                    .sidebar-desktop { display: none !important; }
+                    .sidebar-desktop {
+                        display: flex !important;
+                        transform: translateX(110%);
+                        width: min(84vw, 320px) !important;
+                        height: calc(100dvh - 62px) !important;
+                        min-height: 0 !important;
+                        top: 62px !important;
+                        right: 0 !important;
+                        z-index: 430 !important;
+                        border-top-left-radius: 18px;
+                        box-shadow: -18px 0 42px rgba(0,0,0,.42) !important;
+                        transition: transform .28s ease, background .3s ease, box-shadow .3s ease !important;
+                    }
+                    .sidebar-desktop.mobile-open { transform: translateX(0) !important; }
                     .main-content { margin-right: 0 !important; }
+                    .main-content > div { padding: 16px 10px 28px !important; max-width: 100% !important; }
+                    .assistant-topbar { padding: 12px 14px !important; gap: 10px !important; flex-wrap: wrap !important; }
+                    .assistant-topbar-actions { width: 100%; justify-content: space-between !important; gap: 8px !important; }
+                    .sidebar-desktop nav { padding: 12px 10px !important; }
+                    .sidebar-desktop .sb-link { min-height: 42px; }
                 }
                 @media (min-width: 769px) {
                     .sidebar-mobile-overlay { display: none !important; }
@@ -194,12 +281,20 @@ export default function AssistantLayout({ children, assistant, title }) {
                 .page-anim { animation: fadeInUp .4s ease both; }
             `}</style>
 
-            <div dir="rtl" style={{ display: 'flex', minHeight: '100vh', position: 'relative' }}>
+            <div dir="rtl" className="assistant-shell" style={{ display: 'flex', minHeight: '100vh', position: 'relative' }}>
+                <div className="assistant-ornaments" aria-hidden="true">
+                    <span className="assistant-ornament ring" style={{ top: '12%', left: '8%' }} />
+                    <span className="assistant-ornament diamond" style={{ top: '28%', left: '34%' }} />
+                    <span className="assistant-ornament star" style={{ top: '18%', right: '31%' }} />
+                    <span className="assistant-ornament diamond" style={{ bottom: '18%', left: '20%' }} />
+                    <span className="assistant-ornament ring" style={{ bottom: '-42px', right: '22%' }} />
+                    <span className="assistant-ornament star" style={{ bottom: '32%', right: '9%' }} />
+                </div>
 
                 {/* ── Desktop Sidebar ── */}
                 <aside
                     ref={sidebarRef}
-                    className="sidebar-desktop"
+                    className={`sidebar-desktop${mobileOpen ? ' mobile-open' : ''}`}
                     style={{
                         width: sidebarW,
                         minHeight: '100vh',
@@ -238,11 +333,10 @@ export default function AssistantLayout({ children, assistant, title }) {
                                     flexShrink: 0,
                                     overflow: 'hidden',
                                 }}>
-                                    <img src="/images/teacher-logo.jpg" alt="Logo" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                    <img src="/images/منصور لوجو.png" alt="Logo" style={{ width: '220%', height: '100%', objectFit: 'contain', objectPosition: 'left center' }} />
                                 </div>
                                 <div>
                                     <div style={{ color: darkMode ? C.gold : C.navy, fontSize: 13, fontWeight: 700, lineHeight: 1.2 }}>السكرتارية</div>
-                                    <div style={{ color: darkMode ? 'rgba(220,201,163,.4)' : '#94a3b8', fontSize: 10 }}>الصيفي للتاريخ</div>
                                 </div>
                             </div>
                         )}
@@ -361,7 +455,7 @@ export default function AssistantLayout({ children, assistant, title }) {
 
                 {/* ── Mobile Header ── */}
                 <header className="mobile-header" style={{
-                    position: 'fixed', top: 0, left: 0, right: 0, zIndex: 200,
+                    position: 'fixed', top: 0, left: 0, right: 0, zIndex: 420,
                     background: darkMode ? '#101c2c' : C.navy,
                     boxShadow: '0 4px 20px rgba(0,0,0,.3)',
                     display: 'flex', alignItems: 'center', justifyContent: 'space-between',
@@ -392,8 +486,8 @@ export default function AssistantLayout({ children, assistant, title }) {
                         className="sidebar-mobile-overlay"
                         onClick={() => setMobileOpen(false)}
                         style={{
-                            position: 'fixed', inset: 0, zIndex: 300,
-                            background: 'rgba(0,0,0,.6)', backdropFilter: 'blur(4px)',
+                            position: 'fixed', inset: 0, zIndex: 410,
+                            background: 'rgba(0,0,0,.55)', backdropFilter: 'blur(3px)',
                         }}
                     />
                 )}
@@ -407,6 +501,8 @@ export default function AssistantLayout({ children, assistant, title }) {
                         minHeight: '100vh',
                         transition: 'margin-right .3s cubic-bezier(.4,0,.2,1)',
                         background: bgBody,
+                        position: 'relative',
+                        zIndex: 2,
                     }}
                 >
                     {/* Top Bar */}
@@ -419,11 +515,11 @@ export default function AssistantLayout({ children, assistant, title }) {
                         justifyContent: 'space-between',
                         boxShadow: '0 2px 12px rgba(20,33,61,.06)',
                         transition: 'all 0.3s ease'
-                    }}>
+                    }} className="assistant-topbar">
                         <h1 style={{ fontSize: 18, fontWeight: 800, color: textMain, margin: 0 }}>
                             {title || 'لوحة السكرتارية'}
                         </h1>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+                        <div className="assistant-topbar-actions" style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
                             <button 
                                 type="button"
                                 onClick={() => setDarkMode(!darkMode)}
@@ -474,9 +570,9 @@ function LogoRing() {
             boxShadow: '0 2px 8px rgba(244,124,32,0.25)'
         }}>
             <img 
-                src="/images/teacher-logo.jpg" 
+                src="/images/منصور لوجو.png" 
                 alt="Teacher Logo" 
-                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                style={{ width: '220%', height: '100%', objectFit: 'contain', objectPosition: 'left center' }}
             />
         </div>
     );

@@ -173,7 +173,7 @@ class LessonController extends Controller
                 'id'              => $lesson->id,
                 'title'           => $lesson->title,
                 'description'     => $lesson->description,
-                'thumbnail_url'   => $lesson->image,
+                'thumbnail_url'   => $this->publicFileUrl($lesson->image),
                 'duration'        => $lesson->duration_minutes,
                 'duration_fmt'    => $lesson->duration_formatted,
                 'order'           => $lesson->lesson_number,
@@ -481,5 +481,20 @@ class LessonController extends Controller
             'passed' => $passed,
             'score'  => $bestResult?->score,
         ];
+    }
+
+    private function publicFileUrl(?string $path): ?string
+    {
+        if (!$path) {
+            return null;
+        }
+
+        if (str_starts_with($path, 'http://') || str_starts_with($path, 'https://')) {
+            return $path;
+        }
+
+        return str_starts_with($path, 'uploads/')
+            ? asset($path)
+            : asset('storage/' . ltrim($path, '/'));
     }
 }

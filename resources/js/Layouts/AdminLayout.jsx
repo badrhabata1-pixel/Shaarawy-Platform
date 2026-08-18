@@ -461,6 +461,11 @@ export default function AdminLayout({ children, title = 'لوحة التحكم' 
                     .admin-topbar-search    { display: none               !important; }
                     .admin-topbar-date      { display: none               !important; }
                     .admin-topbar-title     { font-size: 15px             !important; }
+                    .admin-topbar-inner     { padding: 12px 14px          !important; gap: 10px !important; }
+                    .admin-main main        { padding: 14px 10px 26px     !important; overflow-x: hidden; }
+                    .admin-sidebar          { width: min(88vw, 310px)     !important; }
+                    .admin-sidebar button,
+                    .admin-sidebar a        { width: 100%; }
                 }
             `}</style>
 
@@ -613,7 +618,7 @@ export default function AdminLayout({ children, title = 'لوحة التحكم' 
                     borderBottom: '1px solid var(--a-topbar-b)',
                     boxShadow: `0 1px 0 rgba(255,255,255,${dark ? '.03' : '.7'}),0 4px 16px var(--a-shadow)`,
                 }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 14, padding: '14px 24px' }}>
+                    <div className="admin-topbar-inner" style={{ display: 'flex', alignItems: 'center', gap: 14, padding: '14px 24px' }}>
 
                         <button onClick={() => setSidebarOpen(true)} className="lg:hidden" style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--a-text)', padding: 4 }}>
                             <Icon name="menu" size={22} />

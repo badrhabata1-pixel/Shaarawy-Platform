@@ -184,7 +184,7 @@ export default function GradeExamForm({ assistant, examResult, responses = [] })
                         <button 
                             type="submit"
                             disabled={processing}
-                            className="w-full bg-[#14213D] text-white py-4 rounded-xl font-black text-sm hover:bg-[#F47C20] transition duration-300 shadow-md"
+                            className="brand-cta w-full py-4 text-sm"
                         >
                             {processing ? 'جاري حفظ ورصد الدرجات يدوياً...' : 'حفظ التعديلات ورصد الدرجة الكلية بنجاح 💾'}
                         </button>

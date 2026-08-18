@@ -15,6 +15,53 @@ const C = {
     orangeD: '#129dd9', navyL: '#1e2e50',
 };
 
+function CardOrnaments({ color = '#2fbcd4', soft = false }) {
+    const opacity = soft ? .07 : .12;
+    const size = soft ? 34 : 48;
+    const patId = useRef(`as-ip-${Math.random().toString(36).slice(2)}`).current;
+    return (
+        <>
+            <svg style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', pointerEvents: 'none', opacity }}>
+                <defs>
+                    <pattern id={patId} width={size} height={size} patternUnits="userSpaceOnUse">
+                        <g stroke={color} fill="none">
+                            <rect x="0" y="0" width={size} height={size} strokeWidth="1" />
+                            <rect
+                                x={size * 0.12}
+                                y={size * 0.12}
+                                width={size * 0.76}
+                                height={size * 0.76}
+                                transform={`rotate(45 ${size / 2} ${size / 2})`}
+                                strokeWidth="1.2"
+                            />
+                            <rect
+                                x={size * 0.30}
+                                y={size * 0.30}
+                                width={size * 0.40}
+                                height={size * 0.40}
+                                transform={`rotate(45 ${size / 2} ${size / 2})`}
+                                strokeWidth="0.85"
+                                opacity="0.7"
+                            />
+                        </g>
+                    </pattern>
+                </defs>
+                <rect width="100%" height="100%" fill={`url(#${patId})`} />
+            </svg>
+            <div style={{ position: 'absolute', top: 12, left: 24, right: 24, height: 1, background: `repeating-linear-gradient(90deg, ${color}88 0 6px, transparent 6px 14px)`, pointerEvents: 'none', opacity: soft ? .38 : .62 }} />
+            <div style={{ position: 'absolute', bottom: 12, left: 24, right: 24, height: 1, background: `repeating-linear-gradient(90deg, ${color}66 0 6px, transparent 6px 14px)`, pointerEvents: 'none', opacity: soft ? .22 : .5 }} />
+            <div style={{ position: 'absolute', top: 14, left: 14, opacity: soft ? .18 : .32, pointerEvents: 'none' }}>
+                <svg width="14" height="14" viewBox="0 0 20 20">
+                    <g stroke={color} strokeWidth="1.5" fill="none">
+                        <rect x="3.2" y="3.2" width="13.6" height="13.6" />
+                        <rect x="3.2" y="3.2" width="13.6" height="13.6" transform="rotate(45 10 10)" />
+                    </g>
+                </svg>
+            </div>
+        </>
+    );
+}
+
 /* ─── Stat Card ───────────────────────────────────── */
 function StatCard({ label, value, color, icon, href, delay = 0, theme }) {
     const ref = useRef(null);
@@ -46,10 +93,12 @@ function StatCard({ label, value, color, icon, href, delay = 0, theme }) {
             onMouseEnter={e => { e.currentTarget.style.boxShadow = theme.darkMode ? '0 8px 30px rgba(0,0,0,.5)' : '0 8px 30px rgba(20,33,61,.12)'; e.currentTarget.style.transform = 'translateY(-2px)'; }}
             onMouseLeave={e => { e.currentTarget.style.boxShadow = theme.darkMode ? '0 4px 20px rgba(0,0,0,.35)' : '0 4px 20px rgba(20,33,61,.06)'; e.currentTarget.style.transform = 'translateY(0)'; }}
         >
+            <CardOrnaments color={color} soft />
+            <div style={{ position: 'absolute', inset: 0, background: `linear-gradient(135deg, ${color}10, transparent 65%)`, pointerEvents: 'none' }} />
             {/* Accent bar */}
             <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 3, background: `linear-gradient(90deg, ${color}, ${color}00)` }} />
             
-            <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 14, position: 'relative', zIndex: 1 }}>
                 <div style={{ width: 46, height: 46, borderRadius: 14, display: 'flex', alignItems: 'center', justifyContent: 'center', background: `${color}15`, fontSize: 20 }}>
                     {icon}
                 </div>
@@ -94,9 +143,13 @@ function GroupCard({ group, delay, theme }) {
             alignItems: 'center',
             justifyContent: 'space-between',
             boxShadow: theme.darkMode ? '0 2px 10px rgba(0,0,0,.25)' : '0 2px 10px rgba(20,33,61,.04)',
-            transition: 'all 0.3s ease'
+            transition: 'all 0.3s ease',
+            position: 'relative',
+            overflow: 'hidden',
         }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+            <CardOrnaments color={C.orange} soft />
+            <div style={{ position: 'absolute', inset: 0, background: `linear-gradient(135deg, ${C.orange}0f, transparent 65%)`, pointerEvents: 'none' }} />
+            <div style={{ display: 'flex', alignItems: 'center', gap: 12, position: 'relative', zIndex: 1 }}>
                 <div style={{
                     width: 42, height: 42, borderRadius: 10,
                     background: `linear-gradient(135deg, ${C.navy}, ${C.navyL})`,
@@ -114,6 +167,7 @@ function GroupCard({ group, delay, theme }) {
                 background: `${C.orange}15`, color: C.orange,
                 borderRadius: 20, padding: '4px 12px',
                 fontSize: 13, fontWeight: 700,
+                position: 'relative', zIndex: 1,
             }}>
                 {group.students_count} طالب
             </div>
@@ -159,7 +213,7 @@ export default function AssistantDashboard({ assistant, stats, my_groups = [], r
 
     return (
         <AssistantLayout assistant={assistant} title="لوحة التحكم">
-            <Head title="لوحة السكرتارية — منصة الصيفي" />
+            <Head title="لوحة السكرتارية — منصة منصور" />
 
             <style>{`
                 @keyframes fadeInUp {
@@ -183,12 +237,14 @@ export default function AssistantDashboard({ assistant, stats, my_groups = [], r
                 position: 'relative',
                 overflow: 'hidden',
             }}>
+                <CardOrnaments color={C.orange} />
+                <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(100deg, transparent 30%, rgba(47,188,212,0.09) 50%, transparent 70%)', pointerEvents: 'none' }} />
                 <div style={{
                     position: 'absolute', top: -40, left: -40,
                     width: 200, height: 200, borderRadius: '50%',
                     background: 'rgba(244,124,32,.08)', pointerEvents: 'none',
                 }} />
-                <div>
+                <div style={{ position: 'relative', zIndex: 1 }}>
                     <h2 style={{ color: '#fff', fontSize: 22, fontWeight: 900, margin: '0 0 6px' }}>
                         أهلاً، سكرتارية المنصة 👋
                     </h2>
@@ -258,9 +314,13 @@ export default function AssistantDashboard({ assistant, stats, my_groups = [], r
                     background: bgCard, borderRadius: 16, padding: '20px 22px',
                     border: borderCard,
                     boxShadow: '0 4px 20px rgba(0,0,0,.02)',
-                    transition: 'all 0.3s ease'
+                    transition: 'all 0.3s ease',
+                    position: 'relative',
+                    overflow: 'hidden',
                 }}>
-                    <h3 style={{ color: textMain, fontSize: 16, fontWeight: 800, marginBottom: 16, display: 'flex', alignItems: 'center', gap: 8 }}>
+                    <CardOrnaments color={C.orange} soft />
+                    <div style={{ position: 'absolute', inset: 0, background: `linear-gradient(160deg, ${C.orange}0d, transparent 70%)`, pointerEvents: 'none' }} />
+                    <h3 style={{ color: textMain, fontSize: 16, fontWeight: 800, marginBottom: 16, display: 'flex', alignItems: 'center', gap: 8, position: 'relative', zIndex: 1 }}>
                         <span style={{ background: `${C.orange}18`, color: C.orange, borderRadius: 8, padding: '4px 8px' }}>👥</span>
                         مجموعاتي
                     </h3>
@@ -269,7 +329,7 @@ export default function AssistantDashboard({ assistant, stats, my_groups = [], r
                             لا توجد مجموعات مُعيّنة لك بعد
                         </p>
                     ) : (
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: 10, position: 'relative', zIndex: 1 }}>
                             {my_groups.map((group, i) => (
                                 <GroupCard key={group.id} group={group} delay={i * 60} theme={theme} />
                             ))}
@@ -282,13 +342,17 @@ export default function AssistantDashboard({ assistant, stats, my_groups = [], r
                     background: bgCard, borderRadius: 16, padding: '20px 22px',
                     border: borderCard,
                     boxShadow: '0 4px 20px rgba(0,0,0,.02)',
-                    transition: 'all 0.3s ease'
+                    transition: 'all 0.3s ease',
+                    position: 'relative',
+                    overflow: 'hidden',
                 }}>
-                    <h3 style={{ color: textMain, fontSize: 16, fontWeight: 800, marginBottom: 16, display: 'flex', alignItems: 'center', gap: 8 }}>
+                    <CardOrnaments color={C.orange} soft />
+                    <div style={{ position: 'absolute', inset: 0, background: `linear-gradient(160deg, ${C.orange}0d, transparent 70%)`, pointerEvents: 'none' }} />
+                    <h3 style={{ color: textMain, fontSize: 16, fontWeight: 800, marginBottom: 16, display: 'flex', alignItems: 'center', gap: 8, position: 'relative', zIndex: 1 }}>
                         <span style={{ background: `${C.orange}18`, color: C.orange, borderRadius: 8, padding: '4px 8px' }}>⚡</span>
                         إجراءات سريعة
                     </h3>
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: 10, position: 'relative', zIndex: 1 }}>
                         {[
                             { label: 'تفعيل طلاب جدد', href: route('assistant.students.requests'), color: C.orange, icon: '✅' },
                             { label: 'إيصالات الدفع', onClick: () => setShowReceipts(true), count: pendingReceiptsCount, color: '#d97706', icon: '🧾' },
@@ -304,9 +368,12 @@ export default function AssistantDashboard({ assistant, stats, my_groups = [], r
                                 textDecoration: 'none', color: action.color,
                                 fontWeight: 700, fontSize: 14,
                                 transition: 'all .2s',
+                                position: 'relative',
+                                overflow: 'hidden',
                             };
                             const content = (
                                 <>
+                                    <CardOrnaments color={action.color} soft />
                                     <span style={{ fontSize: 18 }}>{action.icon}</span>
                                     <span>{action.label}</span>
                                     {action.count > 0 && (

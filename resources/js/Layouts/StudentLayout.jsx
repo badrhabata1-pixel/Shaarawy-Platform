@@ -50,7 +50,7 @@ export default function StudentLayout({ children, title, student: studentProp })
     const notifRef = useRef(null);
 
     const student = studentProp || props.student || props.auth?.user || props.auth?.student || {
-        full_name: 'طالب الصيفي',
+        full_name: 'طالب منصور',
         initials:  'ص',
         avatar:    null,
     };
@@ -158,9 +158,6 @@ export default function StudentLayout({ children, title, student: studentProp })
                 {/* Logo */}
                 <Link href="/" style={{ display:'flex', alignItems:'center', gap:8, textDecoration:'none', flexShrink:0 }}>
                     <LogoRing />
-                    <div className="nav-desktop" style={{ flexDirection:'column', gap:2 }}>
-                        <div style={{ fontFamily:"'Cinzel',serif", fontSize:7.5, color:'rgba(45,212,191,.65)', letterSpacing:'0.22em', whiteSpace:'nowrap', marginTop:2 }}>HISTORIA MAGISTRA</div>
-                    </div>
                 </Link>
 
                 {/* Right side controls */}
@@ -492,16 +489,30 @@ function WhatsAppBtn() {
 
 function LogoRing() {
     return (
-        <img
-            src="/images/logo-sify.png"
-            alt="منصة الصيفي"
+        <div
             className="nav-logo-img"
             style={{
-                height: 100, width: 'auto', objectFit: 'contain', flexShrink: 0,
-                filter: 'invert(1) brightness(2.2) contrast(1.1) drop-shadow(0 0 12px rgba(45,212,191,.45))',
-                transition: 'filter .3s ease, height .3s ease',
+                height: 100,
+                width: 86,
+                overflow: 'hidden',
+                flexShrink: 0,
+                position: 'relative',
+                transition: 'height .3s ease',
             }}
-        />
+        >
+            <img
+                src="/images/منصور لوجو.png"
+                alt="منصور"
+                style={{
+                    height: '100%',
+                    width: 'auto',
+                    objectFit: 'contain',
+                    objectPosition: 'left center',
+                    filter: 'drop-shadow(0 0 12px rgba(45,212,191,.45))',
+                    display: 'block',
+                }}
+            />
+        </div>
     );
 }
 

@@ -21,6 +21,7 @@ const METHOD = {
     vodafone: { label: 'فودافون كاش', icon: '📱' },
     instapay: { label: 'إنستا باي',   icon: '⚡' },
 };
+const BRAND_GRAD = 'linear-gradient(135deg,#0D9488 0%,#d9620a 100%)';
 
 function screenshotUrl(path) {
     if (!path) return null;
@@ -109,8 +110,8 @@ export default function AssistantPaymentsIndex({ assistant, requests = [] }) {
                                 padding: '7px 18px', borderRadius: 8, cursor: 'pointer',
                                 fontFamily: "'Cairo',sans-serif", fontSize: 13, fontWeight: 700,
                                 border: '1.5px solid',
-                                borderColor: isActive ? '#F47C20' : cardBd,
-                                background:  isActive ? '#F47C20' : card,
+                                borderColor: isActive ? '#0D9488' : cardBd,
+                                background:  isActive ? BRAND_GRAD : card,
                                 color:       isActive ? '#fff'    : txtSub,
                                 transition: 'all .2s',
                             }}>
@@ -238,10 +239,11 @@ export default function AssistantPaymentsIndex({ assistant, requests = [] }) {
                                 cursor: 'pointer', fontFamily: "'Cairo',sans-serif", fontWeight: 700,
                             }}>إلغاء</button>
                             <button onClick={submitReview} disabled={submitting} style={{
-                                padding: '9px 24px', borderRadius: 8, border: 'none', cursor: 'pointer',
+                                padding: '9px 24px', borderRadius: 999, border: 'none', cursor: 'pointer',
                                 fontFamily: "'Cairo',sans-serif", fontWeight: 700, color: '#fff',
-                                background: reviewModal.action === 'approve' ? '#059669' : '#DC2626',
+                                background: BRAND_GRAD,
                                 opacity: submitting ? .6 : 1,
+                                boxShadow: submitting ? 'none' : 'var(--brand-cta-shadow)',
                             }}>
                                 {submitting ? 'جارٍ...' : reviewModal.action === 'approve' ? 'تأكيد الموافقة' : 'تأكيد الرفض'}
                             </button>
@@ -265,12 +267,13 @@ function Info({ label, value, ltr, txtSub, txtMain }) {
 function ActionBtn({ color, onClick, children }) {
     return (
         <button onClick={onClick} style={{
-            padding: '7px 14px', borderRadius: 8, border: `1.5px solid ${color}`,
-            background: `${color}18`, color, fontWeight: 800, fontSize: 12,
+            padding: '8px 16px', borderRadius: 999, border: 'none',
+            background: BRAND_GRAD, color: '#fff', fontWeight: 800, fontSize: 12,
             cursor: 'pointer', fontFamily: "'Cairo',sans-serif", transition: 'all .15s',
+            boxShadow: 'var(--brand-cta-shadow)',
         }}
-            onMouseEnter={e => { e.currentTarget.style.background = color; e.currentTarget.style.color = '#fff'; }}
-            onMouseLeave={e => { e.currentTarget.style.background = `${color}18`; e.currentTarget.style.color = color; }}
+            onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-1px)'; }}
+            onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; }}
         >
             {children}
         </button>

@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Head, useForm, router } from '@inertiajs/react';
 import AssistantLayout from '@/Layouts/AssistantLayout';
 
@@ -58,7 +58,7 @@ export default function WatchTracker({ assistant, never_watched_students = [], p
                                 className="w-full border border-gray-200 dark:border-gray-800 bg-white dark:bg-[#0e1726] text-[#14213D] dark:text-white rounded-lg p-3 text-sm focus:border-[#F47C20] focus:ring-0 outline-none transition"
                             />
                         </div>
-                        <button type="submit" className="w-full md:w-auto bg-[#14213D] text-white px-8 py-3 rounded-xl font-black text-sm hover:bg-[#F47C20] transition shadow-md self-end">
+                        <button type="submit" className="brand-cta w-full md:w-auto px-8 py-3 text-sm self-end">
                             البحث الفوري 🔍
                         </button>
                     </form>
@@ -152,8 +152,8 @@ function UnwatchedRow({ student, index, theme }) {
     const barColor = pct === 0 ? '#ef4444' : pct < 50 ? '#f97316' : '#eab308';
     const initials = student.name ? student.name.split(' ').map(w => w[0]).slice(0, 2).join('') : '?';
 
-    const studentMsg = `أهلاً يا بطل 👋 بخصوص متابعتك مع منصة مستر محمد الصيفي في مادة التاريخ، يرجى شد حيلك وإنهاء مشاهدة المحاضرة الأخيرة وحل الاختبار الدوري المرفق بها لتجنب تراكم المنهج عليك. بالتوفيق! 🏛️`;
-    const parentMsg = `السلام عليكم ورحمة الله وبركاته مع حضرتك سكرتارية منصة مستر محمد الصيفي لتدريس التاريخ. نود إحاطة علم سيادتكم بأن الطالب لم يكمل مشاهدة المحاضرة الأخيرة على المنصة حتى الآن. يرجى حثه ومتابعته لإنهاء المحاضرة وحل الاختبار المرفق بها لضمان استمرار تفوقه الدراسي. شكراً لتعاونكم! 🏛️`;
+    const studentMsg = `أهلاً يا بطل 👋 بخصوص متابعتك مع منصة منصور، يرجى شد حيلك وإنهاء مشاهدة المحاضرة الأخيرة وحل الاختبار الدوري المرفق بها لتجنب تراكم المنهج عليك. بالتوفيق! 🏛️`;
+    const parentMsg = `السلام عليكم ورحمة الله وبركاته مع حضرتك سكرتارية منصة منصور. نود إحاطة علم سيادتكم بأن الطالب لم يكمل مشاهدة المحاضرة الأخيرة على المنصة حتى الآن. يرجى حثه ومتابعته لإنهاء المحاضرة وحل الاختبار المرفق بها لضمان استمرار تفوقه الدراسي. شكراً لتعاونكم! 🏛️`;
 
     return (
         <tr style={{ borderBottom: theme.borderCell, transition: 'background .15s', animation: `fadeInUp .3s ${index * 0.04}s both` }}
@@ -191,7 +191,7 @@ function UnwatchedRow({ student, index, theme }) {
                         💬 الطالب
                     </a>
                     {student.parent_phone && (
-                        <a href={`https://wa.me/20${student.parent_phone}?text=${encodeURIComponent(parentMsg)}`} target="_blank" rel="noopener noreferrer" className="px-3.5 py-1.5 bg-[#F47C20] text-white rounded-lg font-bold text-[10px] hover:bg-[#d96a12] transition flex items-center gap-1 shadow-sm">
+                        <a href={`https://wa.me/20${student.parent_phone}?text=${encodeURIComponent(parentMsg)}`} target="_blank" rel="noopener noreferrer" className="brand-cta px-3.5 py-1.5 text-[10px]">
                             🛡️ ولي الأمر
                         </a>
                     )}
