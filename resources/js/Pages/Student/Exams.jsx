@@ -1,4 +1,4 @@
-﻿import { Head, Link } from '@inertiajs/react';
+import { Head, Link } from '@inertiajs/react';
 import { useState, useEffect } from 'react';
 import StudentLayout from '@/Layouts/StudentLayout';
 
@@ -47,7 +47,7 @@ export default function Exams({ exams }) {
 
     return (
         <StudentLayout>
-            <Head title="الامتحانات — منصة الصيفي" />
+            <Head title="الامتحانات — منصة منصور" />
 
             <style>{`
                 @keyframes fadeUp { from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:translateY(0)} }

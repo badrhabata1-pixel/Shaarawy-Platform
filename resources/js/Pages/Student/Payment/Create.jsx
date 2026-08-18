@@ -2,7 +2,8 @@ import { useState, useEffect } from 'react';
 import { Head, useForm } from '@inertiajs/react';
 import StudentLayout from '@/Layouts/StudentLayout';
 
-const O = '#F47C20';
+const O = '#0D9488';
+const BRAND_GRAD = 'linear-gradient(135deg,#0D9488 0%,#d9620a 100%)';
 const N = '#14213D';
 const G = '#C9A14A';
 const B = '#DCC9A3';
@@ -33,8 +34,8 @@ export default function PaymentCreate({ units = [], settings = {}, preUnit = nul
     });
 
     const paymentInfo = {
-        vodafone: { label: 'فودافون كاش', number: settings.vodafone_number, name: settings.vodafone_name, color: '#E40000', grad: 'linear-gradient(135deg,#e40000,#a30000)', icon: '📱' },
-        instapay: { label: 'إنستا باي',   number: settings.instapay_number, name: settings.instapay_name, color: '#7C3AED', grad: 'linear-gradient(135deg,#7C3AED,#5b21b6)', icon: '⚡' },
+        vodafone: { label: 'فودافون كاش', number: settings.vodafone_number, name: settings.vodafone_name, color: O, grad: BRAND_GRAD, icon: '📱' },
+        instapay: { label: 'إنستا باي',   number: settings.instapay_number, name: settings.instapay_name, color: O, grad: BRAND_GRAD, icon: '⚡' },
     };
 
     const selectMethod = (m) => { setMethod(m); setData('method', m); };
@@ -76,7 +77,7 @@ export default function PaymentCreate({ units = [], settings = {}, preUnit = nul
 
     return (
         <StudentLayout>
-            <Head title="طلب دفع — منصة الصيفي" />
+            <Head title="طلب دفع — منصة منصور" />
 
             <style>{`
                 @keyframes fadeUp   { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
@@ -86,7 +87,7 @@ export default function PaymentCreate({ units = [], settings = {}, preUnit = nul
                 .pu { animation: fadeUp .45s both }
                 .pay-method:hover { transform: translateY(-3px); }
                 .pay-upload:hover { border-color: ${G} !important; background: ${dark ? 'rgba(201,161,74,.06)' : 'rgba(201,161,74,.04)'} !important; }
-                .pay-submit:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 10px 36px rgba(244,124,32,.55) !important; }
+                .pay-submit:hover:not(:disabled) { transform: translateY(-2px); box-shadow: var(--brand-cta-shadow) !important; }
                 .pay-copy:hover  { background: rgba(201,161,74,.22) !important; }
                 select option { background: ${dark ? '#0e1a2e' : '#fff'}; color: ${txt}; }
             `}</style>
@@ -349,12 +350,12 @@ export default function PaymentCreate({ units = [], settings = {}, preUnit = nul
                         <button type="submit" disabled={processing} className="pay-submit"
                             style={{
                                 width:'100%', padding:'16px', borderRadius:14,
-                                background: processing ? (dark ? 'rgba(255,255,255,.1)' : '#d4c9b0') : `linear-gradient(135deg,${O} 0%,#d9620a 100%)`,
+                                background: processing ? (dark ? 'rgba(255,255,255,.1)' : '#d4c9b0') : BRAND_GRAD,
                                 color: processing ? txtDim : '#fff',
                                 border:'none', fontSize:16, fontWeight:800,
                                 cursor: processing ? 'not-allowed' : 'pointer',
                                 fontFamily:"'Cairo',sans-serif",
-                                boxShadow: processing ? 'none' : '0 6px 28px rgba(244,124,32,.4)',
+                                boxShadow: processing ? 'none' : 'var(--brand-cta-shadow)',
                                 transition:'all .2s',
                                 letterSpacing:'.04em',
                             }}

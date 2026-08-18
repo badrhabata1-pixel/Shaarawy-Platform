@@ -60,7 +60,7 @@ export default function StudentProfile({ student }) {
 
     return (
         <StudentLayout title="👤 ملفي الشخصي">
-            <Head title="تعديل حسابي — منصة الصيفي" />
+            <Head title="تعديل حسابي — منصة منصور" />
 
             <style>{`
                 @keyframes fadeUp { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:translateY(0)} }

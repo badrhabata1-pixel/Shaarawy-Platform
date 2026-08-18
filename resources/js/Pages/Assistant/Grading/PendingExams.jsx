@@ -49,7 +49,7 @@ export default function PendingExams({ assistant, pending = [], exams_list = [],
     }, [pending]);
 
     return (
-        <AssistantLayout assistant={assistant} title="📝 امتحانات وحوش التاريخ">
+        <AssistantLayout assistant={assistant} title="📝 امتحانات الطلاب">
             <Head title="سجل الامتحانات — بوابة السكرتارية" />
 
             <div className="max-w-5xl mx-auto space-y-6 text-right" dir="rtl" style={{ fontFamily: 'Cairo, sans-serif' }}>
@@ -85,7 +85,7 @@ export default function PendingExams({ assistant, pending = [], exams_list = [],
                         {/* زر البحث الفوري المضاء والمستقل المكتوب بطلبك */}
                         <button 
                             type="submit" 
-                            className="w-full md:w-auto bg-[#14213D] text-white px-8 py-3 rounded-xl font-black text-sm hover:bg-[#F47C20] transition shadow-md self-end"
+                            className="brand-cta w-full md:w-auto px-8 py-3 text-sm self-end"
                         >
                             البحث الفوري 🔍
                         </button>
@@ -132,7 +132,7 @@ export default function PendingExams({ assistant, pending = [], exams_list = [],
 
                                 <Link 
                                     href={route('assistant.exams.grade.form', exam.id)}
-                                    className="w-full bg-[#14213D] text-white py-3 rounded-xl font-black text-xs hover:bg-[#F47C20] transition duration-300 text-center block shadow-md hover:shadow-[#F47C20]/20"
+                                    className="brand-cta w-full py-3 text-xs"
                                 >
                                     👀 عرض ورقة الإجابة وتعديل الدرجة
                                 </Link>

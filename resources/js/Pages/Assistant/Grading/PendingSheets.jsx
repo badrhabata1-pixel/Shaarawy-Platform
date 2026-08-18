@@ -27,7 +27,7 @@ export default function PendingSheets({ assistant, stats, pending_sheets = [] })
                 <div className="flex justify-between items-center flex-wrap gap-4 pb-4 border-b border-gray-200 dark:border-gray-700">
                     <div>
                         <h2 className="text-xl font-black text-[#14213D] dark:text-[#DCC9A3]">سجل واجبات الطلاب بانتظار المراجعة</h2>
-                        <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">قم بمراجعة وتصحيح الأسئلة المقالية ورصد درجات وحوش التاريخ</p>
+                        <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">قم بمراجعة وتصحيح الأسئلة المقالية ورصد درجات الطلاب</p>
                     </div>
                     <div style={{
                         background: `${O}15`, border: `1.5px solid ${O}40`,
@@ -78,7 +78,7 @@ export default function PendingSheets({ assistant, stats, pending_sheets = [] })
 
                                 <Link
                                     href={route('assistant.sheets.grade.form', sheet.id)}
-                                    className="w-full bg-[#14213D] dark:bg-[#0d1829] text-white py-3 rounded-xl font-black text-xs hover:bg-[#F47C20] transition duration-300 text-center block shadow-md hover:shadow-[#F47C20]/20"
+                                    className="brand-cta w-full py-3 text-xs"
                                 >
                                     ✍️ ابدأ تصحيح ورصد الدرجات
                                 </Link>

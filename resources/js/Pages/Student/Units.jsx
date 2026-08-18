@@ -37,8 +37,8 @@ export default function Units({ student, units }) {
     const starField = useMemo(() => STARS, []);
 
     return (
-        <StudentLayout title="🌌 أطلس الوحدات">
-            <Head title="الوحدات — منصة الصيفي" />
+        <StudentLayout title="📖 رحلة التعلّم">
+            <Head title="الوحدات — منصة منصور" />
 
             <style>{`
                 @keyframes twinkle       { 0%,100%{opacity:.15; transform:scale(1)} 50%{opacity:1; transform:scale(1.35)} }
@@ -105,14 +105,34 @@ export default function Units({ student, units }) {
                     </div>
 
                     <h1 style={{
+                        display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 14,
                         fontSize: 34, fontWeight: 900, margin: '0 0 12px', lineHeight: 1.25,
                         fontFamily: "'Cinzel', serif", letterSpacing: '.02em',
-                        backgroundImage: `linear-gradient(90deg, ${B} 0%, #fff 35%, ${G} 60%, ${B} 100%)`,
-                        backgroundSize: '200% auto',
-                        WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent',
-                        animation: 'shimmerSweep 6s linear infinite',
                     }}>
-                        🌌 أطلس الوحدات
+                        {/* أيقونة badge مضيئة بدل الإيموجي (كانت بتظهر كمربع فاضي) */}
+                        <span style={{
+                            position: 'relative', width: 46, height: 46, borderRadius: 14,
+                            background: `linear-gradient(135deg, rgba(45,212,191,.18), rgba(13,148,136,.08))`,
+                            border: `1.5px solid ${G}66`,
+                            display: 'flex', alignItems: 'center', justifyContent: 'center',
+                            boxShadow: `0 0 18px rgba(45,212,191,.25), inset 0 1px 0 rgba(255,255,255,.08)`,
+                            flexShrink: 0,
+                        }}>
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                                <path d="M4 5.5C4 4.67 4.67 4 5.5 4H11V20H5.5C4.67 20 4 19.33 4 18.5V5.5Z" stroke={G} strokeWidth="1.6" strokeLinejoin="round"/>
+                                <path d="M20 5.5C20 4.67 19.33 4 18.5 4H13V20H18.5C19.33 20 20 19.33 20 18.5V5.5Z" stroke={G} strokeWidth="1.6" strokeLinejoin="round"/>
+                                <path d="M11 6.5C11 6.5 9.5 6 8 6M11 10C11 10 9.5 9.5 8 9.5M11 13.5C11 13.5 9.5 13 8 13" stroke={G} strokeWidth="1.2" strokeLinecap="round" opacity=".6"/>
+                            </svg>
+                        </span>
+
+                        <span style={{
+                            backgroundImage: `linear-gradient(90deg, ${B} 0%, #fff 35%, ${G} 60%, ${B} 100%)`,
+                            backgroundSize: '200% auto',
+                            WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent',
+                            animation: 'shimmerSweep 6s linear infinite',
+                        }}>
+                            رحلة التعلّم
+                        </span>
                     </h1>
                     <p style={{ color: 'rgba(220,201,163,.65)', fontSize: 13, margin: '0 0 26px' }}>
                         {student.grade} — كل وحدة بوابة زمن قائمة بذاتها، اختر بوابتك وابدأ العبور
@@ -388,5 +408,3 @@ function EmptyState() {
         </div>
     );
 }
-
-

@@ -255,6 +255,10 @@ function PageStyles() {
             .foot-grid  { display:grid; grid-template-columns:1.6fr 1fr 1fr 1fr; gap:40px; }
             .nav-links  { display:flex; }
             .hero-right { flex:0 0 60%; max-width:60%; }
+            .teacher-fixed-ring {
+                max-width: min(72vw, 620px);
+                max-height: min(72vw, 620px);
+            }
 
             /* روابط الناف بار — خط سفلي متحرك عند المرور */
             .nav-link-item { position:relative; }
@@ -312,6 +316,7 @@ function PageStyles() {
                 .teacher-hero-wrap { flex:0 0 100% !important; max-width:100% !important; min-height:55vw !important; max-height:70vw !important; height:65vw !important; overflow:hidden !important; }
                 .teacher-hero-wrap .th-deco:nth-child(n+4) { display:none !important; }
                 .teacher-hero-img  { max-width:72vw !important; }
+                .teacher-fixed-ring { width:74vw !important; height:74vw !important; top:50% !important; left:50% !important; }
                 .about-full-grid   { grid-template-columns:1fr !important; min-height:auto !important; max-height:none !important; }
                 .about-photo-side  { height:62vw !important; min-height:220px !important; }
                 .about-text-side   { padding:clamp(28px,6vw,48px) clamp(20px,5vw,40px) !important; }
@@ -735,8 +740,8 @@ function TeacherHero({ dark }) {
             }}/>
 
             {/* حلقة مدارية متقطعة — هوية هندسية عربية بديلة عن القوس اليوناني */}
-            <svg className="th-deco" viewBox="0 0 400 400" fill="none"
-                style={{ position:'absolute', top:'50%', left:'50%', transform:'translate(-50%,-50%)', width:640, height:640, pointerEvents:'none', opacity: dark ? 0.6 : 0.4, animation:'rayRotate 90s linear infinite' }}>
+            <svg className="teacher-fixed-ring" viewBox="0 0 400 400" fill="none"
+                style={{ position:'absolute', top:'50%', left:'50%', transform:'translate(-50%,-50%)', width:620, height:620, pointerEvents:'none', opacity: dark ? 0.6 : 0.4, zIndex:1 }}>
                 <circle cx="200" cy="200" r="188" stroke="#2fbcd4" strokeWidth="1.4" strokeDasharray="1 11" fill="none" opacity=".85"/>
                 <circle cx="200" cy="200" r="164" stroke="#009688" strokeWidth=".7" fill="none" opacity=".3"/>
                 {/* شمسات صغيرة على الحلقة */}
@@ -823,13 +828,12 @@ function TeacherHero({ dark }) {
             <div className="th-img" style={{
                 position:'relative', zIndex:5, width:'100%',
                 display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center', gap:20,
-                animation:'teacherFloat 5.5s ease-in-out infinite',
             }}>
                 <div ref={imgRef} className="teacher-hero-img" style={{ width:'100%', maxWidth:600, position:'relative', display:'flex', justifyContent:'center' }}>
-                    {/* صورة الأستاذ محمد منصور */}
+                    {/* صورة الأستاذ منصور */}
                     <img
                         src="/images/hero-mansour.png.png"
-                        alt="الأستاذ محمد منصور"
+                        alt="الأستاذ منصور"
                         style={{
                             width:'86%', height:'auto', position:'relative', zIndex:2,
                             filter: dark
@@ -950,18 +954,20 @@ function ThemeToggle({ dark, setDark }) {
 function NavLogo({ dark = true }) {
     return (
         <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexShrink: 0 }}>
-            <div role="img" aria-label="شعار منصة منصور" style={{
-                width: 46, height: 46, borderRadius: '50%', flexShrink: 0,
-                background: 'linear-gradient(150deg,#1b3a60,#2fbcd4)',
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                boxShadow: '0 0 0 1px rgba(47,188,212,.4), 0 4px 16px rgba(0,0,0,.25)',
-            }}>
-                <span style={{ fontFamily: "'Ruwudu',serif", fontSize: 22, color: '#fff' }}>ض</span>
+            <div style={{ height: 100, width: 86, overflow: 'hidden', flexShrink: 0 }}>
+                <img
+                    src="/images/منصور لوجو.png"
+                    alt="منصور"
+                    style={{
+                        height: '100%',
+                        width: 'auto',
+                        objectFit: 'contain',
+                        objectPosition: 'left center',
+                        filter: dark ? 'drop-shadow(0 0 10px rgba(47,188,212,.35))' : 'none',
+                        display: 'block',
+                    }}
+                />
             </div>
-            <span style={{
-                fontFamily: "'Ruwudu',serif", fontSize: 18, letterSpacing: '.03em',
-                color: dark ? '#eef2f7' : '#1b3a60', transition: 'color .4s ease',
-            }}>منصة منصور</span>
         </div>
     );
 }
@@ -1170,7 +1176,7 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
 
     return (
         <>
-            <Head title="الأستاذ محمد منصور — منصة اللغة العربية" />
+            <Head title="الأستاذ منصور — منصة اللغة العربية" />
             <PageStyles />
             <Preloader visible={loading} />
 
@@ -1326,7 +1332,7 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
                     </div>
 
                     <p style={{ fontSize:'clamp(14px,1.6vw,18px)', color:T.textDim2, maxWidth:520, lineHeight:2, margin:'0 0 36px' }}>
-                        <span style={{ fontFamily:'Ruwudu,serif', fontSize:'1.35em', color:'#009688', letterSpacing:'.04em' }}>يا مولانا</span>، أهلاً بيك في بيتك التاني — مع الأستاذ محمد منصور هتذاكر اللغة العربية بطريقة عمرك ما جربتها.
+                        <span style={{ fontFamily:'Ruwudu,serif', fontSize:'1.35em', color:'#009688', letterSpacing:'.04em' }}>يا مولانا</span>، أهلاً بيك في بيتك التاني — مع الأستاذ منصور هتذاكر اللغة العربية بطريقة عمرك ما جربتها.
                         شرح واضح، فيديوهات تفاعلية، ومتابعة مستمرة لحد ما تلم المنهج.
                     </p>
 
@@ -1867,7 +1873,7 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
                             {/* الاسم */}
                             <div>
                                 <h2 style={{ fontSize:'clamp(34px,4vw,54px)', fontFamily:"'Ruwudu',serif", color: darkMode ? '#f5f0e8' : C.navy, lineHeight:1.15, margin:'0 0 8px' }}>
-                                    محمد منصور
+                                    منصور
                                 </h2>
                                 <div style={{ display:'flex', alignItems:'center', gap:9 }}>
                                     <svg width="9" height="9" viewBox="0 0 18 18"><rect x="4" y="4" width="10" height="10" transform="rotate(45 9 9)" fill={C.amber}/></svg>
@@ -1973,7 +1979,7 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
                         أماكن تواجدنا
                     </h2>
                     <p style={{ fontSize:14, color: darkMode ? 'rgba(226,232,240,.5)' : 'rgba(27,58,96,.55)', maxWidth:440, margin:'0 auto 18px' }}>
-                        اختار الفرع القريب منك وابدأ رحلتك مع الأستاذ محمد منصور
+                        اختار الفرع القريب منك وابدأ رحلتك مع الأستاذ منصور
                     </p>
                     <div style={{ display:'flex', alignItems:'center', justifyContent:'center', gap:10 }}>
                         <div style={{ width:40, height:1, background:`linear-gradient(90deg,transparent,${C.gold})` }}/>
@@ -2047,7 +2053,7 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
                         <div style={{ height:1, width:80, background:'linear-gradient(90deg,rgba(47,188,212,.5),transparent)' }}/>
                     </div>
 
-                    {/* شعار منصة منصور — مدالية "ض" بدل الصورة القديمة */}
+                    {/* شعار منصور */}
                     <div style={{ display:'flex', justifyContent:'center', marginBottom:28 }}>
                         <div style={{ position:'relative', display:'inline-block' }}>
                             {/* Outer glow ring */}
@@ -2058,14 +2064,25 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
                                 filter:'blur(10px)',
                                 pointerEvents:'none',
                             }}/>
-                            <div role="img" aria-label="شعار منصة منصور" style={{
-                                width:'clamp(84px,11vw,112px)', height:'clamp(84px,11vw,112px)', borderRadius:'50%',
-                                background:'linear-gradient(150deg,#1b3a60,#2fbcd4)',
-                                display:'flex', alignItems:'center', justifyContent:'center',
+                            <div style={{
+                                width:'clamp(82px,11vw,124px)',
+                                height:'clamp(82px,11vw,124px)',
+                                overflow:'hidden',
                                 position:'relative',
-                                boxShadow:'0 0 0 1px rgba(47,188,212,.4), 0 10px 40px rgba(0,0,0,.4)',
                             }}>
-                                <span style={{ fontFamily:"'Ruwudu',serif", fontSize:'clamp(38px,5vw,52px)', color:'#fff' }}>ض</span>
+                                <img
+                                    src="/images/منصور لوجو.png"
+                                    alt="منصور"
+                                    style={{
+                                        height:'150%',
+                                        width:'auto',
+                                        objectFit:'contain',
+                                        objectPosition:'left center',
+                                        filter:'drop-shadow(0 10px 28px rgba(0,0,0,.35))',
+                                        display:'block',
+                                        transform:'translateY(-16%)',
+                                    }}
+                                />
                             </div>
                         </div>
                     </div>

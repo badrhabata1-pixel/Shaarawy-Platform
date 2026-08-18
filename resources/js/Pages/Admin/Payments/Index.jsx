@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Head, router, usePage } from '@inertiajs/react';
 import AdminLayout from '@/Layouts/AdminLayout';
+const BRAND_GRAD = 'linear-gradient(135deg,#0D9488 0%,#d9620a 100%)';
 
 /* ── detect dark/light from AdminLayout's data-theme attr ── */
 function useAdminDark() {
@@ -111,8 +112,8 @@ export default function PaymentsIndex({ requests = [], statusFilter = 'all' }) {
                                 padding: '7px 18px', borderRadius: 10, cursor: 'pointer',
                                 fontFamily: "'Cairo',sans-serif", fontSize: 13, fontWeight: 700,
                                 border: '1.5px solid',
-                                borderColor: isActive ? '#2fbcd4' : 'var(--a-border)',
-                                background:  isActive ? '#2fbcd4' : 'var(--a-card)',
+                                borderColor: isActive ? '#0D9488' : 'var(--a-border)',
+                                background:  isActive ? BRAND_GRAD : 'var(--a-card)',
                                 color:       isActive ? '#fff'    : 'var(--a-text-3)',
                                 transition: 'all .2s',
                             }}>
@@ -263,10 +264,11 @@ export default function PaymentsIndex({ requests = [], statusFilter = 'all' }) {
                                 إلغاء
                             </button>
                             <button onClick={submitReview} disabled={submitting} style={{
-                                padding: '9px 24px', borderRadius: 8, border: 'none', cursor: 'pointer',
+                                padding: '9px 24px', borderRadius: 999, border: 'none', cursor: 'pointer',
                                 fontFamily: "'Cairo',sans-serif", fontWeight: 700, color: '#fff',
-                                background: reviewModal.action === 'approve' ? '#059669' : '#DC2626',
+                                background: BRAND_GRAD,
                                 opacity: submitting ? .6 : 1,
+                                boxShadow: submitting ? 'none' : 'var(--brand-cta-shadow)',
                             }}>
                                 {submitting ? 'جارٍ...' : reviewModal.action === 'approve' ? 'تأكيد الموافقة' : 'تأكيد الرفض'}
                             </button>
@@ -282,13 +284,13 @@ function ActionBtn({ color, onClick, children }) {
     return (
         <button onClick={onClick}
             style={{
-                padding: '5px 12px', borderRadius: 6, border: `1.5px solid ${color}`,
-                background: `${color}22`, color, fontWeight: 700, fontSize: 12,
+                padding: '7px 14px', borderRadius: 999, border: 'none',
+                background: BRAND_GRAD, color: '#fff', fontWeight: 700, fontSize: 12,
                 cursor: 'pointer', fontFamily: "'Cairo',sans-serif", transition: 'all .15s',
-                whiteSpace: 'nowrap',
+                whiteSpace: 'nowrap', boxShadow: 'var(--brand-cta-shadow)',
             }}
-            onMouseEnter={e => { e.currentTarget.style.background = color; e.currentTarget.style.color = '#fff'; }}
-            onMouseLeave={e => { e.currentTarget.style.background = `${color}22`; e.currentTarget.style.color = color; }}
+            onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-1px)'; }}
+            onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; }}
         >
             {children}
         </button>

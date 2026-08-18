@@ -2,7 +2,8 @@ import { Head, Link } from '@inertiajs/react';
 import { useState, useEffect } from 'react';
 import StudentLayout from '@/Layouts/StudentLayout';
 
-const O = '#F47C20';
+const O = '#0D9488';
+const BRAND_GRAD = 'linear-gradient(135deg,#0D9488 0%,#d9620a 100%)';
 const N = '#14213D';
 const G = '#C9A14A';
 
@@ -49,7 +50,7 @@ export default function PaymentHistory({ requests = [] }) {
 
     return (
         <StudentLayout>
-            <Head title="سجل الدفع — منصة الصيفي" />
+            <Head title="سجل الدفع — منصة منصور" />
 
             <div style={{ maxWidth: 720, margin: '0 auto', padding: '32px 20px', fontFamily: "'Cairo',sans-serif", direction: 'rtl' }}>
 
@@ -61,9 +62,9 @@ export default function PaymentHistory({ requests = [] }) {
                     </div>
                     <Link href={route('student.payment.create')} style={{
                         padding: '10px 22px', borderRadius: 10,
-                        background: `linear-gradient(135deg,${O},#d9620a)`,
+                        background: BRAND_GRAD,
                         color: '#fff', fontWeight: 700, fontSize: 13,
-                        textDecoration: 'none', boxShadow: '0 4px 16px rgba(244,124,32,.35)',
+                        textDecoration: 'none', boxShadow: 'var(--brand-cta-shadow)',
                     }}>
                         + طلب دفع جديد
                     </Link>

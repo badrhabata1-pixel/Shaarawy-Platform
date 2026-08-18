@@ -449,6 +449,10 @@ export default function Dashboard({
                     0%,100% { opacity:.15 }
                     50%     { opacity:1 }
                 }
+                @keyframes spinRing {
+                    from { transform: rotate(0deg); }
+                    to   { transform: rotate(360deg); }
+                }
                 :root { --qn-width: min(33vw, 320px); }
                 @media (max-width: 860px) {
                     :root { --qn-width: min(82vw, 300px); }
@@ -961,9 +965,9 @@ function QuickCard({ icon, title, desc, href, accent, mark, delay }) {
                 onMouseLeave={()=>setHov(false)}
                 style={{
                     background:`linear-gradient(150deg,#070F1C 0%,${N} 100%)`,
-                    borderRadius:20, padding:'2rem 1.75rem 1.75rem',
+                    padding:'4.5rem 1.75rem 1.75rem',
                     border:`1px solid ${accent}28`,
-                    borderTop:`3px solid ${accent}`,
+                    borderRadius:'110px 110px 18px 18px / 70px 70px 18px 18px',
                     boxShadow: hov
                         ? `0 22px 55px rgba(0,0,0,.55), 0 0 0 1px ${accent}38, inset 0 1px 0 ${accent}18`
                         : `0 6px 24px rgba(0,0,0,.38), inset 0 1px 0 ${accent}0C`,
@@ -983,35 +987,69 @@ function QuickCard({ icon, title, desc, href, accent, mark, delay }) {
                     filter:'grayscale(1) sepia(.4)',
                 }}>{mark}</div>
 
+                {/* خط القوس — يبرز حافة المحراب من الداخل */}
+                <div style={{
+                    position:'absolute', top:8, left:'12%', right:'12%', height:60,
+                    borderRadius:'100px 100px 0 0 / 60px 60px 0 0',
+                    border:`1.5px solid ${accent}${hov ? '55' : '2A'}`,
+                    borderBottom:'none',
+                    transition:'border-color .3s ease',
+                    pointerEvents:'none',
+                }}/>
+
+                {/* نجمة ثمانية صغيرة أعلى القوس كزخرفة */}
+                <div style={{
+                    position:'absolute', top:14, left:'50%', transform:'translateX(-50%) rotate(22.5deg)',
+                    width:10, height:10,
+                    background: hov ? accent : `${accent}90`,
+                    clipPath:'polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%)',
+                    transition:'background .3s ease',
+                    pointerEvents:'none',
+                }}/>
+
                 {/* Top shimmer */}
                 <div style={{
                     position:'absolute', top:0, left:0, right:0, height:1,
                     background:`linear-gradient(90deg,transparent,${accent}70,transparent)`,
                 }}/>
 
-                {/* Icon box */}
+                {/* Icon box — دائري، متمركز جوه القوس + حلقة دوارة عند الـ hover */}
                 <div style={{
-                    width:54, height:54, borderRadius:14,
+                    position:'absolute', top:26, left:'50%', transform:'translateX(-50%)',
+                    width:44, height:44, borderRadius:'50%',
                     background:`${accent}15`, border:`1.5px solid ${accent}30`,
                     display:'flex', alignItems:'center', justifyContent:'center',
-                    fontSize:24, marginBottom:20,
+                    fontSize:20,
                     transition:'transform .3s, box-shadow .3s, background .3s',
-                    transform: hov ? 'scale(1.1) rotate(-4deg)' : 'none',
                     boxShadow: hov ? `0 8px 22px ${accent}40` : 'none',
-                    position:'relative',
-                }}>{icon}</div>
+                }}>
+                    {/* الحلقة الدوارة */}
+                    {hov && (
+                        <span style={{
+                            position:'absolute',
+                            inset:-6,
+                            borderRadius:'50%',
+                            border:'2px solid transparent',
+                            borderTopColor: accent,
+                            borderRightColor: accent,
+                            animation:'spinRing .9s linear infinite',
+                            pointerEvents:'none',
+                        }}/>
+                    )}
+                    {icon}
+                </div>
 
                 {/* Title */}
                 <div style={{
                     color:'#fff', fontSize:16, fontWeight:900,
-                    marginBottom:10, position:'relative',
+                    marginBottom:10, position:'relative', textAlign:'center',
                     fontFamily:"'Cairo',sans-serif",
                 }}>{title}</div>
 
                 {/* Expanding accent divider */}
                 <div style={{
-                    width: hov ? 52 : 26, height:2,
-                    background:`linear-gradient(90deg,${accent},transparent)`,
+                    width: hov ? 52 : 26, height:2, margin:'0 auto',
+                    background:`linear-gradient(90deg,transparent,${accent},transparent)`,
                     borderRadius:2, marginBottom:12,
                     transition:'width .35s ease',
                 }}/>
@@ -1019,17 +1057,16 @@ function QuickCard({ icon, title, desc, href, accent, mark, delay }) {
                 {/* Description */}
                 <div style={{
                     color:`${B}99`, fontSize:12.5,
-                    lineHeight:1.8, position:'relative',
+                    lineHeight:1.8, position:'relative', textAlign:'center',
                     paddingBottom: 28,
                 }}>{desc}</div>
 
                 {/* Enter arrow — slides in on hover */}
                 <div style={{
-                    position:'absolute', bottom:18, left:20,
+                    position:'absolute', bottom:18, left:'50%', transform: hov ? 'translateX(-50%)' : 'translateX(-50%) translateY(6px)',
                     display:'flex', alignItems:'center', gap:6,
                     color:accent, fontSize:12, fontWeight:800,
                     opacity: hov ? 1 : 0,
-                    transform: hov ? 'translateX(0)' : 'translateX(10px)',
                     transition:'opacity .3s, transform .3s',
                 }}>
                     ← ادخل الآن
@@ -1043,9 +1080,9 @@ function LockedQuickCard({ icon, title, desc, mark, delay }) {
     return (
         <div style={{
             background:`linear-gradient(150deg,#070F1C 0%,${N} 100%)`,
-            borderRadius:20, padding:'2rem 1.75rem 1.75rem',
+            padding:'4.5rem 1.75rem 1.75rem',
             border:`1px solid rgba(255,255,255,.06)`,
-            borderTop:`3px solid rgba(255,255,255,.1)`,
+            borderRadius:'110px 110px 18px 18px / 70px 70px 18px 18px',
             boxShadow:`0 6px 24px rgba(0,0,0,.38)`,
             animation:`db-up .6s ${delay}ms both`,
             position:'relative', overflow:'hidden',
@@ -1060,6 +1097,24 @@ function LockedQuickCard({ icon, title, desc, mark, delay }) {
                 pointerEvents:'none', userSelect:'none',
                 filter:'grayscale(1) sepia(.4)',
             }}>{mark}</div>
+
+            {/* خط القوس */}
+            <div style={{
+                position:'absolute', top:8, left:'12%', right:'12%', height:60,
+                borderRadius:'100px 100px 0 0 / 60px 60px 0 0',
+                border:'1.5px solid rgba(148,163,184,.25)',
+                borderBottom:'none',
+                pointerEvents:'none',
+            }}/>
+
+            {/* نجمة ثمانية صغيرة أعلى القوس */}
+            <div style={{
+                position:'absolute', top:14, left:'50%', transform:'translateX(-50%) rotate(22.5deg)',
+                width:10, height:10,
+                background:'rgba(148,163,184,.4)',
+                clipPath:'polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%)',
+                pointerEvents:'none',
+            }}/>
 
             {/* Lock badge */}
             <div style={{
@@ -1078,33 +1133,34 @@ function LockedQuickCard({ icon, title, desc, mark, delay }) {
                 background:`linear-gradient(90deg,transparent,rgba(255,255,255,.12),transparent)`,
             }}/>
 
-            {/* Icon box */}
+            {/* Icon box — دائري، متمركز جوه القوس */}
             <div style={{
-                width:54, height:54, borderRadius:14,
+                position:'absolute', top:26, left:'50%', transform:'translateX(-50%)',
+                width:44, height:44, borderRadius:'50%',
                 background:'rgba(148,163,184,.08)', border:'1.5px solid rgba(148,163,184,.15)',
                 display:'flex', alignItems:'center', justifyContent:'center',
-                fontSize:24, marginBottom:20,
+                fontSize:20,
             }}>{icon}</div>
 
             {/* Title */}
             <div style={{
                 color:'rgba(255,255,255,.45)', fontSize:16, fontWeight:900,
-                marginBottom:10, fontFamily:"'Cairo',sans-serif",
+                marginBottom:10, textAlign:'center', fontFamily:"'Cairo',sans-serif",
             }}>{title}</div>
 
             {/* Divider */}
-            <div style={{ width:26, height:2, background:'rgba(255,255,255,.1)', borderRadius:2, marginBottom:12 }}/>
+            <div style={{ width:26, height:2, margin:'0 auto', background:'rgba(255,255,255,.1)', borderRadius:2, marginBottom:12 }}/>
 
             {/* Description */}
             <div style={{
                 color:`rgba(45,212,191,.35)`, fontSize:12.5,
-                lineHeight:1.8, paddingBottom:28,
+                lineHeight:1.8, textAlign:'center', paddingBottom:28,
             }}>{desc}</div>
 
             {/* Offline note */}
             <div style={{
-                position:'absolute', bottom:18, right:18,
-                fontSize:11, fontWeight:800, color:'#64748b',
+                position:'absolute', bottom:18, left:'50%', transform:'translateX(-50%)',
+                fontSize:11, fontWeight:800, color:'#64748b', whiteSpace:'nowrap',
             }}>
                 متاح للطلاب الأونلاين فقط
             </div>
@@ -1203,7 +1259,7 @@ function PaymentCard({ subscription = {}, payment = null, style = {} }) {
                             fontSize: 12.5, fontWeight: 700,
                             fontFamily: "'Cairo',sans-serif", cursor: 'pointer',
                             border: `1.5px solid ${selectedMethod === m.key ? O : 'var(--db-rowbdr)'}`,
-                            background: selectedMethod === m.key ? `${O}1a` : 'var(--db-row)',
+                            background: selectedMethod === m.key ? 'linear-gradient(135deg,rgba(13,148,136,.18),rgba(217,98,10,.16))' : 'var(--db-row)',
                             color: selectedMethod === m.key ? O : 'var(--db-text)',
                             transition: 'all .2s ease',
                         }}
@@ -1259,7 +1315,7 @@ function PaymentCard({ subscription = {}, payment = null, style = {} }) {
                     type="submit"
                     style={{
                         width: '100%',
-                        background: O,
+                        background: 'linear-gradient(135deg,#0D9488 0%,#d9620a 100%)',
                         color: '#fff',
                         padding: '12px 24px',
                         borderRadius: 10,

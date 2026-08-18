@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Head, Link } from '@inertiajs/react';
 import axios from 'axios';
 import StudentLayout from '@/Layouts/StudentLayout';
@@ -38,7 +38,7 @@ export default function LessonShow({
 }) {
     const dark = useDarkMode();
 
-    /* ── Theme tokens (تعديل الألوان لهوية الصيفي) ── */
+    /* ── Theme tokens (تعديل الألوان لهوية منصور) ── */
     const cardBg         = dark ? '#0a1424' : '#fff'; // كحلي داكن متناسق مع الخلفية
     const cardBorder     = dark ? '1px solid rgba(201, 161, 74, 0.15)' : '1px solid #f0ede8'; // حواف بلمسة ذهبية خفيفة في الليل
     const cardShadow     = dark ? '0 8px 32px rgba(0,0,0,0.45)' : '0 4px 24px rgba(20,33,61,.1)';
@@ -89,6 +89,7 @@ export default function LessonShow({
     const [isFullscreen, setIsFullscreen] = useState(false);
     const [isFakeFullscreen, setIsFakeFullscreen] = useState(false); // التكبير البديل المخصص والآمن للآيفون
     const [isMuted, setIsMuted] = useState(true); // start muted so autoplay actually works
+    const [isPlaying, setIsPlaying] = useState(true);
 
     /* ── Focus question refs ── */
     const vqActiveRef  = useRef(null);
@@ -104,6 +105,7 @@ export default function LessonShow({
             iframeRef.current.contentWindow?.postMessage(JSON.stringify({ method: 'pause' }), 'https://player.vimeo.com');
         else if (type === 'mp4' && videoRef.current)
             videoRef.current.pause();
+        setIsPlaying(false);
     }, []);
 
     const resumeVideo = useCallback(() => {
@@ -114,7 +116,13 @@ export default function LessonShow({
             iframeRef.current.contentWindow?.postMessage(JSON.stringify({ method: 'play' }), 'https://player.vimeo.com');
         else if (type === 'mp4' && videoRef.current)
             videoRef.current.play();
+        setIsPlaying(true);
     }, []);
+
+    const togglePlay = useCallback(() => {
+        if (isPlaying) pauseVideo();
+        else resumeVideo();
+    }, [isPlaying, pauseVideo, resumeVideo]);
 
     /* ── Mute / unmute ── */
     const toggleMute = useCallback(() => {
@@ -148,9 +156,13 @@ export default function LessonShow({
 
         if (supportsNativeFS) {
             if (!document.fullscreenElement && !document.webkitFullscreenElement) {
-                (el.requestFullscreen || el.webkitRequestFullscreen || el.msRequestFullscreen)?.call(el);
+                const fsPromise = (el.requestFullscreen || el.webkitRequestFullscreen || el.msRequestFullscreen)?.call(el);
+                fsPromise?.then?.(() => {
+                    window.screen?.orientation?.lock?.('landscape').catch?.(() => {});
+                });
             } else {
                 (document.exitFullscreen || document.webkitExitFullscreen || document.msExitFullscreen)?.call(document);
+                window.screen?.orientation?.unlock?.();
             }
         } else {
             // حل آمن للآيفون (iOS Safari) لتكبير الحاوية وحمايتها تماماً عبر الـ CSS
@@ -173,6 +185,7 @@ export default function LessonShow({
             const isNativeFS = !!(document.fullscreenElement || document.webkitFullscreenElement);
             setIsFullscreen(isNativeFS);
             if (!isNativeFS) {
+                window.screen?.orientation?.unlock?.();
                 setIsFakeFullscreen(false); // إلغاء تفعيل التكبير البديل تلقائياً لو خرج من التكبير الأصلي
             }
         };
@@ -293,7 +306,15 @@ export default function LessonShow({
         }
         videoTypeRef.current = 'mp4';
         return (
-            <video key={`mp4-${url}`} ref={videoRef} controls className="w-full h-full rounded-xl" controlsList="nodownload">
+            <video
+                key={`mp4-${url}`}
+                ref={videoRef}
+                controls
+                className="w-full h-full rounded-xl"
+                controlsList="nodownload"
+                onPlay={() => setIsPlaying(true)}
+                onPause={() => setIsPlaying(false)}
+            >
                 <source src={url} type="video/mp4" />
                 المتصفح الخاص بك لا يدعم تشغيل الفيديو.
             </video>
@@ -365,9 +386,28 @@ export default function LessonShow({
                 .responsive-player-wrap {
                     min-height: 300px;
                 }
+                .responsive-player-wrap:fullscreen,
+                .responsive-player-wrap:-webkit-full-screen {
+                    width: 100vw !important;
+                    height: 100vh !important;
+                    aspect-ratio: auto !important;
+                    border-radius: 0 !important;
+                    background: #000 !important;
+                }
                 @media (max-width: 768px) {
                     .responsive-player-wrap {
                         min-height: auto !important; /* يلغي الطول الأدنى القسري على الموبايل ليعيد المشغل للنسبة الذهبية ويحميه من التمدد والانحراف */
+                    }
+                }
+                @media (max-width: 900px) and (orientation: landscape) {
+                    .responsive-player-wrap.fs-active {
+                        position: fixed !important;
+                        inset: 0 !important;
+                        width: 100vw !important;
+                        height: 100vh !important;
+                        aspect-ratio: auto !important;
+                        z-index: 99999 !important;
+                        border-radius: 0 !important;
                     }
                 }
             `}</style>
@@ -408,7 +448,7 @@ export default function LessonShow({
                         {/* Player */}
                         <div
                             ref={playerWrapRef}
-                            className="responsive-player-wrap"
+                            className={`responsive-player-wrap${showFS ? ' fs-active' : ''}`}
                             style={{
                                 position: showFS ? 'fixed' : 'relative',
                                 top: showFS ? 0 : undefined,
@@ -426,6 +466,45 @@ export default function LessonShow({
                             <Watermark email={watermark.email} phone={watermark.phone} name={watermark.name} />
                             {vqActive && (
                                 <VideoQuizOverlay lessonId={lesson.id} question={vqActive} onDone={handleQuizDone} />
+                            )}
+                            {!vqActive && (
+                                <button
+                                    type="button"
+                                    onClick={togglePlay}
+                                    aria-label={isPlaying ? 'إيقاف الفيديو' : 'تشغيل الفيديو'}
+                                    style={{
+                                        position: 'absolute',
+                                        top: 70,
+                                        left: 0,
+                                        right: 0,
+                                        bottom: 62,
+                                        zIndex: 19,
+                                        border: 'none',
+                                        background: 'transparent',
+                                        cursor: 'pointer',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        color: '#fff',
+                                    }}
+                                >
+                                    {!isPlaying && (
+                                        <span style={{
+                                            width: 58,
+                                            height: 58,
+                                            borderRadius: '50%',
+                                            background: 'rgba(0,0,0,.45)',
+                                            border: '1px solid rgba(255,255,255,.22)',
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                            fontSize: 26,
+                                            backdropFilter: 'blur(4px)',
+                                        }}>
+                                            ▶
+                                        </span>
+                                    )}
+                                </button>
                             )}
                             {/* ── FULL bottom bar cover ── */}
                             <div style={{
@@ -482,6 +561,21 @@ export default function LessonShow({
                                 gap: 8,
                                 pointerEvents: 'auto',
                             }}>
+                                <button
+                                    type="button"
+                                    onClick={togglePlay}
+                                    title={isPlaying ? 'إيقاف الفيديو' : 'تشغيل الفيديو'}
+                                    style={{
+                                        width: 38, height: 38, borderRadius: '50%',
+                                        border: 'none', cursor: 'pointer',
+                                        background: 'rgba(255,255,255,.15)',
+                                        color: '#fff', fontSize: 16,
+                                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                        backdropFilter: 'blur(4px)',
+                                    }}
+                                >
+                                    {isPlaying ? '⏸' : '▶'}
+                                </button>
                                 <button
                                     type="button"
                                     onClick={toggleMute}

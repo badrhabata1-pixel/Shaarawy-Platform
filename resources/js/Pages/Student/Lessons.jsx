@@ -1,4 +1,4 @@
-﻿import { Head, usePage } from '@inertiajs/react';
+import { Head, usePage } from '@inertiajs/react';
 import { useState } from 'react';
 import StudentLayout from '@/Layouts/StudentLayout';
 import LockOverlay from '@/Components/LockOverlay';
@@ -25,7 +25,7 @@ export default function Lessons({ student, unit, lessons }) {
 
     return (
         <StudentLayout title="🎬 دار العرض">
-            <Head title={`${unit?.title ?? 'المحاضرات'} — منصة الصيفي`} />
+            <Head title={`${unit?.title ?? 'المحاضرات'} — منصة منصور`} />
 
             <style>{`
                 @keyframes bulbChase   { 0%,100%{opacity:.25} 50%{opacity:1} }
@@ -164,6 +164,14 @@ export default function Lessons({ student, unit, lessons }) {
     );
 }
 
+function fileUrl(path) {
+    if (!path) return null;
+    if (/^https?:\/\//i.test(path) || path.startsWith('/storage/') || path.startsWith('/uploads/')) {
+        return path;
+    }
+    return path.startsWith('uploads/') ? `/${path}` : `/storage/${path.replace(/^\/+/, '')}`;
+}
+
 /* Places a bulb evenly around the marquee frame perimeter */
 function bulbPosition(i, total) {
     const perSide = total / 4;
@@ -278,7 +286,7 @@ function PosterCard({ lesson, index, isCurrent, onUnlock, mode }) {
                     {lesson.thumbnail_url ? (
                         <img
                             className="poster-img"
-                            src={lesson.thumbnail_url.startsWith('/storage') ? lesson.thumbnail_url : `/storage${lesson.thumbnail_url.startsWith('/') ? '' : '/'}${lesson.thumbnail_url}`}
+                            src={fileUrl(lesson.thumbnail_url)}
                             alt={lesson.title}
                             style={{
                                 width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top center',
@@ -425,7 +433,7 @@ function DefaultPoster({ isLocked, isParentHovered }) {
                 color: B, fontSize: 10, letterSpacing: 4, fontFamily: "'Cinzel', serif",
                 opacity: isParentHovered ? 0.9 : 0.5, fontWeight: 700, transition: 'opacity 0.3s ease',
             }}>
-                HISTORIA MAGISTRA
+                منصور
             </div>
         </div>
     );
