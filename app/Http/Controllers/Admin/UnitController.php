@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\AcademicYear;
 use App\Models\Unit;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
 class UnitController extends Controller
@@ -71,7 +72,15 @@ class UnitController extends Controller
         $data['is_visible'] = $request->boolean('is_visible', true);
 
         if ($request->hasFile('image')) {
+            if ($unit->image) {
+                Storage::disk('public')->delete($unit->image);
+            }
             $data['image'] = $request->file('image')->store('units', 'public');
+        } elseif ($request->boolean('remove_image')) {
+            if ($unit->image) {
+                Storage::disk('public')->delete($unit->image);
+            }
+            $data['image'] = null;
         } else {
             unset($data['image']);
         }

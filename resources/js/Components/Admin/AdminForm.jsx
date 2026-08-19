@@ -5,8 +5,9 @@ import AdminLayout from '@/Layouts/AdminLayout';
 /* ═══════════════════════════════════════════════════
    ADMIN FIELD
 ═══════════════════════════════════════════════════ */
-export function AdminField({ label, name, type = 'text', value, onChange, error, hint, options, required, accept, multiple, placeholder, rows: textRows = 4, min, max, step, disabled }) {
+export function AdminField({ label, name, type = 'text', value, onChange, error, hint, options, required, accept, multiple, placeholder, rows: textRows = 4, min, max, step, disabled, currentUrl, onRemove }) {
     const [preview, setPreview] = useState(null);
+    const [removed, setRemoved] = useState(false);
 
     const base = {
         width: '100%', padding: '10px 14px', borderRadius: 12,
@@ -29,11 +30,21 @@ export function AdminField({ label, name, type = 'text', value, onChange, error,
     const handleFileChange = (e) => {
         const file = multiple ? Array.from(e.target.files) : e.target.files[0];
         if (!multiple && file && file.type.startsWith('image/')) {
+            setRemoved(false);
             const reader = new FileReader();
             reader.onload = ev => setPreview(ev.target.result);
             reader.readAsDataURL(file);
         }
         onChange(e);
+    };
+
+    const handleRemove = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        setPreview(null);
+        setRemoved(true);
+        onChange({ target: { files: [] } });
+        onRemove && onRemove();
     };
 
     const renderInput = () => {
@@ -70,22 +81,32 @@ export function AdminField({ label, name, type = 'text', value, onChange, error,
                         </span>
                     </label>
                 );
-            case 'file':
+            case 'file': {
+                const displayImg = preview || (!removed ? currentUrl : null);
                 return (
                     <div>
-                        <label className="flex flex-col items-center justify-center gap-2 rounded-2xl cursor-pointer"
+                        <label className="relative flex flex-col items-center justify-center gap-2 rounded-2xl cursor-pointer"
                             style={{ border: '2px dashed var(--a-input-b)', padding: '20px', background: 'var(--a-input)' }}>
-                            {preview
-                                ? <img src={preview} alt="preview" className="w-24 h-24 object-cover rounded-xl mb-2" />
-                                : <div className="text-4xl" style={{ opacity: 0.3 }}>📎</div>
-                            }
+                            {displayImg ? (
+                                <>
+                                    <img src={displayImg} alt="preview" className="w-24 h-24 object-cover rounded-xl mb-2" />
+                                    <button type="button" onClick={handleRemove} title="حذف الصورة"
+                                        className="absolute top-2 left-2 w-7 h-7 rounded-full flex items-center justify-center text-white text-sm font-bold leading-none"
+                                        style={{ background: '#ef4444', boxShadow: '0 2px 8px rgba(239,68,68,.4)' }}>
+                                        ×
+                                    </button>
+                                </>
+                            ) : (
+                                <div className="text-4xl" style={{ opacity: 0.3 }}>📎</div>
+                            )}
                             <span className="text-sm font-semibold" style={{ color: 'var(--a-text-4)' }}>
-                                {preview ? 'اضغط لتغيير الملف' : 'اضغط لرفع ملف'}
+                                {displayImg ? 'اضغط لتغيير الملف' : 'اضغط لرفع ملف'}
                             </span>
                             <input type="file" className="hidden" accept={accept} multiple={multiple} onChange={handleFileChange} />
                         </label>
                     </div>
                 );
+            }
             default:
                 return (
                     <input type={type} name={name} value={value ?? ''} onChange={onChange}

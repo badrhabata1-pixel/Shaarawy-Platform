@@ -10,6 +10,7 @@ export default function Form({ item, academicYears }) {
         price:            item?.price            || '',
         description:      item?.description      || '',
         image:            null,
+        remove_image:     false,
         is_free:          item?.is_free          ?? false,
         is_visible:       item?.is_visible       ?? true,
     });
@@ -95,7 +96,9 @@ export default function Form({ item, academicYears }) {
                 name="image"
                 type="file"
                 accept="image/*"
+                currentUrl={item?.image ? `/storage/${item.image}` : null}
                 onChange={e => setData('image', e.target.files[0])}
+                onRemove={() => setData('remove_image', true)}
                 error={errors.image}
             />
             <AdminField
