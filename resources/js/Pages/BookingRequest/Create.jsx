@@ -17,21 +17,37 @@ const GLYPHS = [
     { ch: 'ي', x: '82%', y: '60%', rot: -10, sz: 24 },
 ];
 
-export default function Create({ groups = [] }) {
+export default function Create({ groups = [], academicYears = [] }) {
     const { flash } = usePage().props;
     const { data, setData, post, processing, errors, reset } = useForm({
-        name:         '',
-        phone:        '',
-        school:       '',
-        address:      '',
-        parent_name:  '',
-        parent_phone: '',
-        parent_job:   '',
-        group_id:     '',
-        gender:       '',
+        name:              '',
+        phone:             '',
+        school:            '',
+        academic_year_id:  '',
+        address:           '',
+        parent_name:       '',
+        parent_phone:      '',
+        parent_job:        '',
+        group_id:          '',
+        gender:            '',
     });
 
     const [submitted, setSubmitted] = useState(false);
+
+    const selectedYear = academicYears.find(a => String(a.id) === String(data.academic_year_id));
+    const filteredGroups = data.academic_year_id
+        ? groups.filter(g => String(g.academic_year_id) === String(data.academic_year_id))
+        : groups;
+
+    const onGradeChange = (value) => {
+        setData(prevData => ({
+            ...prevData,
+            academic_year_id: value,
+            group_id: groups.some(g => String(g.id) === String(prevData.group_id) && String(g.academic_year_id) === String(value))
+                ? prevData.group_id
+                : '',
+        }));
+    };
 
     const submit = (e) => {
         e.preventDefault();
@@ -208,6 +224,20 @@ export default function Create({ groups = [] }) {
                                     </div>
                                 </div>
                                 <div>
+                                    <label style={labelStyle}>الصف الدراسي</label>
+                                    <select value={data.academic_year_id} onChange={e => onGradeChange(e.target.value)}
+                                        onFocus={onFocus} onBlur={onBlur} style={{ ...inputStyle(!!errors.academic_year_id), cursor: 'pointer' }}>
+                                        <option value="">اختر الصف الدراسي...</option>
+                                        {academicYears.map(a => <option key={a.id} value={a.id}>{a.name}</option>)}
+                                    </select>
+                                    {errors.academic_year_id && <p style={errorStyle}>{errors.academic_year_id}</p>}
+                                    {selectedYear && Number(selectedYear.price) > 0 && (
+                                        <p style={{ marginTop: 8, fontSize: 13, fontWeight: 700, color: '#009688', fontFamily: 'Cairo,sans-serif' }}>
+                                            إجمالي رسوم {selectedYear.name}: {Number(selectedYear.price).toLocaleString('ar-EG')} جنيه
+                                        </p>
+                                    )}
+                                </div>
+                                <div>
                                     <label style={labelStyle}>العنوان بالتفصيل</label>
                                     <input type="text" value={data.address} onChange={e => setData('address', e.target.value)}
                                         onFocus={onFocus} onBlur={onBlur} placeholder="المنطقة - الشارع"
@@ -252,8 +282,10 @@ export default function Create({ groups = [] }) {
                                         <label style={labelStyle}>المجموعة الدراسية (مجموعات الحجز)</label>
                                         <select value={data.group_id} onChange={e => setData('group_id', e.target.value)}
                                             onFocus={onFocus} onBlur={onBlur} style={{ ...inputStyle(!!errors.group_id), cursor: 'pointer' }}>
-                                            <option value="">اختر المجموعة المناسبة...</option>
-                                            {groups.map(g => <option key={g.id} value={g.id}>{g.name}</option>)}
+                                            <option value="">
+                                                {data.academic_year_id ? 'اختر المجموعة المناسبة...' : 'اختر الصف الدراسي أولاً أو اختر من كل المجموعات...'}
+                                            </option>
+                                            {filteredGroups.map(g => <option key={g.id} value={g.id}>{g.name}</option>)}
                                         </select>
                                         {errors.group_id && <p style={errorStyle}>{errors.group_id}</p>}
                                     </div>

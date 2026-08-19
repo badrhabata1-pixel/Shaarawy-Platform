@@ -10,6 +10,7 @@ class BookingRequest extends Model
         'name',
         'phone',
         'school',
+        'academic_year_id',
         'address',
         'parent_name',
         'parent_phone',
@@ -22,5 +23,10 @@ class BookingRequest extends Model
     public function group()
     {
         return $this->belongsTo(Group::class);
+    }
+
+    public function academicYear()
+    {
+        return $this->belongsTo(AcademicYear::class);
     }
 }
