@@ -157,7 +157,7 @@ export default function StudentLayout({ children, title, student: studentProp })
 
                 {/* Logo */}
                 <Link href="/" style={{ display:'flex', alignItems:'center', gap:8, textDecoration:'none', flexShrink:0 }}>
-                    <LogoRing />
+                    <LogoRing dark={darkMode} />
                 </Link>
 
                 {/* Right side controls */}
@@ -487,7 +487,11 @@ function WhatsAppBtn() {
     );
 }
 
-function LogoRing() {
+function LogoRing({ dark = true }) {
+    const logoFilter = dark
+        ? 'drop-shadow(0 0 12px rgba(45,212,191,.45))'
+        : 'brightness(0) saturate(100%) invert(16%) sepia(26%) saturate(1532%) hue-rotate(175deg) brightness(92%) contrast(94%) drop-shadow(0 2px 8px rgba(20,33,61,.18))';
+
     return (
         <div
             className="nav-logo-img"
@@ -508,7 +512,7 @@ function LogoRing() {
                     width: 'auto',
                     objectFit: 'contain',
                     objectPosition: 'left center',
-                    filter: 'drop-shadow(0 0 12px rgba(45,212,191,.45))',
+                    filter: logoFilter,
                     display: 'block',
                 }}
             />

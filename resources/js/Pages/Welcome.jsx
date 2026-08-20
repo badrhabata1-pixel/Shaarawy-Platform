@@ -259,6 +259,14 @@ function PageStyles() {
                 max-width: min(72vw, 620px);
                 max-height: min(72vw, 620px);
             }
+            .teacher-hero-wrap,
+            .teacher-hero-img,
+            .teacher-hero-img img {
+                background: transparent !important;
+                border: 0 !important;
+                box-shadow: none !important;
+                outline: 0 !important;
+            }
 
             /* روابط الناف بار — خط سفلي متحرك عند المرور */
             .nav-link-item { position:relative; }
@@ -845,31 +853,6 @@ const ORBIT_PARTICLES = [
 
 function TeacherHero({ dark }) {
     const wrapRef = useRef();
-    const imgRef  = useRef();
-    const mState  = useRef({ tx:0, ty:0, cx:0, cy:0 });
-    const raf     = useRef();
-
-    /* Smooth mouse parallax */
-    useEffect(() => {
-        const onMove = (e) => {
-            if (!wrapRef.current) return;
-            const r = wrapRef.current.getBoundingClientRect();
-            mState.current.tx = ((e.clientX - r.left) / r.width  - 0.5) * 2;
-            mState.current.ty = ((e.clientY - r.top)  / r.height - 0.5) * 2;
-        };
-        window.addEventListener('mousemove', onMove, { passive: true });
-        const tick = () => {
-            const s = mState.current;
-            s.cx += (s.tx - s.cx) * 0.05;
-            s.cy += (s.ty - s.cy) * 0.05;
-            if (imgRef.current) {
-                imgRef.current.style.transform = `translateX(${s.cx * -11}px) translateY(${s.cy * -7}px)`;
-            }
-            raf.current = requestAnimationFrame(tick);
-        };
-        raf.current = requestAnimationFrame(tick);
-        return () => { window.removeEventListener('mousemove', onMove); cancelAnimationFrame(raf.current); };
-    }, []);
 
     /* GSAP entrance */
     useEffect(() => {
@@ -886,26 +869,6 @@ function TeacherHero({ dark }) {
             display:'flex', alignItems:'center', justifyContent:'center',
             minHeight:'80vh', flexShrink:0,
         }}>
-            {/* Ambient glow */}
-            <div className="th-deco" style={{
-                position:'absolute', top:'50%', left:'50%', transform:'translate(-50%,-50%)',
-                width:560, height:660,
-                background:'radial-gradient(ellipse at center, rgba(0,150,136,.26) 0%, rgba(47,188,212,.12) 38%, transparent 68%)',
-                filter:'blur(40px)',
-                animation:'teacherGlow 4.5s ease-in-out infinite',
-                pointerEvents:'none',
-            }}/>
-
-            {/* Rotating light rays */}
-            <div className="th-deco" style={{
-                position:'absolute', top:'50%', left:'50%',
-                width:780, height:780, marginLeft:-390, marginTop:-390,
-                background:'conic-gradient(from 0deg, transparent 0deg, rgba(47,188,212,.045) 5deg, transparent 10deg, transparent 22deg, rgba(0,150,136,.03) 27deg, transparent 32deg, transparent 44deg, rgba(47,188,212,.04) 49deg, transparent 54deg, transparent 66deg, rgba(47,188,212,.03) 71deg, transparent 76deg, transparent 88deg, rgba(0,150,136,.04) 93deg, transparent 98deg, transparent 110deg, rgba(47,188,212,.03) 115deg, transparent 120deg)',
-                animation:'rayRotate 48s linear infinite',
-                pointerEvents:'none',
-                opacity: dark ? 1 : 0.4,
-            }}/>
-
             {/* حلقة مدارية متقطعة — هوية هندسية عربية بديلة عن القوس اليوناني */}
             <svg className="teacher-fixed-ring" viewBox="0 0 400 400" fill="none"
                 style={{ position:'absolute', top:'50%', left:'50%', transform:'translate(-50%,-50%)', width:620, height:620, pointerEvents:'none', opacity: dark ? 0.6 : 0.4, zIndex:1 }}>
@@ -996,18 +959,19 @@ function TeacherHero({ dark }) {
                 position:'relative', zIndex:5, width:'100%',
                 display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center', gap:20,
             }}>
-                <div ref={imgRef} className="teacher-hero-img" style={{ width:'100%', maxWidth:600, position:'relative', display:'flex', justifyContent:'center' }}>
+                <div className="teacher-hero-img" style={{ width:'100%', maxWidth:600, position:'relative', display:'flex', justifyContent:'center', transform:'none' }}>
                     {/* صورة الأستاذ منصور */}
                     <img
                         src="/images/hero-mansour.png.png"
                         alt="الأستاذ منصور"
                         style={{
                             width:'86%', height:'auto', position:'relative', zIndex:2,
+                            transform:'none',
                             filter: dark
                                 ? 'drop-shadow(0 34px 70px rgba(0,0,0,.6)) drop-shadow(0 0 46px rgba(0,150,136,.22))'
                                 : 'drop-shadow(0 24px 50px rgba(0,0,0,.18)) drop-shadow(0 0 34px rgba(0,150,136,.14))',
-                            maskImage: 'radial-gradient(ellipse 10% 6% at 25% 90%, transparent 60%, black 100%)',
-                            WebkitMaskImage: 'radial-gradient(ellipse 10% 6% at 25% 90%, transparent 60%, black 100%)',
+                            maskImage: 'radial-gradient(ellipse 58% 54% at 50% 50%, #000 0%, #000 72%, rgba(0,0,0,.75) 84%, transparent 100%)',
+                            WebkitMaskImage: 'radial-gradient(ellipse 58% 54% at 50% 50%, #000 0%, #000 72%, rgba(0,0,0,.75) 84%, transparent 100%)',
                         }}
                     />
 
@@ -1120,6 +1084,10 @@ function ThemeToggle({ dark, setDark }) {
 
 /* ── Logo ────────────────────────────────────────────────────── */
 function NavLogo({ dark = true }) {
+    const logoFilter = dark
+        ? 'drop-shadow(0 0 10px rgba(47,188,212,.35))'
+        : 'brightness(0) saturate(100%) invert(16%) sepia(26%) saturate(1532%) hue-rotate(175deg) brightness(92%) contrast(94%) drop-shadow(0 2px 8px rgba(27,58,96,.18))';
+
     return (
         <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexShrink: 0 }}>
             <div className="nav-logo-box" style={{ height: 100, width: 86, overflow: 'hidden', flexShrink: 0 }}>
@@ -1131,7 +1099,7 @@ function NavLogo({ dark = true }) {
                         width: 'auto',
                         objectFit: 'contain',
                         objectPosition: 'left center',
-                        filter: dark ? 'drop-shadow(0 0 10px rgba(47,188,212,.35))' : 'none',
+                        filter: logoFilter,
                         display: 'block',
                     }}
                 />
