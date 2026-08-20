@@ -204,7 +204,7 @@ export default function AssistantLogin({ status }) {
                                     </button>
                                 </div>
                                 {errors.password && (
-                                    <p style={{ color: '#ef4444', fontSize: 12, marginTop: 5, fontFamily: 'Cairo,sans-serif' }}>{errors.password}</p>
+                                    <p style={{ color: '#447aef', fontSize: 12, marginTop: 5, fontFamily: 'Cairo,sans-serif' }}>{errors.password}</p>
                                 )}
                             </div>
 
@@ -249,3 +249,7 @@ export default function AssistantLogin({ status }) {
         </>
     );
 }
+ 
+
+
+ 
