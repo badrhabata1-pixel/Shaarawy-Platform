@@ -28,7 +28,7 @@ class ClassController extends Controller
             'price'       => ['required', 'numeric'],
             'description' => ['nullable', 'string'],
             'image'       => ['nullable', 'image', 'max:3072'],
-            'level'       => ['nullable', 'max:255'],
+            'level'       => ['nullable', 'integer', 'min:0', 'max:255'],
         ]);
 
         if ($request->hasFile('image')) {
@@ -54,7 +54,7 @@ class ClassController extends Controller
             'price'       => ['required', 'numeric'],
             'description' => ['nullable', 'string'],
             'image'       => ['nullable', 'image', 'max:3072'],
-            'level'       => ['nullable', 'max:255'],
+            'level'       => ['nullable', 'integer', 'min:0', 'max:255'],
         ]);
 
         if ($request->hasFile('image')) {

@@ -111,9 +111,9 @@ const BRANCHES = [
 /* FILTERS: built dynamically inside the component from live units */
 
 const PORTALS = [
-    { icon:'📚', title:'تنظيم الدروس والوحدات',         text:'المنهج كله مرتب قدامك — نحو وبلاغة وأدب ونصوص في مكان واحد. مش هتضيع في الكتاب تاني' },
-    { icon:'🎬', title:'دروس بالفيديو والصور التوضيحية', text:'مش هتحفظ القاعدة، هتفهمها — أمثلة وشواهد حية بتخليك حاسس باللغة مش بس عارفها'    },
-    { icon:'✍️', title:'تطبيقات وتمارين تفاعلية',       text:'ذاكر وجرّب دماغك — أسئلة بعد كل درس عشان المعلومة تتثبّت وتلاقي نفسك جاهز لأي سؤال'  },
+    { hero: encodeURI('/images/منصور ( نجيب ).png'),    title:'تنظيم الدروس والكورسات',      text:'المنهج كله مرتب قدامك — نحو وبلاغة وأدب ونصوص في مكان واحد. مش هتضيع في الكتاب تاني' },
+    { hero: encodeURI('/images/منصور (طه حسين ).png'),  title:'دروس بالفيديو والصور التوضيحية', text:'مش هتحفظ القاعدة، هتفهمها — أمثلة وشواهد حية بتخليك حاسس باللغة مش بس عارفها'    },
+    { hero: encodeURI('/images/طربوش احمر.png'),         title:'تطبيقات وتمارين تفاعلية',       text:'ذاكر وجرّب دماغك — أسئلة بعد كل درس عشان المعلومة تتثبّت وتلاقي نفسك جاهز لأي سؤال'  },
 ];
 
 /* ── History particles config ────────────────────────────────── */
@@ -303,6 +303,7 @@ function PageStyles() {
                 .about-full-grid  { grid-template-columns:1fr !important; min-height:auto !important; max-height:none !important; }
                 .about-photo-side { height:60vw !important; min-height:260px !important; }
                 .about-text-side  { padding:clamp(32px,6vw,56px) clamp(24px,5vw,48px) !important; }
+                .nav-logo-box     { height:76px !important; width:66px !important; }
             }
 
             /* ══ MOBILE ══ */
@@ -312,6 +313,10 @@ function PageStyles() {
                 .foot-grid      { grid-template-columns:1fr 1fr; }
                 .nav-links      { display:none; }
                 .hero-right     { flex:0 0 100%; max-width:100%; }
+                .site-nav          { padding:0 clamp(10px,3vw,20px) !important; }
+                .nav-right-group   { gap:8px !important; }
+                .nav-logo-box      { height:58px !important; width:50px !important; }
+                .theme-toggle-btn  { transform:scale(.8); transform-origin:center; }
                 .hero-section   { flex-direction:column-reverse !important; padding-top:0 !important; padding-left:20px !important; padding-right:20px !important; padding-bottom:40px !important; gap:0 !important; min-height:auto !important; }
                 .teacher-hero-wrap { flex:0 0 100% !important; max-width:100% !important; min-height:55vw !important; max-height:70vw !important; height:65vw !important; overflow:hidden !important; }
                 .teacher-hero-wrap .th-deco:nth-child(n+4) { display:none !important; }
@@ -327,7 +332,8 @@ function PageStyles() {
                 .branches-row      { height:auto !important; flex-direction:column !important; }
                 .branches-row .branch-collapsed { min-width:0 !important; flex:0 0 auto !important; height:64px !important; }
                 .branches-row .branch-active    { min-width:0 !important; flex:0 0 auto !important; height:520px !important; }
-                .about-text-side .about-stats-grid { grid-template-columns:repeat(3,1fr) !important; }
+                .about-text-side .about-stats-grid { grid-template-columns:repeat(2,1fr) !important; max-width:280px !important; }
+                .about-feats-grid  { grid-template-columns:1fr !important; }
                 .foot-social-grid { grid-template-columns:1fr 1fr !important; }
             }
 
@@ -338,6 +344,12 @@ function PageStyles() {
                 .nav-ctas   { gap:6px !important; }
                 .nav-ctas a,
                 .nav-ctas button { padding:8px 12px !important; font-size:12px !important; }
+                .nav-ctas svg     { display:none !important; }
+                .nav-right-group  { gap:6px !important; }
+                .nav-logo-box     { height:46px !important; width:40px !important; }
+                .theme-toggle-btn { transform:scale(.68); transform-origin:center; }
+                /* شبكة أمان: لو المساحة لسه ضيقة، اترك العناصر تلف لسطر تاني بدل ما تتلزق */
+                .site-nav { flex-wrap:wrap !important; height:auto !important; min-height:64px !important; row-gap:8px !important; padding-top:8px !important; padding-bottom:8px !important; }
                 .hero-right p  { font-size:14px !important; }
                 .teacher-hero-wrap { height:70vw !important; max-height:70vw !important; }
                 .hero-stats > div { flex:1 0 auto; min-width:80px; }
@@ -1042,6 +1054,7 @@ function Preloader({ visible }) {
 function ThemeToggle({ dark, setDark }) {
     return (
         <button
+            className="theme-toggle-btn"
             onClick={() => setDark(!dark)}
             title={dark ? 'بدّل للوضع النهاري' : 'بدّل للوضع الليلي'}
             style={{
@@ -1109,7 +1122,7 @@ function ThemeToggle({ dark, setDark }) {
 function NavLogo({ dark = true }) {
     return (
         <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexShrink: 0 }}>
-            <div style={{ height: 100, width: 86, overflow: 'hidden', flexShrink: 0 }}>
+            <div className="nav-logo-box" style={{ height: 100, width: 86, overflow: 'hidden', flexShrink: 0 }}>
                 <img
                     src="/images/منصور لوجو.png"
                     alt="منصور"
@@ -1347,7 +1360,7 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
                 NAVBAR  —  floating, framed, neoclassical
             ══════════════════════════════════════════════════════ */}
 {/* ── NAVBAR  —  floating, borderless glassmorphism ── */}
-            <nav style={{
+            <nav className="site-nav" style={{
                 position:       'fixed',
                 top:            14,
                 left:           8,
@@ -1372,7 +1385,7 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
                 transition:     'background .4s ease, box-shadow .4s ease',
             }}>
                 {/* Right group: logo + toggle */}
-                <div style={{ display:'flex', alignItems:'center', gap:14 }}>
+                <div className="nav-right-group" style={{ display:'flex', alignItems:'center', gap:14 }}>
                     <NavLogo dark={darkMode} />
                     <ThemeToggle dark={darkMode} setDark={setDarkMode} />
                 </div>
@@ -1486,7 +1499,7 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
                     </div>
 
                     <p style={{ fontSize:'clamp(14px,1.6vw,18px)', color:T.textDim2, maxWidth:520, lineHeight:2, margin:'0 0 36px' }}>
-                        <span style={{ fontFamily:'Ruwudu,serif', fontSize:'1.35em', color:'#009688', letterSpacing:'.04em' }}>يا مولانا</span>، أهلاً بيك في بيتك التاني — مع الأستاذ منصور هتذاكر اللغة العربية بطريقة عمرك ما جربتها.
+                        <span style={{ fontFamily:'Ruwudu,serif', fontSize:'1.35em', color:'#009688', letterSpacing:'.04em' }}>أهلاً بيك</span> في بيتك التاني — مع الأستاذ منصور هتذاكر اللغة العربية بطريقة عمرك ما جربتها.
                         شرح واضح، فيديوهات تفاعلية، ومتابعة مستمرة لحد ما تلم المنهج.
                     </p>
 
@@ -1500,14 +1513,6 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
                         <a href="#features" style={{ padding:'14px 28px', borderRadius:12, border:`1px solid rgba(47,188,212,.35)`, color:T.text, fontSize:15, textDecoration:'none' }}>اعرف أكتر ←</a>
                     </div>
 
-                    <div className="hero-stats" style={{ display:'flex', gap:32, flexWrap:'wrap', paddingTop:24, borderTop:`1px solid rgba(47,188,212,.15)` }}>
-                        {[{count:1000000,label:'متابع على فيسبوك',prefix:'+',color:C.gold},{count:2000000,label:'طالب مسجل',prefix:'+',color:C.amber},{count:98,label:'نسبة النجاح',prefix:'',suffix:'٪',color:C.gold}].map(({count,label,prefix,suffix='',color})=>(
-                            <div key={label}>
-                                <div style={{ fontSize:'clamp(20px,2.4vw,32px)', fontWeight:800, color }}>{prefix}<span data-count={count}>٠</span>{suffix}</div>
-                                <div style={{ fontSize:12, color:T.textDim4, marginTop:2 }}>{label}</div>
-                            </div>
-                        ))}
-                    </div>
                 </div>
                 <TeacherHero dark={darkMode} />
             </section>
@@ -1642,7 +1647,7 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
                 </div>
 
                 <div className="port-grid" style={{ maxWidth:1160, margin:'0 auto', alignItems:'end' }}>
-                    {PORTALS.map(({title,text,icon},i)=>(
+                    {PORTALS.map(({title,text,hero},i)=>(
                         <div key={i} data-reveal style={{ display:'flex', flexDirection:'column', alignItems:'center' }}>
 
                             {/* قلادة زخرفية نازلة فوق كل قسم — بديل شكل الخنجر القديم */}
@@ -1653,7 +1658,7 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
                             </svg>
 
                             <PopOutCard
-                                icon={icon} title={title} text={text}
+                                hero={hero} title={title} text={text}
                                 num={String(i+1).padStart(2,'0')}
                                 featured={i === 1}
                                 dark={darkMode}
@@ -1875,8 +1880,8 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
             {/* ══════════════════════════════════════════════════════
                 عن الأستاذ
             ══════════════════════════════════════════════════════ */}
-            <section id="about" style={{ padding:'clamp(80px,12vh,140px) clamp(20px,4vw,60px)', position:'relative', zIndex:10 }}>
-                <div style={{ maxWidth:1180, margin:'0 auto', position:'relative' }} data-reveal>
+            <section id="about" style={{ padding:'clamp(80px,12vh,140px) clamp(8px,1.2vw,16px)', position:'relative', zIndex:10 }}>
+                <div style={{ maxWidth:'none', margin:'0 auto', position:'relative' }} data-reveal>
 
                     {/* زخارف أركان رفيعة بجوهرة صغيرة — طراز تذهيب المخطوطات */}
                     {['tl','tr','bl','br'].map(pos => {
@@ -1905,16 +1910,32 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
                         {/* إطار داخلي مزدوج */}
                         <div style={{ position:'absolute', inset:8, borderRadius:18, border:`1px solid ${darkMode?'rgba(47,188,212,.16)':'rgba(47,188,212,.22)'}`, pointerEvents:'none', zIndex:5 }}/>
 
-                        {/* ── لوحة الشمسة (يسار) ── */}
+                        {/* ── لوحة الصورة (يسار) — صورة كاملة بطراز تحريري ── */}
                         <div className="about-photo-side" style={{
-                            position:'relative', overflow:'hidden', display:'flex', alignItems:'center', justifyContent:'center',
-                            padding:'56px 30px',
-                            background: darkMode
-                                ? 'radial-gradient(circle at 50% 40%, #142b47 0%, #0a1626 60%, #050b15 100%)'
-                                : 'radial-gradient(circle at 50% 40%, #e4eef5 0%, #d7e6ee 60%, #cfe0ea 100%)',
+                            position:'relative', overflow:'hidden', minHeight:460,
+                            background: darkMode ? '#050b15' : '#cfe0ea',
                         }}>
-                            {/* نسيج نجمة ثمانية */}
-                            <svg style={{ position:'absolute', inset:0, width:'100%', height:'100%', opacity: darkMode?.07:.09 }}>
+                            {/* الصورة — تملأ اللوحة بالكامل مع ظهورها كاملة بدون قص */}
+                            <img
+                                src={encodeURI('/images/فوتيه منصور.png')}
+                                alt="الأستاذ منصور"
+                                style={{
+                                    position:'absolute', inset:0, width:'100%', height:'100%',
+                                    objectFit:'contain', objectPosition:'center',
+                                    filter: darkMode ? 'brightness(.96) saturate(1.05)' : 'none',
+                                }}
+                            />
+
+                            {/* تدرّج للدمج مع لوحة النص ولتثبيت القراءة عند الحواف */}
+                            <div style={{
+                                position:'absolute', inset:0, pointerEvents:'none',
+                                background: darkMode
+                                    ? 'linear-gradient(180deg, rgba(5,11,21,.4) 0%, transparent 20%, transparent 68%, rgba(5,11,21,.88) 100%)'
+                                    : 'linear-gradient(180deg, rgba(255,255,255,.25) 0%, transparent 20%, transparent 68%, rgba(255,255,255,.65) 100%)',
+                            }}/>
+
+                            {/* نسيج نجمة ثمانية خافت فوق الصورة */}
+                            <svg style={{ position:'absolute', inset:0, width:'100%', height:'100%', opacity:.05, pointerEvents:'none' }}>
                                 <defs>
                                     <pattern id="aboutStarPat2" width="48" height="48" patternUnits="userSpaceOnUse">
                                         <g stroke={C.gold} fill="none" strokeWidth="1">
@@ -1926,86 +1947,77 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
                                 <rect width="100%" height="100%" fill="url(#aboutStarPat2)"/>
                             </svg>
 
-                            {/* الشمسة الكبيرة — حرف الضاد */}
-                            <div style={{ position:'relative', width:'clamp(200px,24vw,300px)', height:'clamp(200px,24vw,300px)' }}>
-                                <svg width="100%" height="100%" viewBox="0 0 300 300" style={{ position:'absolute', inset:0 }}>
-                                    <circle cx="150" cy="150" r="140" fill="none" stroke={C.gold} strokeWidth=".8" opacity=".45"/>
-                                    <circle cx="150" cy="150" r="118" fill="none" stroke={C.gold} strokeWidth=".6" opacity=".3"/>
-                                    <g stroke={C.gold} strokeWidth="1.2" fill="none" opacity=".55">
-                                        <rect x="55" y="55" width="190" height="190"/>
-                                        <rect x="55" y="55" width="190" height="190" transform="rotate(45 150 150)"/>
-                                    </g>
-                                    <circle cx="150" cy="150" r="92" fill={darkMode ? '#0a1626' : '#eef4f8'} stroke={C.gold} strokeWidth="1.6"/>
-                                </svg>
-                                <div style={{ position:'absolute', inset:0, display:'flex', alignItems:'center', justifyContent:'center' }}>
-                                    <span style={{
-                                        fontFamily:"'Ruwudu',serif", fontSize:'clamp(90px,11vw,130px)', lineHeight:1,
-                                        background:`linear-gradient(160deg,${C.gold},${C.amber})`,
-                                        WebkitBackgroundClip:'text', WebkitTextFillColor:'transparent', backgroundClip:'text',
-                                    }}>ض</span>
+                            {/* حافة ذهبية علوية رفيعة */}
+                            <div style={{ position:'absolute', top:0, left:0, right:0, height:3, background:`linear-gradient(90deg, transparent, ${C.gold}, ${C.amber}, ${C.gold}, transparent)`, opacity:.85 }}/>
+
+                            {/* شارة الاسم أسفل الصورة */}
+                            <div style={{ position:'absolute', bottom:22, left:26, right:26, zIndex:2 }}>
+                                <div style={{ display:'inline-flex', alignItems:'center', gap:9, marginBottom:8 }}>
+                                    <svg width="9" height="9" viewBox="0 0 18 18"><rect x="4" y="4" width="10" height="10" transform="rotate(45 9 9)" fill={C.gold}/></svg>
+                                    <span style={{ fontSize:11, color:C.gold, letterSpacing:'.18em', fontWeight:700 }}>الأستاذ</span>
+                                </div>
+                                <div style={{ fontFamily:"'Ruwudu',serif", fontSize:'clamp(24px,2.6vw,32px)', color:'#f5f0e8', lineHeight:1.1 }}>
+                                    محمد منصور
                                 </div>
                             </div>
-
-                            {/* توهج أرضي */}
-                            <div style={{ position:'absolute', bottom:'8%', left:'50%', transform:'translateX(-50%)', width:'70%', height:70, background:`radial-gradient(ellipse, rgba(47,188,212,.16) 0%, transparent 70%)`, filter:'blur(14px)', pointerEvents:'none' }}/>
                         </div>
 
                         {/* ── لوحة المحتوى (يمين) ── */}
                         <div className="about-text-side" style={{
                             background: darkMode ? '#0a1424' : '#ffffff',
-                            padding:'clamp(40px,5vw,64px)',
-                            display:'flex', flexDirection:'column', justifyContent:'center', gap:22,
+                            padding:'clamp(40px,4vw,64px)',
+                            display:'flex', flexDirection:'column', justifyContent:'center', gap:24,
                             position:'relative', direction:'rtl',
                         }}>
-                            {/* Tag */}
-                            <div style={{ display:'inline-flex', alignItems:'center', gap:10, alignSelf:'flex-start' }}>
-                                <svg width="12" height="12" viewBox="0 0 18 18" fill="none"><rect x="4" y="4" width="10" height="10" transform="rotate(45 9 9)" stroke={C.gold} strokeWidth="1.6"/></svg>
-                                <span style={{ fontSize:11, color:C.gold, letterSpacing:'.24em', fontWeight:700 }}>عن الأستاذ</span>
-                            </div>
+                            <div style={{ maxWidth:640 }}>
+                                {/* Tag */}
+                                <div style={{ display:'inline-flex', alignItems:'center', gap:10, alignSelf:'flex-start' }}>
+                                    <svg width="12" height="12" viewBox="0 0 18 18" fill="none"><rect x="4" y="4" width="10" height="10" transform="rotate(45 9 9)" stroke={C.gold} strokeWidth="1.6"/></svg>
+                                    <span style={{ fontSize:11, color:C.gold, letterSpacing:'.24em', fontWeight:700 }}>عن الأستاذ</span>
+                                </div>
 
-                            {/* الاسم */}
-                            <div>
-                                <h2 style={{ fontSize:'clamp(34px,4vw,54px)', fontFamily:"'Ruwudu',serif", color: darkMode ? '#f5f0e8' : C.navy, lineHeight:1.15, margin:'0 0 8px' }}>
-                                    منصور
-                                </h2>
-                                <div style={{ display:'flex', alignItems:'center', gap:9 }}>
-                                    <svg width="9" height="9" viewBox="0 0 18 18"><rect x="4" y="4" width="10" height="10" transform="rotate(45 9 9)" fill={C.amber}/></svg>
-                                    <span style={{ fontSize:13, color:C.amber, fontWeight:700, letterSpacing:'.04em' }}>أستاذ اللغة العربية — الثانوية العامة</span>
+                                {/* الاسم */}
+                                <div style={{ marginTop:14 }}>
+                                    <h2 style={{ fontSize:'clamp(34px,4vw,54px)', fontFamily:"'Ruwudu',serif", color: darkMode ? '#f5f0e8' : C.navy, lineHeight:1.15, margin:'0 0 8px' }}>
+                                        منصور
+                                    </h2>
+                                    <div style={{ display:'flex', alignItems:'center', gap:9 }}>
+                                        <svg width="9" height="9" viewBox="0 0 18 18"><rect x="4" y="4" width="10" height="10" transform="rotate(45 9 9)" fill={C.amber}/></svg>
+                                        <span style={{ fontSize:13, color:C.amber, fontWeight:700, letterSpacing:'.04em' }}>أستاذ اللغة العربية — الثانوية العامة</span>
+                                    </div>
+                                </div>
+
+                                {/* اقتباس */}
+                                <div style={{ position:'relative', paddingRight:20, marginTop:20, borderRight:`2px solid ${darkMode?'rgba(47,188,212,.35)':'rgba(47,188,212,.4)'}` }}>
+                                    <p style={{ fontSize:'clamp(14px,1.4vw,17px)', fontWeight:600, color: darkMode ? 'rgba(240,232,213,.78)' : 'rgba(27,58,96,.78)', lineHeight:2.05, margin:0 }}>
+                                        <span style={{ fontFamily:"'Ruwudu',serif", fontSize:'1.3em', color:C.amber, letterSpacing:'.03em' }}>ركّز معايا</span> وجهّز نفسك من النهارده...<br/>
+                                        هنذاكر مع بعض بأسلوب مختلف تمامًا — تفهم الدرس مش تحفظه<br/>
+                                        لحد ما <span style={{ color:C.amber, fontWeight:900 }}>الدرجة الكاملة تبقى حقك المضمون</span>
+                                    </p>
                                 </div>
                             </div>
 
-                            {/* اقتباس */}
-                            <div style={{ position:'relative', paddingRight:20, borderRight:`2px solid ${darkMode?'rgba(47,188,212,.35)':'rgba(47,188,212,.4)'}` }}>
-                                <p style={{ fontSize:'clamp(14px,1.4vw,17px)', fontWeight:600, color: darkMode ? 'rgba(240,232,213,.78)' : 'rgba(27,58,96,.78)', lineHeight:2.05, margin:0 }}>
-                                    <span style={{ fontFamily:"'Ruwudu',serif", fontSize:'1.3em', color:C.amber, letterSpacing:'.03em' }}>يا مولانا</span>، ركّز معايا وجهّز نفسك...<br/>
-                                    هنذاكر بأسلوب مختلف خالص — فاهم مش حافظ<br/>
-                                    لحد ما <span style={{ color:C.amber, fontWeight:900 }}>الدرجة الكاملة تبقى حقك</span>
-                                </p>
-                            </div>
-
-                            {/* إحصائيات */}
-                            <div style={{ display:'flex', alignItems:'center', padding:'18px 0', borderTop:`1px solid ${darkMode?'rgba(47,188,212,.14)':'rgba(47,188,212,.18)'}`, borderBottom:`1px solid ${darkMode?'rgba(47,188,212,.14)':'rgba(47,188,212,.18)'}` }}>
+                            {/* إحصائيات — بطاقات مستقلة بدل الخط الفاصل */}
+                            <div className="about-stats-grid" style={{ display:'grid', gridTemplateColumns:'repeat(2,1fr)', gap:14, maxWidth:340 }}>
                                 {[
                                     { count:98,      suffix:'٪',  label:'نسبة النجاح' },
-                                    { count:2000000, prefix:'+',  label:'طالب مسجل'  },
                                     { count:500,     prefix:'+',  label:'ساعة محتوى' },
-                                ].map(({count,prefix='',suffix='',label}, i) => (
-                                    <React.Fragment key={label}>
-                                        {i>0 && (
-                                            <svg width="8" height="8" viewBox="0 0 18 18" style={{ flexShrink:0, margin:'0 clamp(8px,1.4vw,18px)' }}><rect x="4" y="4" width="10" height="10" transform="rotate(45 9 9)" fill={C.gold} opacity=".5"/></svg>
-                                        )}
-                                        <div style={{ textAlign:'center', flex:1 }}>
-                                            <div style={{ fontSize:'clamp(20px,2.2vw,30px)', fontWeight:900, color:C.gold, lineHeight:1.1 }}>
-                                                {prefix}<span data-count={count}>٠</span>{suffix}
-                                            </div>
-                                            <div style={{ fontSize:11, color: darkMode?'rgba(47,188,212,.55)':'rgba(27,58,96,.5)', marginTop:5, letterSpacing:'.04em' }}>{label}</div>
+                                ].map(({count,prefix='',suffix='',label}) => (
+                                    <div key={label} style={{
+                                        textAlign:'center', padding:'16px 8px', borderRadius:14,
+                                        background: darkMode ? 'rgba(47,188,212,.05)' : 'rgba(27,58,96,.03)',
+                                        border:`1px solid ${darkMode?'rgba(47,188,212,.14)':'rgba(27,58,96,.1)'}`,
+                                    }}>
+                                        <div style={{ fontSize:'clamp(19px,2vw,28px)', fontWeight:900, color:C.gold, lineHeight:1.1 }}>
+                                            {prefix}<span data-count={count}>٠</span>{suffix}
                                         </div>
-                                    </React.Fragment>
+                                        <div style={{ fontSize:11, color: darkMode?'rgba(47,188,212,.55)':'rgba(27,58,96,.5)', marginTop:6, letterSpacing:'.03em' }}>{label}</div>
+                                    </div>
                                 ))}
                             </div>
 
-                            {/* مميزات */}
-                            <div style={{ display:'flex', flexDirection:'column', gap:2 }}>
+                            {/* مميزات — شبكة عمودين لاستغلال العرض المتاح */}
+                            <div className="about-feats-grid" style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'4px 20px' }}>
                                 {[
                                     'شروحات فيديو تفصيلية لكل درس ووحدة',
                                     'خرائط ذهنية ونماذج إعراب تثبّت المعلومة',

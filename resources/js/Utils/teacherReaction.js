@@ -1,5 +1,5 @@
 export function teacherReactionImage(percentage) {
-    if (percentage >= 85) return '/images/excellent.png';
-    if (percentage >= 50) return '/images/good.png';
-    return '/images/bad.png';
+    if (percentage >= 85) return encodeURI('/images/ممتاز.png');
+    if (percentage >= 50) return encodeURI('/images/جيد جدا.png');
+    return encodeURI('/images/ضعيف.png');
 }

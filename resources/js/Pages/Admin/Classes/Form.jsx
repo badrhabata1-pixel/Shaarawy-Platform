@@ -54,13 +54,13 @@ export default function Form({ item }) {
                 placeholder="السعر بالجنيه المصري"
             />
             <AdminField
-                label="المستوى"
+                label="ترتيب الصف"
                 name="level"
-                type="text"
+                type="number"
                 value={data.level}
                 onChange={e => setData('level', e.target.value)}
                 error={errors.level}
-                placeholder="مثال: ثانوي، إعدادي"
+                placeholder="مثال: 0، 1، 2 ... (الأصغر يظهر أولاً في بوابة الطالب)"
             />
             <AdminField
                 label="الوصف"

@@ -1,10 +1,12 @@
 import { useForm, Head } from '@inertiajs/react';
 import { useState } from 'react';
 
-const O = '#F47C20';
-const N = '#14213D';
-const B = '#DCC9A3';
-const W = '#F7F3EB';
+const TEAL  = '#2fbcd4';
+const TEAL2 = '#009688';
+const NAVY  = '#1b3a60';
+const INK   = '#0A1422';
+
+const LOGIN_IMG = encodeURI('/images/تسجيل او اانشاء.png');
 
 export default function StudentLogin({ status, errors: pageErrors }) {
     const { data, setData, post, processing, errors } = useForm({
@@ -21,68 +23,54 @@ export default function StudentLogin({ status, errors: pageErrors }) {
     const allErrors = { ...errors, ...pageErrors };
 
     return (
-        <div style={{
-            minHeight:    '100vh',
-            background:   N,
-            display:      'flex',
-            flexDirection:'column',
-            fontFamily:   "'Cairo', sans-serif",
-            direction:    'rtl',
-            position:     'relative',
-            overflow:     'hidden',
+        <div dir="rtl" style={{
+            minHeight:  '100vh',
+            background: `linear-gradient(135deg, #060B16 0%, #0D1829 45%, ${NAVY} 75%, ${INK} 100%)`,
+            fontFamily: "'Cairo', sans-serif",
+            position:   'relative',
+            overflow:   'hidden',
+            display:    'flex',
+            flexDirection: 'column',
         }}>
-            <Head title="تسجيل الدخول — منصة الصيفي" />
+            <Head title="تسجيل دخول الطالب — منصة منصور" />
             <GoogleFonts />
+            <BrandStyles />
+            <StarPattern />
             <Particles />
-            <ColumnLeft />
-            <ColumnRight />
+
+            {/* Decorative orbs */}
+            <div style={{ position: 'absolute', top: -80, right: -80, width: 360, height: 360, borderRadius: '50%', background: 'radial-gradient(circle, rgba(47,188,212,.18) 0%, transparent 70%)', pointerEvents: 'none' }} />
+            <div style={{ position: 'absolute', bottom: -100, left: -100, width: 400, height: 400, borderRadius: '50%', background: `radial-gradient(circle, rgba(27,58,96,.8) 0%, transparent 70%)`, pointerEvents: 'none' }} />
+
+            {/* توقيع "منصور" المائي */}
+            <span aria-hidden="true" style={{
+                position: 'absolute', bottom: '3%', left: '50%', transform: 'translateX(-50%)',
+                fontFamily: "'Rakkas',serif", fontSize: 'clamp(60px,10vw,110px)', lineHeight: 1,
+                color: 'rgba(47,188,212,.06)', whiteSpace: 'nowrap', pointerEvents: 'none', userSelect: 'none',
+            }}>منصة منصور</span>
 
             {/* NAV */}
             <nav style={{
-                position:       'relative',
-                zIndex:         10,
-                background:     'rgba(8,15,30,.82)',
-                backdropFilter: 'blur(24px) saturate(1.8)',
-                WebkitBackdropFilter: 'blur(24px) saturate(1.8)',
-                padding:        '0 clamp(16px,4vw,2.5rem)',
-                height:         80,
-                display:        'flex',
-                alignItems:     'center',
-                justifyContent: 'space-between',
-                boxShadow:      '0 4px 32px rgba(0,0,0,.45), inset 0 -1px 0 rgba(201,161,74,.18)',
+                position: 'relative', zIndex: 10,
+                background: 'rgba(6,11,22,.82)', backdropFilter: 'blur(24px) saturate(1.8)', WebkitBackdropFilter: 'blur(24px) saturate(1.8)',
+                padding: '0 clamp(16px,4vw,2.5rem)', height: 80,
+                display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+                boxShadow: '0 4px 32px rgba(0,0,0,.45), inset 0 -1px 0 rgba(47,188,212,.14)',
             }}>
-                {/* Gold top line */}
-                <div style={{ position:'absolute', top:0, left:0, right:0, height:2, background:'linear-gradient(90deg,transparent 0%,rgba(201,161,74,.6) 30%,rgba(244,124,32,.8) 50%,rgba(201,161,74,.6) 70%,transparent 100%)' }} />
+                <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 2, background: `linear-gradient(90deg,transparent 0%,rgba(47,188,212,.6) 30%,rgba(0,150,136,.8) 50%,rgba(47,188,212,.6) 70%,transparent 100%)` }} />
 
-                {/* Decorative glyph right */}
-                <div style={{ position:'absolute', right:'calc(50% - 180px)', top:'50%', transform:'translateY(-50%)', fontSize:28, opacity:.06, userSelect:'none', fontFamily:'serif' }}>𓃭</div>
-                <div style={{ position:'absolute', left:'calc(50% - 180px)', top:'50%', transform:'translateY(-50%)', fontSize:28, opacity:.06, userSelect:'none', fontFamily:'serif' }}>𓅓</div>
-
-                {/* Logo */}
-                <div style={{ display: 'flex', alignItems: 'center' }}>
-                    <LogoRing />
+                <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                    <img src="/images/manasety.png.png" alt="منصتي" style={{ height: 46, width: 'auto', objectFit: 'contain', filter: 'drop-shadow(0 4px 14px rgba(47,188,212,.35))' }} />
                 </div>
 
-                {/* Center divider ornament */}
-                <div style={{ position:'absolute', left:'50%', top:'50%', transform:'translate(-50%,-50%)', display:'flex', alignItems:'center', gap:8, pointerEvents:'none' }}>
-                    <div style={{ width:40, height:1, background:'linear-gradient(90deg,transparent,rgba(201,161,74,.25))' }} />
-                    <div style={{ width:4, height:4, borderRadius:'50%', background:'rgba(201,161,74,.3)' }} />
-                    <div style={{ width:40, height:1, background:'linear-gradient(90deg,rgba(201,161,74,.25),transparent)' }} />
-                </div>
-
-                {/* Nav links */}
-                <div className="reg-nav-links" style={{ display:'flex', gap:10, alignItems:'center', flexWrap:'wrap', justifyContent:'flex-end' }}>
-                    <a href="/register"
-                        style={{ display:'inline-flex', alignItems:'center', gap:5, color:B, fontSize:12, fontWeight:600, textDecoration:'none', padding:'6px 14px', borderRadius:99, border:`1px solid rgba(220,201,163,.18)`, background:'rgba(220,201,163,.05)', whiteSpace:'nowrap', transition:'all .2s' }}
-                        onMouseEnter={e=>{ e.currentTarget.style.background='rgba(201,161,74,.12)'; e.currentTarget.style.borderColor='rgba(201,161,74,.4)'; e.currentTarget.style.color='#C9A14A'; }}
-                        onMouseLeave={e=>{ e.currentTarget.style.background='rgba(220,201,163,.05)'; e.currentTarget.style.borderColor='rgba(220,201,163,.18)'; e.currentTarget.style.color=B; }}
+                <div className="reg-nav-links" style={{ display: 'flex', gap: 10, alignItems: 'center', flexWrap: 'wrap', justifyContent: 'flex-end' }}>
+                    <a href="/register" className="nav-pill"
+                        style={{ color: '#c7e9ef' }}
                     >
                         طالب جديد؟ سجّل ←
                     </a>
-                    <a href="/"
-                        style={{ display:'inline-flex', alignItems:'center', gap:5, color:'rgba(220,201,163,.55)', fontSize:12, fontWeight:600, textDecoration:'none', padding:'6px 14px', borderRadius:99, border:'1px solid transparent', whiteSpace:'nowrap', transition:'all .2s' }}
-                        onMouseEnter={e=>{ e.currentTarget.style.color=B; e.currentTarget.style.borderColor='rgba(220,201,163,.15)'; }}
-                        onMouseLeave={e=>{ e.currentTarget.style.color='rgba(220,201,163,.55)'; e.currentTarget.style.borderColor='transparent'; }}
+                    <a href="/" className="nav-pill nav-pill-ghost"
+                        style={{ color: 'rgba(199,233,239,.55)' }}
                     >
                         الرئيسية ←
                     </a>
@@ -91,217 +79,142 @@ export default function StudentLogin({ status, errors: pageErrors }) {
 
             {/* MAIN */}
             <div style={{
-                flex:           1,
-                display:        'flex',
-                alignItems:     'flex-start',
-                justifyContent: 'center',
-                padding:        'clamp(16px,4vw,32px)',
-                position:       'relative',
-                zIndex:         2,
+                flex: 1, display: 'flex', alignItems: 'flex-start', justifyContent: 'center',
+                padding: 'clamp(16px,4vw,32px)', position: 'relative', zIndex: 2,
             }}>
                 <div className="login-split" style={{
-                    display:      'flex',
-                    direction:    'ltr',
-                    width:        '100%',
-                    maxWidth:     940,
-                    borderRadius: 20,
-                    overflow:     'hidden',
-                    animation:    'rise .7s cubic-bezier(.22,1,.36,1)',
-                    boxShadow:    '0 40px 100px rgba(0,0,0,.5)',
+                    display: 'flex', direction: 'ltr', width: '100%', maxWidth: 940,
+                    borderRadius: 20, overflow: 'hidden', animation: 'riseUp .7s cubic-bezier(.22,1,.36,1)',
+                    boxShadow: '0 40px 100px rgba(0,0,0,.5)',
                 }}>
-
                     {/* PHOTO PANEL */}
                     <div className="login-photo" style={{
-                        flex:       '0 0 380px',
-                        position:   'relative',
-                        background: `linear-gradient(160deg,${N},#0a1422)`,
-                        overflow:   'hidden',
+                        flex: '0 0 380px', position: 'relative',
+                        background: `linear-gradient(160deg,${NAVY},${INK})`, overflow: 'hidden',
                     }}>
-                        <MiniCol style={{ left: 10, top: '14%', opacity: .12 }} />
-                        <MiniCol style={{ right: 10, top: '14%', transform: 'scaleX(-1)', opacity: .12 }} />
                         <img
-                            src="/images/teatcher-sign.png"
-                            alt="الأستاذ محمد الصيفي"
-                            style={{
-                                position: 'absolute', bottom: -8, left: '62%',
-                                transform: 'translateX(-50%)',
-                                height: '102%', width: 'auto', maxWidth: 'none',
-                                objectFit: 'contain',
-                                filter: 'drop-shadow(0 18px 26px rgba(0,0,0,.5))',
-                            }}
+                            src={LOGIN_IMG}
+                            alt="تسجيل الدخول"
+                            style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 20%' }}
                         />
-                        <div style={{
-                            position: 'absolute', inset: 0,
-                            background: `linear-gradient(180deg, transparent 38%, ${N} 92%)`,
-                        }} />
+                        <div style={{ position: 'absolute', inset: 0, background: `linear-gradient(180deg, transparent 42%, ${NAVY} 94%)` }} />
                         <div style={{
                             position: 'relative', zIndex: 2, height: '100%',
                             display: 'flex', flexDirection: 'column',
                             justifyContent: 'flex-end', alignItems: 'center',
-                            textAlign: 'center', padding: '1.5rem 1rem 1.25rem',
-                            direction: 'rtl',
+                            textAlign: 'center', padding: '1.5rem 1rem 1.25rem', direction: 'rtl',
                         }}>
-                            <div style={{ color: '#fff', fontWeight: 800, fontSize: 15 }}>الأستاذ محمد الصيفي</div>
-                            <div style={{ color: B, fontSize: 11, marginTop: 3, opacity: .85 }}>مؤسس منصة الصيفي التعليمية</div>
+                            <div style={{ color: '#fff', fontWeight: 800, fontSize: 15 }}>أهلاً بعودتك 👋</div>
+                            <div style={{ color: TEAL, fontSize: 11, marginTop: 3, opacity: .9 }}>منصة منصور التعليمية</div>
                         </div>
                     </div>
 
                     {/* FORM PANEL */}
-                    <div className="login-form-panel" style={{ background: W, flex: 1, minWidth: 0, direction: 'rtl', overflowY: 'auto' }}>
+                    <div className="login-form-panel" style={{ background: '#fff', flex: 1, minWidth: 0, direction: 'rtl', overflowY: 'auto' }}>
 
-                    {/* HEADER */}
-                    <div style={{
-                        background: N,
-                        padding:    '2rem',
-                        textAlign:  'center',
-                        position:   'relative',
-                        overflow:   'hidden',
-                    }}>
-                        <div style={{
-                            position: 'absolute', bottom: 0, left: 0, right: 0,
-                            height: 3, background: O,
-                        }} />
-                        <MiniCol style={{ left: 16, top: '50%', transform: 'translateY(-50%)', opacity: .15 }} />
-                        <MiniCol style={{ right: 16, top: '50%', transform: 'translateY(-50%) scaleX(-1)', opacity: .15 }} />
-
-                        <LogoRing large />
-                        <div style={{
-                            fontFamily:    "'Cinzel',serif",
-                            color:         B,
-                            fontSize:      10,
-                            letterSpacing: 4,
-                            opacity:       .65,
-                            margin:        '.6rem 0 .4rem',
-                        }}>
-                            HISTORIA • MAGISTRA VITAE
-                        </div>
-                        <h1 style={{ color: '#fff', fontSize: 20, fontWeight: 700, margin: '0 0 .3rem' }}>
-                            تسجيل دخول الطالب
-                        </h1>
-                        <p style={{ color: B, fontSize: 12, margin: 0, opacity: .75 }}>
-                            منصة محمد الصيفي التعليمية
-                        </p>
-                    </div>
-
-                    {/* BODY */}
-                    <form onSubmit={submit} className="reg-form-body" style={{ padding: '1.75rem 2rem' }}>
-
-                        {/* Status message (e.g. logged out) */}
-                        {status && (
-                            <div style={{
-                                background: '#EDFAF4', border: '1px solid #7EDBB0',
-                                borderRadius: 10, padding: '10px 14px',
-                                color: '#1A6B47', fontSize: 13, marginBottom: 16, textAlign: 'center',
-                            }}>
-                                {status}
+                        {/* HEADER */}
+                        <div style={{ background: NAVY, padding: '2rem', textAlign: 'center', position: 'relative', overflow: 'hidden' }}>
+                            <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: 3, background: `linear-gradient(90deg, ${TEAL}, ${TEAL2})` }} />
+                            <h1 style={{ color: '#fff', fontSize: 20, fontWeight: 900, margin: '0 0 4px', fontFamily: 'Cairo,sans-serif' }}>
+                                تسجيل دخول الطالب
+                            </h1>
+                            <p style={{ color: 'rgba(255,255,255,.6)', fontSize: 12, margin: 0 }}>
+                                منصة منصور التعليمية
+                            </p>
+                            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, marginTop: 10 }}>
+                                <div style={{ width: 28, height: 1, background: `linear-gradient(90deg,transparent,${TEAL})` }} />
+                                <svg width="10" height="10" viewBox="0 0 18 18" fill="none"><rect x="4" y="4" width="10" height="10" transform="rotate(45 9 9)" stroke={TEAL} strokeWidth="1.6" /></svg>
+                                <div style={{ width: 28, height: 1, background: `linear-gradient(90deg,${TEAL},transparent)` }} />
                             </div>
-                        )}
+                        </div>
 
-                        {/* Error banner */}
-                        {allErrors.email && (
+                        {/* BODY */}
+                        <form onSubmit={submit} className="reg-form-body" style={{ padding: '1.75rem 2rem' }}>
+
+                            {status && (
+                                <div style={{ background: '#d1fae5', border: '1px solid #6ee7b7', borderRadius: 10, padding: '10px 14px', color: '#065f46', fontSize: 13, marginBottom: 16, textAlign: 'center' }}>
+                                    {status}
+                                </div>
+                            )}
+
+                            {allErrors.email && (
+                                <div style={{ background: '#FEF2F2', border: '1px solid #FECACA', borderRadius: 10, padding: '10px 14px', color: '#B91C1C', fontSize: 13, marginBottom: 16, textAlign: 'center' }}>
+                                    {allErrors.email}
+                                </div>
+                            )}
+
                             <div style={{
-                                background: '#FEF2F2', border: '1px solid #FECACA',
-                                borderRadius: 10, padding: '10px 14px',
-                                color: '#B91C1C', fontSize: 13, marginBottom: 16, textAlign: 'center',
+                                background: NAVY, borderRadius: 10, padding: '.7rem 1rem',
+                                marginBottom: '1.25rem', textAlign: 'center',
+                                color: TEAL, fontSize: 11, fontStyle: 'italic',
+                                borderRight: `3px solid ${TEAL2}`, lineHeight: 1.7,
                             }}>
-                                {allErrors.email}
+                                "العلم نور يضيء دروب المستقبل"
                             </div>
-                        )}
 
-                        {/* Quote */}
-                        <div style={{
-                            background: N, borderRadius: 10, padding: '.7rem 1rem',
-                            marginBottom: '1.25rem', textAlign: 'center',
-                            color: B, fontSize: 11, fontStyle: 'italic',
-                            borderRight: `3px solid ${O}`, lineHeight: 1.7,
-                        }}>
-                            "العلم نور يضيء دروب المستقبل"
-                        </div>
+                            <Field label="البريد الإلكتروني" required error={errors.email}>
+                                <InputField
+                                    type="email"
+                                    value={data.email}
+                                    onChange={e => setData('email', e.target.value)}
+                                    placeholder="student@example.com"
+                                    hasError={!!errors.email}
+                                    ltr
+                                    autoComplete="email"
+                                />
+                            </Field>
 
-                        {/* Email */}
-                        <Field label="البريد الإلكتروني" required error={errors.email}>
-                            <InputField
-                                type="email"
-                                value={data.email}
-                                onChange={e => setData('email', e.target.value)}
-                                placeholder="student@example.com"
-                                hasError={!!errors.email}
-                                ltr
-                                autoComplete="email"
-                            />
-                        </Field>
+                            <Field label="كلمة المرور" required error={errors.password}>
+                                <InputField
+                                    type="password"
+                                    value={data.password}
+                                    onChange={e => setData('password', e.target.value)}
+                                    placeholder="••••••••"
+                                    hasError={!!errors.password}
+                                    autoComplete="current-password"
+                                />
+                            </Field>
 
-                        {/* Password */}
-                        <Field label="كلمة المرور" required error={errors.password}>
-                            <InputField
-                                type="password"
-                                value={data.password}
-                                onChange={e => setData('password', e.target.value)}
-                                placeholder="••••••••"
-                                hasError={!!errors.password}
-                                autoComplete="current-password"
-                            />
-                        </Field>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 12 }}>
+                                <input
+                                    type="checkbox"
+                                    id="remember"
+                                    checked={data.remember}
+                                    onChange={e => setData('remember', e.target.checked)}
+                                    style={{ accentColor: TEAL, width: 16, height: 16, cursor: 'pointer' }}
+                                />
+                                <label htmlFor="remember" style={{ fontSize: 12, color: '#64748b', cursor: 'pointer' }}>
+                                    تذكرني
+                                </label>
+                            </div>
 
-                        {/* Remember me */}
-                        <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 12 }}>
-                            <input
-                                type="checkbox"
-                                id="remember"
-                                checked={data.remember}
-                                onChange={e => setData('remember', e.target.checked)}
-                                style={{ accentColor: O, width: 16, height: 16, cursor: 'pointer' }}
-                            />
-                            <label htmlFor="remember" style={{ fontSize: 12, color: '#666', cursor: 'pointer' }}>
-                                تذكرني
-                            </label>
-                        </div>
+                            <button
+                                type="submit"
+                                disabled={processing}
+                                className="brand-btn"
+                                style={{
+                                    width: '100%',
+                                    background: processing ? '#94a3b8' : `linear-gradient(135deg, ${TEAL}, ${TEAL2})`,
+                                    color: '#fff', border: 'none', borderRadius: 10, padding: '13px',
+                                    fontSize: 15, fontWeight: 800, cursor: processing ? 'not-allowed' : 'pointer',
+                                    marginTop: '.5rem', fontFamily: "'Cairo', sans-serif",
+                                    boxShadow: processing ? 'none' : `0 6px 20px rgba(47,188,212,.35)`,
+                                    transition: 'all .2s ease',
+                                }}
+                            >
+                                {processing ? '⏳ جارٍ الدخول...' : 'تسجيل الدخول'}
+                            </button>
 
-                        {/* Submit */}
-                        <button
-                            type="submit"
-                            disabled={processing}
-                            style={{
-                                width:        '100%',
-                                background:   processing ? '#ccc' : O,
-                                color:        '#fff',
-                                border:       'none',
-                                borderRadius: 10,
-                                padding:      '13px',
-                                fontSize:     15,
-                                fontWeight:   700,
-                                cursor:       processing ? 'not-allowed' : 'pointer',
-                                marginTop:    '.5rem',
-                                fontFamily:   "'Cairo', sans-serif",
-                                transition:   'opacity .2s',
-                            }}
-                        >
-                            {processing ? 'جارٍ الدخول...' : '🚀 دخول'}
-                        </button>
-
-                        {/* Footer */}
-                        <div style={{
-                            textAlign: 'center', padding: '.75rem 0 0',
-                            fontSize: 11, color: '#aaa',
-                            borderTop: `1px solid ${B}`, marginTop: '1rem',
-                        }}>
-                            ليس لديك حساب؟{' '}
-                            <a href="/register" style={{ color: O, textDecoration: 'none', fontWeight: 700 }}>
-                                سجّل الآن
-                            </a>
-                            <span style={{
-                                display: 'block', fontFamily: "'Cinzel',serif",
-                                fontSize: 9, letterSpacing: 2, marginTop: 4, color: '#C9A14A',
-                            }}>
-                                HISTORIA MAGISTRA VITAE
-                            </span>
-                        </div>
-                    </form>
+                            <div style={{ textAlign: 'center', padding: '.75rem 0 0', fontSize: 11, color: '#94a3b8', borderTop: '1px solid #E2E8F0', marginTop: '1rem' }}>
+                                ليس لديك حساب؟{' '}
+                                <a href="/register" style={{ color: TEAL2, textDecoration: 'none', fontWeight: 700 }}>
+                                    سجّل الآن
+                                </a>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
-
-            <AnimStyles />
         </div>
     );
 }
@@ -311,108 +224,24 @@ export default function StudentLogin({ status, errors: pageErrors }) {
 function GoogleFonts() {
     return (
         <link
-            href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Cairo:wght@400;600;700&display=swap"
+            href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Rakkas&display=swap"
             rel="stylesheet"
         />
     );
 }
 
-function AnimStyles() {
+function StarPattern() {
     return (
-        <style>{`
-            @keyframes rise {
-                from { transform: translateY(24px); opacity: 0; }
-                to   { transform: translateY(0);   opacity: 1; }
-            }
-            @keyframes floatUp {
-                0%   { transform: translateY(0); opacity: 0; }
-                15%  { opacity: .55; }
-                85%  { opacity: .2; }
-                100% { transform: translateY(-400px); opacity: 0; }
-            }
-            @keyframes pulse {
-                0%,100% { box-shadow: 0 0 0 0   rgba(244,124,32,.35); }
-                50%      { box-shadow: 0 0 0 8px rgba(244,124,32,0);   }
-            }
-
-            /* ── TABLET ── */
-            @media (max-width: 820px) {
-                .login-split  { flex-direction: column !important; max-width: 480px !important; }
-                .login-photo  { flex: 0 0 200px !important; min-height: 200px !important; }
-            }
-
-            /* ── MOBILE ── */
-            @media (max-width: 600px) {
-                .login-split  { width: 100% !important; max-width: 100% !important; border-radius: 12px !important; }
-                .login-photo  { flex: 0 0 180px !important; min-height: 180px !important; }
-                .reg-home-link { display: none !important; }
-                .reg-form-body { padding: 1.25rem 1.1rem !important; }
-            }
-
-            /* ── SMALL MOBILE ── */
-            @media (max-width: 420px) {
-                .login-split  { border-radius: 0 !important; }
-                .login-photo  { flex: 0 0 140px !important; min-height: 140px !important; }
-                .reg-nav-links { gap: 8px !important; }
-                .reg-nav-links a { font-size: 11px !important; }
-            }
-        `}</style>
-    );
-}
-
-function LogoRing({ large }) {
-    return (
-        <img
-            src="/images/logo-sify.png"
-            alt="شعار منصة الصيفي"
-            style={{
-                height: large ? 80 : 100,
-                width: 'auto',
-                objectFit: 'contain',
-                display: 'block',
-                margin: large ? '0 auto .6rem' : 0,
-                flexShrink: 0,
-                filter: 'invert(1) brightness(2) contrast(1.1) drop-shadow(0 0 8px rgba(201,161,74,.4))',
-                transition: 'filter .3s ease',
-            }}
-        />
-    );
-}
-
-function MiniCol({ style }) {
-    return (
-        <svg style={{ position: 'absolute', ...style }} width="30" height="160" viewBox="0 0 30 160">
-            <rect x="8"  y="0"   width="14" height="12" fill="#DCC9A3"/>
-            <rect x="5"  y="12"  width="20" height="6"  fill="#DCC9A3"/>
-            <rect x="10" y="18"  width="10" height="124" fill="#DCC9A3"/>
-            <rect x="5"  y="142" width="20" height="6"  fill="#DCC9A3"/>
-            <rect x="2"  y="148" width="26" height="12" fill="#DCC9A3"/>
-        </svg>
-    );
-}
-
-function ColumnLeft() {
-    return (
-        <svg style={{ position: 'absolute', left: '1.5rem', top: '50%', transform: 'translateY(-50%)', opacity: .07, zIndex: 1 }}
-            width="60" height="320" viewBox="0 0 60 320">
-            <rect x="20" y="0"   width="20" height="20" fill="#DCC9A3"/>
-            <rect x="14" y="20"  width="32" height="10" fill="#DCC9A3"/>
-            <rect x="22" y="30"  width="16" height="258" fill="#DCC9A3"/>
-            <rect x="14" y="288" width="32" height="10" fill="#DCC9A3"/>
-            <rect x="8"  y="298" width="44" height="22" fill="#DCC9A3"/>
-        </svg>
-    );
-}
-
-function ColumnRight() {
-    return (
-        <svg style={{ position: 'absolute', right: '1.5rem', top: '50%', transform: 'translateY(-50%) scaleX(-1)', opacity: .07, zIndex: 1 }}
-            width="60" height="320" viewBox="0 0 60 320">
-            <rect x="20" y="0"   width="20" height="20" fill="#DCC9A3"/>
-            <rect x="14" y="20"  width="32" height="10" fill="#DCC9A3"/>
-            <rect x="22" y="30"  width="16" height="258" fill="#DCC9A3"/>
-            <rect x="14" y="288" width="32" height="10" fill="#DCC9A3"/>
-            <rect x="8"  y="298" width="44" height="22" fill="#DCC9A3"/>
+        <svg style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', opacity: .05, pointerEvents: 'none' }}>
+            <defs>
+                <pattern id="studentLoginStarPat" width="52" height="52" patternUnits="userSpaceOnUse">
+                    <g stroke={TEAL} fill="none" strokeWidth="1">
+                        <rect x="6" y="6" width="40" height="40" />
+                        <rect x="6" y="6" width="40" height="40" transform="rotate(45 26 26)" />
+                    </g>
+                </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#studentLoginStarPat)" />
         </svg>
     );
 }
@@ -430,7 +259,7 @@ function Particles() {
                 <div key={i} style={{
                     position: 'absolute', left: p.left, bottom: 0,
                     width: p.size, height: p.size,
-                    background: O, borderRadius: '50%',
+                    background: TEAL, borderRadius: '50%',
                     animation: `floatUp ${p.duration} ${p.delay} linear infinite`,
                     opacity: 0,
                 }} />
@@ -439,14 +268,54 @@ function Particles() {
     );
 }
 
+function BrandStyles() {
+    return (
+        <style>{`
+            * { box-sizing: border-box; }
+            @keyframes riseUp {
+                from { transform: translateY(24px); opacity: 0; }
+                to   { transform: translateY(0);   opacity: 1; }
+            }
+            @keyframes floatUp {
+                0%   { transform: translateY(0); opacity: 0; }
+                15%  { opacity: .55; }
+                85%  { opacity: .2; }
+                100% { transform: translateY(-400px); opacity: 0; }
+            }
+            .nav-pill { display:inline-flex; align-items:center; gap:5px; font-size:12px; font-weight:600; text-decoration:none; padding:6px 14px; border-radius:99px; border:1px solid rgba(47,188,212,.2); background:rgba(47,188,212,.06); white-space:nowrap; transition:all .2s; }
+            .nav-pill:hover { background:rgba(47,188,212,.16); border-color:rgba(47,188,212,.5); color:#2fbcd4 !important; }
+            .nav-pill-ghost { border-color: transparent; background: transparent; }
+            .nav-pill-ghost:hover { border-color: rgba(199,233,239,.18); background: transparent; }
+            .brand-btn:hover { opacity:.92; transform: translateY(-1px); }
+            .brand-btn:active { transform: translateY(0); }
+
+            @media (max-width: 820px) {
+                .login-split  { flex-direction: column !important; max-width: 480px !important; }
+                .login-photo  { flex: 0 0 200px !important; min-height: 200px !important; }
+            }
+            @media (max-width: 600px) {
+                .login-split  { width: 100% !important; max-width: 100% !important; border-radius: 12px !important; }
+                .login-photo  { flex: 0 0 180px !important; min-height: 180px !important; }
+                .reg-form-body { padding: 1.25rem 1.1rem !important; }
+            }
+            @media (max-width: 420px) {
+                .login-split  { border-radius: 0 !important; }
+                .login-photo  { flex: 0 0 140px !important; min-height: 140px !important; }
+                .reg-nav-links { gap: 8px !important; }
+                .reg-nav-links a { font-size: 11px !important; }
+            }
+        `}</style>
+    );
+}
+
 function Field({ label, required, error, children }) {
     return (
         <div style={{ marginBottom: 14 }}>
-            <label style={{ display: 'block', fontSize: 12, fontWeight: 700, color: N, marginBottom: 5 }}>
-                {label}{required && <span style={{ color: O }}> *</span>}
+            <label style={{ display: 'block', fontSize: 12, fontWeight: 700, color: NAVY, marginBottom: 5, fontFamily: 'Cairo,sans-serif' }}>
+                {label}{required && <span style={{ color: TEAL2 }}> *</span>}
             </label>
             {children}
-            {error && <p style={{ color: '#C0392B', fontSize: 11, marginTop: 3 }}>{error}</p>}
+            {error && <p style={{ color: '#ef4444', fontSize: 11, marginTop: 3 }}>{error}</p>}
         </div>
     );
 }
@@ -464,15 +333,15 @@ function InputField({ type = 'text', value, onChange, placeholder, hasError, ltr
             onBlur={() => setFocused(false)}
             style={{
                 width: '100%', boxSizing: 'border-box',
-                border: `1.5px solid ${hasError ? '#C0392B' : focused ? O : B}`,
-                borderRadius: 8, padding: '11px 12px',
-                fontSize: 13,
-                background: focused ? '#fff' : W,
-                color: N, outline: 'none',
+                border: `1.5px solid ${hasError ? '#ef4444' : focused ? TEAL : '#E2E8F0'}`,
+                borderRadius: 10, padding: '11px 12px', fontSize: 13,
+                background: focused ? '#fff' : '#F8FAFC',
+                color: NAVY, outline: 'none',
                 fontFamily: "'Cairo', sans-serif",
                 direction: ltr ? 'ltr' : 'rtl',
                 textAlign: 'right',
-                transition: 'border-color .2s, background .2s',
+                boxShadow: focused ? '0 0 0 3px rgba(47,188,212,.12)' : 'none',
+                transition: 'border-color .2s, box-shadow .2s, background .2s',
             }}
         />
     );
