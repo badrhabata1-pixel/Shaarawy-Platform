@@ -2067,8 +2067,8 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
                         name="المقر الرئيسي"
                         num="01"
                         icon="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z M9 22V12h6v10"
-                        address="المحلة الكبرى — شارع صيدلية الطبال"
-                        detail="خلف مول الشيشيني، مقابل مدرسة الصنايع"
+                        address="المحلة الكبرى — خلف مول الشيشيني"
+                        detail="شارع صيدلية الطبال المقابل لمدرسة الصنايع"
                         featured={true}
                         dark={darkMode}
                     />
@@ -2170,8 +2170,8 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
                     <div style={{ width:36, height:1, background:'linear-gradient(90deg,rgba(47,188,212,.5),transparent)' }}/>
                 </div>
                 <div className="foot-social-grid" style={{
-                    display:'grid', gridTemplateColumns:'repeat(3,1fr)',
-                    gap:20, maxWidth:960, margin:'clamp(22px,3vh,30px) auto 0',
+                    display:'grid', gridTemplateColumns:'repeat(2,1fr)',
+                    gap:20, maxWidth:640, margin:'clamp(22px,3vh,30px) auto 0',
                     padding:'0 clamp(24px,5vw,72px)',
                 }}>
                     {/* Facebook */}
@@ -2199,20 +2199,6 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
                         icon={
                             <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
                                 <path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
-                            </svg>
-                        }
-                    />
-                    {/* TikTok */}
-                    <SocialCard
-                        dark={darkMode}
-                        href="#"
-                        label="تيك توك"
-                        handle="[رابط تيك توك المدرس]"
-                        glow="rgba(255,255,255,.12)"
-                        borderHover="rgba(255,255,255,.38)"
-                        icon={
-                            <svg width="30" height="30" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.34 6.34 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.79 1.53V6.77a4.85 4.85 0 01-1.02-.08z"/>
                             </svg>
                         }
                     />
