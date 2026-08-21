@@ -523,18 +523,18 @@ function LocationCard({ name, num, icon, address, detail, featured, dark }) {
 ═══════════════════════════════════════════════════════════════ */
 function SocialCard({ href, label, handle, glow, borderHover, icon, dark = true }) {
     const [hovered, setHovered] = useState(false);
-    const accent = borderHover;
+    const accent = hovered ? C.amber : C.gold;
 
     const cardBg = dark
-        ? (hovered ? 'linear-gradient(155deg,#101f36,#0a1524)' : 'linear-gradient(155deg,#0c1929,#080f1c)')
-        : (hovered ? 'linear-gradient(155deg,#f4f8fb,#e9f1f6)' : '#ffffff');
-    const cardBorder  = hovered ? accent : (dark ? 'rgba(47,188,212,.16)' : 'rgba(27,58,96,.13)');
+        ? (hovered ? 'linear-gradient(155deg,#0f2035,#08111f)' : 'linear-gradient(155deg,#0b1728,#070f1b)')
+        : (hovered ? 'linear-gradient(155deg,#f6fbfd,#edf5f8)' : '#ffffff');
+    const cardBorder  = hovered ? 'rgba(0,150,136,.72)' : (dark ? 'rgba(47,188,212,.18)' : 'rgba(27,58,96,.13)');
     const cardShadow  = hovered
-        ? `0 16px 44px rgba(0,0,0,${dark?'.5':'.1'}), 0 0 30px ${glow}`
-        : (dark ? '0 4px 20px rgba(0,0,0,.3)' : '0 2px 16px rgba(27,58,96,.06)');
+        ? `0 14px 34px rgba(0,0,0,${dark?'.42':'.1'}), inset 0 1px 0 rgba(47,188,212,.16), 0 0 24px ${glow}`
+        : (dark ? '0 4px 18px rgba(0,0,0,.28)' : '0 2px 14px rgba(27,58,96,.06)');
     const labelColor  = hovered ? '#009688' : (dark ? 'rgba(226,232,240,.85)' : C.navy);
-    const handleColor = dark ? 'rgba(226,232,240,.35)' : 'rgba(27,58,96,.4)';
-    const ctaColor    = hovered ? '#009688' : (dark ? 'rgba(47,188,212,.42)' : 'rgba(27,58,96,.38)');
+    const handleColor = dark ? 'rgba(226,232,240,.42)' : 'rgba(27,58,96,.46)';
+    const ctaColor    = hovered ? '#009688' : (dark ? 'rgba(47,188,212,.55)' : 'rgba(27,58,96,.46)');
 
     return (
         <a
@@ -545,24 +545,25 @@ function SocialCard({ href, label, handle, glow, borderHover, icon, dark = true 
             onMouseLeave={() => setHovered(false)}
             style={{
                 display:'flex', flexDirection:'column', alignItems:'center', gap:12,
-                padding:'30px 20px 24px',
-                borderRadius:18,
+                padding:'26px 18px 22px',
+                minHeight:190,
+                borderRadius:14,
                 background: cardBg,
                 border:`1px solid ${cardBorder}`,
                 boxShadow: cardShadow,
                 textDecoration:'none',
-                transform: hovered ? 'translateY(-6px)' : 'translateY(0)',
+                transform: hovered ? 'translateY(-4px)' : 'translateY(0)',
                 transition:'all 0.4s cubic-bezier(.22,1,.36,1)',
                 cursor:'pointer', position:'relative', overflow:'hidden',
             }}
         >
             {/* إطار داخلي مزدوج */}
-            <div style={{ position:'absolute', inset:6, borderRadius:12, border:`1px solid ${accent}`, opacity: hovered?.5:.16, transition:'opacity .5s ease', pointerEvents:'none' }}/>
+            <div style={{ position:'absolute', inset:7, borderRadius:9, border:`1px solid ${accent}`, opacity: hovered?.45:.16, transition:'opacity .5s ease', pointerEvents:'none' }}/>
 
             {/* توهج */}
             <div style={{
                 position:'absolute', bottom:-30, left:'50%', transform:'translateX(-50%)',
-                width:160, height:90,
+                width:150, height:82,
                 background:`radial-gradient(ellipse, ${glow} 0%, transparent 70%)`,
                 filter:'blur(18px)',
                 opacity: hovered ? 1 : 0,
@@ -571,8 +572,8 @@ function SocialCard({ href, label, handle, glow, borderHover, icon, dark = true 
             }}/>
 
             {/* شمسة الأيقونة */}
-            <div style={{ position:'relative', width:64, height:64, display:'flex', alignItems:'center', justifyContent:'center', transform: hovered?'scale(1.07)':'scale(1)', transition:'transform .4s cubic-bezier(.22,1,.36,1)', zIndex:1 }}>
-                <svg width="64" height="64" viewBox="0 0 64 64" style={{ position:'absolute', inset:0 }}>
+            <div style={{ position:'relative', width:58, height:58, display:'flex', alignItems:'center', justifyContent:'center', transform: hovered?'scale(1.05)':'scale(1)', transition:'transform .4s cubic-bezier(.22,1,.36,1)', zIndex:1 }}>
+                <svg width="58" height="58" viewBox="0 0 64 64" style={{ position:'absolute', inset:0 }}>
                     <circle cx="32" cy="32" r="29" fill="none" stroke={accent} strokeWidth=".7" opacity={hovered?.75:.35}/>
                     <g stroke={accent} strokeWidth="1" fill="none" opacity={hovered?.9:.4}>
                         <rect x="13" y="13" width="38" height="38"/>
@@ -580,7 +581,7 @@ function SocialCard({ href, label, handle, glow, borderHover, icon, dark = true 
                     </g>
                     <circle cx="32" cy="32" r="19" fill={dark?'rgba(47,188,212,.06)':'rgba(27,58,96,.04)'} stroke={accent} strokeWidth="1.2"/>
                 </svg>
-                <div style={{ position:'relative', zIndex:1, color: hovered ? '#009688' : '#2fbcd4', display:'flex', transition:'color .3s ease' }}>
+                <div style={{ position:'relative', zIndex:1, color: accent, display:'flex', transition:'color .3s ease' }}>
                     {icon}
                 </div>
             </div>
@@ -604,7 +605,7 @@ function SocialCard({ href, label, handle, glow, borderHover, icon, dark = true 
             <div style={{ display:'flex', alignItems:'center', gap:7, marginTop:2, position:'relative', zIndex:1 }}>
                 <div style={{ width:16, height:1, background:`linear-gradient(90deg,transparent,${ctaColor})` }}/>
                 <span style={{ fontSize:11, fontWeight:700, color: ctaColor, letterSpacing:'.03em', transition:'color 0.3s ease' }}>
-                    {hovered ? 'زوروا الصفحة ←' : 'تابعنا'}
+                    {hovered ? 'افتح الرابط ←' : 'تابعنا'}
                 </span>
                 <div style={{ width:16, height:1, background:`linear-gradient(90deg,${ctaColor},transparent)` }}/>
             </div>
@@ -2180,8 +2181,8 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
                         href="https://www.facebook.com/share/1CCyqXVvxq/?mibextid=wwXIfr"
                         label="فيسبوك"
                         handle="خواطر المنصور"
-                        glow="rgba(24,119,242,.28)"
-                        borderHover="rgba(24,119,242,.55)"
+                        glow="rgba(47,188,212,.2)"
+                        borderHover="rgba(0,150,136,.72)"
                         icon={
                             <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
                                 <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
@@ -2194,8 +2195,8 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
                         href="https://youtube.com/channel/UCmocXEAuiOe1OpEhIjFQA8A?si=osmKAW5VEvem_0jO"
                         label="يوتيوب"
                         handle="خواطر المنصور"
-                        glow="rgba(255,0,0,.22)"
-                        borderHover="rgba(255,60,60,.55)"
+                        glow="rgba(47,188,212,.2)"
+                        borderHover="rgba(0,150,136,.72)"
                         icon={
                             <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
                                 <path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
