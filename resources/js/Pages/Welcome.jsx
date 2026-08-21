@@ -2049,10 +2049,10 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
                 <div style={{ textAlign:'center', marginBottom:'clamp(44px,7vh,72px)', position:'relative' }} data-reveal>
                     <p style={{ fontSize:12, color:C.gold, letterSpacing:'.22em', marginBottom:12 }}>▸ تواجدنا</p>
                     <h2 style={{ fontSize:'clamp(28px,3.5vw,50px)', fontWeight:800, margin:'0 0 14px', color: darkMode ? C.white : C.navy }}>
-                        أماكن تواجدنا
+                        مقر الأستاذ منصور
                     </h2>
                     <p style={{ fontSize:14, color: darkMode ? 'rgba(226,232,240,.5)' : 'rgba(27,58,96,.55)', maxWidth:440, margin:'0 auto 18px' }}>
-                        اختار الفرع القريب منك وابدأ رحلتك مع الأستاذ منصور
+                        تعال زورنا وابدأ رحلتك مع الأستاذ منصور
                     </p>
                     <div style={{ display:'flex', alignItems:'center', justifyContent:'center', gap:10 }}>
                         <div style={{ width:40, height:1, background:`linear-gradient(90deg,transparent,${C.gold})` }}/>
@@ -2061,34 +2061,17 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
                     </div>
                 </div>
 
-                {/* ── Location cards — عنوان placeholder، يتحدّث ببيانات الفروع الحقيقية ── */}
-                <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(260px,1fr))', gap:22, maxWidth:1060, margin:'0 auto', position:'relative' }}>
-                    {[
-                        {
-                            name:    '[اسم الفرع الأول]',
-                            num:     '01',
-                            icon:    'M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z M9 22V12h6v10',
-                            address: '[عنوان الفرع الأول بالتفصيل]',
-                            detail:  '[أقرب علامة مميزة]',
-                        },
-                        {
-                            name:    '[اسم الفرع الثاني]',
-                            num:     '02',
-                            icon:    'M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z',
-                            address: '[عنوان الفرع الثاني بالتفصيل]',
-                            detail:  '[أقرب علامة مميزة]',
-                            featured: true,
-                        },
-                        {
-                            name:    '[اسم الفرع الثالث]',
-                            num:     '03',
-                            icon:    'M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z M9 22V12h6v10',
-                            address: '[عنوان الفرع الثالث بالتفصيل]',
-                            detail:  '[أقرب علامة مميزة]',
-                        },
-                    ].map(({ name, num, icon, address, detail, featured }, i) => (
-                        <LocationCard key={i} name={name} num={num} icon={icon} address={address} detail={detail} featured={!!featured} dark={darkMode} />
-                    ))}
+                {/* ── Location card — المقر الرئيسي ── */}
+                <div style={{ maxWidth:420, margin:'0 auto', position:'relative' }}>
+                    <LocationCard
+                        name="المقر الرئيسي"
+                        num="01"
+                        icon="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z M9 22V12h6v10"
+                        address="المحلة الكبرى — شارع صيدلية الطبال"
+                        detail="خلف مول الشيشيني، مقابل مدرسة الصنايع"
+                        featured={true}
+                        dark={darkMode}
+                    />
                 </div>
             </section>
 
@@ -2166,6 +2149,18 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
                     <p style={{ fontSize:14, color: darkMode ? 'rgba(226,232,240,.42)' : 'rgba(27,58,96,.5)', maxWidth:400, margin:'0 auto', lineHeight:2 }}>
                         نصنع لسانًا فصيحًا يصنع مستقبلك — العربية مش حفظ، دي ذوق وفهم
                     </p>
+
+                    {/* أرقام التواصل */}
+                    <div style={{ display:'flex', alignItems:'center', justifyContent:'center', gap:18, flexWrap:'wrap', marginTop:22 }}>
+                        <a href="tel:01097694425" style={{ display:'inline-flex', alignItems:'center', gap:8, fontSize:13, color: darkMode ? 'rgba(226,232,240,.6)' : 'rgba(27,58,96,.65)', textDecoration:'none', direction:'ltr' }}>
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#2fbcd4" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                            ٠١٠٩٧٦٩٤٤٢٥
+                        </a>
+                        <a href="tel:0402239520" style={{ display:'inline-flex', alignItems:'center', gap:8, fontSize:13, color: darkMode ? 'rgba(226,232,240,.6)' : 'rgba(27,58,96,.65)', textDecoration:'none', direction:'ltr' }}>
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#2fbcd4" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                            ٠٤٠٢٢٣٩٥٢٠
+                        </a>
+                    </div>
                 </div>
 
                 {/* ── Social cards ── */}
@@ -2182,9 +2177,9 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
                     {/* Facebook */}
                     <SocialCard
                         dark={darkMode}
-                        href="#"
+                        href="https://www.facebook.com/share/1CCyqXVvxq/?mibextid=wwXIfr"
                         label="فيسبوك"
-                        handle="[رابط فيسبوك المدرس]"
+                        handle="خواطر المنصور"
                         glow="rgba(24,119,242,.28)"
                         borderHover="rgba(24,119,242,.55)"
                         icon={
@@ -2196,9 +2191,9 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
                     {/* YouTube */}
                     <SocialCard
                         dark={darkMode}
-                        href="#"
+                        href="https://youtube.com/channel/UCmocXEAuiOe1OpEhIjFQA8A?si=osmKAW5VEvem_0jO"
                         label="يوتيوب"
-                        handle="[رابط يوتيوب المدرس]"
+                        handle="خواطر المنصور"
                         glow="rgba(255,0,0,.22)"
                         borderHover="rgba(255,60,60,.55)"
                         icon={
@@ -2286,7 +2281,7 @@ function WelcomeWhatsAppBtn() {
                 .wa-float-w:hover { transform: scale(1.1) !important; }
             `}</style>
             <a
-                href="https://wa.me/201234567890"
+                href="https://wa.me/201097694425"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="wa-float-w"
