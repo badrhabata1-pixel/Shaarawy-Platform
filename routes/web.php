@@ -40,15 +40,43 @@ use App\Http\Controllers\Assistant\PromoCodeController   as AssistantPromoCodeCo
 
 /* ── Public (الصفحات العامة المفتوحة للجميع) ─────────────────────────── */
 Route::get('/', function () {
+    $units = collect();
+    $topStudents = collect();
+    $dbHost = config('database.connections.mysql.host', '127.0.0.1');
+    $dbPort = (int) config('database.connections.mysql.port', 3306);
+    $dbOnline = false;
+
+    try {
+        $socket = @fsockopen($dbHost, $dbPort, $errno, $errstr, 0.2);
+        if ($socket) {
+            fclose($socket);
+            $dbOnline = true;
+        }
+    } catch (\Throwable $e) {
+        $dbOnline = false;
+    }
+
+    if ($dbOnline) {
+        try {
+            $units = \App\Models\Unit::with('academicYear:id,name')
+                ->where('is_visible', true)
+                ->orderByDesc('id')
+                ->get(['id', 'title', 'description', 'price', 'image', 'academic_year_id', 'term']);
+
+            $topStudents = \App\Models\TopStudent::with(['student:id,name', 'academicYear:id,name'])
+                ->orderByDesc('month')
+                ->orderBy('rank')
+                ->get(['id', 'student_id', 'academic_year_id', 'rank', 'month', 'notes']);
+        } catch (\Throwable $e) {
+            report($e);
+            $units = collect();
+            $topStudents = collect();
+        }
+    }
+
     return Inertia::render('Welcome', [
-        'units' => \App\Models\Unit::with('academicYear:id,name')
-            ->where('is_visible', true)
-            ->orderByDesc('id')
-            ->get(['id', 'title', 'description', 'price', 'image', 'academic_year_id', 'term']), // تم حذف is_free
-        'topStudents' => \App\Models\TopStudent::with(['student:id,name', 'academicYear:id,name'])
-            ->orderByDesc('month')
-            ->orderBy('rank')
-            ->get(['id', 'student_id', 'academic_year_id', 'rank', 'month', 'notes']),
+        'units' => $units,
+        'topStudents' => $topStudents,
     ]);
 })->name('home');
 Route::get('/home', fn() => Inertia::render('Home'))->name('home.legacy');
