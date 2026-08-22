@@ -7,7 +7,9 @@ import AdminLayout from '@/Layouts/AdminLayout';
 ═══════════════════════════════════════════════════ */
 export const imgUrl = (path) => {
     if (!path) return null;
-    if (path.startsWith('http')) return path;
+    if (path.startsWith('http') || path.startsWith('/')) return path;
+    // ملفات الدروس بتتخزن مباشرة تحت public/uploads (مش عبر قرص storage)
+    if (path.startsWith('uploads/')) return `/${path}`;
     return `/storage/${path}`;
 };
 

@@ -32,7 +32,6 @@ class LessonAdminController extends Controller
         $data = $request->validate([
             'title'              => ['required', 'string', 'max:255'],
             'unit_id'            => ['required', 'exists:units,id'],
-            'price'              => ['nullable', 'numeric', 'min:0'],
             'description'        => ['nullable', 'string'],
             'lesson_number'      => ['nullable', 'integer'],
             'duration_minutes'   => ['nullable', 'integer'],
@@ -110,7 +109,6 @@ class LessonAdminController extends Controller
         $data = $request->validate([
             'title'              => ['required', 'string', 'max:255'],
             'unit_id'            => ['required', 'exists:units,id'],
-            'price'              => ['nullable', 'numeric', 'min:0'],
             'description'        => ['nullable', 'string'],
             'lesson_number'      => ['nullable', 'integer'],
             'duration_minutes'   => ['nullable', 'integer'],

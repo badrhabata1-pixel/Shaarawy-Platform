@@ -60,8 +60,8 @@ class PromoCodeController extends Controller
 
         while ($created < $validated['count'] && $attempts < $maxAttempts) {
             $attempts++;
-            // SWEFY-XXXXX format (alphanumeric, uppercase)
-            $code = 'SWEFY-' . strtoupper(Str::random(5));
+            // MANSOUR-XXXXX format (alphanumeric, uppercase)
+            $code = 'MANSOUR-' . strtoupper(Str::random(5));
 
             if (!PromoCode::where('code', $code)->exists()) {
                 PromoCode::create([
@@ -90,5 +90,16 @@ class PromoCodeController extends Controller
         $code->delete();
 
         return back()->with('success', 'تم حذف الكود بنجاح ✓');
+    }
+
+    /**
+     * Delete ALL promo codes at once.
+     */
+    public function destroyAll()
+    {
+        $count = PromoCode::count();
+        PromoCode::query()->delete();
+
+        return back()->with('success', "تم حذف {$count} كود بنجاح ✓");
     }
 }

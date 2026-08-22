@@ -30,6 +30,7 @@ class StudentController extends Controller
             'email'            => 'required|email|unique:students,email',
             'password'         => 'required|string|min:8',
             'phone'            => 'required|string|max:20',
+            'parent_phone'     => 'required|string|max:20',
             'type'             => 'required|in:online,offline',
             'academic_year_id' => 'nullable|exists:academic_years,id',
         ]);
@@ -42,6 +43,7 @@ class StudentController extends Controller
             'email'            => $validated['email'],
             'password'         => Hash::make($validated['password']),
             'phone'            => $validated['phone'],
+            'parent_phone'     => $validated['parent_phone'],
             'student_type'     => $validated['type'],
             'academic_year_id' => $validated['academic_year_id'] ?? null,
             'status'           => 'pending', // بانتظار المراجعة

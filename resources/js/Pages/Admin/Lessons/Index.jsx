@@ -23,7 +23,9 @@ export default function Index({ lessons, units }) {
                 {
                     key: 'title',
                     label: 'عنوان الدرس',
-                    render: row => <span className="font-bold text-[#1b3a60] dark:text-[#f0f4f8]">{row.title}</span>,
+                    render: row => (
+                        <AvatarCell name={row.title} image={row.image} />
+                    ),
                 },
                 {
                     key: 'unit',
@@ -54,11 +56,6 @@ export default function Index({ lessons, units }) {
                     render: row => row.duration_minutes
                         ? <span className="text-sm text-gray-600">{row.duration_minutes} دقيقة</span>
                         : '—',
-                },
-                {
-                    key: 'price',
-                    label: 'السعر',
-                    render: row => <Badge label={`${Number(row.price || 0).toLocaleString('ar-EG')} ج.م`} color="orange" />,
                 },
                 {
                     key: 'is_published',

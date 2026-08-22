@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Student;
 use App\Http\Controllers\Controller;
 use App\Models\PaymentRequest;
 use App\Models\PaymentSetting;
+use App\Models\PromoCode;
 use App\Models\Unit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -14,6 +15,13 @@ class PaymentController extends Controller
 {
     public function create(Request $request)
     {
+        $student = Auth::guard('student')->user();
+
+        // الطالب الأوفلاين معاه كود تفعيل بدل الدفع الإلكتروني — يشوف شاشة إدخال الكود مش صفحة الدفع
+        if ($student && $student->student_type === 'offline') {
+            return Inertia::render('Student/Payment/Activate');
+        }
+
         $units = Unit::where('is_visible', true)
             ->where('is_free', false)
             ->with('academicYear:id,name')
@@ -27,8 +35,30 @@ class PaymentController extends Controller
         ]);
     }
 
+    public function activate(Request $request)
+    {
+        $data = $request->validate([
+            'code' => ['required', 'string', 'min:4', 'max:20'],
+        ]);
+
+        $student = Auth::guard('student')->user();
+        $ok = PromoCode::redeem($data['code'], $student);
+
+        if (!$ok) {
+            return back()->withErrors(['code' => 'الكود غير صحيح أو مستخدم من قبل']);
+        }
+
+        return redirect()->route('student.lessons')
+            ->with('success', 'تم تفعيل الاشتراك بنجاح ✓');
+    }
+
     public function store(Request $request)
     {
+        $student = Auth::guard('student')->user();
+        if ($student && $student->student_type === 'offline') {
+            abort(403, 'الطلاب الأوفلاين يفعّلون الاشتراك بكود التفعيل.');
+        }
+
         $data = $request->validate([
             'unit_id'      => ['required', 'exists:units,id'],
             'method'       => ['required', 'in:vodafone,instapay'],

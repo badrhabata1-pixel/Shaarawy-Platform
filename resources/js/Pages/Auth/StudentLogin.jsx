@@ -93,6 +93,7 @@ export default function StudentLogin({ status, errors: pageErrors }) {
                         background: `linear-gradient(160deg,${NAVY},${INK})`, overflow: 'hidden',
                     }}>
                         <img
+                            className="login-photo-img"
                             src={LOGIN_IMG}
                             alt="تسجيل الدخول"
                             style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 20%' }}
@@ -291,16 +292,18 @@ function BrandStyles() {
 
             @media (max-width: 820px) {
                 .login-split  { flex-direction: column !important; max-width: 480px !important; }
-                .login-photo  { flex: 0 0 200px !important; min-height: 200px !important; }
+                .login-photo  { flex: 0 0 240px !important; min-height: 240px !important; }
+                .login-photo-img { object-position: center 14% !important; }
             }
             @media (max-width: 600px) {
                 .login-split  { width: 100% !important; max-width: 100% !important; border-radius: 12px !important; }
-                .login-photo  { flex: 0 0 180px !important; min-height: 180px !important; }
+                .login-photo  { flex: 0 0 210px !important; min-height: 210px !important; }
                 .reg-form-body { padding: 1.25rem 1.1rem !important; }
             }
             @media (max-width: 420px) {
                 .login-split  { border-radius: 0 !important; }
-                .login-photo  { flex: 0 0 140px !important; min-height: 140px !important; }
+                .login-photo  { flex: 0 0 170px !important; min-height: 170px !important; }
+                .login-photo-img { object-position: center 10% !important; }
                 .reg-nav-links { gap: 8px !important; }
                 .reg-nav-links a { font-size: 11px !important; }
             }

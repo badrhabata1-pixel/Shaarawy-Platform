@@ -692,9 +692,12 @@ function HistIcon({ type, sz, color }) {
    COURSE CARD — بطاقة وحدة دراسية بطراز شمسة/مخطوطة موحّد مع باقي الموقع
 ═══════════════════════════════════════════════════════════════ */
 function CourseCard({ unit, dark, auth }) {
-    const [hovered, setHovered] = useState(false);
+    const [hovered, setHovered]   = useState(false);
+    const [imgError, setImgError] = useState(false);
 
-    const imgSrc     = unit.image ? `/storage/${unit.image}` : null;
+    const imgSrc     = unit.image && !imgError
+        ? (unit.image.startsWith('http') || unit.image.startsWith('/') ? unit.image : `/storage/${unit.image}`)
+        : null;
     const gradeName  = unit.academic_year?.name ?? '';
     const isFree     = Boolean(unit.is_free) || !unit.price || Number(unit.price) === 0;
     const priceLabel = isFree ? 'مجاني' : `${unit.price} جنيه`;
@@ -724,8 +727,8 @@ function CourseCard({ unit, dark, auth }) {
             {/* ── الوسائط / الشمسة الزخرفية ── */}
             <div style={{ position:'relative', height:190, overflow:'hidden', flexShrink:0 }}>
                 {imgSrc ? (
-                    <img src={imgSrc} alt={unit.title} style={{
-                        width:'100%', height:'100%', objectFit:'cover',
+                    <img src={imgSrc} alt={unit.title} onError={() => setImgError(true)} style={{
+                        width:'100%', height:'100%', objectFit:'cover', objectPosition:'center',
                         transform: hovered ? 'scale(1.07)' : 'scale(1)',
                         transition:'transform .6s cubic-bezier(.22,1,.36,1)',
                     }}/>

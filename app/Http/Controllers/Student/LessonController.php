@@ -30,7 +30,7 @@ class LessonController extends Controller
         $units = Unit::where('academic_year_id', $student->academic_year_id)
             ->where('is_visible', true)
             ->withCount(['lessons' => fn ($q) => $q->where('is_published', true)])
-            ->orderBy('id')
+            ->orderByDesc('id')
             ->get(['id', 'title', 'description', 'image', 'price', 'term', 'is_free', 'academic_year_id']);
 
         $unitIds = $units->pluck('id');
@@ -76,6 +76,7 @@ class LessonController extends Controller
             'student' => [
                 'full_name' => $student->full_name,
                 'grade'     => $student->academicYear?->name ?? 'غير محدد',
+                'mode'      => $student->student_type,
             ],
             'units' => $unitsData,
         ]);

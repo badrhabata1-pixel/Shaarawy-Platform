@@ -33,6 +33,7 @@ export default function PromoCodes({ assistant, promoCodes, academicYears = [], 
     });
 
     const [deleteId, setDeleteId] = useState(null);
+    const [confirmDeleteAll, setConfirmDeleteAll] = useState(false);
 
     const generate = (e) => {
         e.preventDefault();
@@ -42,6 +43,13 @@ export default function PromoCodes({ assistant, promoCodes, academicYears = [], 
     const destroy = (id) => {
         router.delete(route('assistant.promo.destroy', id), { preserveScroll: true });
         setDeleteId(null);
+    };
+
+    const destroyAll = () => {
+        router.delete(route('assistant.promo.destroyAll'), {
+            preserveScroll: true,
+            onSuccess: () => setConfirmDeleteAll(false),
+        });
     };
 
     const card   = dark ? '#152238' : '#fff';
@@ -143,14 +151,28 @@ export default function PromoCodes({ assistant, promoCodes, academicYears = [], 
                         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
                     }}>
                         <h2 style={{ fontSize: 15, fontWeight: 800, color: dark ? '#DCC9A3' : '#14213D', margin: 0 }}>🎟️ أكواد الشحن النشطة بالمنصة</h2>
-                        <span style={{
-                            padding: '4px 12px', borderRadius: 999,
-                            background: available > 0 ? 'rgba(5,150,105,.15)' : (dark ? 'rgba(255,255,255,.06)' : 'rgba(100,116,139,.1)'),
-                            color: available > 0 ? G : txtSub,
-                            fontSize: 12, fontWeight: 700,
-                        }}>
-                            {available} كود متاح
-                        </span>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                            <span style={{
+                                padding: '4px 12px', borderRadius: 999,
+                                background: available > 0 ? 'rgba(5,150,105,.15)' : (dark ? 'rgba(255,255,255,.06)' : 'rgba(100,116,139,.1)'),
+                                color: available > 0 ? G : txtSub,
+                                fontSize: 12, fontWeight: 700,
+                            }}>
+                                {available} كود متاح
+                            </span>
+                            {codes.length > 0 && (
+                                <button onClick={() => setConfirmDeleteAll(true)} style={{
+                                    padding: '6px 14px', borderRadius: 999,
+                                    border: `1.5px solid ${R}`,
+                                    background: 'rgba(220,38,38,.1)', color: R,
+                                    fontWeight: 700, fontSize: 12, cursor: 'pointer',
+                                    fontFamily: "'Cairo',sans-serif", transition: 'all .15s',
+                                }}
+                                    onMouseEnter={e => { e.currentTarget.style.background = R; e.currentTarget.style.color = '#fff'; }}
+                                    onMouseLeave={e => { e.currentTarget.style.background = 'rgba(220,38,38,.1)'; e.currentTarget.style.color = R; }}
+                                >🗑️ حذف كل الأكواد</button>
+                            )}
+                        </div>
                     </div>
 
                     {codes.length === 0 ? (
@@ -249,6 +271,42 @@ export default function PromoCodes({ assistant, promoCodes, academicYears = [], 
                                 background: R, color: '#fff', cursor: 'pointer',
                                 fontFamily: "'Cairo',sans-serif", fontWeight: 700,
                             }}>تأكيد الحذف</button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* Delete All Modal */}
+            {confirmDeleteAll && (
+                <div style={{
+                    position: 'fixed', inset: 0, background: 'rgba(0,0,0,.6)',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    zIndex: 9999, padding: 20,
+                }} onClick={() => setConfirmDeleteAll(false)}>
+                    <div style={{
+                        background: card, borderRadius: 16, padding: '28px',
+                        border: `1px solid ${cardBd}`,
+                        maxWidth: 400, width: '100%', direction: 'rtl',
+                        fontFamily: "'Cairo',sans-serif",
+                        boxShadow: dark ? '0 24px 80px rgba(0,0,0,.5)' : '0 24px 80px rgba(0,0,0,.2)',
+                    }} onClick={e => e.stopPropagation()}>
+                        <h3 style={{ fontSize: 17, fontWeight: 800, color: txtMain, marginBottom: 10 }}>⚠️ تأكيد حذف كل الأكواد</h3>
+                        <p style={{ fontSize: 13, color: txtSub, marginBottom: 22, lineHeight: 1.6 }}>
+                            هيتم حذف <strong style={{ color: R }}>{promoCodes?.total ?? codes.length}</strong> كود نهائياً — متضمنة الأكواد المستخدمة والمتاحة. لا يمكن التراجع.
+                        </p>
+                        <div style={{ display: 'flex', gap: 10, justifyContent: 'flex-end' }}>
+                            <button onClick={() => setConfirmDeleteAll(false)} style={{
+                                padding: '9px 20px', borderRadius: 8,
+                                border: `1px solid ${cardBd}`,
+                                background: dark ? 'rgba(255,255,255,.05)' : '#f8fafc',
+                                color: txtSub, cursor: 'pointer',
+                                fontFamily: "'Cairo',sans-serif", fontWeight: 700,
+                            }}>إلغاء</button>
+                            <button onClick={destroyAll} style={{
+                                padding: '9px 24px', borderRadius: 8, border: 'none',
+                                background: R, color: '#fff', cursor: 'pointer',
+                                fontFamily: "'Cairo',sans-serif", fontWeight: 700,
+                            }}>حذف الكل نهائياً</button>
                         </div>
                     </div>
                 </div>

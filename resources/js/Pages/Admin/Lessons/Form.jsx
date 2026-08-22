@@ -15,7 +15,6 @@ export default function Form({ item, units, exams = [] }) {
         unit_id:          item?.unit_id          || '',
         lesson_number:    item?.lesson_number    || '',
         duration_minutes: item?.duration_minutes || '',
-        price:            item?.price            || '',
         description:      item?.description      || '',
         video_url:        item?.video_url        || '',
         video_file:       null,
@@ -134,7 +133,6 @@ export default function Form({ item, units, exams = [] }) {
             <AdminField label="الوحدة الدراسية"      name="unit_id"          type="select"   value={data.unit_id}          onChange={e => setData('unit_id', e.target.value)}          error={errors.unit_id}          required options={units.map(u => ({ value: u.id, label: u.title }))} />
             <AdminField label="رقم الدرس"            name="lesson_number"    type="number"   value={data.lesson_number}    onChange={e => setData('lesson_number', e.target.value)}    error={errors.lesson_number}    placeholder="رقم الدرس في الوحدة" />
             <AdminField label="مدة الدرس (دقائق)"    name="duration_minutes" type="number"   value={data.duration_minutes} onChange={e => setData('duration_minutes', e.target.value)} error={errors.duration_minutes} placeholder="مدة الدرس بالدقائق" />
-            <AdminField label="السعر"                name="price"            type="number"   value={data.price}            onChange={e => setData('price', e.target.value)}            error={errors.price}            placeholder="السعر بالجنيه المصري" />
             <AdminField label="الوصف"                name="description"      type="textarea" value={data.description}      onChange={e => setData('description', e.target.value)}      error={errors.description}      rows={4} placeholder="وصف مختصر للدرس" />
 
             {/* ── Videos Section ─────────────────────────── */}

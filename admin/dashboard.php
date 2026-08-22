@@ -33,7 +33,7 @@ try {
 <html dir="rtl" lang="ar">
 <head>
     <meta charset="UTF-8">
-    <title>لوحة القيادة | منصة الصيفي</title>
+    <title>لوحة القيادة | منصة منصور</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
     <!-- Bootstrap 3 RTL (للتوافق مع AdminLTE) -->
@@ -48,7 +48,7 @@ try {
 
     <style>
         /* ══════════════════════════════════════════
-           متغيرات التصميم الجديد — منصة الصيفي
+           متغيرات التصميم الجديد — منصة منصور
         ══════════════════════════════════════════ */
         :root {
             --navy:      #14213D;
@@ -265,7 +265,7 @@ try {
     <header class="main-header">
         <a href="dashboard.php" class="logo">
             <span class="logo-mini"><b>م</b>ص</span>
-            <span class="logo-lg"><b>منصة</b> الصيفي</span>
+            <span class="logo-lg"><b>منصة</b> منصور</span>
         </a>
         <nav class="navbar navbar-static-top">
             <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
@@ -285,19 +285,19 @@ try {
                     <!-- User -->
                     <li class="dropdown user user-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <img src="https://ui-avatars.com/api/?name=Sweefy&background=F47C20&color=fff&bold=true"
-                                 class="user-image" alt="Mr. Sweefy">
+                            <img src="https://ui-avatars.com/api/?name=Mansour&background=F47C20&color=fff&bold=true"
+                                 class="user-image" alt="الأستاذ منصور">
                             <span class="hidden-xs" style="color:#fff; font-weight:700;">
-                                <?php echo htmlspecialchars($_SESSION['admin_name'] ?? 'Mr. Sweefy'); ?>
+                                <?php echo htmlspecialchars($_SESSION['admin_name'] ?? 'الأستاذ منصور'); ?>
                             </span>
                         </a>
                         <ul class="dropdown-menu">
                             <li class="user-header" style="background:var(--navy);">
-                                <img src="https://ui-avatars.com/api/?name=Sweefy&background=F47C20&color=fff&bold=true&size=90"
+                                <img src="https://ui-avatars.com/api/?name=Mansour&background=F47C20&color=fff&bold=true&size=90"
                                      class="img-circle" alt="User Image">
                                 <p style="color:var(--gold);">
-                                    <?php echo htmlspecialchars($_SESSION['admin_name'] ?? 'Mr. Sweefy'); ?>
-                                    <small>مدرس — منصة الصيفي</small>
+                                    <?php echo htmlspecialchars($_SESSION['admin_name'] ?? 'الأستاذ منصور'); ?>
+                                    <small>مدرس — منصة منصور</small>
                                 </p>
                             </li>
                             <li class="user-footer">
@@ -535,7 +535,7 @@ try {
         <strong>
             <a href="https://kaboxdev.vercel.app/" target="_blank">Powered by KABOx / Mindly</a>
         </strong>
-        &nbsp;— منصة الصيفي &copy; <?php echo date('Y'); ?>
+        &nbsp;— منصة منصور &copy; <?php echo date('Y'); ?>
     </footer>
 
 </div><!-- /wrapper -->

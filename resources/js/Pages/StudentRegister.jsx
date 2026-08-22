@@ -14,6 +14,7 @@ export default function StudentRegister({ grades = [] }) {
         last_name:        '',
         email:            '',
         phone:            '',
+        parent_phone:     '',
         password:         '',
         type:             'online',
         academic_year_id: '',
@@ -93,6 +94,7 @@ export default function StudentRegister({ grades = [] }) {
                         background: `linear-gradient(160deg,${NAVY},${INK})`, overflow: 'hidden',
                     }}>
                         <img
+                            className="login-photo-img"
                             src={REGISTER_IMG}
                             alt="إنشاء حساب جديد"
                             style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 18%' }}
@@ -189,7 +191,7 @@ export default function StudentRegister({ grades = [] }) {
                                         autoComplete="new-password"
                                     />
                                 </Field>
-                                <Field label="رقم الهاتف" required error={errors.phone}>
+                                <Field label="رقم هاتف الطالب" required error={errors.phone}>
                                     <InputField
                                         type="tel"
                                         value={data.phone}
@@ -201,6 +203,18 @@ export default function StudentRegister({ grades = [] }) {
                                     />
                                 </Field>
                             </div>
+
+                            <Field label="رقم هاتف ولي الأمر" required error={errors.parent_phone}>
+                                <InputField
+                                    type="tel"
+                                    value={data.parent_phone}
+                                    onChange={e => setData('parent_phone', e.target.value)}
+                                    placeholder="01xxxxxxxxx"
+                                    hasError={!!errors.parent_phone}
+                                    ltr
+                                    autoComplete="tel"
+                                />
+                            </Field>
 
                             {grades.length > 0 && (
                                 <Field label="الصف الدراسي" error={errors.academic_year_id}>
@@ -331,18 +345,20 @@ function BrandStyles() {
 
             @media (max-width: 820px) {
                 .login-split  { flex-direction: column !important; width: 96% !important; max-width: 540px !important; }
-                .login-photo  { flex: 0 0 200px !important; min-height: 200px !important; }
+                .login-photo  { flex: 0 0 240px !important; min-height: 240px !important; }
+                .login-photo-img { object-position: center 12% !important; }
             }
             @media (max-width: 600px) {
                 .login-split  { width: 100% !important; max-width: 100% !important; border-radius: 12px !important; }
-                .login-photo  { flex: 0 0 160px !important; min-height: 160px !important; }
+                .login-photo  { flex: 0 0 200px !important; min-height: 200px !important; }
                 .login-form-panel { max-height: none !important; }
                 .reg-grid     { grid-template-columns: 1fr !important; }
                 .reg-form-body { padding: 1.25rem 1.1rem !important; }
             }
             @media (max-width: 420px) {
                 .login-split  { border-radius: 0 !important; }
-                .login-photo  { flex: 0 0 130px !important; min-height: 130px !important; }
+                .login-photo  { flex: 0 0 160px !important; min-height: 160px !important; }
+                .login-photo-img { object-position: center 8% !important; }
                 .reg-nav-links { gap: 8px !important; }
                 .reg-nav-links a { font-size: 11px !important; }
             }

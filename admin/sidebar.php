@@ -2,7 +2,7 @@
 
 <style>
 /* ══════════════════════════════════════════════
-   SWEEFY ADMIN SIDEBAR — Professional v2
+   MANSOUR ADMIN SIDEBAR — Professional v2
    Light / Dark adaptive
 ══════════════════════════════════════════════ */
 
@@ -279,10 +279,10 @@ li.sw-parent-active > .sw-link i { color: var(--orange) !important; }
 
     <!-- Brand -->
     <div class="sw-brand">
-        <div class="sw-brand-icon">ص</div>
+        <div class="sw-brand-icon">م</div>
         <div class="sw-brand-text">
-            <div class="sw-brand-name">منصة الصيفي</div>
-            <div class="sw-brand-sub">SWEEFY PLATFORM</div>
+            <div class="sw-brand-name">منصة منصور</div>
+            <div class="sw-brand-sub">MANSOUR PLATFORM</div>
         </div>
         <button class="sw-theme-toggle" id="swThemeBtn" title="تبديل الوضع" onclick="swToggleTheme()">
             <i class="fa fa-sun-o" id="swThemeIcon"></i>

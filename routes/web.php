@@ -121,6 +121,7 @@ Route::middleware(['auth:student', 'no.cache'])->prefix('student')->name('studen
     /* Payment (طلبات الدفع للطلاب) */
     Route::get('/payment',         [StudentPaymentController::class, 'create'])->name('payment.create');
     Route::post('/payment',        [StudentPaymentController::class, 'store'])->name('payment.store');
+    Route::post('/payment/activate', [StudentPaymentController::class, 'activate'])->name('payment.activate');
     Route::get('/payment/history', [StudentPaymentController::class, 'history'])->name('payment.history');
     Route::post('/receipts',       [StudentPaymentReceiptController::class, 'store'])->name('receipts.store');
 
@@ -170,9 +171,10 @@ Route::middleware(['auth:assistant', 'no.cache'])->prefix('assistant')->name('as
     Route::post('/grade-exam/{id}', [App\Http\Controllers\Assistant\GradingController::class, 'saveExamGrade'])->name('exams.grade.save');
 
     // مسار أكواد تفعيل شحن المحاضرات للسكرتارية
-    Route::post('/promo-codes/generate', [AssistantPromoCodeController::class, 'generate'])->name('promo.generate');
-    Route::get('/promo-codes',           [AssistantPromoCodeController::class, 'index'])->name('promo.index');
-    Route::delete('/promo-codes/{id}',   [AssistantPromoCodeController::class, 'destroy'])->name('promo.destroy');
+    Route::post('/promo-codes/generate',   [AssistantPromoCodeController::class, 'generate'])->name('promo.generate');
+    Route::get('/promo-codes',             [AssistantPromoCodeController::class, 'index'])->name('promo.index');
+    Route::delete('/promo-codes/all',      [AssistantPromoCodeController::class, 'destroyAll'])->name('promo.destroyAll');
+    Route::delete('/promo-codes/{id}',     [AssistantPromoCodeController::class, 'destroy'])->name('promo.destroy');
 
     // إدارة وإرسال الإشعارات والتنبيهات للطلاب من السكرتارية
     Route::get('/notifications', [App\Http\Controllers\Assistant\NotificationController::class, 'index'])->name('notifications.index');
@@ -273,9 +275,10 @@ Route::middleware(['auth', 'no.cache'])->prefix('admin')->name('admin.')->group(
     Route::delete('/video-questions/{question}',                        [VideoQuestionAdminController::class, 'destroy'])->name('vq.destroy');
 
     /* أكواد تفعيل شحن المحاضرات للآدمن */
-    Route::post('/promo-codes/generate', [PromoCodeController::class, 'generate'])->name('promo.generate');
-    Route::get('/promo-codes',           [PromoCodeController::class, 'webIndex'])->name('promo.index');
-    Route::delete('/promo-codes/{id}',   [PromoCodeController::class, 'destroy'])->name('promo.destroy');
+    Route::post('/promo-codes/generate',   [PromoCodeController::class, 'generate'])->name('promo.generate');
+    Route::get('/promo-codes',             [PromoCodeController::class, 'webIndex'])->name('promo.index');
+    Route::delete('/promo-codes/all',      [PromoCodeController::class, 'destroyAll'])->name('promo.destroyAll');
+    Route::delete('/promo-codes/{id}',     [PromoCodeController::class, 'destroy'])->name('promo.destroy');
 
     /* مراجعة وقبول اشتراكات الدفع الإلكتروني */
     Route::post('/subscriptions/{id}/approve', [SubscriptionAdminController::class, 'approve'])->name('subscriptions.approve');

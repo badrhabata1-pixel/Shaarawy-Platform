@@ -20,8 +20,8 @@ return new class extends Migration
         DB::table('payment_settings')->insert([
             ['key' => 'vodafone_number',  'value' => '01000000000', 'created_at' => now(), 'updated_at' => now()],
             ['key' => 'instapay_number',  'value' => '01000000000', 'created_at' => now(), 'updated_at' => now()],
-            ['key' => 'vodafone_name',    'value' => 'محمد الصيفي', 'created_at' => now(), 'updated_at' => now()],
-            ['key' => 'instapay_name',    'value' => 'محمد الصيفي', 'created_at' => now(), 'updated_at' => now()],
+            ['key' => 'vodafone_name',    'value' => 'محمد منصور', 'created_at' => now(), 'updated_at' => now()],
+            ['key' => 'instapay_name',    'value' => 'محمد منصور', 'created_at' => now(), 'updated_at' => now()],
         ]);
     }
 

@@ -1,5 +1,5 @@
 ﻿import { Head } from '@inertiajs/react';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import StudentLayout from '@/Layouts/StudentLayout';
 
 const O  = '#0D9488';
@@ -153,7 +153,7 @@ export default function Units({ student, units }) {
             ) : (
                 <div className="atlas-grid">
                     {units.map((unit, i) => (
-                        <PortalNode key={unit.id} unit={unit} index={i} roman={toRoman(i + 1)} />
+                        <PortalNode key={unit.id} unit={unit} index={i} roman={toRoman(i + 1)} mode={student.mode} />
                     ))}
                 </div>
             )}
@@ -199,9 +199,10 @@ function ProgressOrbit({ pct, size = 168 }) {
 }
 
 /* ── Portal node (unit) ──────────────────────────────────────── */
-function PortalNode({ unit, index, roman }) {
+function PortalNode({ unit, index, roman, mode }) {
     const pct = unit.lessons_count > 0 ? Math.round((unit.completed_count / unit.lessons_count) * 100) : 0;
     const size = 168;
+    const [imgError, setImgError] = useState(false);
 
     return (
         <div className="portal-node" style={{ animation: `nodeRise .55s ${index * 0.07}s both`, position: 'relative' }}>
@@ -239,13 +240,14 @@ function PortalNode({ unit, index, roman }) {
                         position: 'absolute', inset: 12, borderRadius: '50%', overflow: 'hidden',
                         background: `radial-gradient(circle at 35% 30%, #1c2f57, #060c1c)`,
                     }}>
-                        {unit.image ? (
+                        {unit.image && !imgError ? (
                             <img
                                 className="portal-img"
-                                src={unit.image.startsWith('/storage') ? unit.image : `/storage${unit.image.startsWith('/') ? '' : '/'}${unit.image}`}
+                                src={unit.image.startsWith('http') || unit.image.startsWith('/') ? unit.image : `/storage/${unit.image}`}
                                 alt={unit.title}
+                                onError={() => setImgError(true)}
                                 style={{
-                                    width: '100%', height: '100%', objectFit: 'cover',
+                                    width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center',
                                     filter: unit.is_unlocked ? 'none' : 'grayscale(.6) brightness(.45)',
                                     transition: 'transform .6s cubic-bezier(.22,1,.36,1), filter .4s',
                                 }}
@@ -316,7 +318,7 @@ function PortalNode({ unit, index, roman }) {
                         )}
                     </div>
 
-                    <UnitCTA unit={unit} />
+                    <UnitCTA unit={unit} mode={mode} />
                 </div>
             </div>
         </div>
@@ -333,7 +335,7 @@ function ConstellationDot() {
 }
 
 /* ── CTA — sigil pill button ──────────────────────────────────── */
-function UnitCTA({ unit }) {
+function UnitCTA({ unit, mode }) {
     if (unit.is_unlocked) {
         return (
             <a
@@ -370,6 +372,25 @@ function UnitCTA({ unit }) {
             }}>
                 ⏳ طلبك قيد المراجعة
             </div>
+        );
+    }
+
+    if (mode === 'offline') {
+        return (
+            <a
+                href="/student/payment"
+                style={{
+                    width: '100%', boxSizing: 'border-box',
+                    background: 'transparent', border: `2px solid ${O}`, color: O,
+                    borderRadius: 999, padding: '9px', fontSize: 12.5, fontWeight: 800, textDecoration: 'none',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6,
+                    transition: 'background .2s, color .2s',
+                }}
+                onMouseEnter={e => { e.currentTarget.style.background = O; e.currentTarget.style.color = '#fff'; }}
+                onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = O; }}
+            >
+                🔑 أدخل كود التفعيل
+            </a>
         );
     }
 

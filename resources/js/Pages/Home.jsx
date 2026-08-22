@@ -28,7 +28,7 @@ export default function Home() {
                     
                     {/* إبقاء اسم المنصة فقط وإلغاء اللوجو الدائري تماماً بناءً على طلبك */}
                     <div className="flex flex-col text-right">
-                        <span className="text-2xl md:text-3xl font-black tracking-widest text-white hover:text-[#F47C20] cursor-pointer transition-colors block">منصة الصيفي</span>
+                        <span className="text-2xl md:text-3xl font-black tracking-widest text-white hover:text-[#F47C20] cursor-pointer transition-colors block">منصة منصور</span>
                         <span className="text-[10px] text-[#DCC9A3] tracking-widest hidden lg:inline">HISTORIA MAGISTRA VITAE</span>
                     </div>
 
@@ -72,7 +72,7 @@ export default function Home() {
                         بطريقة مختلفة
                     </h1>
                     <p className="text-gray-300 max-w-3xl mx-auto text-sm sm:text-base md:text-lg lg:text-xl leading-relaxed font-semibold">
-                        منصة تعليمية متكاملة مع مستر محمد الصيفي - رحلة تفاعلية رائعة عبر الزمن لتجعل التاريخ حياً وممتعاً في ذهنك.
+                        منصة تعليمية متكاملة مع الأستاذ محمد منصور - رحلة تفاعلية رائعة عبر الزمن لتجعل التاريخ حياً وممتعاً في ذهنك.
                     </p>
                     <span className="text-xs text-gray-500 tracking-widest block font-bold">EXPLORE HISTORY IN A WHOLE NEW WAY</span>
                     
@@ -129,7 +129,7 @@ export default function Home() {
                 <div className="relative z-10">
                     <div className="text-center space-y-4 mb-20">
                         <span className="bg-[#14213D] text-white text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-wider">FEATURES • الميزات</span>
-                        <h2 className="text-3xl sm:text-4xl md:text-5xl font-black">لماذا <span className="text-[#F47C20]">منصة الصيفي؟</span></h2>
+                        <h2 className="text-3xl sm:text-4xl md:text-5xl font-black">لماذا <span className="text-[#F47C20]">منصة منصور؟</span></h2>
                         <p className="text-gray-800 text-sm sm:text-base font-extrabold">كل ما تحتاجه لرحلة تعليمية متميزة في مكان واحد</p>
                     </div>
 
@@ -192,14 +192,14 @@ export default function Home() {
                     <div className="text-center space-y-4">
                         <span className="bg-[#F47C20] text-white text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-wider">TESTIMONIALS • آراء الطلاب</span>
                         <h2 className="text-3xl sm:text-4xl font-black">ماذا قال <span className="text-[#F47C20]">طلابنا؟</span></h2>
-                        <p className="text-gray-400 text-sm sm:text-base font-semibold">آلاف الطلاب وثقوا بمنصة الصيفي وغيرت نظرتهم للتاريخ</p>
+                        <p className="text-gray-400 text-sm sm:text-base font-semibold">آلاف الطلاب وثقوا بمنصة منصور وغيرت نظرتهم للتاريخ</p>
                     </div>
 
                     <div className="grid md:grid-cols-3 gap-8">
                         {/* رأي 1 */}
                         <div className="bg-white/5 border border-white/10 p-10 rounded-lg space-y-6 hover:border-[#F47C20]/50 transition" data-aos="fade-right">
                             <span className="text-yellow-500 text-base md:text-lg">★★★★★</span>
-                            <p className="text-gray-300 text-xs sm:text-sm leading-relaxed font-medium">"مستر الصيفي بيخلي التاريخ حكاية مش بس حفظ تواريخ، ده بيخليك تعيش الحدث وتفهم ليه حصل."</p>
+                            <p className="text-gray-300 text-xs sm:text-sm leading-relaxed font-medium">"الأستاذ منصور بيخلي التاريخ حكاية مش بس حفظ تواريخ، ده بيخليك تعيش الحدث وتفهم ليه حصل."</p>
                             <div className="flex items-center space-x-4 rtl:space-x-reverse pt-2">
                                 <span className="w-12 h-12 bg-[#F47C20] rounded-full flex items-center justify-center text-sm font-bold shadow-md">أح</span>
                                 <div>
@@ -225,7 +225,7 @@ export default function Home() {
                         {/* رأي 3 */}
                         <div className="bg-white/5 border border-white/10 p-10 rounded-lg space-y-6 hover:border-[#F47C20]/50 transition" data-aos="fade-left">
                             <span className="text-yellow-500 text-base md:text-lg">★★★★★</span>
-                            <p className="text-gray-300 text-xs sm:text-sm leading-relaxed font-medium">"ربنا يبارك في مستر الصيفي، بسببه عشقت التاريخ وجبت أعلى درجة في الفصل."</p>
+                            <p className="text-gray-300 text-xs sm:text-sm leading-relaxed font-medium">"ربنا يبارك في الأستاذ منصور، بسببه عشقت التاريخ وجبت أعلى درجة في الفصل."</p>
                             <div className="flex items-center space-x-4 rtl:space-x-reverse pt-2">
                                 <span className="w-12 h-12 bg-yellow-600 rounded-full flex items-center justify-center text-sm font-bold shadow-md">مع</span>
                                 <div>
@@ -254,7 +254,7 @@ export default function Home() {
             {/* 7. الـ Footer الفخم */}
             <footer id="footer" className="bg-[#14213D] text-gray-400 py-12 px-6 border-t border-white/10">
                 <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center space-y-6 md:space-y-0 text-xs sm:text-sm text-center md:text-right">
-                    <span className="font-bold">&copy; 2026 منصة محمد الصيفي — جميع الحقوق محفوظة</span>
+                    <span className="font-bold">&copy; 2026 منصة محمد منصور — جميع الحقوق محفوظة</span>
                     <div className="flex space-x-8 rtl:space-x-reverse font-bold">
                         <a href="#" className="hover:text-white transition">سياسة الخصوصية</a>
                         <a href="#" className="hover:text-white transition">الشروط والأحكام</a>

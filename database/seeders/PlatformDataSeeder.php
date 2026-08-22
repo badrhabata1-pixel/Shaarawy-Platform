@@ -23,7 +23,7 @@ class PlatformDataSeeder extends Seeder
             ['title' => 'المحاضرة الأولى: الحملة الفرنسية على مصر'],
             [
                 'grade_id' => $grade->id,
-                'description' => 'شرح تفصيلي لأسباب الحملة الفرنسية على مصر ومعركة أبو قير البحرية مع مستر الصيفي.',
+                'description' => 'شرح تفصيلي لأسباب الحملة الفرنسية على مصر ومعركة أبو قير البحرية مع الأستاذ منصور.',
                 'thumbnail_url' => 'https://images.unsplash.com/photo-1539650116574-8efeb43e2750?q=80&w=600',
                 'stream_url' => 'https://www.youtube.com/watch?v=dQw4w9WgXcQ', // رابط تجريبي
                 'duration_minutes' => 45,

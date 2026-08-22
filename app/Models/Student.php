@@ -48,7 +48,7 @@ class Student extends Authenticatable
         }
         
         // في حال عدم وجودها نرجع حقل الـ name المدمج أو اسماً افتراضياً لمنع الـ Null Error
-        return $this->name ?? 'طالب الصيفي';
+        return $this->name ?? 'طالب منصور';
     }
 
     /**

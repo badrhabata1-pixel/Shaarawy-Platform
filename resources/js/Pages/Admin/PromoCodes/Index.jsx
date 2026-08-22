@@ -26,7 +26,8 @@ function useAdminDark() {
 export default function Index({ promoCodes = [], academicYears = [] }) {
     const dark = useAdminDark();
 
-    const [deleteId, setDeleteId]     = useState(null);
+    const [deleteId, setDeleteId]         = useState(null);
+    const [confirmDeleteAll, setConfirmDeleteAll] = useState(false);
     const [copied, setCopied]         = useState(null);
     const [filterStatus, setFilter]   = useState('all');
     const [filterYear, setFilterYear] = useState('');
@@ -47,6 +48,13 @@ export default function Index({ promoCodes = [], academicYears = [] }) {
         router.delete(route('admin.promo.destroy', deleteId), {
             preserveScroll: true,
             onSuccess: () => setDeleteId(null),
+        });
+    };
+
+    const handleDeleteAll = () => {
+        router.delete(route('admin.promo.destroyAll'), {
+            preserveScroll: true,
+            onSuccess: () => setConfirmDeleteAll(false),
         });
     };
 
@@ -259,19 +267,37 @@ export default function Index({ promoCodes = [], academicYears = [] }) {
                                 </p>
                             </div>
 
-                            <button onClick={exportCSV} style={{
-                                display: 'flex', alignItems: 'center', gap: 6,
-                                padding: '8px 18px', borderRadius: 10,
-                                border: `1.5px solid rgba(52,211,153,.4)`,
-                                background: 'rgba(52,211,153,.1)', color: GRN,
-                                fontSize: 12, fontWeight: 700, cursor: 'pointer',
-                                fontFamily: "'Cairo',sans-serif", transition: 'background .15s',
-                            }}
-                                onMouseEnter={e => e.currentTarget.style.background = 'rgba(52,211,153,.2)'}
-                                onMouseLeave={e => e.currentTarget.style.background = 'rgba(52,211,153,.1)'}
-                            >
-                                📥 تصدير CSV
-                            </button>
+                            <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
+                                <button onClick={exportCSV} style={{
+                                    display: 'flex', alignItems: 'center', gap: 6,
+                                    padding: '8px 18px', borderRadius: 10,
+                                    border: `1.5px solid rgba(52,211,153,.4)`,
+                                    background: 'rgba(52,211,153,.1)', color: GRN,
+                                    fontSize: 12, fontWeight: 700, cursor: 'pointer',
+                                    fontFamily: "'Cairo',sans-serif", transition: 'background .15s',
+                                }}
+                                    onMouseEnter={e => e.currentTarget.style.background = 'rgba(52,211,153,.2)'}
+                                    onMouseLeave={e => e.currentTarget.style.background = 'rgba(52,211,153,.1)'}
+                                >
+                                    📥 تصدير CSV
+                                </button>
+
+                                {total > 0 && (
+                                    <button onClick={() => setConfirmDeleteAll(true)} style={{
+                                        display: 'flex', alignItems: 'center', gap: 6,
+                                        padding: '8px 18px', borderRadius: 10,
+                                        border: `1.5px solid rgba(248,113,113,.4)`,
+                                        background: 'rgba(248,113,113,.1)', color: R,
+                                        fontSize: 12, fontWeight: 700, cursor: 'pointer',
+                                        fontFamily: "'Cairo',sans-serif", transition: 'background .15s',
+                                    }}
+                                        onMouseEnter={e => e.currentTarget.style.background = 'rgba(248,113,113,.2)'}
+                                        onMouseLeave={e => e.currentTarget.style.background = 'rgba(248,113,113,.1)'}
+                                    >
+                                        🗑️ حذف كل الأكواد
+                                    </button>
+                                )}
+                            </div>
                         </div>
 
                         {/* Filter bar */}
@@ -476,6 +502,55 @@ export default function Index({ promoCodes = [], academicYears = [] }) {
                                 fontFamily: "'Cairo',sans-serif", fontWeight: 700, fontSize: 13,
                                 boxShadow: '0 4px 14px rgba(220,38,38,.35)',
                             }}>تأكيد الحذف</button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* ── Delete All Modal ── */}
+            {confirmDeleteAll && (
+                <div
+                    style={{
+                        position: 'fixed', inset: 0, background: 'rgba(0,0,0,.55)',
+                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                        zIndex: 9999, padding: 20,
+                    }}
+                    onClick={() => setConfirmDeleteAll(false)}
+                >
+                    <div
+                        style={{
+                            background: 'var(--a-card)', borderRadius: 18, padding: '28px 32px',
+                            border: `1px solid ${cardBdr}`,
+                            maxWidth: 400, width: '100%', direction: 'rtl',
+                            fontFamily: "'Cairo',sans-serif",
+                            boxShadow: dark ? '0 24px 80px rgba(0,0,0,.65)' : '0 24px 80px rgba(0,0,0,.18)',
+                            animation: 'fadeUp .18s both',
+                        }}
+                        onClick={e => e.stopPropagation()}
+                    >
+                        <div style={{ fontSize: 46, textAlign: 'center', marginBottom: 10 }}>⚠️</div>
+                        <h3 style={{ fontSize: 16, fontWeight: 800, color: 'var(--a-text)', margin: '0 0 8px', textAlign: 'center' }}>
+                            تأكيد حذف كل الأكواد
+                        </h3>
+                        <p style={{ fontSize: 13, color: 'var(--a-text-3)', marginBottom: 26, textAlign: 'center', lineHeight: 1.6 }}>
+                            هيتم حذف <strong style={{ color: R }}>{total}</strong> كود نهائياً — متضمنة الأكواد المستخدمة والمتاحة.<br />لا يمكن التراجع عن هذا الإجراء.
+                        </p>
+                        <div style={{ display: 'flex', gap: 10 }}>
+                            <button onClick={() => setConfirmDeleteAll(false)} style={{
+                                flex: 1, padding: '11px', borderRadius: 10,
+                                border: `1px solid var(--a-border)`,
+                                background: 'var(--a-card-2)',
+                                color: 'var(--a-text-3)', cursor: 'pointer',
+                                fontFamily: "'Cairo',sans-serif", fontWeight: 700, fontSize: 13,
+                                transition: 'background .15s',
+                            }}>إلغاء</button>
+                            <button onClick={handleDeleteAll} style={{
+                                flex: 1, padding: '11px', borderRadius: 10, border: 'none',
+                                background: 'linear-gradient(135deg,#ef4444,#dc2626)',
+                                color: '#fff', cursor: 'pointer',
+                                fontFamily: "'Cairo',sans-serif", fontWeight: 700, fontSize: 13,
+                                boxShadow: '0 4px 14px rgba(220,38,38,.35)',
+                            }}>حذف الكل نهائياً</button>
                         </div>
                     </div>
                 </div>

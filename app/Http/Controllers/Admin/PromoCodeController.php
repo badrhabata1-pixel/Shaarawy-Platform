@@ -68,4 +68,16 @@ class PromoCodeController extends Controller
 
         return back()->with('success', 'تم الحذف بنجاح ✓');
     }
+
+    /**
+     * Delete ALL promo codes at once.
+     * DELETE /admin/promo-codes/all
+     */
+    public function destroyAll()
+    {
+        $count = PromoCode::count();
+        PromoCode::query()->delete();
+
+        return back()->with('success', "تم حذف {$count} كود بنجاح ✓");
+    }
 }
