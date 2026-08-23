@@ -71,20 +71,48 @@ class PromoCode extends Model
                 ['student_id' => $student->id, 'lesson_id' => $promo->lesson_id],
                 ['is_unlocked' => true, 'unlocked_at' => now()]
             );
+
+            $unitId = $promo->lesson?->unit_id;
+            if ($unitId) {
+                static::activateUnitSubscription($student, $unitId, $promo->academic_year_id);
+            }
         } else {
             // Unlock ALL lessons for this academic year
-            $lessonIds = Lesson::whereHas('unit', fn ($q) =>
-                $q->where('academic_year_id', $promo->academic_year_id)
-            )->pluck('id');
+            $unitIds = Unit::where('academic_year_id', $promo->academic_year_id)->pluck('id');
 
+            $lessonIds = Lesson::whereIn('unit_id', $unitIds)->pluck('id');
             foreach ($lessonIds as $lessonId) {
                 StudentLessonProgress::updateOrCreate(
                     ['student_id' => $student->id, 'lesson_id' => $lessonId],
                     ['is_unlocked' => true, 'unlocked_at' => now()]
                 );
             }
+
+            // كود عام للصف كله لازم يفتح "الوحدة" نفسها كمان — مش بس الدروس اللي جواها
+            // عشان صفحة "رحلة التعلّم" بتتحقق من الاشتراك على الوحدة مش من فتح الدروس
+            foreach ($unitIds as $unitId) {
+                static::activateUnitSubscription($student, $unitId, $promo->academic_year_id);
+            }
         }
 
         return true;
+    }
+
+    /**
+     * فتح بوابة الوحدة للطالب (Subscription) عشان يقدر يدخلها من صفحة رحلة التعلّم أصلاً
+     */
+    private static function activateUnitSubscription(Student $student, int $unitId, int $academicYearId): void
+    {
+        Subscription::updateOrCreate(
+            ['student_id' => $student->id, 'unit_id' => $unitId],
+            [
+                'class_id'       => $academicYearId,
+                'type'           => 'unit',
+                'status'         => 'active',
+                'is_active'      => true,
+                'payment_method' => 'promo_code',
+                'start_date'     => now()->toDateString(),
+            ]
+        );
     }
 }
