@@ -9,6 +9,7 @@ use App\Models\Lesson;
 use App\Models\PaymentRequest;
 use App\Models\PaymentSetting;
 use App\Models\Subscription;
+use App\Models\TopStudent;
 use Illuminate\Support\Facades\Schema;
 use Inertia\Inertia;
 
@@ -28,6 +29,7 @@ class DashboardController extends Controller
         $lessonsTotal   = Lesson::count();
         $revenue        = Subscription::where('status', 'active')->sum('price') ?? 0;
         $pendingSubs    = Subscription::where('status', 'pending')->count();
+        $topStudents    = TopStudent::where('month', now()->format('Y-m'))->count();
         $onlineCount    = Student::where('student_type', 'online')->count();
         $offlineCount   = Student::where('student_type', 'offline')->count();
         $receipts = collect();
@@ -75,7 +77,14 @@ class DashboardController extends Controller
         for ($i = 5; $i >= 0; $i--) {
             $date = now()->subMonths($i);
             $monthlyData[] = [
-                'month_ar' => $arabicMonths[$date->month],
+                'month'    => $arabicMonths[$date->month],
+                'revenue'  => (int) Subscription::where('status', 'active')
+                    ->whereYear('created_at', $date->year)
+                    ->whereMonth('created_at', $date->month)
+                    ->sum('price'),
+                'students' => Student::whereYear('created_at', $date->year)
+                    ->whereMonth('created_at', $date->month)
+                    ->count(),
                 'online'   => Student::where('student_type', 'online')
                     ->whereYear('created_at', $date->year)
                     ->whereMonth('created_at', $date->month)
@@ -94,6 +103,7 @@ class DashboardController extends Controller
                 'lessons'     => $lessonsTotal,
                 'revenue'     => (int) $revenue,
                 'pendingSubs' => $pendingSubs,
+                'topStudents' => $topStudents,
                 'online'      => $onlineCount,
                 'offline'     => $offlineCount,
             ],
