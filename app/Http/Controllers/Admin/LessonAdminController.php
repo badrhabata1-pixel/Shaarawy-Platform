@@ -50,39 +50,43 @@ class LessonAdminController extends Controller
         ]);
         $data['gate_exam_id'] = $data['gate_exam_id'] ?: null;
 
-        if ($request->hasFile('image')) {
-            $data['image'] = $this->saveFile($request->file('image'), 'uploads/lessons/images');
-        }
-        if ($request->hasFile('pdf_file')) {
-            $data['pdf_file'] = $this->saveFile($request->file('pdf_file'), 'uploads/lessons/pdfs');
-        }
-        if ($request->hasFile('pdf_file_2')) {
-            $data['pdf_file_2'] = $this->saveFile($request->file('pdf_file_2'), 'uploads/lessons/pdfs');
-        }
-        if ($request->hasFile('video_file')) {
-            $data['video_url'] = asset($this->saveFile($request->file('video_file'), 'uploads/lessons/videos'));
-        }
-        unset($data['video_file']);
+        try {
+            if ($request->hasFile('image')) {
+                $data['image'] = $this->saveFile($request->file('image'), 'uploads/lessons/images');
+            }
+            if ($request->hasFile('pdf_file')) {
+                $data['pdf_file'] = $this->saveFile($request->file('pdf_file'), 'uploads/lessons/pdfs');
+            }
+            if ($request->hasFile('pdf_file_2')) {
+                $data['pdf_file_2'] = $this->saveFile($request->file('pdf_file_2'), 'uploads/lessons/pdfs');
+            }
+            if ($request->hasFile('video_file')) {
+                $data['video_url'] = asset($this->saveFile($request->file('video_file'), 'uploads/lessons/videos'));
+            }
+            unset($data['video_file']);
 
-        $extraPdfPaths = [];
-        if ($request->hasFile('extra_pdfs')) {
-            foreach ($request->file('extra_pdfs') as $pdf) {
-                if ($pdf) {
-                    $extraPdfPaths[] = $this->saveFile($pdf, 'uploads/lessons/pdfs');
+            $extraPdfPaths = [];
+            if ($request->hasFile('extra_pdfs')) {
+                foreach ($request->file('extra_pdfs') as $pdf) {
+                    if ($pdf) {
+                        $extraPdfPaths[] = $this->saveFile($pdf, 'uploads/lessons/pdfs');
+                    }
                 }
             }
-        }
-        $data['extra_pdfs'] = $extraPdfPaths ?: null;
+            $data['extra_pdfs'] = $extraPdfPaths ?: null;
 
-        foreach ($data['extra_video_urls'] ?? [] as $i => &$v) {
-            if (is_array($v)) {
-                if ($request->hasFile("extra_video_urls.$i.file")) {
-                    $v['url'] = asset($this->saveFile($request->file("extra_video_urls.$i.file"), 'uploads/lessons/videos'));
+            foreach ($data['extra_video_urls'] ?? [] as $i => &$v) {
+                if (is_array($v)) {
+                    if ($request->hasFile("extra_video_urls.$i.file")) {
+                        $v['url'] = asset($this->saveFile($request->file("extra_video_urls.$i.file"), 'uploads/lessons/videos'));
+                    }
+                    unset($v['file']);
                 }
-                unset($v['file']);
             }
+            unset($v);
+        } catch (\RuntimeException $e) {
+            return back()->withErrors(['pdf_file' => $e->getMessage()])->withInput();
         }
-        unset($v);
 
         $extraVideos = array_values(array_filter(
             $data['extra_video_urls'] ?? [],
@@ -127,47 +131,51 @@ class LessonAdminController extends Controller
         ]);
         $data['gate_exam_id'] = $data['gate_exam_id'] ?: null;
 
-        if ($request->hasFile('image')) {
-            $data['image'] = $this->saveFile($request->file('image'), 'uploads/lessons/images');
-        } else {
-            unset($data['image']);
-        }
-        if ($request->hasFile('pdf_file')) {
-            $data['pdf_file'] = $this->saveFile($request->file('pdf_file'), 'uploads/lessons/pdfs');
-        } else {
-            unset($data['pdf_file']);
-        }
-        if ($request->hasFile('pdf_file_2')) {
-            $data['pdf_file_2'] = $this->saveFile($request->file('pdf_file_2'), 'uploads/lessons/pdfs');
-        } else {
-            unset($data['pdf_file_2']);
-        }
-        if ($request->hasFile('video_file')) {
-            $data['video_url'] = asset($this->saveFile($request->file('video_file'), 'uploads/lessons/videos'));
-        }
-        unset($data['video_file']);
+        try {
+            if ($request->hasFile('image')) {
+                $data['image'] = $this->saveFile($request->file('image'), 'uploads/lessons/images');
+            } else {
+                unset($data['image']);
+            }
+            if ($request->hasFile('pdf_file')) {
+                $data['pdf_file'] = $this->saveFile($request->file('pdf_file'), 'uploads/lessons/pdfs');
+            } else {
+                unset($data['pdf_file']);
+            }
+            if ($request->hasFile('pdf_file_2')) {
+                $data['pdf_file_2'] = $this->saveFile($request->file('pdf_file_2'), 'uploads/lessons/pdfs');
+            } else {
+                unset($data['pdf_file_2']);
+            }
+            if ($request->hasFile('video_file')) {
+                $data['video_url'] = asset($this->saveFile($request->file('video_file'), 'uploads/lessons/videos'));
+            }
+            unset($data['video_file']);
 
-        $existingPdfs = $lesson->extra_pdfs ?? [];
-        $newPdfs = [];
-        if ($request->hasFile('extra_pdfs')) {
-            foreach ($request->file('extra_pdfs') as $pdf) {
-                if ($pdf) {
-                    $newPdfs[] = $this->saveFile($pdf, 'uploads/lessons/pdfs');
+            $existingPdfs = $lesson->extra_pdfs ?? [];
+            $newPdfs = [];
+            if ($request->hasFile('extra_pdfs')) {
+                foreach ($request->file('extra_pdfs') as $pdf) {
+                    if ($pdf) {
+                        $newPdfs[] = $this->saveFile($pdf, 'uploads/lessons/pdfs');
+                    }
                 }
             }
-        }
-        $mergedPdfs = array_values(array_filter(array_merge($existingPdfs, $newPdfs)));
-        $data['extra_pdfs'] = $mergedPdfs ?: null;
+            $mergedPdfs = array_values(array_filter(array_merge($existingPdfs, $newPdfs)));
+            $data['extra_pdfs'] = $mergedPdfs ?: null;
 
-        foreach ($data['extra_video_urls'] ?? [] as $i => &$v) {
-            if (is_array($v)) {
-                if ($request->hasFile("extra_video_urls.$i.file")) {
-                    $v['url'] = asset($this->saveFile($request->file("extra_video_urls.$i.file"), 'uploads/lessons/videos'));
+            foreach ($data['extra_video_urls'] ?? [] as $i => &$v) {
+                if (is_array($v)) {
+                    if ($request->hasFile("extra_video_urls.$i.file")) {
+                        $v['url'] = asset($this->saveFile($request->file("extra_video_urls.$i.file"), 'uploads/lessons/videos'));
+                    }
+                    unset($v['file']);
                 }
-                unset($v['file']);
             }
+            unset($v);
+        } catch (\RuntimeException $e) {
+            return back()->withErrors(['pdf_file' => $e->getMessage()])->withInput();
         }
-        unset($v);
 
         $extraVideos = array_values(array_filter(
             $data['extra_video_urls'] ?? [],
@@ -190,8 +198,11 @@ class LessonAdminController extends Controller
     private function saveFile(UploadedFile $file, string $subdir): string
     {
         $dir = public_path($subdir);
-        if (!file_exists($dir)) {
-            mkdir($dir, 0755, true);
+        if (!file_exists($dir) && !mkdir($dir, 0755, true) && !file_exists($dir)) {
+            throw new \RuntimeException("تعذّر إنشاء المجلد $subdir — تأكد إن مجلد public قابل للكتابة على السيرفر.");
+        }
+        if (!is_writable($dir)) {
+            throw new \RuntimeException("مجلد $subdir غير قابل للكتابة على السيرفر — راجع صلاحيات الملفات (permissions).");
         }
         $filename = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
         $file->move($dir, $filename);

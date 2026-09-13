@@ -72,7 +72,7 @@ class ExamAdminController extends Controller
                 'question_type'  => $q['question_type']  ?? 'mcq',
                 'answer_type'    => 'text',
                 'marks'          => max(1, (int) ($q['marks'] ?? 1)),
-                'correct_answer' => $q['correct_answer'] ?? null,
+                'correct_answer' => isset($q['correct_answer']) ? trim($q['correct_answer']) : null,
                 'image_path'     => $imagePath,
             ]);
 
@@ -84,6 +84,12 @@ class ExamAdminController extends Controller
                 }
             }
         }
+
+        // Keep total_marks in sync with the actual sum of question marks so the
+        // pass/fail threshold (computed from total_marks) always matches what
+        // students can really score — an out-of-sync total_marks was causing
+        // students who answered every question correctly to still be marked "failed".
+        $exam->update(['total_marks' => max(1, $exam->questions()->sum('marks'))]);
     }
 
     public function store(Request $request)

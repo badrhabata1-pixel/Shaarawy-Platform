@@ -41,7 +41,11 @@ class SheetController extends Controller
         ]);
 
         if ($request->hasFile('pdf_file')) {
-            $data['file_path'] = $request->file('pdf_file')->store('sheets/pdfs', 'public');
+            try {
+                $data['file_path'] = $request->file('pdf_file')->store('sheets/pdfs', 'public');
+            } catch (\Throwable $e) {
+                return back()->withErrors(['pdf_file' => 'فشل رفع الملف: ' . $e->getMessage()])->withInput();
+            }
         }
         unset($data['pdf_file']);
 
@@ -72,7 +76,11 @@ class SheetController extends Controller
         ]);
 
         if ($request->hasFile('pdf_file')) {
-            $data['file_path'] = $request->file('pdf_file')->store('sheets/pdfs', 'public');
+            try {
+                $data['file_path'] = $request->file('pdf_file')->store('sheets/pdfs', 'public');
+            } catch (\Throwable $e) {
+                return back()->withErrors(['pdf_file' => 'فشل رفع الملف: ' . $e->getMessage()])->withInput();
+            }
         }
         unset($data['pdf_file']);
 

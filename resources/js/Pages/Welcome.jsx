@@ -2266,6 +2266,29 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
                     </div>
                     <div style={{ width:32, height:1, background:'linear-gradient(90deg,rgba(47,188,212,.3),transparent)' }}/>
                 </div>
+
+                {/* ── Credit line ── */}
+                <div dir="ltr" style={{
+                    textAlign:'center',
+                    paddingBottom:'clamp(20px,3vh,28px)',
+                    fontSize:14,
+                    color: darkMode ? 'rgba(226,232,240,.65)' : 'rgba(27,58,96,.65)',
+                    letterSpacing:'.02em',
+                }}>
+                    Powered by KABOx / <a
+                        href="https://wa.me/201503601350"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{
+                            color: C.gold,
+                            fontWeight:800,
+                            textDecoration:'none',
+                            transition:'text-decoration .2s ease',
+                        }}
+                        onMouseEnter={e=>e.currentTarget.style.textDecoration='underline'}
+                        onMouseLeave={e=>e.currentTarget.style.textDecoration='none'}
+                    >Mindly</a>
+                </div>
             </footer>
 
             </div>
