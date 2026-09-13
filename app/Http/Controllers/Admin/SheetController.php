@@ -122,15 +122,22 @@ class SheetController extends Controller
 
     private function syncQuestions(Sheet $sheet, array $questions, Request $request): void
     {
-        // Images still referenced by the incoming questions must survive the wipe below
-        $keepPaths = collect($questions)->pluck('existing_image_path')->filter()->all();
+        // IMPORTANT: never blindly delete-and-recreate every question on every edit.
+        // question_id on exam_responses-style answer tables cascadeOnDelete()s, so
+        // wiping all questions here would silently destroy already-submitted student
+        // answers on this sheet the moment an admin edits it. Instead: update existing
+        // questions in place (matched by id) and only delete the ones actually removed.
+        $existingQuestions = $sheet->questions()->get()->keyBy('id');
+        $incomingIds = collect($questions)->pluck('id')->filter()->map(fn ($id) => (int) $id);
 
-        foreach ($sheet->questions as $old) {
-            if ($old->image_path && !in_array($old->image_path, $keepPaths, true)) {
-                Storage::disk('public')->delete($old->image_path);
+        foreach ($existingQuestions as $id => $old) {
+            if (!$incomingIds->contains($id)) {
+                if ($old->image_path) {
+                    Storage::disk('public')->delete($old->image_path);
+                }
+                $old->delete();
             }
         }
-        $sheet->questions()->delete();
 
         foreach ($questions as $i => $q) {
             $imagePath = $q['existing_image_path'] ?? null;
@@ -147,14 +154,25 @@ class SheetController extends Controller
                 $imagePath = $request->file("question_images.$i")->store('questions', 'public');
             }
 
-            $question = $sheet->questions()->create([
+            $attrs = [
                 'question_text'  => $q['question_text']  ?? '',
                 'question_type'  => $q['question_type']  ?? 'essay',
                 'answer_type'    => 'text',
                 'marks'          => max(1, (int) ($q['marks'] ?? 1)),
-                'correct_answer' => $q['correct_answer'] ?? null,
+                'correct_answer' => isset($q['correct_answer']) ? trim($q['correct_answer']) : null,
                 'image_path'     => $imagePath,
-            ]);
+            ];
+
+            $existingId = isset($q['id']) ? (int) $q['id'] : null;
+            $question   = $existingId ? $existingQuestions->get($existingId) : null;
+
+            if ($question) {
+                $question->update($attrs);
+                // Choices carry no foreign key from student answers, safe to redo.
+                $question->choices()->delete();
+            } else {
+                $question = $sheet->questions()->create($attrs);
+            }
 
             if (($q['question_type'] ?? 'essay') === 'mcq') {
                 foreach ($q['choices'] ?? [] as $choiceText) {

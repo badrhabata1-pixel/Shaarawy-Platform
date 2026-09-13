@@ -7,6 +7,7 @@ const RED = '#ef4444';
 
 /* ── helpers ─────────────────────────────────────── */
 const blankQuestion = () => ({
+    id:             null,
     question_text:  '',
     question_type:  'essay',
     marks:          1,
@@ -20,6 +21,7 @@ const blankQuestion = () => ({
 
 const parseExistingQuestions = (questions = []) =>
     questions.map(q => ({
+        id:             q.id,
         question_text:  q.question_text  || '',
         question_type:  q.question_type  || 'essay',
         marks:          q.marks          || 1,
@@ -241,9 +243,22 @@ export default function Form({ item, lessons, academicYears }) {
                 value={data.description} onChange={e => setData('description', e.target.value)}
                 error={errors.description} placeholder="وصف مختصر للشيت (اختياري)" />
 
+            {item?.file_path && (
+                <div style={{
+                    fontSize: 12, color: '#059669', marginBottom: 6,
+                    display: 'flex', alignItems: 'center', gap: 6, fontFamily: 'Cairo, sans-serif',
+                }}>
+                    <span>📎</span>
+                    <a href={`/storage/${item.file_path}`} target="_blank" rel="noopener noreferrer"
+                        style={{ color: '#059669', fontWeight: 700, textDecoration: 'underline' }}>
+                        فيه ملف PDF مرفوع بالفعل — اضغط للمعاينة
+                    </a>
+                </div>
+            )}
             <AdminField label="ملف PDF" name="pdf_file" type="file" accept=".pdf"
                 onChange={e => setData('pdf_file', e.target.files[0])}
-                error={errors.pdf_file} hint="ملف PDF للشيت" />
+                error={errors.pdf_file}
+                hint={item?.file_path ? 'اختر ملف جديد فقط لو عايز تستبدل الملف الحالي' : 'ملف PDF للشيت'} />
 
             {/* ════════════════════════════════
                 QUESTION BUILDER

@@ -8,6 +8,7 @@ const RED = '#ef4444';
 
 /* ── helpers ────────────────────────────────────────── */
 const blankQuestion = () => ({
+    id:             null,
     question_text:  '',
     question_type:  'mcq',
     marks:          1,
@@ -21,6 +22,7 @@ const blankQuestion = () => ({
 
 const parseExistingQuestions = (questions = []) =>
     questions.map(q => ({
+        id:             q.id,
         question_text:  q.question_text  || '',
         question_type:  q.question_type  || 'mcq',
         marks:          q.marks          || 1,
