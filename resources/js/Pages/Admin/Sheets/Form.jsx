@@ -243,7 +243,15 @@ export default function Form({ item, lessons, academicYears }) {
                 value={data.description} onChange={e => setData('description', e.target.value)}
                 error={errors.description} placeholder="وصف مختصر للشيت (اختياري)" />
 
-            {item?.file_path && (
+            {data.pdf_file ? (
+                <div style={{
+                    fontSize: 12, color: '#059669', marginBottom: 6,
+                    display: 'flex', alignItems: 'center', gap: 6, fontFamily: 'Cairo, sans-serif',
+                }}>
+                    <span>✅</span>
+                    <span style={{ fontWeight: 700 }}>تم اختيار الملف: {data.pdf_file.name}</span>
+                </div>
+            ) : item?.file_path && (
                 <div style={{
                     fontSize: 12, color: '#059669', marginBottom: 6,
                     display: 'flex', alignItems: 'center', gap: 6, fontFamily: 'Cairo, sans-serif',
