@@ -17,28 +17,20 @@ const C = {
     white:  '#F3ECDA',
 };
 
-/* ── Static data ─────────────────────────────────────────────── */
-const FEATURES = [
-    { n:'01', title:'شرح بسيط ومفهوم',              text:'الأستاذ بيشرح بأسلوب سهل وممتع — أحداث التاريخ هتبقى واضحة ومرتبة في دماغك',
-        icon:(<path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>) },
-    { n:'02', title:'فيديوهات ورسومات توضيحية',     text:'تعلّم بصرياً بخرائط ذهنية وأمثلة وشواهد حية وشرح مرئي عالي الجودة',
-        icon:(<><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></>) },
-    { n:'03', title:'أسئلة تركيز وتقييم فوري',      text:'بعد كل فيديو فيه أسئلة تركيز بتقيس فهمك الفعلي — مش حفظ، ده فهم حقيقي',
-        icon:(<><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></>) },
-    { n:'04', title:'الأستاذ بيتابعك بالتفصيل',     text:'من خلال نتايج أسئلة التركيز الأستاذ بيشوف مين فاهم ومين محتاج مساعدة — متابعة حقيقية لكل طالب لوحده',
-        icon:(<><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></>) },
-    { n:'05', title:'اختبارات بنظام الوزارة',        text:'نماذج امتحانات تاريخ بنفس أسلوب الثانوية العامة والبكالوريا عشان تتعود على الجو الفعلي وتدخل الامتحان بثقة',
-        icon:(<><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></>) },
-    { n:'06', title:'لوحة تحكم سهلة للطالب',        text:'كل حاجة في مكانها — محاضراتك، تقدمك، درجاتك، ومدفوعاتك في شاشة واحدة مرتبة وواضحة',
-        icon:(<><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></>) },
-    { n:'07', title:'نظام إشعارات ذكي',             text:'هتتنبه على الطبطبة — محاضرة جديدة، نتيجة اختبار، أو رسالة من الأستاذ — مش هتفوتك أي حاجة',
-        icon:(<><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></>) },
-    { n:'08', title:'أمان وحماية عالية للبيانات',   text:'المنصة محمية بنظام تشفير متقدم — بياناتك وسجل مدفوعاتك في أمان تام ومش بيتشاف إلا منك',
-        icon:(<><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></>) },
-];
-
-/* ألوان متدرّجة لشارات الأرقام وزخرفة البلاطات — بالتبادل */
-const TILE_ACCENTS = ['#C9A96A', '#1F5A45', '#0E3A2E', '#2D6B52', '#8B5E3C'];
+/* ── "ليه تشترك معانا؟" — الأستاذ في النص وأربع بطاقات حواليه ─── */
+const WHY_FEATURES = {
+    center: {
+        img:   'ChatGPT Image Sep 28, 2026, 03_10_40 PM.png',
+        title: 'شرح بسيط ومفهوم',
+        text:  'الأستاذ أحمد الشعراوي بيشرح الأحداث والموضوعات بأسلوب سهل ومنظم يخليك تفهم بسرعة وتثبت المعلومة من أول مرة.',
+    },
+    around: [
+        { img:'ChatGPT Image Sep 28, 2026, 03_05_45 PM.png',  title:'أسئلة بعد كل جزء وتقسيم فكري',      text:'تدريب مستمر وأسئلة مركزة بعد كل جزء تساعدك تفكر وتحلل وتراجع أول بأول.' },
+        { img:'label_top_right_transparent.png', aspect:'1405/593', title:'فيديوهات وخرائط ورسومات توضيحية',   text:'شرح بصري يساعدك تربط بين الأحداث والزمن والمكان بشكل أوضح وأسهل.' },
+        { img:'ChatGPT Image Sep 28, 2026, 03_14_09 PM.png',  title:'اختبارات بنظام الوزارة',            text:'نماذج واختبارات بنفس شكل الامتحان تقيس مستواك وتتعود على الأسئلة الفعلية.' },
+        { img:'ChatGPT Image Sep 28, 2026, 03_21_04 PM.png',  title:'متابعة مستمرة وتقييم الأداء',       text:'تتابع تقدمك بسهولة وتعرف نقاط القوة والجزء اللي محتاج مراجعة أكتر.' },
+    ],
+};
 
 /* COURSES: populated dynamically from DB (passed as Inertia prop) */
 
@@ -321,7 +313,7 @@ function PageStyles() {
                 .foot-grid      { grid-template-columns:1fr 1fr; }
                 .nav-links      { display:none; }
                 .hero-right     { flex:0 0 100%; max-width:100%; }
-                .site-nav          { padding:0 clamp(10px,3vw,20px) !important; }
+                .site-nav          { padding:0 clamp(10px,3vw,20px) !important; width:90% !important; }
                 .nav-right-group   { gap:8px !important; }
                 .nav-logo-box      { height:58px !important; width:50px !important; }
                 .theme-toggle-btn  { transform:scale(.8); transform-origin:center; }
@@ -337,9 +329,7 @@ function PageStyles() {
                 .hero-stats        { gap:20px !important; flex-wrap:wrap; }
                 .port-grid > div   { max-width:100%; margin:0 auto; width:100%; }
                 .hero-welcome-img  { max-width:100% !important; margin-bottom:20px !important; }
-                .branches-row      { height:auto !important; flex-direction:column !important; }
-                .branches-row .branch-collapsed { min-width:0 !important; flex:0 0 auto !important; height:64px !important; }
-                .branches-row .branch-active    { min-width:0 !important; flex:0 0 auto !important; height:520px !important; }
+                .branches-necklace { gap:16px !important; }
                 .about-text-side .about-stats-grid { grid-template-columns:repeat(2,1fr) !important; max-width:280px !important; }
                 .about-feats-grid  { grid-template-columns:1fr !important; }
                 .foot-social-grid { grid-template-columns:1fr 1fr !important; }
@@ -357,7 +347,7 @@ function PageStyles() {
                 .nav-logo-box     { height:46px !important; width:40px !important; }
                 .theme-toggle-btn { transform:scale(.68); transform-origin:center; }
                 /* شبكة أمان: لو المساحة لسه ضيقة، اترك العناصر تلف لسطر تاني بدل ما تتلزق */
-                .site-nav { flex-wrap:wrap !important; height:auto !important; min-height:64px !important; row-gap:8px !important; padding-top:8px !important; padding-bottom:8px !important; }
+                .site-nav { flex-wrap:wrap !important; height:auto !important; min-height:64px !important; row-gap:8px !important; padding-top:8px !important; padding-bottom:8px !important; width:94% !important; }
                 .hero-right p  { font-size:14px !important; }
                 .teacher-hero-wrap { height:70vw !important; max-height:70vw !important; }
                 .hero-stats > div { flex:1 0 auto; min-width:80px; }
@@ -365,6 +355,31 @@ function PageStyles() {
 
             /* بطاقات الكورسات — شبكة متجاوبة بدل التمرير الأفقي */
             .courses-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:30px; max-width:1200px; margin:0 auto; }
+
+            /* ليه تشترك معانا — الأستاذ في النص والبطاقات حواليه */
+            .why-grid {
+                display:grid; grid-template-columns:1.35fr 1fr 1.35fr; grid-template-areas:"left center right";
+                gap:28px; align-items:center; max-width:1320px; margin:0 auto;
+            }
+            .why-grid .why-center { grid-area:center; }
+            .why-grid .why-left   { grid-area:left;  display:flex; flex-direction:column; gap:22px; }
+            .why-grid .why-right  { grid-area:right; display:flex; flex-direction:column; gap:22px; }
+            .why-side-card { transition:transform .4s cubic-bezier(.22,1,.36,1), box-shadow .4s ease; }
+            .why-side-card:hover { transform:translateY(-4px); }
+
+            /* لوحة المعبد — إضاءة ذهبية عند المرور بالماوس */
+            .branch-temple-panel { transition:box-shadow .4s ease, border-color .4s ease; }
+            .branch-temple-panel:hover {
+                border-color:rgba(201,169,106,.6) !important;
+                box-shadow:0 0 0 1px rgba(201,169,106,.4), 0 0 60px rgba(201,169,106,.22), 0 20px 50px rgba(0,0,0,.4);
+            }
+            .branch-temple-panel:hover .temple-watermark {
+                opacity:.16;
+                filter:drop-shadow(0 0 26px rgba(201,169,106,.5));
+            }
+            @media(max-width:1080px){
+                .why-grid { grid-template-columns:1fr; grid-template-areas:"center" "left" "right"; max-width:520px; }
+            }
             .course-desc-clamp {
                 display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;
                 overflow:hidden; text-overflow:ellipsis;
@@ -870,119 +885,58 @@ function TeacherHero({ dark }) {
         <div ref={wrapRef} className="teacher-hero-wrap" style={{
             flex:'0 0 56%', maxWidth:880, position:'relative',
             display:'flex', alignItems:'center', justifyContent:'center',
-            minHeight:'80vh', flexShrink:0,
+            minHeight:'60vh', flexShrink:0,
         }}>
-            {/* حلقة مدارية متقطعة — هوية هندسية عربية بديلة عن القوس اليوناني */}
-            <svg className="teacher-fixed-ring" viewBox="0 0 400 400" fill="none"
-                style={{ position:'absolute', top:'50%', left:'50%', transform:'translate(-50%,-50%)', width:620, height:620, pointerEvents:'none', opacity: dark ? 0.6 : 0.4, zIndex:1 }}>
-                <circle cx="200" cy="200" r="188" stroke="#C9A96A" strokeWidth="1.4" strokeDasharray="1 11" fill="none" opacity=".85"/>
-                <circle cx="200" cy="200" r="164" stroke="#8B5E3C" strokeWidth=".7" fill="none" opacity=".3"/>
-                {/* شمسات صغيرة على الحلقة */}
-                {[0, 90, 180, 270].map(deg => {
-                    const a = (deg * Math.PI) / 180;
-                    const cx = 200 + Math.cos(a) * 188, cy = 200 + Math.sin(a) * 188;
-                    return (
-                        <g key={deg} transform={`translate(${cx} ${cy})`} opacity=".7">
-                            <rect x="-5" y="-5" width="10" height="10" transform="rotate(45)" fill="none" stroke="#C9A96A" strokeWidth="1"/>
-                        </g>
-                    );
-                })}
-            </svg>
-
-            {/* Orbit particles */}
-            {ORBIT_PARTICLES.map(({ sym, x, y, d, dl, sz, amber }, i) => (
-                <div key={i} className="th-deco" style={{
-                    position:'absolute', left:x, top:y,
-                    fontSize:sz, color: amber ? '#8B5E3C' : '#C9A96A',
-                    opacity: dark ? 0.42 : 0.28,
-                    animation:`orbitBob ${d} ${dl} ease-in-out infinite`,
-                    pointerEvents:'none',
-                    textShadow: amber ? '0 0 10px rgba(139,94,60,.5)' : '0 0 10px rgba(201,169,106,.45)',
-                }}>{sym}</div>
-            ))}
-
-            {/* History floating icons */}
-            {HIST_ICONS.map(({ x, y, rot, sz, d, dl, type }, i) => (
-                <div key={`hi-${i}`} className="th-deco" style={{
-                    position:'absolute', left:x, top:y,
-                    opacity: dark ? 0.55 : 0.45,
-                    animation:`orbitBob ${d} ${dl} ease-in-out infinite`,
-                    pointerEvents:'none',
-                    transform:`rotate(${rot}deg)`,
-                    filter: dark
-                        ? 'drop-shadow(0 0 6px rgba(201,169,106,.35))'
-                        : 'drop-shadow(0 0 4px rgba(14,58,46,.25))',
-                }}>
-                    <HistIcon type={type} sz={sz} color={dark ? '#C9A96A' : '#0E3A2E'}/>
-                </div>
-            ))}
-
-            {/* حروف عربية عائمة بطراز شبحي — تبرز جماليات نقطة الحرف العربي */}
-            {ARABIC_GLYPHS.map(({ ch, x, y, rot, sz, d, dl }, i) => (
-                <div key={`ag-${i}`} className="th-deco" style={{
-                    position:'absolute', left:x, top:y,
-                    fontFamily:"'Ruwudu',serif", fontSize:sz, lineHeight:1,
-                    color: dark ? 'rgba(201,169,106,.5)' : 'rgba(14,58,46,.32)',
-                    opacity: dark ? 0.7 : 0.55,
-                    animation:`orbitBob ${d} ${dl} ease-in-out infinite`,
-                    transform:`rotate(${rot}deg)`,
-                    pointerEvents:'none', userSelect:'none',
-                    textShadow: dark ? '0 0 14px rgba(201,169,106,.3)' : 'none',
-                }}>{ch}</div>
-            ))}
-
-            {/* نقاط الحروف العائمة */}
-            {DOT_ACCENTS.map(({ x, y, sz, amber }, i) => (
-                <div key={`dot-${i}`} className="th-deco" style={{
-                    position:'absolute', left:x, top:y,
-                    width:sz, height:sz, borderRadius:'50%',
-                    background: amber ? '#8B5E3C' : '#C9A96A',
-                    boxShadow: `0 0 8px ${amber ? 'rgba(139,94,60,.7)' : 'rgba(201,169,106,.7)'}`,
-                    opacity: dark ? 0.75 : 0.5,
-                    animation:`orbitBob ${3.2 + i*.4}s ${i*.3}s ease-in-out infinite`,
-                    pointerEvents:'none',
-                }}/>
-            ))}
-
-            {/* أشكال معينة مدوّرة الحواف — زخرفة أركان هندسية */}
+            {/* لمسات زخرفية خفيفة في أركان اللوحة — بدل الحلقة المدارية والرموز المبعثرة */}
             <div className="th-deco" style={{
-                position:'absolute', bottom:'8%', left:'0%', width:52, height:52, borderRadius:16,
+                position:'absolute', top:'-4%', right:'2%', width:38, height:38, borderRadius:11,
                 border:`1.5px solid ${dark ? 'rgba(201,169,106,.5)' : 'rgba(14,58,46,.3)'}`,
                 transform:'rotate(45deg)', pointerEvents:'none',
             }}/>
             <div className="th-deco" style={{
-                position:'absolute', top:'10%', right:'4%', width:30, height:30, borderRadius:9,
+                position:'absolute', bottom:'-4%', left:'2%', width:26, height:26, borderRadius:8,
                 background: dark ? 'rgba(139,94,60,.18)' : 'rgba(139,94,60,.14)',
                 border:`1.5px solid ${dark ? 'rgba(139,94,60,.55)' : 'rgba(139,94,60,.4)'}`,
                 transform:'rotate(45deg)', pointerEvents:'none',
             }}/>
 
-            {/* Main image + float wrapper — framed portrait medallion */}
+            {/* اللوحة الرئيسية — صورة بانورامية بإطار ذهبي احترافي */}
             <div className="th-img" style={{
                 position:'relative', zIndex:5, width:'100%',
-                display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center', gap:20,
+                display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center',
             }}>
-                <div className="teacher-hero-img" style={{ width:'100%', maxWidth:600, position:'relative', display:'flex', justifyContent:'center', transform:'none' }}>
-                    {/* صورة الأستاذ أحمد الشعراوي */}
-                    <img
-                        src={encodeURI('/images/ChatGPT Image Sep 28, 2026, 03_10_40 PM.png')}
-                        alt="الأستاذ أحمد الشعراوي"
-                        style={{
-                            width:'86%', height:'auto', position:'relative', zIndex:2,
-                            transform:'none',
-                            filter: dark
-                                ? 'drop-shadow(0 34px 70px rgba(0,0,0,.6)) drop-shadow(0 0 46px rgba(139,94,60,.22))'
-                                : 'drop-shadow(0 24px 50px rgba(0,0,0,.18)) drop-shadow(0 0 34px rgba(139,94,60,.14))',
-                            maskImage: 'radial-gradient(ellipse 58% 54% at 50% 50%, #000 0%, #000 72%, rgba(0,0,0,.75) 84%, transparent 100%)',
-                            WebkitMaskImage: 'radial-gradient(ellipse 58% 54% at 50% 50%, #000 0%, #000 72%, rgba(0,0,0,.75) 84%, transparent 100%)',
-                        }}
-                    />
+                <div className="teacher-hero-img" style={{
+                    width:'100%', aspectRatio:'1920/811', position:'relative', borderRadius:22, overflow:'hidden',
+                    border:`1.5px solid ${dark ? 'rgba(201,169,106,.4)' : 'rgba(201,169,106,.5)'}`,
+                    boxShadow: dark
+                        ? '0 30px 70px rgba(0,0,0,.55), 0 0 0 1px rgba(201,169,106,.12), inset 0 1px 0 rgba(255,255,255,.06)'
+                        : '0 24px 56px rgba(14,58,46,.22), 0 0 0 1px rgba(201,169,106,.18)',
+                }}>
+                    {/* صورة الأستاذ أحمد الشعراوي — هتتحط لاحقًا */}
+
+                    {/* إطار داخلي رفيع — لمسة تذهيب المخطوطات */}
+                    <div style={{ position:'absolute', inset:8, borderRadius:15, border:'1px solid rgba(201,169,106,.35)', pointerEvents:'none', zIndex:3 }}/>
+
+                    {/* زخارف أركان ذهبية */}
+                    {['tl','tr','bl','br'].map(pos => (
+                        <div key={pos} style={{
+                            position:'absolute', width:26, height:26, zIndex:3, color:'#C9A96A', opacity:.85,
+                            top: pos[0]==='t' ? 10 : 'auto', bottom: pos[0]==='b' ? 10 : 'auto',
+                            right: pos[1]==='r' ? 10 : 'auto', left: pos[1]==='l' ? 10 : 'auto',
+                            transform:`scale(${pos[1]==='r'?-1:1},${pos[0]==='b'?-1:1})`,
+                        }}>
+                            <svg viewBox="0 0 30 30" width="26" height="26">
+                                <path d="M3,19 L3,3 L19,3" stroke="currentColor" strokeWidth="1.6" fill="none" strokeLinecap="round"/>
+                                <rect x="0" y="0" width="7" height="7" transform="rotate(45 3.2 3.2)" fill="currentColor"/>
+                            </svg>
+                        </div>
+                    ))}
 
                     {/* Ground glow */}
                     <div style={{
-                        position:'absolute', bottom:'6%', left:'10%', right:'10%', height:55,
+                        position:'absolute', bottom:0, left:'10%', right:'10%', height:55, zIndex:1,
                         background:`radial-gradient(ellipse at center, rgba(201,169,106,.${dark?'22':'10'}) 0%, transparent 72%)`,
-                        filter:'blur(10px)', pointerEvents:'none', zIndex:0,
+                        filter:'blur(10px)', pointerEvents:'none',
                     }}/>
                 </div>
 
@@ -1010,8 +964,8 @@ function Preloader({ visible }) {
                     animation:`pingRing 2s ease-out ${i*.5}s infinite`,
                 }}/>
             ))}
-            <span style={{ fontFamily:'Ruwudu,serif', fontSize:'clamp(26px,4.5vw,42px)', color:C.gold, letterSpacing:'.18em' }}>
-                منصور
+            <span style={{ fontFamily:'Ruwudu,serif', fontSize:'clamp(22px,4vw,36px)', color:C.gold, letterSpacing:'.1em' }}>
+                الشعراوي
             </span>
         </div>
     );
@@ -1087,25 +1041,73 @@ function ThemeToggle({ dark, setDark }) {
 
 /* ── Logo ────────────────────────────────────────────────────── */
 function NavLogo({ dark = true }) {
-    const logoFilter = dark
-        ? 'drop-shadow(0 0 10px rgba(201,169,106,.35))'
-        : 'brightness(0) saturate(100%) invert(16%) sepia(26%) saturate(1532%) hue-rotate(175deg) brightness(92%) contrast(94%) drop-shadow(0 2px 8px rgba(14,58,46,.18))';
-
     return (
         <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexShrink: 0 }}>
-            <div className="nav-logo-box" style={{ height: 100, width: 86, overflow: 'hidden', flexShrink: 0 }}>
-                <img
-                    src="/images/منصور لوجو.png"
-                    alt="منصور"
-                    style={{
-                        height: '100%',
-                        width: 'auto',
-                        objectFit: 'contain',
-                        objectPosition: 'left center',
-                        filter: logoFilter,
-                        display: 'block',
-                    }}
-                />
+            <div className="nav-logo-box" style={{
+                height: 52, width: 52, borderRadius: 15, flexShrink: 0,
+                background: 'linear-gradient(150deg, #0E3A2E, #1F5A45)',
+                boxShadow: '0 0 0 3px rgba(201,169,106,.18), 0 6px 18px rgba(14,58,46,.35)',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+            }}>
+                <span style={{ fontFamily: "'Reem Kufi', sans-serif", fontSize: 24, color: '#C9A96A' }}>ش</span>
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', lineHeight: 1.15 }}>
+                <span style={{ fontFamily: "'Cairo',sans-serif", fontWeight: 900, fontSize: 14, color: dark ? '#F3ECDA' : '#0E3A2E' }}>منصة الشعراوي</span>
+                <span style={{ fontFamily: "'Cairo',sans-serif", fontWeight: 600, fontSize: 9.5, letterSpacing: '.1em', color: '#C9A96A' }}>ELSHARAWY PLATFORM</span>
+            </div>
+        </div>
+    );
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   NAV DROPDOWN — بطاقة منسدلة زجاجية تتمدد فوق الناف بار الثابت أسفل الشاشة
+   (بديل قائمة الروابط البسيطة — بطاقة معاينة حقيقية تفتح لأعلى)
+═══════════════════════════════════════════════════════════════ */
+function NavDropdownItem({ label, dark, T, children, width = 320 }) {
+    const [open, setOpen] = useState(false);
+    const closeTimer = useRef(null);
+    const onEnter = () => { clearTimeout(closeTimer.current); setOpen(true); };
+    const onLeave = () => { closeTimer.current = setTimeout(() => setOpen(false), 160); };
+    useEffect(() => () => clearTimeout(closeTimer.current), []);
+
+    return (
+        <div onMouseEnter={onEnter} onMouseLeave={onLeave} style={{ position: 'relative' }}>
+            <button
+                type="button"
+                className="nav-link-item"
+                onClick={() => setOpen(v => !v)}
+                style={{
+                    color: T.navLink, background: 'none', border: 'none', cursor: 'pointer',
+                    fontFamily: "'Cairo',sans-serif",
+                    fontSize: 13, fontWeight: 600, padding: '8px 14px', borderRadius: 8,
+                    display: 'flex', alignItems: 'center', gap: 5,
+                    transition: 'color .2s ease',
+                }}
+                onFocus={onEnter} onBlur={onLeave}
+            >
+                {label}
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"
+                    style={{ transition: 'transform .3s cubic-bezier(.22,1,.36,1)', transform: open ? 'rotate(180deg)' : 'none' }}>
+                    <polyline points="6 9 12 15 18 9" />
+                </svg>
+            </button>
+
+            <div style={{
+                position: 'absolute', bottom: 'calc(100% + 18px)', left: '50%', width,
+                transform: `translateX(-50%) translateY(${open ? 0 : 12}px) scale(${open ? 1 : 0.92})`,
+                transformOrigin: 'bottom center',
+                opacity: open ? 1 : 0,
+                visibility: open ? 'visible' : 'hidden',
+                pointerEvents: open ? 'auto' : 'none',
+                transition: 'opacity .3s cubic-bezier(.22,1,.36,1), transform .34s cubic-bezier(.22,1,.36,1), visibility 0s linear ' + (open ? '0s' : '.3s'),
+                background: dark ? 'rgba(20,18,16,.7)' : 'rgba(255,252,245,.85)',
+                backdropFilter: 'blur(30px) saturate(1.7)', WebkitBackdropFilter: 'blur(30px) saturate(1.7)',
+                borderRadius: 20,
+                border: `1px solid ${dark ? 'rgba(201,169,106,.2)' : 'rgba(201,169,106,.3)'}`,
+                boxShadow: dark ? '0 24px 60px rgba(0,0,0,.6)' : '0 20px 50px rgba(14,58,46,.18)',
+                padding: 16, zIndex: 60,
+            }}>
+                {children}
             </div>
         </div>
     );
@@ -1117,121 +1119,174 @@ function NavLogo({ dark = true }) {
 ═══════════════════════════════════════════════════════════════ */
 function LanguageBranches({ dark }) {
     const [active, setActive] = useState(1);
+    const panelRef = useRef(null);
+
+    /* اختيار فرع جديد — بيعمل ترانزيشن دائري (ripple) منطلق من مكان الدائرة اللي اتضغطت */
+    const selectBranch = (i, e) => {
+        if (i === active) return;
+        const panel = panelRef.current;
+        const reduceMotion = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        if (!panel || !panel.animate || reduceMotion) { setActive(i); return; }
+
+        const panelRect = panel.getBoundingClientRect();
+        const btnRect   = e.currentTarget.getBoundingClientRect();
+        const x = btnRect.left + btnRect.width / 2 - panelRect.left;
+        const y = 0;
+        const endRadius = Math.hypot(Math.max(x, panelRect.width - x), Math.max(0, panelRect.height - y));
+
+        setActive(i);
+        requestAnimationFrame(() => {
+            panel.animate(
+                { clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${endRadius}px at ${x}px ${y}px)`] },
+                { duration: 550, easing: 'cubic-bezier(.22,1,.36,1)' }
+            );
+        });
+    };
 
     return (
-        <div className="branches-row" style={{ display:'flex', gap:14, height:520, alignItems:'stretch' }}>
-            {BRANCHES.map((b, i) => {
-                const isActive = active === i;
-                return (
-                    <div key={i}
-                        onClick={() => setActive(i)}
-                        className={isActive ? 'branch-active' : 'branch-collapsed'}
-                        style={{
-                            position:'relative', overflow:'hidden', cursor:'pointer',
-                            flex: isActive ? '1 1 0%' : '0 0 108px',
-                            minWidth: isActive ? 320 : 108,
-                            borderRadius:28,
-                            transition:'flex-basis .55s cubic-bezier(.22,1,.36,1), min-width .55s cubic-bezier(.22,1,.36,1), background .4s ease',
-                            background: isActive
-                                ? 'linear-gradient(155deg,#1A3D2E 0%,#1C1916 55%,#141210 100%)'
-                                : (dark ? 'rgba(226,232,240,.04)' : '#F5EFDF'),
-                            border: `1px solid ${isActive ? 'rgba(201,169,106,.35)' : (dark ? 'rgba(226,232,240,.08)' : 'rgba(14,58,46,.08)')}`,
-                        }}
-                    >
-                        {/* نسيج نجمة خافت في حالة الفتح */}
-                        {isActive && (
-                            <svg style={{ position:'absolute', inset:0, width:'100%', height:'100%', opacity:.05, pointerEvents:'none' }}>
-                                <defs><pattern id={`bpat-${i}`} width="46" height="46" patternUnits="userSpaceOnUse">
-                                    <g stroke="#C9A96A" fill="none" strokeWidth="1">
-                                        <rect x="6" y="6" width="34" height="34"/>
-                                        <rect x="6" y="6" width="34" height="34" transform="rotate(45 23 23)"/>
+        <div>
+            {/* ── القلادة — دوائر الفروع المعلّقة على سلسلة متدلّية حقيقية ── */}
+            <div className="branches-necklace" style={{ position:'relative', display:'flex', justifyContent:'center', gap:'clamp(18px,3.6vw,44px)', paddingTop:26, paddingBottom:28, flexWrap:'wrap' }}>
+                {/* سلسلة القلادة — منحنية ومتدلّية بين كل جوهرتين */}
+                <svg viewBox="0 0 500 34" preserveAspectRatio="none" style={{ position:'absolute', top:0, left:'6%', right:'6%', width:'88%', height:28, pointerEvents:'none' }}>
+                    <path d="M0,4 Q62.5,32 125,4 Q187.5,32 250,4 Q312.5,32 375,4 Q437.5,32 500,4"
+                        fill="none" stroke="rgba(201,169,106,.5)" strokeWidth="1.4"/>
+                    {[0,125,250,375,500].map(x => (
+                        <g key={x}>
+                            <circle cx={x} cy="4" r="3.4" fill="#C9A96A" opacity=".85"/>
+                            <circle cx={x} cy="4" r="6" fill="none" stroke="#C9A96A" strokeWidth=".7" opacity=".4"/>
+                        </g>
+                    ))}
+                </svg>
+                {BRANCHES.map((b, i) => {
+                    const isActive = active === i;
+                    return (
+                        <button key={i}
+                            onClick={(e)=>selectBranch(i, e)}
+                            style={{
+                                position:'relative', background:'none', border:'none', cursor:'pointer', padding:0,
+                                display:'flex', flexDirection:'column', alignItems:'center', gap:9,
+                            }}
+                        >
+                            {/* خيط التعليق */}
+                            <div style={{ width:1, height:20, background:'linear-gradient(180deg,rgba(201,169,106,.7),rgba(201,169,106,.25))' }}/>
+
+                            {/* الميدالية — حلقة خارجية + شمسة نجمية + جواهر صغيرة حوالين الإطار */}
+                            <div style={{ position:'relative', width: isActive?98:72, height: isActive?98:72, display:'flex', alignItems:'center', justifyContent:'center', transition:'all .45s cubic-bezier(.22,1,.36,1)' }}>
+                                <svg viewBox="0 0 98 98" style={{ position:'absolute', inset:0, width:'100%', height:'100%', opacity: isActive?1:.6, transition:'opacity .45s ease' }}>
+                                    <circle cx="49" cy="49" r="46" fill="none" stroke="#C9A96A" strokeWidth=".8" opacity=".55"/>
+                                    <g stroke="#C9A96A" strokeWidth="1" fill="none" opacity={isActive?.85:.4}>
+                                        <rect x="20" y="20" width="58" height="58"/>
+                                        <rect x="20" y="20" width="58" height="58" transform="rotate(45 49 49)"/>
                                     </g>
-                                </pattern></defs>
-                                <rect width="100%" height="100%" fill={`url(#bpat-${i})`}/>
-                            </svg>
-                        )}
-
-                        {!isActive ? (
-                            <>
-                                {/* أيقونة الفرع — حالة الطي */}
-                                <div style={{ position:'absolute', top:24, left:0, right:0, display:'flex', justifyContent:'center' }}>
-                                    <div style={{
-                                        width:44, height:44, borderRadius:'50%', flexShrink:0,
-                                        display:'flex', alignItems:'center', justifyContent:'center',
-                                        background: dark ? 'rgba(226,232,240,.07)' : '#fff',
-                                        border: '1px solid rgba(201,169,106,.25)',
-                                        boxShadow: dark ? 'none' : '0 2px 8px rgba(14,58,46,.08)',
-                                    }}>
-                                        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke={dark ? 'rgba(226,232,240,.6)' : '#0E3A2E'} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                                            {b.icon}
-                                        </svg>
-                                    </div>
+                                    {[0,45,90,135,180,225,270,315].map(deg => {
+                                        const a = (deg*Math.PI)/180, r = 46;
+                                        const cx = 49 + Math.cos(a)*r, cy = 49 + Math.sin(a)*r;
+                                        return <circle key={deg} cx={cx} cy={cy} r="1.7" fill="#C9A96A" opacity={isActive?.9:.4}/>;
+                                    })}
+                                </svg>
+                                <div style={{
+                                    position:'relative', width: isActive ? 74 : 54, height: isActive ? 74 : 54, borderRadius:'50%',
+                                    display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0,
+                                    background: isActive ? 'linear-gradient(155deg,#1F5A45,#0E3A2E)' : (dark ? 'rgba(226,232,240,.05)' : '#fff'),
+                                    border: `2px solid ${isActive ? '#C9A96A' : 'rgba(201,169,106,.35)'}`,
+                                    boxShadow: isActive ? '0 0 0 6px rgba(201,169,106,.14), 0 12px 30px rgba(0,0,0,.35)' : (dark ? 'none' : '0 2px 10px rgba(14,58,46,.1)'),
+                                    transition:'all .45s cubic-bezier(.22,1,.36,1)',
+                                }}>
+                                    <svg width={isActive?28:20} height={isActive?28:20} viewBox="0 0 24 24" fill="none"
+                                        stroke={isActive ? '#C9A96A' : (dark ? 'rgba(226,232,240,.6)' : '#0E3A2E')}
+                                        strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"
+                                        style={{ transition:'all .45s cubic-bezier(.22,1,.36,1)' }}>
+                                        {b.icon}
+                                    </svg>
                                 </div>
-
-                                {/* عنوان رأسي */}
-                                <div style={{ position:'absolute', inset:0, display:'flex', alignItems:'center', justifyContent:'center', paddingTop:70 }}>
-                                    <span style={{
-                                        transform:'rotate(-90deg)', whiteSpace:'nowrap',
-                                        fontFamily:"'Ruwudu',serif", fontSize:19,
-                                        color: dark ? 'rgba(226,232,240,.75)' : '#0E3A2E',
-                                    }}>{b.title}</span>
-                                </div>
-
-                                {/* سهم الفتح */}
-                                <div style={{ position:'absolute', bottom:20, left:0, right:0, display:'flex', justifyContent:'center' }}>
-                                    <div style={{ width:26, height:26, borderRadius:'50%', display:'flex', alignItems:'center', justifyContent:'center', background: dark ? 'rgba(226,232,240,.08)' : 'rgba(14,58,46,.06)' }}>
-                                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke={dark ? 'rgba(226,232,240,.5)' : 'rgba(14,58,46,.5)'} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                                            <line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/>
-                                        </svg>
-                                    </div>
-                                </div>
-                            </>
-                        ) : (
-                            /* حالة الفتح — المحتوى الكامل */
-                            <div style={{ position:'relative', zIndex:1, height:'100%', display:'flex', flexDirection:'column', padding:'26px 30px 28px', animation:'branchIn .5s ease both' }}>
-                                <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:18 }}>
-                                    <div style={{ display:'inline-flex', alignItems:'center', gap:8, padding:'5px 14px', borderRadius:999, background:'rgba(201,169,106,.12)', border:'1px solid rgba(201,169,106,.3)' }}>
-                                        <span style={{ fontSize:12, color:'#C9A96A', fontWeight:700 }}>فرع {b.title}</span>
-                                    </div>
-                                    <div style={{
-                                        width:44, height:44, borderRadius:'50%', flexShrink:0,
-                                        display:'flex', alignItems:'center', justifyContent:'center',
-                                        background:'rgba(201,169,106,.14)', border:'1px solid rgba(201,169,106,.4)',
-                                        boxShadow:'0 0 18px rgba(201,169,106,.25)',
-                                    }}>
-                                        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#C9A96A" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                                            {b.icon}
-                                        </svg>
-                                    </div>
-                                </div>
-
-                                <h3 style={{ fontFamily:"'Ruwudu',serif", fontSize:'clamp(24px,2.6vw,34px)', color:'#F3ECDA', margin:'0 0 14px' }}>{b.title}</h3>
-
-                                <p style={{ fontSize:14, lineHeight:2, color:'rgba(226,232,240,.65)', maxWidth:640, margin:'0 0 20px' }}>{b.desc}</p>
-
-                                <div style={{ fontSize:12.5, color:'#8B5E3C', fontWeight:700, marginBottom:10 }}>أبرز محاور الدراسة:</div>
-                                <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(220px,1fr))', gap:'6px 24px', marginBottom:'auto' }}>
-                                    {b.points.map((pt, pi) => (
-                                        <div key={pi} style={{ display:'flex', alignItems:'flex-start', gap:8, padding:'6px 0' }}>
-                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8B5E3C" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink:0, marginTop:3 }}>
-                                                <polyline points="20 6 9 17 4 12"/>
-                                            </svg>
-                                            <span style={{ fontSize:13, color:'rgba(226,232,240,.8)', lineHeight:1.6 }}>{pt}</span>
-                                        </div>
-                                    ))}
-                                </div>
-
-                                <a href="#courses" style={{ display:'inline-flex', alignItems:'center', gap:9, fontSize:13, color:'#C9A96A', textDecoration:'none', fontWeight:700, marginTop:18, paddingTop:18, borderTop:'1px solid rgba(255,255,255,.08)' }}>
-                                    <span style={{ width:26, height:26, borderRadius:'50%', background:'rgba(201,169,106,.15)', display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0 }}>
-                                        <svg width="10" height="10" viewBox="0 0 24 24" fill="#C9A96A"><polygon points="6 3 20 12 6 21"/></svg>
-                                    </span>
-                                    أوّل محاضرات مجانية في فرع {b.title}
-                                </a>
                             </div>
-                        )}
+                            <span style={{
+                                fontFamily:"'Cairo',sans-serif", fontSize:12.5, fontWeight: isActive?800:600,
+                                color: isActive ? '#C9A96A' : (dark ? 'rgba(226,232,240,.55)' : 'rgba(14,58,46,.6)'),
+                                transition:'color .4s ease', whiteSpace:'nowrap',
+                            }}>{b.title}</span>
+                        </button>
+                    );
+                })}
+            </div>
+
+            {/* ── لوحة المحتوى — واجهة معبد بعمودين جانبيين، بتضيء عند المرور، وبتتغيّر بترانزيشن دائري عند اختيار فرع جديد ── */}
+            <div ref={panelRef} className="branch-temple-panel" style={{
+                position:'relative', overflow:'hidden', borderRadius:28, minHeight:440,
+                background:'linear-gradient(155deg,#1A3D2E 0%,#1C1916 55%,#141210 100%)',
+                border:'1px solid rgba(201,169,106,.35)',
+            }}>
+                {/* شعار معبد كامل — حجم ضخم، خارج ومقصوص من حدود الكارت، علامة مائية هادية جدًا */}
+                <div className="temple-watermark" style={{ position:'absolute', left:-64, bottom:-56, width:320, height:320, pointerEvents:'none', userSelect:'none', opacity:.09, zIndex:0, transition:'opacity .5s ease, filter .5s ease' }}>
+                    <svg viewBox="0 0 100 85" style={{ width:'100%', height:'100%', fill:'#E8DCC1' }}>
+                        {/* سقف المعبد المثلث المصمت */}
+                        <polygon points="50,5 5,30 95,30"/>
+                        {/* العارضة العلوية العريضة */}
+                        <rect x="3" y="32" width="94" height="6" rx="1"/>
+                        {/* الـ 4 أعمدة العريضة المصمتة */}
+                        <rect x="10" y="40" width="12" height="32" rx="1"/>
+                        <rect x="34" y="40" width="12" height="32" rx="1"/>
+                        <rect x="56" y="40" width="12" height="32" rx="1"/>
+                        <rect x="78" y="40" width="12" height="32" rx="1"/>
+                        {/* القاعدة السفلية السميكة */}
+                        <rect x="2" y="74" width="96" height="7" rx="1"/>
+                    </svg>
+                </div>
+
+                {BRANCHES.map((b, i) => active === i && (
+                    <div key={i} style={{ position:'relative', zIndex:1, padding:'clamp(26px,4vw,44px)', animation:'branchIn .5s ease both' }}>
+                        <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:18, flexWrap:'wrap', gap:12 }}>
+                            <div style={{ display:'inline-flex', alignItems:'center', gap:8, padding:'5px 14px', borderRadius:999, background:'rgba(201,169,106,.12)', border:'1px solid rgba(201,169,106,.3)' }}>
+                                <span style={{ fontSize:12, color:'#C9A96A', fontWeight:700 }}>فرع {b.title}</span>
+                            </div>
+                        </div>
+
+                        <h3 style={{ fontFamily:"'Ruwudu',serif", fontSize:'clamp(24px,2.6vw,34px)', color:'#F3ECDA', margin:'0 0 14px' }}>{b.title}</h3>
+
+                        <p style={{ fontSize:14, lineHeight:2, color:'rgba(226,232,240,.65)', maxWidth:680, margin:'0 0 20px' }}>{b.desc}</p>
+
+                        <div style={{ fontSize:12.5, color:'#8B5E3C', fontWeight:700, marginBottom:10 }}>أبرز محاور الدراسة:</div>
+                        <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(220px,1fr))', gap:'6px 24px', marginBottom:24 }}>
+                            {b.points.map((pt, pi) => (
+                                <div key={pi} style={{ display:'flex', alignItems:'flex-start', gap:8, padding:'6px 0' }}>
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8B5E3C" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink:0, marginTop:3 }}>
+                                        <polyline points="20 6 9 17 4 12"/>
+                                    </svg>
+                                    <span style={{ fontSize:13, color:'rgba(226,232,240,.8)', lineHeight:1.6 }}>{pt}</span>
+                                </div>
+                            ))}
+                        </div>
+
+                        <a href="#courses" style={{ display:'inline-flex', alignItems:'center', gap:9, fontSize:13, color:'#C9A96A', textDecoration:'none', fontWeight:700, paddingTop:18, borderTop:'1px solid rgba(255,255,255,.08)' }}>
+                            <span style={{ width:26, height:26, borderRadius:'50%', background:'rgba(201,169,106,.15)', display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0 }}>
+                                <svg width="10" height="10" viewBox="0 0 24 24" fill="#C9A96A"><polygon points="6 3 20 12 6 21"/></svg>
+                            </span>
+                            أوّل محاضرات مجانية في فرع {b.title}
+                        </a>
                     </div>
-                );
-            })}
+                ))}
+            </div>
+        </div>
+    );
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   WHY-SUBSCRIBE CARDS — بطاقات أثرية حقيقية (صور جاهزة) بدل الرسم بالكود
+═══════════════════════════════════════════════════════════════ */
+function WhySideCard({ img, title, text, dark, aspect = '1774/887' }) {
+    return (
+        <div className="why-side-card" data-reveal style={{ position:'relative', width:'100%', aspectRatio:aspect }}>
+            <img src={encodeURI(`/images/${img}`)} alt="" style={{ display:'block', width:'100%', height:'100%', objectFit:'contain' }} />
+        </div>
+    );
+}
+
+function WhyCenterCard({ img, title, text, dark }) {
+    return (
+        <div data-reveal style={{ position:'relative', width:'100%', maxWidth:340, margin:'0 auto', aspectRatio:'1374/1145' }}>
+            <img src={encodeURI(`/images/${img}`)} alt="الأستاذ أحمد الشعراوي" style={{ display:'block', width:'100%', height:'100%', objectFit:'contain' }} />
         </div>
     );
 }
@@ -1292,8 +1347,8 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
 
     const pageBg = darkMode
         ? `linear-gradient(160deg, #141210 0%, #0a1628 35%, #0E3A2E 65%, #090e1a 100%)`
-        : '#ffffff';
-    const pageEdge = darkMode ? C.dark : '#ffffff';
+        : '#FAF3E3';
+    const pageEdge = darkMode ? C.dark : '#FAF3E3';
 
     /* Theme tokens — text/backgrounds that sit directly on the page bg flip with it.
        Cards keep a permanent dark "stone tablet" look in both modes (by design). */
@@ -1330,12 +1385,21 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
             {/* ══════════════════════════════════════════════════════
                 NAVBAR  —  floating, framed, neoclassical — ثابتة أسفل الشاشة
             ══════════════════════════════════════════════════════ */}
+{/* ── NAVBAR GLOW — توهج بيج خفيف خلف الناف بار ── */}
+            <div aria-hidden="true" style={{
+                position:'fixed', bottom:0, left:'50%', transform:'translateX(-50%)',
+                width:'min(920px, 78vw)', height:180, zIndex:49, pointerEvents:'none',
+                background:'radial-gradient(ellipse 60% 100% at 50% 100%, rgba(232,220,193,.4) 0%, rgba(201,169,106,.18) 40%, transparent 75%)',
+                filter:'blur(6px)',
+            }}/>
+
 {/* ── NAVBAR  —  floating, borderless glassmorphism ── */}
             <nav className="site-nav" style={{
                 position:       'fixed',
                 bottom:         14,
-                left:           8,
-                right:          8,
+                left:           '50%',
+                width:          '60%',
+                transform:      'translateX(-50%)',
                 zIndex:         50,
                 display:        'flex',
                 alignItems:     'center',
@@ -1361,18 +1425,61 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
                     <ThemeToggle dark={darkMode} setDark={setDarkMode} />
                 </div>
 
-                {/* Center: nav links (hidden on mobile via CSS) */}
-                <div className="nav-links" style={{ gap:4, position:'absolute', left:'50%', transform:'translateX(-50%)' }}>
-                    {[{label:'الرئيسية',href:'#'},{label:'المقررات',href:'#courses'},{label:'عن المنصة',href:'#about'}].map(({label,href})=>(
-                        <a key={label} href={href} className="nav-link-item" style={{
-                            color:T.navLink, textDecoration:'none',
-                            fontSize:13, fontWeight:600, padding:'8px 14px', borderRadius:8,
-                            transition:'color .2s ease',
-                        }}
-                        onMouseEnter={e=>{e.currentTarget.style.color=C.gold;}}
-                        onMouseLeave={e=>{e.currentTarget.style.color=T.navLink;}}
-                        >{label}</a>
-                    ))}
+                {/* Center: nav links (hidden on mobile via CSS) — بطاقتان منسدلتان بمعاينة حقيقية + رابط مباشر */}
+                <div className="nav-links" style={{ gap:4, position:'absolute', left:'50%', transform:'translateX(-50%)', alignItems:'center' }}>
+                    <a href="#" className="nav-link-item" style={{
+                        color:T.navLink, textDecoration:'none',
+                        fontFamily:"'Cairo',sans-serif",
+                        fontSize:13, fontWeight:600, padding:'8px 14px', borderRadius:8,
+                        transition:'color .2s ease',
+                    }}
+                    onMouseEnter={e=>{e.currentTarget.style.color=C.gold;}}
+                    onMouseLeave={e=>{e.currentTarget.style.color=T.navLink;}}
+                    >الرئيسية</a>
+
+                    <NavDropdownItem label="المقررات" dark={darkMode} T={T} width={360}>
+                        <p style={{ fontFamily:"'Cairo',sans-serif", fontSize:11, fontWeight:700, letterSpacing:'.12em', color:C.gold, margin:'2px 4px 12px' }}>فروع التاريخ</p>
+                        <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:8 }}>
+                            {BRANCHES.map(b => (
+                                <a key={b.title} href="#branches" style={{
+                                    display:'flex', alignItems:'center', gap:9, padding:'10px 11px', borderRadius:12,
+                                    textDecoration:'none', color:T.text,
+                                    background: darkMode ? 'rgba(201,169,106,.06)' : 'rgba(14,58,46,.04)',
+                                    border:`1px solid ${darkMode ? 'rgba(201,169,106,.12)' : 'rgba(14,58,46,.08)'}`,
+                                    transition:'background .2s ease, transform .2s ease',
+                                }}
+                                onMouseEnter={e=>{e.currentTarget.style.background=darkMode?'rgba(201,169,106,.14)':'rgba(14,58,46,.08)'; e.currentTarget.style.transform='translateY(-2px)';}}
+                                onMouseLeave={e=>{e.currentTarget.style.background=darkMode?'rgba(201,169,106,.06)':'rgba(14,58,46,.04)'; e.currentTarget.style.transform='none';}}
+                                >
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={C.gold} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink:0 }}>{b.icon}</svg>
+                                    <span style={{ fontFamily:"'Cairo',sans-serif", fontSize:12.5, fontWeight:700 }}>{b.title}</span>
+                                </a>
+                            ))}
+                        </div>
+                    </NavDropdownItem>
+
+                    <NavDropdownItem label="عن المنصة" dark={darkMode} T={T} width={280}>
+                        <div style={{ display:'flex', alignItems:'center', gap:12, marginBottom:12 }}>
+                            <div style={{
+                                width:44, height:44, borderRadius:13, flexShrink:0,
+                                background:'linear-gradient(150deg,#0E3A2E,#1F5A45)',
+                                display:'flex', alignItems:'center', justifyContent:'center',
+                                boxShadow:'0 0 0 2px rgba(201,169,106,.25)',
+                            }}>
+                                <span style={{ fontFamily:"'Reem Kufi',sans-serif", fontSize:20, color:'#C9A96A' }}>ش</span>
+                            </div>
+                            <div>
+                                <p style={{ fontFamily:"'Cairo',sans-serif", fontSize:13, fontWeight:800, color:T.text, margin:0 }}>أ. أحمد الشعراوي</p>
+                                <p style={{ fontFamily:"'Cairo',sans-serif", fontSize:11, fontWeight:600, color:C.gold, margin:'2px 0 0' }}>أستاذ التاريخ — الثانوية العامة</p>
+                            </div>
+                        </div>
+                        <p style={{ fontFamily:"'Cairo',sans-serif", fontSize:12, lineHeight:1.9, color:T.textDim2, margin:'0 0 12px' }}>
+                            منصة متكاملة بتفهّمك التاريخ بأسلوب مبسّط، فيديوهات وخرائط توضيحية، ومتابعة حقيقية لتقدمك.
+                        </p>
+                        <a href="#about" style={{ display:'inline-flex', alignItems:'center', gap:5, fontFamily:"'Cairo',sans-serif", fontSize:12, fontWeight:800, color:C.gold, textDecoration:'none' }}>
+                            اعرف أكتر عن المنصة ←
+                        </a>
+                    </NavDropdownItem>
                 </div>
 
                 {/* Left group: auth buttons */}
@@ -1503,86 +1610,28 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
                         <div style={{ width:40, height:1, background:`linear-gradient(90deg,${C.gold},transparent)` }}/>
                     </div>
                 </div>
-                <div className="feat-grid">
-                    {FEATURES.map(({n,title,text,icon}, i)=>{
-                        const accent = TILE_ACCENTS[i % TILE_ACCENTS.length];
-                        const numAr  = ['١','٢','٣','٤','٥','٦','٧','٨'][i] ?? (i+1);
-                        const patId  = `feat-pat-${i}`;
-                        const tileRole = i === 0 ? ' feat-card-big' : i === 6 ? ' feat-card-wide' : '';
-                        return (
-                        <div key={n} className={`feat-item feat-item-${i}`}>
-                            <div className="feat-num-outside" style={{ color: accent }}>{numAr}</div>
-                            <div className={`feat-card${tileRole}`} data-reveal style={{ animationDelay: `${i * 0.06}s` }}>
-                                {/* زخارف أركان رفيعة بجوهرة صغيرة — طراز تذهيب المخطوطات */}
-                                {['tl','tr','bl','br'].map(pos => (
-                                    <div key={pos} className={`feat-corner feat-corner-${pos}`} style={{ color: accent }}>
-                                        <svg viewBox="0 0 30 30" width="30" height="30">
-                                            <path d="M3,19 L3,3 L19,3" stroke="currentColor" strokeWidth="1.4" fill="none" strokeLinecap="round"/>
-                                            <rect x="0" y="0" width="7" height="7" transform="rotate(45 3.2 3.2)" fill="currentColor"/>
-                                        </svg>
-                                    </div>
-                                ))}
-
-                                <div className="feat-card-inner" style={{
-                                    background: darkMode ? 'linear-gradient(155deg,#17251C,#171310)' : 'linear-gradient(155deg,#F7F3E9,#F3ECDA)',
-                                    boxShadow: darkMode ? '0 4px 20px rgba(0,0,0,.3)' : '0 6px 24px rgba(14,58,46,.12)',
-                                    '--frame-c': darkMode ? `${accent}66` : `${accent}99`,
-                                }}>
-                                    {/* نسيج نجمة ثمانية يغطي الكارت كله — بينوّر عند المرور */}
-                                    <svg className="feat-pattern" style={{ position:'absolute', inset:0, width:'100%', height:'100%' }}>
-                                        <defs>
-                                            <pattern id={patId} width="36" height="36" patternUnits="userSpaceOnUse">
-                                                <g stroke={accent} fill="none" strokeWidth="1">
-                                                    <rect x="4" y="4" width="28" height="28"/>
-                                                    <rect x="4" y="4" width="28" height="28" transform="rotate(45 18 18)"/>
-                                                </g>
-                                            </pattern>
-                                        </defs>
-                                        <rect width="100%" height="100%" fill={`url(#${patId})`}/>
-                                    </svg>
-
-                                    {/* شمسة نجمية — ميدالية الأيقونة بطراز رسوم المخطوطات */}
-                                    <div className="feat-medal-wrap">
-                                        <div className="feat-medal">
-                                            <svg className="feat-medal-deco" width="76" height="76" viewBox="0 0 76 76" style={{ position:'absolute', inset:0 }}>
-                                                <circle cx="38" cy="38" r="35" fill="none" stroke={accent} strokeWidth=".7" opacity=".7"/>
-                                                <g stroke={accent} strokeWidth="1" fill="none">
-                                                    <rect x="15" y="15" width="46" height="46"/>
-                                                    <rect x="15" y="15" width="46" height="46" transform="rotate(45 38 38)"/>
-                                                </g>
-                                                <circle cx="38" cy="38" r="24" fill={darkMode ? '#1C1916' : '#ffffff'} stroke={accent} strokeWidth="1.4"/>
-                                            </svg>
-                                            <svg className="feat-icon-svg" viewBox="0 0 24 24" fill="none" stroke={accent} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                                                {icon}
-                                            </svg>
-                                        </div>
-                                    </div>
-
-                                    <div className="feat-body-wrap">
-                                        <div className="feat-title" style={{ color: T.text }}>{title}</div>
-                                        <div className="feat-body" style={{ color: T.textDim2 }}>{text}</div>
-
-                                        <div className="feat-div" style={{ color: accent }}>
-                                            <div className="feat-div-line"/>
-                                            <svg width="10" height="10" viewBox="0 0 18 18" fill="none"><rect x="4" y="4" width="10" height="10" transform="rotate(45 9 9)" stroke="currentColor" strokeWidth="1.6"/></svg>
-                                            <div className="feat-div-line" style={{ background:`linear-gradient(90deg, transparent, currentColor)` }}/>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        );
-                    })}
+                <div className="why-grid">
+                    <div className="why-left">
+                        <WhySideCard {...WHY_FEATURES.around[0]} dark={darkMode} />
+                        <WhySideCard {...WHY_FEATURES.around[1]} dark={darkMode} />
+                    </div>
+                    <div className="why-center">
+                        <WhyCenterCard {...WHY_FEATURES.center} dark={darkMode} />
+                    </div>
+                    <div className="why-right">
+                        <WhySideCard {...WHY_FEATURES.around[2]} dark={darkMode} />
+                        <WhySideCard {...WHY_FEATURES.around[3]} dark={darkMode} />
+                    </div>
                 </div>
             </section>
 
             {/* ══════════════════════════════════════════════════════
-                فروع اللغة العربية — بطاقات متمددة
+                فروع التاريخ — بطاقات متمددة
             ══════════════════════════════════════════════════════ */}
-            <section style={{ padding:'clamp(60px,10vh,100px) 0', position:'relative', zIndex:10 }}>
+            <section id="branches" style={{ padding:'clamp(60px,10vh,100px) 0', position:'relative', zIndex:10 }}>
                 <div style={{ textAlign:'center', marginBottom:48, padding:'0 clamp(24px,5vw,72px)' }}>
-                    <p style={{ fontSize:12, color:C.gold, letterSpacing:'.22em', marginBottom:12 }} data-reveal>▸ خارطة اللغة</p>
-                    <h2 style={{ fontSize:'clamp(26px,3.5vw,52px)', fontWeight:800, margin:0 }} data-reveal>فروع اللغة العربية</h2>
+                    <p style={{ fontSize:12, color:C.gold, letterSpacing:'.22em', marginBottom:12 }} data-reveal>▸ خارطة التاريخ</p>
+                    <h2 style={{ fontSize:'clamp(26px,3.5vw,52px)', fontWeight:800, margin:0 }} data-reveal>فروع التاريخ</h2>
                     <p style={{ fontSize:15, color:T.textDim4, maxWidth:480, margin:'14px auto 0' }} data-reveal>اضغط على أي فرع عشان تعرف هتذاكر فيه إيه قبل أن تبدأ رحلتك.</p>
                 </div>
 
