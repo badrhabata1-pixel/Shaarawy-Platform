@@ -900,47 +900,11 @@ function TeacherHero({ dark }) {
                 transform:'rotate(45deg)', pointerEvents:'none',
             }}/>
 
-            {/* اللوحة الرئيسية — صورة بانورامية بإطار ذهبي احترافي */}
+            {/* مكان اللوحة الرئيسية — هتتحط لاحقًا */}
             <div className="th-img" style={{
                 position:'relative', zIndex:5, width:'100%',
                 display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center',
-            }}>
-                <div className="teacher-hero-img" style={{
-                    width:'100%', aspectRatio:'1920/811', position:'relative', borderRadius:22, overflow:'hidden',
-                    border:`1.5px solid ${dark ? 'rgba(201,169,106,.4)' : 'rgba(201,169,106,.5)'}`,
-                    boxShadow: dark
-                        ? '0 30px 70px rgba(0,0,0,.55), 0 0 0 1px rgba(201,169,106,.12), inset 0 1px 0 rgba(255,255,255,.06)'
-                        : '0 24px 56px rgba(14,58,46,.22), 0 0 0 1px rgba(201,169,106,.18)',
-                }}>
-                    {/* صورة الأستاذ أحمد الشعراوي — هتتحط لاحقًا */}
-
-                    {/* إطار داخلي رفيع — لمسة تذهيب المخطوطات */}
-                    <div style={{ position:'absolute', inset:8, borderRadius:15, border:'1px solid rgba(201,169,106,.35)', pointerEvents:'none', zIndex:3 }}/>
-
-                    {/* زخارف أركان ذهبية */}
-                    {['tl','tr','bl','br'].map(pos => (
-                        <div key={pos} style={{
-                            position:'absolute', width:26, height:26, zIndex:3, color:'#C9A96A', opacity:.85,
-                            top: pos[0]==='t' ? 10 : 'auto', bottom: pos[0]==='b' ? 10 : 'auto',
-                            right: pos[1]==='r' ? 10 : 'auto', left: pos[1]==='l' ? 10 : 'auto',
-                            transform:`scale(${pos[1]==='r'?-1:1},${pos[0]==='b'?-1:1})`,
-                        }}>
-                            <svg viewBox="0 0 30 30" width="26" height="26">
-                                <path d="M3,19 L3,3 L19,3" stroke="currentColor" strokeWidth="1.6" fill="none" strokeLinecap="round"/>
-                                <rect x="0" y="0" width="7" height="7" transform="rotate(45 3.2 3.2)" fill="currentColor"/>
-                            </svg>
-                        </div>
-                    ))}
-
-                    {/* Ground glow */}
-                    <div style={{
-                        position:'absolute', bottom:0, left:'10%', right:'10%', height:55, zIndex:1,
-                        background:`radial-gradient(ellipse at center, rgba(201,169,106,.${dark?'22':'10'}) 0%, transparent 72%)`,
-                        filter:'blur(10px)', pointerEvents:'none',
-                    }}/>
-                </div>
-
-            </div>
+            }}/>
         </div>
     );
 }
