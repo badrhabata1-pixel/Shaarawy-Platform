@@ -335,4 +335,9 @@ table {
         left: 14px !important;
         bottom: 14px !important;
     }
+
+    /* الناف بار في صفحة الهبوط بقت ثابتة أسفل الشاشة، فزرار الواتساب لازم يتحرك فوقها */
+    .wa-float-w {
+        bottom: 92px !important;
+    }
 }

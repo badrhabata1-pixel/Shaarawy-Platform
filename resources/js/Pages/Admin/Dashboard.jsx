@@ -32,12 +32,13 @@ function ManuscriptEdge({ position = 'top', color = '#C9A96A' }) {
 
 /** رموز إيموجي تاريخية خفيفة — لمسة تزيينية بشرية دافئة تكمّل الزخرفة الهندسية
     بدون ما تتزاحم مع المحتوى؛ موضوعة بعناية في زوايا اللوحات الخضراء الكبيرة */
-function EmojiAccent({ emoji, size = 20, opacity = 0.32, rotate = 0, style = {} }) {
+function EmojiAccent({ emoji, size = 34, opacity = 0.5, rotate = 0, style = {} }) {
     return (
         <span aria-hidden="true" style={{
             position: 'absolute', fontSize: size, opacity, lineHeight: 1,
             pointerEvents: 'none', userSelect: 'none',
-            filter: 'grayscale(0.1) saturate(0.9)',
+            /* لازم نحدد خط إيموجي صريح، لو ورثت خط Cairo هيرسم الرموز مفرغة رمادية بدل الشكل الملوّن */
+            fontFamily: '"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji",sans-serif',
             transform: `rotate(${rotate}deg)`,
             ...style,
         }}>{emoji}</span>
@@ -508,7 +509,7 @@ export default function Dashboard({ stats, latestStudents, monthlyData, adminNam
     const s   = stats          || {};
     const mo  = monthlyData?.length ? monthlyData : Array.from({ length: 6 }, (_, i) => ({ month: `ش${i + 1}`, revenue: 0, students: 0 }));
     const stu = latestStudents || [];
-    const nm  = adminName      || 'الأستاذ محمد منصور';
+    const nm  = adminName      || 'الأستاذ أحمد الشعراوي';
 
     const cards = [
         { variant: 'feature', svgContent: '<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>', label: 'إجمالي الطلاب',   value: s.students    ?? 0, sub: 'طالب مسجل في المنصة',   accent: '#1F5A45', delay: 0.1 },
@@ -568,19 +569,19 @@ export default function Dashboard({ stats, latestStudents, monthlyData, adminNam
                     <PyramidMotif opacity={0.14} />
 
                     {/* لمسات إيموجي تاريخية خفيفة — موزّعة بعناية في الزوايا الفاضية */}
-                    <EmojiAccent emoji="📜" size={19} opacity={0.28} rotate={-12} style={{ top: 16, left: '40%' }} />
-                    <EmojiAccent emoji="👑" size={20} opacity={0.3}  rotate={8}   style={{ top: 14, right: 18 }} />
-                    <EmojiAccent emoji="🏺" size={22} opacity={0.26} rotate={-6}  style={{ bottom: 16, right: 26 }} />
-                    <EmojiAccent emoji="🏛️" size={18} opacity={0.2}  rotate={10}  style={{ bottom: 44, left: '47%' }} />
+                    <EmojiAccent emoji="📜" size={38} opacity={0.5}  rotate={-12} style={{ top: 12, left: '35%' }} />
+                    <EmojiAccent emoji="👑" size={34} opacity={0.55} rotate={10}  style={{ top: 10, right: 16 }} />
+                    <EmojiAccent emoji="🏺" size={40} opacity={0.5}  rotate={-6}  style={{ bottom: 12, right: 22 }} />
+                    <EmojiAccent emoji="🏛️" size={32} opacity={0.4}  rotate={8}   style={{ bottom: 40, left: '48%' }} />
 
                     <div aria-hidden="true" style={{
                         position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center',
                         pointerEvents: 'none', overflow: 'hidden', zIndex: 0,
                     }}>
                         <span style={{
-                            fontSize: 58, fontWeight: 900, fontFamily: "'Cairo', sans-serif",
+                            fontSize: 60, fontWeight: 700, fontFamily: "'Reem Kufi', 'Cairo', sans-serif",
                             color: 'rgba(201,169,106,0.4)',
-                            whiteSpace: 'nowrap', letterSpacing: '0.02em',
+                            whiteSpace: 'nowrap', letterSpacing: '0.04em',
                         }}>رحلة في التاريخ</span>
                     </div>
 
@@ -656,8 +657,8 @@ export default function Dashboard({ stats, latestStudents, monthlyData, adminNam
                     }}>
                         <PyramidMotif opacity={0.09} />
                         <ManuscriptEdge position="top" />
-                        <EmojiAccent emoji="🪙" size={19} opacity={0.25} rotate={-10} style={{ top: 16, left: '50%', transform: 'translateX(-50%) rotate(-10deg)' }} />
-                        <EmojiAccent emoji="📜" size={17} opacity={0.18} rotate={9}   style={{ bottom: 18, right: 22 }} />
+                        <EmojiAccent emoji="🪙" size={36} opacity={0.5}  rotate={-10} style={{ top: 12, left: '50%', transform: 'translateX(-50%) rotate(-10deg)' }} />
+                        <EmojiAccent emoji="📜" size={30} opacity={0.38} rotate={9}   style={{ bottom: 14, right: 20 }} />
                         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', position: 'relative', zIndex: 1 }}>
                             <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                                 <EightPointStar color="#C9A96A" size={14} filled />

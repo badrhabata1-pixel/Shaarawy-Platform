@@ -8,18 +8,18 @@ gsap.registerPlugin(ScrollTrigger);
 
 /* ── Brand palette ───────────────────────────────────────────── */
 const C = {
-    gold:   '#2fbcd4',
-    amber:  '#009688',
-    dark:   '#050b15',
-    mid:    '#0c1929',
-    navy:   '#1b3a60',
-    stone:  '#e2e8f0',
-    white:  '#eef2f7',
+    gold:   '#C9A96A',
+    amber:  '#8B5E3C',
+    dark:   '#141210',
+    mid:    '#1C1916',
+    navy:   '#0E3A2E',
+    stone:  '#E3D9C4',
+    white:  '#F3ECDA',
 };
 
 /* ── Static data ─────────────────────────────────────────────── */
 const FEATURES = [
-    { n:'01', title:'شرح بسيط ومفهوم',              text:'الأستاذ بيشرح بأسلوب سهل وممتع — قواعد اللغة العربية هتبقى سهلة في إيدك',
+    { n:'01', title:'شرح بسيط ومفهوم',              text:'الأستاذ بيشرح بأسلوب سهل وممتع — أحداث التاريخ هتبقى واضحة ومرتبة في دماغك',
         icon:(<path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>) },
     { n:'02', title:'فيديوهات ورسومات توضيحية',     text:'تعلّم بصرياً بخرائط ذهنية وأمثلة وشواهد حية وشرح مرئي عالي الجودة',
         icon:(<><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></>) },
@@ -27,7 +27,7 @@ const FEATURES = [
         icon:(<><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></>) },
     { n:'04', title:'الأستاذ بيتابعك بالتفصيل',     text:'من خلال نتايج أسئلة التركيز الأستاذ بيشوف مين فاهم ومين محتاج مساعدة — متابعة حقيقية لكل طالب لوحده',
         icon:(<><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></>) },
-    { n:'05', title:'اختبارات بنظام الوزارة',        text:'نماذج نحو وبلاغة وأدب بنفس أسلوب الوزارة عشان تتعود على الجو الفعلي وتدخل الامتحان بثقة',
+    { n:'05', title:'اختبارات بنظام الوزارة',        text:'نماذج امتحانات تاريخ بنفس أسلوب الثانوية العامة والبكالوريا عشان تتعود على الجو الفعلي وتدخل الامتحان بثقة',
         icon:(<><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></>) },
     { n:'06', title:'لوحة تحكم سهلة للطالب',        text:'كل حاجة في مكانها — محاضراتك، تقدمك، درجاتك، ومدفوعاتك في شاشة واحدة مرتبة وواضحة',
         icon:(<><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></>) },
@@ -38,72 +38,72 @@ const FEATURES = [
 ];
 
 /* ألوان متدرّجة لشارات الأرقام وزخرفة البلاطات — بالتبادل */
-const TILE_ACCENTS = ['#2fbcd4', '#1b8fa8', '#1b3a60', '#204080', '#009688'];
+const TILE_ACCENTS = ['#C9A96A', '#1F5A45', '#0E3A2E', '#2D6B52', '#8B5E3C'];
 
 /* COURSES: populated dynamically from DB (passed as Inertia prop) */
 
-/* فروع اللغة العربية — بيانات البطاقات المتمددة */
+/* فروع التاريخ — بيانات البطاقات المتمددة */
 const BRANCHES = [
     {
-        title: 'النحو',
-        icon: (<><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></>),
-        desc: 'النحو هو العلم اللي بيضبط أواخر الكلمات ويحدد موقعها الإعرابي في الجملة — هو العمود الفقري للغة العربية اللي بيحفظها من اللحن والخطأ.',
+        title: 'مصر القديمة',
+        icon: (<><path d="M3 21h18"/><path d="M12 3 3 19h18z"/></>),
+        desc: 'حضارة مصر الفرعونية هي أصل الحكاية — بندرس فيها الدول القديمة والوسطى والحديثة وأعظم ملوكها وإنجازاتهم الخالدة.',
         points: [
-            'إعراب الجملة الاسمية والفعلية',
-            'حالات الرفع والنصب والجر والجزم',
-            'المعارف والنكرات وأنواعهما',
-            'الأفعال الناقصة والحروف الناسخة',
-            'أدوات الشرط والاستثناء',
-            'التمييز والحال وأنواعهما',
+            'عصور ما قبل الأسرات وتوحيد القطرين',
+            'الدولة القديمة وعصر بناء الأهرامات',
+            'الدولة الوسطى والحديثة وأشهر ملوكها',
+            'الديانة والفكر والفنون عند المصري القديم',
+            'الكتابة الهيروغليفية ومنجزات الحضارة',
+            'العلاقات الخارجية والحروب في العصر الفرعوني',
         ],
     },
     {
-        title: 'البلاغة',
-        icon: (<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>),
-        desc: 'البلاغة فن إيصال المعنى بأجمل صورة وأبلغ أسلوب — بندرس فيها علم البيان والمعاني والبديع عشان نفهم سر جمال النص العربي.',
+        title: 'التاريخ الإسلامي',
+        icon: (<><path d="M12 2a10 10 0 1 0 10 10 8 8 0 1 1-10-10z"/></>),
+        desc: 'من البعثة النبوية لقيام الدول الإسلامية الكبرى — بندرس فيها أهم الأحداث والشخصيات اللي شكّلت التاريخ الإسلامي.',
         points: [
-            'علم البيان: التشبيه والاستعارة والكناية',
-            'علم المعاني: الإيجاز والإطناب',
-            'أساليب الخبر والإنشاء',
-            'علم البديع: المحسنات اللفظية والمعنوية',
-            'التحليل البلاغي للنصوص الأدبية',
+            'العصر النبوي والخلافة الراشدة',
+            'الدولتان الأموية والعباسية',
+            'الفتوحات الإسلامية وأثرها الحضاري',
+            'الحروب الصليبية ودور صلاح الدين',
+            'الدولة العثمانية ومصر الإسلامية',
             'التطبيق على نماذج امتحانات الوزارة',
         ],
     },
     {
-        title: 'الأدب',
-        icon: (<><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></>),
-        desc: 'الأدب مرآة الحياة العربية عبر العصور — بندرس فيه أهم النصوص وأعلام كل عصر أدبي من الجاهلية لحد العصر الحديث.',
+        title: 'الحضارات القديمة',
+        icon: (<><path d="M3 21V9l9-6 9 6v12"/><path d="M9 21v-8h6v8"/></>),
+        desc: 'رحلة عبر أعظم حضارات العالم القديم — بندرس فيها بلاد الرافدين واليونان والرومان وتأثيرهم على مسار التاريخ الإنساني.',
         points: [
-            'العصور الأدبية: الجاهلي، الإسلامي، الأموي، العباسي، الحديث',
-            'أعلام الأدب وأشهر أعمالهم',
-            'خصائص كل عصر أدبي وسماته',
-            'فنون النثر: المقالة والقصة والرواية',
-            'تحليل النصوص الأدبية ومناسباتها',
+            'حضارة بلاد الرافدين (سومر وبابل وآشور)',
+            'الحضارة الفينيقية والكنعانية',
+            'الحضارة اليونانية ودويلات المدن',
+            'الحضارة الرومانية وامتدادها',
+            'التبادل الحضاري بين الشرق والغرب',
         ],
     },
     {
-        title: 'القراءة',
-        icon: (<><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></>),
-        desc: 'القراءة مهارة أساسية بتنمّي حصيلتك اللغوية وفهمك للنصوص — بندرب فيها على القراءة الواعية والاستيعاب والتحليل لأي نص جديد.',
+        title: 'التاريخ الحديث',
+        icon: (<><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18"/><path d="M8 2v4"/><path d="M16 2v4"/></>),
+        desc: 'من الحملة الفرنسية لمصر الحديثة — بندرس فيها نهضة محمد علي والاحتلال البريطاني وثورات مصر عبر القرنين الأخيرين.',
         points: [
-            'مهارات الفهم القرائي',
-            'استخراج الأفكار الرئيسية والفرعية',
-            'التحليل والاستنتاج من النص',
-            'الثروة اللفظية ومعاني المفردات',
-            'نماذج قراءة متنوعة: علمية وأدبية واجتماعية',
+            'الحملة الفرنسية على مصر وآثارها',
+            'عصر محمد علي وبناء الدولة الحديثة',
+            'الاحتلال البريطاني والحركة الوطنية',
+            'ثورة ١٩١٩ وثورة ٢٣ يوليو',
+            'مصر في العصر الحديث والمعاصر',
         ],
     },
     {
-        title: 'الشعر',
-        icon: (<><path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z"/><line x1="16" y1="8" x2="2" y2="22"/><line x1="17.5" y1="15" x2="9" y2="15"/></>),
-        desc: 'الشعر ديوان العرب وأصدق تعبير عن وجدانهم — بندرس فيه أشهر القصائد وأعاريض الخليل وأغراض الشعر العربي عبر العصور.',
+        title: 'تاريخ أوروبا',
+        icon: (<><circle cx="12" cy="12" r="9"/><path d="M12 3v18"/><path d="M3 12h18"/></>),
+        desc: 'أهم محطات التاريخ الأوروبي وتأثيرها على العالم — من عصر النهضة للحربين العالميتين وتشكّل النظام العالمي الحديث.',
         points: [
-            'بحور الشعر وعلم العروض',
-            'أغراض الشعر: مدح، هجاء، رثاء، غزل، حكمة',
-            'شرح وتحليل أشهر القصائد',
-            'الصورة الشعرية والخيال الأدبي',
-            'شعراء بارزون عبر العصور',
+            'عصر النهضة الأوروبية والاكتشافات الجغرافية',
+            'الثورة الصناعية وأثرها الاقتصادي',
+            'الحرب العالمية الأولى والثانية',
+            'الاستعمار الأوروبي للعالم العربي',
+            'نشأة المنظمات الدولية الحديثة',
         ],
     },
 ];
@@ -111,20 +111,20 @@ const BRANCHES = [
 /* FILTERS: built dynamically inside the component from live units */
 
 const PORTALS = [
-    { hero: encodeURI('/images/منصور ( نجيب ).png'),    title:'تنظيم الدروس والكورسات',      text:'المنهج كله مرتب قدامك — نحو وبلاغة وأدب ونصوص في مكان واحد. مش هتضيع في الكتاب تاني' },
-    { hero: encodeURI('/images/منصور (طه حسين ).png'),  title:'دروس بالفيديو والصور التوضيحية', text:'مش هتحفظ القاعدة، هتفهمها — أمثلة وشواهد حية بتخليك حاسس باللغة مش بس عارفها'    },
+    { hero: encodeURI('/images/منصور ( نجيب ).png'),    title:'تنظيم الدروس والكورسات',      text:'المنهج كله مرتب قدامك — عصور ودول وأحداث في مكان واحد ومترتبة زمنيًا. مش هتضيع في الكتاب تاني' },
+    { hero: encodeURI('/images/منصور (طه حسين ).png'),  title:'دروس بالفيديو والخرائط التوضيحية', text:'مش هتحفظ التاريخ، هتفهمه — خرائط وجداول زمنية وشواهد حية بتخليك حاسس بالحدث مش بس عارفه'    },
     { hero: encodeURI('/images/طربوش احمر.png'),         title:'تطبيقات وتمارين تفاعلية',       text:'ذاكر وجرّب دماغك — أسئلة بعد كل درس عشان المعلومة تتثبّت وتلاقي نفسك جاهز لأي سؤال'  },
 ];
 
-/* ── History particles config ────────────────────────────────── */
+/* ── History particles config — رموز أثرية عائمة بديلة عن الحروف العربية ── */
 const PARTICLES = [
-    { sym:'ض',   l:5,  d:14, dl:0,   s:13 },
-    { sym:'✦',   l:18, d:17, dl:1,   s:10 },
-    { sym:'ع',   l:32, d:12, dl:4,   s:12 },
+    { sym:'✦',   l:5,  d:14, dl:0,   s:13 },
+    { sym:'⟡',   l:18, d:17, dl:1,   s:10 },
+    { sym:'✧',   l:32, d:12, dl:4,   s:12 },
     { sym:'◆',   l:47, d:18, dl:1.5, s:9  },
-    { sym:'ب',   l:61, d:13, dl:5,   s:12 },
+    { sym:'⬩',   l:61, d:13, dl:5,   s:12 },
     { sym:'❖',   l:74, d:16, dl:3.5, s:11 },
-    { sym:'م',   l:86, d:14, dl:3.8, s:13 },
+    { sym:'✥',   l:86, d:14, dl:3.8, s:13 },
     { sym:'✺',   l:93, d:9,  dl:5.5, s:10 },
 ];
 
@@ -137,8 +137,8 @@ function PageStyles() {
             h1, h2, h3 { font-family: 'Ruwudu', serif !important; letter-spacing: .04em; }
             .hero-welcome-img { font-family: 'Aref Ruqaa', serif !important; letter-spacing: .01em; }
             ::-webkit-scrollbar { width:6px; }
-            ::-webkit-scrollbar-track { background:#050b15; }
-            ::-webkit-scrollbar-thumb { background:rgba(47,188,212,.35); border-radius:3px; }
+            ::-webkit-scrollbar-track { background:#141210; }
+            ::-webkit-scrollbar-thumb { background:rgba(201,169,106,.35); border-radius:3px; }
 
             @keyframes pingRing  { 0%{transform:scale(1);opacity:.7} 100%{transform:scale(2.4);opacity:0} }
             @keyframes float     { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
@@ -158,8 +158,8 @@ function PageStyles() {
             @keyframes teacherGlow   { 0%,100%{opacity:.55;transform:translateX(-50%) scale(1)} 50%{opacity:.82;transform:translateX(-50%) scale(1.09)} }
             @keyframes rayRotate     { to{transform:rotate(360deg)} }
             @keyframes orbitBob      { 0%,100%{transform:translateY(0) scale(1)} 50%{transform:translateY(-10px) scale(1.06)} }
-            @keyframes badgeShimmer  { 0%,100%{box-shadow:0 6px 24px rgba(0,0,0,.35),0 0 0 1px rgba(47,188,212,.14),inset 0 1px 0 rgba(47,188,212,.2)} 50%{box-shadow:0 8px 32px rgba(0,0,0,.45),0 0 16px rgba(47,188,212,.18),0 0 0 1px rgba(47,188,212,.22),inset 0 1px 0 rgba(47,188,212,.28)} }
-            @keyframes waveGlowPulse { 0%,100%{filter:drop-shadow(0 0 5px rgba(47,188,212,.65))} 50%{filter:drop-shadow(0 0 18px rgba(47,188,212,1))} }
+            @keyframes badgeShimmer  { 0%,100%{box-shadow:0 6px 24px rgba(0,0,0,.35),0 0 0 1px rgba(201,169,106,.14),inset 0 1px 0 rgba(201,169,106,.2)} 50%{box-shadow:0 8px 32px rgba(0,0,0,.45),0 0 16px rgba(201,169,106,.18),0 0 0 1px rgba(201,169,106,.22),inset 0 1px 0 rgba(201,169,106,.28)} }
+            @keyframes waveGlowPulse { 0%,100%{filter:drop-shadow(0 0 5px rgba(201,169,106,.65))} 50%{filter:drop-shadow(0 0 18px rgba(201,169,106,1))} }
 
             /* Navbar border glow pulse */
             @keyframes navGlow { 0%,100%{opacity:.6} 50%{opacity:1} }
@@ -208,7 +208,7 @@ function PageStyles() {
             .feat-card:hover { transform:translateY(-8px); }
             .feat-card-inner { position:relative; overflow:hidden; border-radius:16px; padding:40px 26px 26px;
                                 height:100%; display:flex; flex-direction:column; justify-content:center;
-                                border:1px solid var(--frame-c, rgba(47,188,212,.4)); }
+                                border:1px solid var(--frame-c, rgba(201,169,106,.4)); }
             .feat-card-wide .feat-card-inner { flex-direction:row; align-items:center; gap:22px; padding:26px 30px; text-align:right; }
             .feat-card-wide .feat-medal-wrap { margin-bottom:0; flex-shrink:0; }
             .feat-card-wide .feat-body-wrap  { text-align:right; }
@@ -220,7 +220,7 @@ function PageStyles() {
             .feat-card-big .feat-body        { font-size:14px; }
             .feat-card-inner::before {
                 content:''; position:absolute; inset:7px; border-radius:9px;
-                border:1px solid var(--frame-c, rgba(47,188,212,.4)); opacity:.55;
+                border:1px solid var(--frame-c, rgba(201,169,106,.4)); opacity:.55;
                 pointer-events:none; z-index:1; transition:opacity .5s ease;
             }
             .feat-card:hover .feat-card-inner::before { opacity:1; }
@@ -272,7 +272,7 @@ function PageStyles() {
             .nav-link-item { position:relative; }
             .nav-link-item::after {
                 content:''; position:absolute; bottom:3px; right:14px; left:14px; height:2px; border-radius:2px;
-                background:linear-gradient(90deg,#2fbcd4,#009688); transform:scaleX(0); transform-origin:center;
+                background:linear-gradient(90deg,#C9A96A,#8B5E3C); transform:scaleX(0); transform-origin:center;
                 transition:transform .35s cubic-bezier(.22,1,.36,1);
             }
             .nav-link-item:hover::after { transform:scaleX(1); }
@@ -280,9 +280,9 @@ function PageStyles() {
             /* زر تسجيل الدخول — إطار شفاف يمتلئ بلطف عند المرور */
             .nav-login-btn { position:relative; overflow:hidden; }
             .nav-login-btn:hover {
-                color:#2fbcd4 !important; border-color:#2fbcd4 !important;
-                background:rgba(47,188,212,.1) !important; transform:translateY(-1px);
-                box-shadow:0 4px 16px rgba(47,188,212,.18);
+                color:#C9A96A !important; border-color:#C9A96A !important;
+                background:rgba(201,169,106,.1) !important; transform:translateY(-1px);
+                box-shadow:0 4px 16px rgba(201,169,106,.18);
             }
             .nav-login-btn:active { transform:translateY(0) scale(.97); }
 
@@ -296,7 +296,7 @@ function PageStyles() {
             .nav-cta-btn:hover::after { transform:translateX(120%); }
             .nav-cta-btn:hover {
                 transform:translateY(-2px) scale(1.025) !important;
-                box-shadow:0 10px 30px rgba(47,188,212,.55), 0 0 0 1px rgba(255,255,255,.12), inset 0 1px 0 rgba(255,255,255,.4) !important;
+                box-shadow:0 10px 30px rgba(201,169,106,.55), 0 0 0 1px rgba(255,255,255,.12), inset 0 1px 0 rgba(255,255,255,.4) !important;
             }
             .nav-cta-btn:active { transform:translateY(0) scale(.98) !important; }
             @media(max-width:1024px){
@@ -380,10 +380,10 @@ function HistoryBackground({ dark = true }) {
         <div style={{ position:'fixed', inset:0, zIndex:0, overflow:'hidden', pointerEvents:'none' }}>
 
             {/* Color gradient orbs — navy in dark mode, warm gold-tinted in light mode */}
-            <div style={{ position:'absolute', width:900, height:900, right:'-10%', top:'0%',    borderRadius:'50%', background: dark ? 'radial-gradient(circle, rgba(27,58,96,.9) 0%, transparent 70%)'  : 'radial-gradient(circle, rgba(47,188,212,.16) 0%, transparent 70%)', animation:'orbPulse1 18s ease-in-out infinite' }}/>
-            <div style={{ position:'absolute', width:700, height:700, left:'0%',   bottom:'5%',  borderRadius:'50%', background: dark ? 'radial-gradient(circle, rgba(0,150,136,.06) 0%, transparent 70%)' : 'radial-gradient(circle, rgba(0,150,136,.10) 0%, transparent 70%)', animation:'orbPulse2 22s ease-in-out infinite' }}/>
-            <div style={{ position:'absolute', width:500, height:500, left:'38%',  top:'30%',    borderRadius:'50%', background: dark ? 'radial-gradient(circle, rgba(47,188,212,.07) 0%, transparent 70%)' : 'radial-gradient(circle, rgba(47,188,212,.12) 0%, transparent 70%)', animation:'orbPulse3 26s ease-in-out infinite' }}/>
-            <div style={{ position:'absolute', width:400, height:400, right:'20%', bottom:'20%', borderRadius:'50%', background: dark ? 'radial-gradient(circle, rgba(12,25,41,.8) 0%, transparent 70%)'  : 'radial-gradient(circle, rgba(226,232,240,.4) 0%, transparent 70%)' }}/>
+            <div style={{ position:'absolute', width:900, height:900, right:'-10%', top:'0%',    borderRadius:'50%', background: dark ? 'radial-gradient(circle, rgba(14,58,46,.9) 0%, transparent 70%)'  : 'radial-gradient(circle, rgba(201,169,106,.16) 0%, transparent 70%)', animation:'orbPulse1 18s ease-in-out infinite' }}/>
+            <div style={{ position:'absolute', width:700, height:700, left:'0%',   bottom:'5%',  borderRadius:'50%', background: dark ? 'radial-gradient(circle, rgba(139,94,60,.06) 0%, transparent 70%)' : 'radial-gradient(circle, rgba(139,94,60,.10) 0%, transparent 70%)', animation:'orbPulse2 22s ease-in-out infinite' }}/>
+            <div style={{ position:'absolute', width:500, height:500, left:'38%',  top:'30%',    borderRadius:'50%', background: dark ? 'radial-gradient(circle, rgba(201,169,106,.07) 0%, transparent 70%)' : 'radial-gradient(circle, rgba(201,169,106,.12) 0%, transparent 70%)', animation:'orbPulse3 26s ease-in-out infinite' }}/>
+            <div style={{ position:'absolute', width:400, height:400, right:'20%', bottom:'20%', borderRadius:'50%', background: dark ? 'radial-gradient(circle, rgba(28,25,22,.8) 0%, transparent 70%)'  : 'radial-gradient(circle, rgba(226,232,240,.4) 0%, transparent 70%)' }}/>
 
             {/* Subtle grid lines (papyrus texture feel) */}
             <svg style={{ position:'absolute', inset:0, width:'100%', height:'100%', opacity: dark ? .025 : .05 }}>
@@ -454,12 +454,12 @@ function LocationCard({ name, num, icon, address, detail, featured, dark }) {
                 position:'relative', overflow:'hidden', borderRadius:18, textAlign:'center',
                 padding: featured ? '36px 26px 30px' : '30px 24px 26px',
                 background: dark
-                    ? (active ? 'linear-gradient(155deg,#101f36,#0a1524)' : 'linear-gradient(155deg,#0c1929,#080f1c)')
-                    : (active ? 'linear-gradient(155deg,#f4f8fb,#e9f1f6)' : '#ffffff'),
-                border:`1px solid ${active ? accent+'99' : dark ? 'rgba(47,188,212,.16)' : 'rgba(47,188,212,.25)'}`,
+                    ? (active ? 'linear-gradient(155deg,#1A2A20,#171310)' : 'linear-gradient(155deg,#1C1916,#120F0B)')
+                    : (active ? 'linear-gradient(155deg,#F7F3E9,#F3ECDA)' : '#ffffff'),
+                border:`1px solid ${active ? accent+'99' : dark ? 'rgba(201,169,106,.16)' : 'rgba(201,169,106,.25)'}`,
                 boxShadow: active
                     ? `0 18px 48px rgba(0,0,0,${dark?'.5':'.1'}), inset 0 1px 0 ${accent}22`
-                    : dark ? '0 4px 20px rgba(0,0,0,.3)' : '0 2px 16px rgba(27,58,96,.06)',
+                    : dark ? '0 4px 20px rgba(0,0,0,.3)' : '0 2px 16px rgba(14,58,46,.06)',
                 transition:'all .45s cubic-bezier(.22,1,.36,1)',
             }}>
                 {/* إطار داخلي مزدوج */}
@@ -489,7 +489,7 @@ function LocationCard({ name, num, icon, address, detail, featured, dark }) {
                             <rect x="14" y="14" width="38" height="38"/>
                             <rect x="14" y="14" width="38" height="38" transform="rotate(45 33 33)"/>
                         </g>
-                        <circle cx="33" cy="33" r="20" fill={dark ? '#0c1929' : '#ffffff'} stroke={accent} strokeWidth="1.3"/>
+                        <circle cx="33" cy="33" r="20" fill={dark ? '#1C1916' : '#ffffff'} stroke={accent} strokeWidth="1.3"/>
                     </svg>
                     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={accent} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" style={{ position:'relative', zIndex:1 }}>
                         <path d={icon}/>
@@ -512,7 +512,7 @@ function LocationCard({ name, num, icon, address, detail, featured, dark }) {
 
                 {/* العنوان والتفاصيل */}
                 <div style={{ fontSize:13, fontWeight:700, color: dark ? 'rgba(226,232,240,.75)' : C.navy, marginBottom:5, lineHeight:1.55, position:'relative', zIndex:2 }}>{address}</div>
-                <div style={{ fontSize:12, color: dark ? 'rgba(226,232,240,.44)' : 'rgba(27,58,96,.55)', lineHeight:1.8, position:'relative', zIndex:2 }}>{detail}</div>
+                <div style={{ fontSize:12, color: dark ? 'rgba(226,232,240,.44)' : 'rgba(14,58,46,.55)', lineHeight:1.8, position:'relative', zIndex:2 }}>{detail}</div>
             </div>
         </div>
     );
@@ -526,15 +526,15 @@ function SocialCard({ href, label, handle, glow, borderHover, icon, dark = true 
     const accent = borderHover;
 
     const cardBg = dark
-        ? (hovered ? 'linear-gradient(155deg,#101f36,#0a1524)' : 'linear-gradient(155deg,#0c1929,#080f1c)')
-        : (hovered ? 'linear-gradient(155deg,#f4f8fb,#e9f1f6)' : '#ffffff');
-    const cardBorder  = hovered ? accent : (dark ? 'rgba(47,188,212,.16)' : 'rgba(27,58,96,.13)');
+        ? (hovered ? 'linear-gradient(155deg,#1A2A20,#171310)' : 'linear-gradient(155deg,#1C1916,#120F0B)')
+        : (hovered ? 'linear-gradient(155deg,#F7F3E9,#F3ECDA)' : '#ffffff');
+    const cardBorder  = hovered ? accent : (dark ? 'rgba(201,169,106,.16)' : 'rgba(14,58,46,.13)');
     const cardShadow  = hovered
         ? `0 16px 44px rgba(0,0,0,${dark?'.5':'.1'}), 0 0 30px ${glow}`
-        : (dark ? '0 4px 20px rgba(0,0,0,.3)' : '0 2px 16px rgba(27,58,96,.06)');
-    const labelColor  = hovered ? '#009688' : (dark ? 'rgba(226,232,240,.85)' : C.navy);
-    const handleColor = dark ? 'rgba(226,232,240,.35)' : 'rgba(27,58,96,.4)';
-    const ctaColor    = hovered ? '#009688' : (dark ? 'rgba(47,188,212,.42)' : 'rgba(27,58,96,.38)');
+        : (dark ? '0 4px 20px rgba(0,0,0,.3)' : '0 2px 16px rgba(14,58,46,.06)');
+    const labelColor  = hovered ? '#8B5E3C' : (dark ? 'rgba(226,232,240,.85)' : C.navy);
+    const handleColor = dark ? 'rgba(226,232,240,.35)' : 'rgba(14,58,46,.4)';
+    const ctaColor    = hovered ? '#8B5E3C' : (dark ? 'rgba(201,169,106,.42)' : 'rgba(14,58,46,.38)');
 
     return (
         <a
@@ -578,9 +578,9 @@ function SocialCard({ href, label, handle, glow, borderHover, icon, dark = true 
                         <rect x="13" y="13" width="38" height="38"/>
                         <rect x="13" y="13" width="38" height="38" transform="rotate(45 32 32)"/>
                     </g>
-                    <circle cx="32" cy="32" r="19" fill={dark?'rgba(47,188,212,.06)':'rgba(27,58,96,.04)'} stroke={accent} strokeWidth="1.2"/>
+                    <circle cx="32" cy="32" r="19" fill={dark?'rgba(201,169,106,.06)':'rgba(14,58,46,.04)'} stroke={accent} strokeWidth="1.2"/>
                 </svg>
-                <div style={{ position:'relative', zIndex:1, color: hovered ? '#009688' : '#2fbcd4', display:'flex', transition:'color .3s ease' }}>
+                <div style={{ position:'relative', zIndex:1, color: hovered ? '#8B5E3C' : '#C9A96A', display:'flex', transition:'color .3s ease' }}>
                     {icon}
                 </div>
             </div>
@@ -624,13 +624,13 @@ const HIST_ICONS = [
     { x:'6%',  y:'88%', rot:5,   sz:34, d:'4.3s', dl:'1.2s', type:'book'    },
 ];
 
-/* حروف عربية عائمة — بأصل الحروف اللي فوقها نقطة (ن، ب، ث، ي، ذ) */
+/* رموز أثرية عائمة — نجوم ومعينات هندسية بطراز زخرفة المخطوطات القديمة */
 const ARABIC_GLYPHS = [
-    { ch:'ن', x:'2%',  y:'20%', rot:-8,  sz:38, d:'4.6s', dl:'.2s' },
-    { ch:'ب', x:'90%', y:'16%', rot:9,   sz:32, d:'4.1s', dl:'.7s' },
-    { ch:'ث', x:'0%',  y:'66%', rot:6,   sz:34, d:'5.0s', dl:'1.1s' },
-    { ch:'ي', x:'92%', y:'62%', rot:-10, sz:30, d:'3.8s', dl:'.4s' },
-    { ch:'ذ', x:'46%', y:'0%',  rot:0,   sz:28, d:'4.4s', dl:'1.5s' },
+    { ch:'✦', x:'2%',  y:'20%', rot:-8,  sz:38, d:'4.6s', dl:'.2s' },
+    { ch:'◆', x:'90%', y:'16%', rot:9,   sz:32, d:'4.1s', dl:'.7s' },
+    { ch:'❖', x:'0%',  y:'66%', rot:6,   sz:34, d:'5.0s', dl:'1.1s' },
+    { ch:'✺', x:'92%', y:'62%', rot:-10, sz:30, d:'3.8s', dl:'.4s' },
+    { ch:'✧', x:'46%', y:'0%',  rot:0,   sz:28, d:'4.4s', dl:'1.5s' },
 ];
 
 /* نقاط الحروف العائمة — زخرفة مستوحاة من نقطة الحروف العربية */
@@ -715,11 +715,11 @@ function CourseCard({ unit, dark, auth }) {
             style={{
                 position:'relative', direction:'rtl', display:'flex', flexDirection:'column',
                 borderRadius:22, overflow:'hidden',
-                background: dark ? 'linear-gradient(165deg,#101f36 0%,#0a1524 60%,#080f1c 100%)' : '#ffffff',
-                border:`1px solid ${hovered ? accent+'88' : dark ? 'rgba(47,188,212,.16)' : 'rgba(27,58,96,.12)'}`,
+                background: dark ? 'linear-gradient(165deg,#1A2A20 0%,#171310 60%,#120F0B 100%)' : '#ffffff',
+                border:`1px solid ${hovered ? accent+'88' : dark ? 'rgba(201,169,106,.16)' : 'rgba(14,58,46,.12)'}`,
                 boxShadow: hovered
                     ? `0 22px 50px rgba(0,0,0,${dark?'.55':'.14'}), 0 0 30px ${accent}26`
-                    : dark ? '0 6px 24px rgba(0,0,0,.35)' : '0 3px 18px rgba(27,58,96,.08)',
+                    : dark ? '0 6px 24px rgba(0,0,0,.35)' : '0 3px 18px rgba(14,58,46,.08)',
                 transform: hovered ? 'translateY(-8px)' : 'translateY(0)',
                 transition:'all .45s cubic-bezier(.22,1,.36,1)',
             }}
@@ -735,14 +735,14 @@ function CourseCard({ unit, dark, auth }) {
                 ) : (
                     <div style={{
                         position:'absolute', inset:0,
-                        background:'linear-gradient(160deg,#16304f 0%,#0c1929 60%,#050b15 100%)',
+                        background:'linear-gradient(160deg,#1F5A45 0%,#1C1916 60%,#141210 100%)',
                         display:'flex', alignItems:'center', justifyContent:'center',
                     }}>
                         {/* نسيج نجمة ثمانية */}
                         <svg style={{ position:'absolute', inset:0, width:'100%', height:'100%', opacity:.08 }}>
                             <defs>
                                 <pattern id={`courseStarPat-${unit.id}`} width="30" height="30" patternUnits="userSpaceOnUse">
-                                    <g stroke="#2fbcd4" fill="none" strokeWidth="1">
+                                    <g stroke="#C9A96A" fill="none" strokeWidth="1">
                                         <rect x="3" y="3" width="24" height="24"/>
                                         <rect x="3" y="3" width="24" height="24" transform="rotate(45 15 15)"/>
                                     </g>
@@ -754,30 +754,30 @@ function CourseCard({ unit, dark, auth }) {
                         {/* شمسة الأيقونة المركزية */}
                         <div style={{ position:'relative', width:78, height:78, display:'flex', alignItems:'center', justifyContent:'center', transform: hovered?'scale(1.08)':'scale(1)', transition:'transform .4s cubic-bezier(.22,1,.36,1)' }}>
                             <svg width="78" height="78" viewBox="0 0 78 78" style={{ position:'absolute', inset:0 }}>
-                                <circle cx="39" cy="39" r="35" fill="none" stroke="#2fbcd4" strokeWidth=".8" opacity={hovered?.75:.45}/>
-                                <g stroke="#2fbcd4" strokeWidth="1" fill="none" opacity={hovered?.9:.5}>
+                                <circle cx="39" cy="39" r="35" fill="none" stroke="#C9A96A" strokeWidth=".8" opacity={hovered?.75:.45}/>
+                                <g stroke="#C9A96A" strokeWidth="1" fill="none" opacity={hovered?.9:.5}>
                                     <rect x="16" y="16" width="46" height="46"/>
                                     <rect x="16" y="16" width="46" height="46" transform="rotate(45 39 39)"/>
                                 </g>
-                                <circle cx="39" cy="39" r="24" fill="#0c1929" stroke="#2fbcd4" strokeWidth="1.3"/>
+                                <circle cx="39" cy="39" r="24" fill="#1C1916" stroke="#C9A96A" strokeWidth="1.3"/>
                             </svg>
                             <div style={{ position:'relative', zIndex:1 }}>
-                                <HistIcon type="book" sz={30} color="#2fbcd4"/>
+                                <HistIcon type="book" sz={30} color="#C9A96A"/>
                             </div>
                         </div>
                     </div>
                 )}
 
                 {/* تدرّج سفلي لدمج الصورة بالبطاقة */}
-                <div style={{ position:'absolute', inset:0, background:'linear-gradient(180deg,transparent 45%, rgba(5,11,21,.88) 100%)', pointerEvents:'none' }}/>
+                <div style={{ position:'absolute', inset:0, background:'linear-gradient(180deg,transparent 45%, rgba(20,18,16,.88) 100%)', pointerEvents:'none' }}/>
 
                 {/* شارة الصف */}
                 {gradeName && (
                     <span style={{
                         position:'absolute', top:14, insetInlineStart:14,
-                        fontSize:11, fontWeight:700, color:'#f5f0e8',
-                        background:'rgba(5,11,21,.55)', backdropFilter:'blur(6px)',
-                        border:'1px solid rgba(47,188,212,.35)', borderRadius:999,
+                        fontSize:11, fontWeight:700, color:'#F5EFDF',
+                        background:'rgba(20,18,16,.55)', backdropFilter:'blur(6px)',
+                        border:'1px solid rgba(201,169,106,.35)', borderRadius:999,
                         padding:'5px 12px',
                     }}>{gradeName}</span>
                 )}
@@ -793,7 +793,7 @@ function CourseCard({ unit, dark, auth }) {
 
                 {/* عنوان الوحدة فوق الصورة */}
                 <div style={{ position:'absolute', bottom:14, insetInlineStart:18, insetInlineEnd:18 }}>
-                    <div style={{ fontSize:17, fontWeight:800, color:'#f5f0e8', lineHeight:1.4 }}>{unit.title}</div>
+                    <div style={{ fontSize:17, fontWeight:800, color:'#F5EFDF', lineHeight:1.4 }}>{unit.title}</div>
                 </div>
             </div>
 
@@ -801,7 +801,7 @@ function CourseCard({ unit, dark, auth }) {
             <div style={{ padding:'18px 20px 20px', display:'flex', flexDirection:'column', flex:1 }}>
                 <p className="course-desc-clamp" style={{
                     fontSize:13, lineHeight:1.85, margin:'0 0 18px',
-                    color: dark ? 'rgba(245,240,232,.56)' : 'rgba(27,58,96,.6)',
+                    color: dark ? 'rgba(245,240,232,.56)' : 'rgba(14,58,46,.6)',
                     minHeight: unit.description ? 'auto' : 0,
                 }}>{unit.description || 'وحدة دراسية كاملة — شرح، تمارين، ومراجعات.'}</p>
 
@@ -875,15 +875,15 @@ function TeacherHero({ dark }) {
             {/* حلقة مدارية متقطعة — هوية هندسية عربية بديلة عن القوس اليوناني */}
             <svg className="teacher-fixed-ring" viewBox="0 0 400 400" fill="none"
                 style={{ position:'absolute', top:'50%', left:'50%', transform:'translate(-50%,-50%)', width:620, height:620, pointerEvents:'none', opacity: dark ? 0.6 : 0.4, zIndex:1 }}>
-                <circle cx="200" cy="200" r="188" stroke="#2fbcd4" strokeWidth="1.4" strokeDasharray="1 11" fill="none" opacity=".85"/>
-                <circle cx="200" cy="200" r="164" stroke="#009688" strokeWidth=".7" fill="none" opacity=".3"/>
+                <circle cx="200" cy="200" r="188" stroke="#C9A96A" strokeWidth="1.4" strokeDasharray="1 11" fill="none" opacity=".85"/>
+                <circle cx="200" cy="200" r="164" stroke="#8B5E3C" strokeWidth=".7" fill="none" opacity=".3"/>
                 {/* شمسات صغيرة على الحلقة */}
                 {[0, 90, 180, 270].map(deg => {
                     const a = (deg * Math.PI) / 180;
                     const cx = 200 + Math.cos(a) * 188, cy = 200 + Math.sin(a) * 188;
                     return (
                         <g key={deg} transform={`translate(${cx} ${cy})`} opacity=".7">
-                            <rect x="-5" y="-5" width="10" height="10" transform="rotate(45)" fill="none" stroke="#2fbcd4" strokeWidth="1"/>
+                            <rect x="-5" y="-5" width="10" height="10" transform="rotate(45)" fill="none" stroke="#C9A96A" strokeWidth="1"/>
                         </g>
                     );
                 })}
@@ -893,11 +893,11 @@ function TeacherHero({ dark }) {
             {ORBIT_PARTICLES.map(({ sym, x, y, d, dl, sz, amber }, i) => (
                 <div key={i} className="th-deco" style={{
                     position:'absolute', left:x, top:y,
-                    fontSize:sz, color: amber ? '#009688' : '#2fbcd4',
+                    fontSize:sz, color: amber ? '#8B5E3C' : '#C9A96A',
                     opacity: dark ? 0.42 : 0.28,
                     animation:`orbitBob ${d} ${dl} ease-in-out infinite`,
                     pointerEvents:'none',
-                    textShadow: amber ? '0 0 10px rgba(0,150,136,.5)' : '0 0 10px rgba(47,188,212,.45)',
+                    textShadow: amber ? '0 0 10px rgba(139,94,60,.5)' : '0 0 10px rgba(201,169,106,.45)',
                 }}>{sym}</div>
             ))}
 
@@ -910,10 +910,10 @@ function TeacherHero({ dark }) {
                     pointerEvents:'none',
                     transform:`rotate(${rot}deg)`,
                     filter: dark
-                        ? 'drop-shadow(0 0 6px rgba(47,188,212,.35))'
-                        : 'drop-shadow(0 0 4px rgba(27,58,96,.25))',
+                        ? 'drop-shadow(0 0 6px rgba(201,169,106,.35))'
+                        : 'drop-shadow(0 0 4px rgba(14,58,46,.25))',
                 }}>
-                    <HistIcon type={type} sz={sz} color={dark ? '#2fbcd4' : '#1b3a60'}/>
+                    <HistIcon type={type} sz={sz} color={dark ? '#C9A96A' : '#0E3A2E'}/>
                 </div>
             ))}
 
@@ -922,12 +922,12 @@ function TeacherHero({ dark }) {
                 <div key={`ag-${i}`} className="th-deco" style={{
                     position:'absolute', left:x, top:y,
                     fontFamily:"'Ruwudu',serif", fontSize:sz, lineHeight:1,
-                    color: dark ? 'rgba(47,188,212,.5)' : 'rgba(27,58,96,.32)',
+                    color: dark ? 'rgba(201,169,106,.5)' : 'rgba(14,58,46,.32)',
                     opacity: dark ? 0.7 : 0.55,
                     animation:`orbitBob ${d} ${dl} ease-in-out infinite`,
                     transform:`rotate(${rot}deg)`,
                     pointerEvents:'none', userSelect:'none',
-                    textShadow: dark ? '0 0 14px rgba(47,188,212,.3)' : 'none',
+                    textShadow: dark ? '0 0 14px rgba(201,169,106,.3)' : 'none',
                 }}>{ch}</div>
             ))}
 
@@ -936,8 +936,8 @@ function TeacherHero({ dark }) {
                 <div key={`dot-${i}`} className="th-deco" style={{
                     position:'absolute', left:x, top:y,
                     width:sz, height:sz, borderRadius:'50%',
-                    background: amber ? '#009688' : '#2fbcd4',
-                    boxShadow: `0 0 8px ${amber ? 'rgba(0,150,136,.7)' : 'rgba(47,188,212,.7)'}`,
+                    background: amber ? '#8B5E3C' : '#C9A96A',
+                    boxShadow: `0 0 8px ${amber ? 'rgba(139,94,60,.7)' : 'rgba(201,169,106,.7)'}`,
                     opacity: dark ? 0.75 : 0.5,
                     animation:`orbitBob ${3.2 + i*.4}s ${i*.3}s ease-in-out infinite`,
                     pointerEvents:'none',
@@ -947,13 +947,13 @@ function TeacherHero({ dark }) {
             {/* أشكال معينة مدوّرة الحواف — زخرفة أركان هندسية */}
             <div className="th-deco" style={{
                 position:'absolute', bottom:'8%', left:'0%', width:52, height:52, borderRadius:16,
-                border:`1.5px solid ${dark ? 'rgba(47,188,212,.5)' : 'rgba(27,58,96,.3)'}`,
+                border:`1.5px solid ${dark ? 'rgba(201,169,106,.5)' : 'rgba(14,58,46,.3)'}`,
                 transform:'rotate(45deg)', pointerEvents:'none',
             }}/>
             <div className="th-deco" style={{
                 position:'absolute', top:'10%', right:'4%', width:30, height:30, borderRadius:9,
-                background: dark ? 'rgba(0,150,136,.18)' : 'rgba(0,150,136,.14)',
-                border:`1.5px solid ${dark ? 'rgba(0,150,136,.55)' : 'rgba(0,150,136,.4)'}`,
+                background: dark ? 'rgba(139,94,60,.18)' : 'rgba(139,94,60,.14)',
+                border:`1.5px solid ${dark ? 'rgba(139,94,60,.55)' : 'rgba(139,94,60,.4)'}`,
                 transform:'rotate(45deg)', pointerEvents:'none',
             }}/>
 
@@ -963,16 +963,16 @@ function TeacherHero({ dark }) {
                 display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center', gap:20,
             }}>
                 <div className="teacher-hero-img" style={{ width:'100%', maxWidth:600, position:'relative', display:'flex', justifyContent:'center', transform:'none' }}>
-                    {/* صورة الأستاذ منصور */}
+                    {/* صورة الأستاذ أحمد الشعراوي */}
                     <img
-                        src="/images/hero-mansour.png.png"
-                        alt="الأستاذ منصور"
+                        src={encodeURI('/images/ChatGPT Image Sep 28, 2026, 03_10_40 PM.png')}
+                        alt="الأستاذ أحمد الشعراوي"
                         style={{
                             width:'86%', height:'auto', position:'relative', zIndex:2,
                             transform:'none',
                             filter: dark
-                                ? 'drop-shadow(0 34px 70px rgba(0,0,0,.6)) drop-shadow(0 0 46px rgba(0,150,136,.22))'
-                                : 'drop-shadow(0 24px 50px rgba(0,0,0,.18)) drop-shadow(0 0 34px rgba(0,150,136,.14))',
+                                ? 'drop-shadow(0 34px 70px rgba(0,0,0,.6)) drop-shadow(0 0 46px rgba(139,94,60,.22))'
+                                : 'drop-shadow(0 24px 50px rgba(0,0,0,.18)) drop-shadow(0 0 34px rgba(139,94,60,.14))',
                             maskImage: 'radial-gradient(ellipse 58% 54% at 50% 50%, #000 0%, #000 72%, rgba(0,0,0,.75) 84%, transparent 100%)',
                             WebkitMaskImage: 'radial-gradient(ellipse 58% 54% at 50% 50%, #000 0%, #000 72%, rgba(0,0,0,.75) 84%, transparent 100%)',
                         }}
@@ -981,7 +981,7 @@ function TeacherHero({ dark }) {
                     {/* Ground glow */}
                     <div style={{
                         position:'absolute', bottom:'6%', left:'10%', right:'10%', height:55,
-                        background:`radial-gradient(ellipse at center, rgba(47,188,212,.${dark?'22':'10'}) 0%, transparent 72%)`,
+                        background:`radial-gradient(ellipse at center, rgba(201,169,106,.${dark?'22':'10'}) 0%, transparent 72%)`,
                         filter:'blur(10px)', pointerEvents:'none', zIndex:0,
                     }}/>
                 </div>
@@ -1028,7 +1028,7 @@ function ThemeToggle({ dark, setDark }) {
                 width:64, height:34, borderRadius:999, position:'relative',
                 border:'none', cursor:'pointer', padding:0, outline:'none', flexShrink:0,
                 background: dark
-                    ? 'linear-gradient(135deg,#0c1430 0%,#1b2a55 60%,#2c3f7a 100%)'
+                    ? 'linear-gradient(135deg,#120F0B 0%,#17251C 60%,#2D6B52 100%)'
                     : 'linear-gradient(135deg,#FFD27A 0%,#F4A23C 55%,#E08A2A 100%)',
                 boxShadow: dark
                     ? 'inset 0 0 0 1px rgba(150,170,255,.4), 0 0 14px rgba(100,130,255,.35)'
@@ -1088,8 +1088,8 @@ function ThemeToggle({ dark, setDark }) {
 /* ── Logo ────────────────────────────────────────────────────── */
 function NavLogo({ dark = true }) {
     const logoFilter = dark
-        ? 'drop-shadow(0 0 10px rgba(47,188,212,.35))'
-        : 'brightness(0) saturate(100%) invert(16%) sepia(26%) saturate(1532%) hue-rotate(175deg) brightness(92%) contrast(94%) drop-shadow(0 2px 8px rgba(27,58,96,.18))';
+        ? 'drop-shadow(0 0 10px rgba(201,169,106,.35))'
+        : 'brightness(0) saturate(100%) invert(16%) sepia(26%) saturate(1532%) hue-rotate(175deg) brightness(92%) contrast(94%) drop-shadow(0 2px 8px rgba(14,58,46,.18))';
 
     return (
         <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexShrink: 0 }}>
@@ -1133,16 +1133,16 @@ function LanguageBranches({ dark }) {
                             borderRadius:28,
                             transition:'flex-basis .55s cubic-bezier(.22,1,.36,1), min-width .55s cubic-bezier(.22,1,.36,1), background .4s ease',
                             background: isActive
-                                ? 'linear-gradient(155deg,#122843 0%,#0c1929 55%,#050b15 100%)'
-                                : (dark ? 'rgba(226,232,240,.04)' : '#f4f6f9'),
-                            border: `1px solid ${isActive ? 'rgba(47,188,212,.35)' : (dark ? 'rgba(226,232,240,.08)' : 'rgba(27,58,96,.08)')}`,
+                                ? 'linear-gradient(155deg,#1A3D2E 0%,#1C1916 55%,#141210 100%)'
+                                : (dark ? 'rgba(226,232,240,.04)' : '#F5EFDF'),
+                            border: `1px solid ${isActive ? 'rgba(201,169,106,.35)' : (dark ? 'rgba(226,232,240,.08)' : 'rgba(14,58,46,.08)')}`,
                         }}
                     >
                         {/* نسيج نجمة خافت في حالة الفتح */}
                         {isActive && (
                             <svg style={{ position:'absolute', inset:0, width:'100%', height:'100%', opacity:.05, pointerEvents:'none' }}>
                                 <defs><pattern id={`bpat-${i}`} width="46" height="46" patternUnits="userSpaceOnUse">
-                                    <g stroke="#2fbcd4" fill="none" strokeWidth="1">
+                                    <g stroke="#C9A96A" fill="none" strokeWidth="1">
                                         <rect x="6" y="6" width="34" height="34"/>
                                         <rect x="6" y="6" width="34" height="34" transform="rotate(45 23 23)"/>
                                     </g>
@@ -1159,10 +1159,10 @@ function LanguageBranches({ dark }) {
                                         width:44, height:44, borderRadius:'50%', flexShrink:0,
                                         display:'flex', alignItems:'center', justifyContent:'center',
                                         background: dark ? 'rgba(226,232,240,.07)' : '#fff',
-                                        border: '1px solid rgba(47,188,212,.25)',
-                                        boxShadow: dark ? 'none' : '0 2px 8px rgba(27,58,96,.08)',
+                                        border: '1px solid rgba(201,169,106,.25)',
+                                        boxShadow: dark ? 'none' : '0 2px 8px rgba(14,58,46,.08)',
                                     }}>
-                                        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke={dark ? 'rgba(226,232,240,.6)' : '#1b3a60'} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                                        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke={dark ? 'rgba(226,232,240,.6)' : '#0E3A2E'} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
                                             {b.icon}
                                         </svg>
                                     </div>
@@ -1173,14 +1173,14 @@ function LanguageBranches({ dark }) {
                                     <span style={{
                                         transform:'rotate(-90deg)', whiteSpace:'nowrap',
                                         fontFamily:"'Ruwudu',serif", fontSize:19,
-                                        color: dark ? 'rgba(226,232,240,.75)' : '#1b3a60',
+                                        color: dark ? 'rgba(226,232,240,.75)' : '#0E3A2E',
                                     }}>{b.title}</span>
                                 </div>
 
                                 {/* سهم الفتح */}
                                 <div style={{ position:'absolute', bottom:20, left:0, right:0, display:'flex', justifyContent:'center' }}>
-                                    <div style={{ width:26, height:26, borderRadius:'50%', display:'flex', alignItems:'center', justifyContent:'center', background: dark ? 'rgba(226,232,240,.08)' : 'rgba(27,58,96,.06)' }}>
-                                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke={dark ? 'rgba(226,232,240,.5)' : 'rgba(27,58,96,.5)'} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                                    <div style={{ width:26, height:26, borderRadius:'50%', display:'flex', alignItems:'center', justifyContent:'center', background: dark ? 'rgba(226,232,240,.08)' : 'rgba(14,58,46,.06)' }}>
+                                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke={dark ? 'rgba(226,232,240,.5)' : 'rgba(14,58,46,.5)'} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                                             <line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/>
                                         </svg>
                                     </div>
@@ -1190,30 +1190,30 @@ function LanguageBranches({ dark }) {
                             /* حالة الفتح — المحتوى الكامل */
                             <div style={{ position:'relative', zIndex:1, height:'100%', display:'flex', flexDirection:'column', padding:'26px 30px 28px', animation:'branchIn .5s ease both' }}>
                                 <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:18 }}>
-                                    <div style={{ display:'inline-flex', alignItems:'center', gap:8, padding:'5px 14px', borderRadius:999, background:'rgba(47,188,212,.12)', border:'1px solid rgba(47,188,212,.3)' }}>
-                                        <span style={{ fontSize:12, color:'#2fbcd4', fontWeight:700 }}>فرع {b.title}</span>
+                                    <div style={{ display:'inline-flex', alignItems:'center', gap:8, padding:'5px 14px', borderRadius:999, background:'rgba(201,169,106,.12)', border:'1px solid rgba(201,169,106,.3)' }}>
+                                        <span style={{ fontSize:12, color:'#C9A96A', fontWeight:700 }}>فرع {b.title}</span>
                                     </div>
                                     <div style={{
                                         width:44, height:44, borderRadius:'50%', flexShrink:0,
                                         display:'flex', alignItems:'center', justifyContent:'center',
-                                        background:'rgba(47,188,212,.14)', border:'1px solid rgba(47,188,212,.4)',
-                                        boxShadow:'0 0 18px rgba(47,188,212,.25)',
+                                        background:'rgba(201,169,106,.14)', border:'1px solid rgba(201,169,106,.4)',
+                                        boxShadow:'0 0 18px rgba(201,169,106,.25)',
                                     }}>
-                                        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#2fbcd4" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                                        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#C9A96A" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
                                             {b.icon}
                                         </svg>
                                     </div>
                                 </div>
 
-                                <h3 style={{ fontFamily:"'Ruwudu',serif", fontSize:'clamp(24px,2.6vw,34px)', color:'#eef2f7', margin:'0 0 14px' }}>{b.title}</h3>
+                                <h3 style={{ fontFamily:"'Ruwudu',serif", fontSize:'clamp(24px,2.6vw,34px)', color:'#F3ECDA', margin:'0 0 14px' }}>{b.title}</h3>
 
                                 <p style={{ fontSize:14, lineHeight:2, color:'rgba(226,232,240,.65)', maxWidth:640, margin:'0 0 20px' }}>{b.desc}</p>
 
-                                <div style={{ fontSize:12.5, color:'#009688', fontWeight:700, marginBottom:10 }}>أبرز محاور الدراسة:</div>
+                                <div style={{ fontSize:12.5, color:'#8B5E3C', fontWeight:700, marginBottom:10 }}>أبرز محاور الدراسة:</div>
                                 <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(220px,1fr))', gap:'6px 24px', marginBottom:'auto' }}>
                                     {b.points.map((pt, pi) => (
                                         <div key={pi} style={{ display:'flex', alignItems:'flex-start', gap:8, padding:'6px 0' }}>
-                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#009688" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink:0, marginTop:3 }}>
+                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8B5E3C" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink:0, marginTop:3 }}>
                                                 <polyline points="20 6 9 17 4 12"/>
                                             </svg>
                                             <span style={{ fontSize:13, color:'rgba(226,232,240,.8)', lineHeight:1.6 }}>{pt}</span>
@@ -1221,9 +1221,9 @@ function LanguageBranches({ dark }) {
                                     ))}
                                 </div>
 
-                                <a href="#courses" style={{ display:'inline-flex', alignItems:'center', gap:9, fontSize:13, color:'#2fbcd4', textDecoration:'none', fontWeight:700, marginTop:18, paddingTop:18, borderTop:'1px solid rgba(255,255,255,.08)' }}>
-                                    <span style={{ width:26, height:26, borderRadius:'50%', background:'rgba(47,188,212,.15)', display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0 }}>
-                                        <svg width="10" height="10" viewBox="0 0 24 24" fill="#2fbcd4"><polygon points="6 3 20 12 6 21"/></svg>
+                                <a href="#courses" style={{ display:'inline-flex', alignItems:'center', gap:9, fontSize:13, color:'#C9A96A', textDecoration:'none', fontWeight:700, marginTop:18, paddingTop:18, borderTop:'1px solid rgba(255,255,255,.08)' }}>
+                                    <span style={{ width:26, height:26, borderRadius:'50%', background:'rgba(201,169,106,.15)', display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0 }}>
+                                        <svg width="10" height="10" viewBox="0 0 24 24" fill="#C9A96A"><polygon points="6 3 20 12 6 21"/></svg>
                                     </span>
                                     أوّل محاضرات مجانية في فرع {b.title}
                                 </a>
@@ -1264,7 +1264,7 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
         return `${names[parseInt(mo)-1]} ${y}`;
     };
 
-    const medalColors = ['#2fbcd4','#94a3b8','#cd7f32'];
+    const medalColors = ['#C9A96A','#94a3b8','#cd7f32'];
 
     useEffect(() => {
         document.body.style.overflow = 'hidden auto';
@@ -1291,7 +1291,7 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
         : units.filter(u => u.academic_year?.name === activeFilter);
 
     const pageBg = darkMode
-        ? `linear-gradient(160deg, #050b15 0%, #0a1628 35%, #1b3a60 65%, #090e1a 100%)`
+        ? `linear-gradient(160deg, #141210 0%, #0a1628 35%, #0E3A2E 65%, #090e1a 100%)`
         : '#ffffff';
     const pageEdge = darkMode ? C.dark : '#ffffff';
 
@@ -1299,13 +1299,13 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
        Cards keep a permanent dark "stone tablet" look in both modes (by design). */
     const T = {
         text:      darkMode ? C.white : C.navy,
-        textDim2:  darkMode ? 'rgba(245,240,232,.68)' : 'rgba(27,58,96,.68)',
-        textDim4:  darkMode ? 'rgba(245,240,232,.52)' : 'rgba(27,58,96,.52)',
-        navBg:     darkMode ? 'rgba(5,11,21,.22)'      : 'rgba(255,255,255,.32)',
-        navBorder: darkMode ? 'rgba(245,240,232,.16)'  : 'rgba(27,58,96,.12)',
-        navLink:   darkMode ? 'rgba(245,240,232,.68)'  : 'rgba(27,58,96,.68)',
-        authBorder:darkMode ? 'rgba(255,255,255,.22)'  : 'rgba(27,58,96,.22)',
-        authText:  darkMode ? 'rgba(245,240,232,.85)'  : 'rgba(27,58,96,.85)',
+        textDim2:  darkMode ? 'rgba(245,240,232,.68)' : 'rgba(14,58,46,.68)',
+        textDim4:  darkMode ? 'rgba(245,240,232,.52)' : 'rgba(14,58,46,.52)',
+        navBg:     darkMode ? 'rgba(20,18,16,.22)'      : 'rgba(255,255,255,.32)',
+        navBorder: darkMode ? 'rgba(245,240,232,.16)'  : 'rgba(14,58,46,.12)',
+        navLink:   darkMode ? 'rgba(245,240,232,.68)'  : 'rgba(14,58,46,.68)',
+        authBorder:darkMode ? 'rgba(255,255,255,.22)'  : 'rgba(14,58,46,.22)',
+        authText:  darkMode ? 'rgba(245,240,232,.85)'  : 'rgba(14,58,46,.85)',
     };
 
     useEffect(() => {
@@ -1324,16 +1324,16 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
             <div
                 ref={pageRef}
                 dir="rtl"
-                style={{ minHeight:'100vh', background:pageBg, fontFamily:'Cairo,sans-serif', position:'relative', color:T.text, transition:'background 1s ease, color 1s ease', paddingTop:100 }}
+                style={{ minHeight:'100vh', background:pageBg, fontFamily:'Cairo,sans-serif', position:'relative', color:T.text, transition:'background 1s ease, color 1s ease', paddingBottom:112 }}
             >
 
             {/* ══════════════════════════════════════════════════════
-                NAVBAR  —  floating, framed, neoclassical
+                NAVBAR  —  floating, framed, neoclassical — ثابتة أسفل الشاشة
             ══════════════════════════════════════════════════════ */}
 {/* ── NAVBAR  —  floating, borderless glassmorphism ── */}
             <nav className="site-nav" style={{
                 position:       'fixed',
-                top:            14,
+                bottom:         14,
                 left:           8,
                 right:          8,
                 zIndex:         50,
@@ -1344,13 +1344,13 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
                 height:         88, // الارتفاع المتناسق والمريح للوجو الكبير
                 borderRadius:   20, // الحواف الدائرية الكبيرة المتناسقة مع الارتفاع
                 // زجاج شفاف أكثر ليمرر ألوان الـ 3D والخلفيات بوضوح ونقاء (Glassmorphic)
-                background:     darkMode ? 'rgba(5, 11, 21, 0.45)' : 'rgba(255, 252, 245, 0.55)',
+                background:     darkMode ? 'rgba(20, 18, 16, 0.45)' : 'rgba(255, 252, 245, 0.55)',
                 // إزالة الحدود تماماً بناءً على طلبك
                 border:         'none', 
                 // التظليل العميق والناعم متعدد الطبقات لتظهر الـ Navbar كأنها طافية فوق الصفحة
                 boxShadow:      darkMode
                     ? '0 24px 60px rgba(0,0,0,0.75), 0 6px 16px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.12)'
-                    : '0 20px 44px rgba(27,58,96,0.18), 0 4px 12px rgba(27,58,96,0.08), inset 0 1px 0 rgba(255,255,255,0.65)',
+                    : '0 20px 44px rgba(14,58,46,0.18), 0 4px 12px rgba(14,58,46,0.08), inset 0 1px 0 rgba(255,255,255,0.65)',
                 backdropFilter: 'blur(30px) saturate(1.7)',
                 WebkitBackdropFilter: 'blur(30px) saturate(1.7)',
                 transition:     'background .4s ease, box-shadow .4s ease',
@@ -1383,7 +1383,7 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
                             padding:'9px 24px', borderRadius:999,
                             background:`linear-gradient(135deg,${C.gold},${C.amber})`,
                             color:C.dark, fontWeight:800, fontSize:13, textDecoration:'none',
-                            boxShadow:`0 4px 18px rgba(47,188,212,.4), inset 0 1px 0 rgba(255,255,255,.3)`,
+                            boxShadow:`0 4px 18px rgba(201,169,106,.4), inset 0 1px 0 rgba(255,255,255,.3)`,
                             transition:'transform .3s cubic-bezier(.22,1,.36,1), box-shadow .3s cubic-bezier(.22,1,.36,1)',
                         }}>
                             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>
@@ -1408,7 +1408,7 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
                             background:`linear-gradient(135deg,${C.gold},${C.amber})`,
                             color:C.dark, fontWeight:800, fontSize:13,
                             textDecoration:'none',
-                            boxShadow:`0 4px 18px rgba(47,188,212,.4), inset 0 1px 0 rgba(255,255,255,.3)`,
+                            boxShadow:`0 4px 18px rgba(201,169,106,.4), inset 0 1px 0 rgba(255,255,255,.3)`,
                             transition:'transform .3s cubic-bezier(.22,1,.36,1), box-shadow .3s cubic-bezier(.22,1,.36,1)',
                         }}>
                             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="16" y1="11" x2="22" y2="11"/></svg>
@@ -1433,55 +1433,49 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
                     <h1 className="hero-welcome-img" style={{
                         fontFamily:"'Aref Ruqaa',serif", fontWeight:700,
                         fontSize:'clamp(30px,4.2vw,44px)', lineHeight:1.2,
-                        margin:'0', color: T.text,
+                        margin:'0 0 8px', color: T.text,
                     }}>
                         أهلاً بيك في
                     </h1>
 
-                    <img
-                        src="/images/manasety.png.png"
-                        alt="منصتي"
-                        style={{ display:'block', width:'clamp(260px,30vw,360px)', height:'auto', margin:'-58px 0 -46px', filter: darkMode ? 'drop-shadow(0 6px 24px rgba(47,188,212,.35))' : 'drop-shadow(0 4px 16px rgba(27,58,96,.2))' }}
-                    />
-
                     <div style={{ marginBottom:36, display:'flex', alignItems:'flex-start', gap:14 }}>
                         <svg width="22" height="22" viewBox="0 0 18 18" style={{ flexShrink:0, opacity:.75, marginTop:14 }}>
-                            <rect x="4" y="4" width="10" height="10" rx="3" fill="#2fbcd4" transform="rotate(45 9 9)"/>
+                            <rect x="4" y="4" width="10" height="10" rx="3" fill="#C9A96A" transform="rotate(45 9 9)"/>
                         </svg>
                         <div style={{ width:'fit-content' }}>
                             <span style={{
                                 fontFamily:"'Aref Ruqaa',serif", fontWeight:700,
                                 fontSize:'clamp(56px,8vw,92px)', color: T.text, letterSpacing:'.01em', lineHeight:1.1,
-                                textShadow: darkMode ? '0 0 34px rgba(47,188,212,.45)' : 'none',
+                                textShadow: darkMode ? '0 0 34px rgba(201,169,106,.45)' : 'none',
                                 whiteSpace:'nowrap',
                             }}>
-                                خواطر{' '}
+                                رحلة{' '}
                                 <span style={{
-                                    background:'linear-gradient(135deg,#2fbcd4,#009688)',
+                                    background:'linear-gradient(135deg,#C9A96A,#8B5E3C)',
                                     WebkitBackgroundClip:'text', WebkitTextFillColor:'transparent', backgroundClip:'text',
-                                }}>المنصور</span>
+                                }}>الشعراوي</span>
                             </span>
                             <svg width="100%" viewBox="0 0 230 34" style={{ display:'block', marginTop:10, aspectRatio:'230/34', animation:'waveGlowPulse 1.8s ease-in-out infinite' }}>
-                                <path d="M15,17 Q35,2 55,17 T95,17 T135,17 T175,17 T215,17" stroke="#2fbcd4" strokeWidth="4.5" fill="none" strokeLinecap="round"/>
-                                <rect x="5"   y="7" width="20" height="20" rx="6" fill="#2fbcd4" transform="rotate(45 15 17)"/>
-                                <rect x="205" y="7" width="20" height="20" rx="6" fill="#2fbcd4" transform="rotate(45 215 17)"/>
+                                <path d="M15,17 Q35,2 55,17 T95,17 T135,17 T175,17 T215,17" stroke="#C9A96A" strokeWidth="4.5" fill="none" strokeLinecap="round"/>
+                                <rect x="5"   y="7" width="20" height="20" rx="6" fill="#C9A96A" transform="rotate(45 15 17)"/>
+                                <rect x="205" y="7" width="20" height="20" rx="6" fill="#C9A96A" transform="rotate(45 215 17)"/>
                             </svg>
                         </div>
                     </div>
 
                     <p style={{ fontSize:'clamp(14px,1.6vw,18px)', color:T.textDim2, maxWidth:520, lineHeight:2, margin:'0 0 36px' }}>
-                        <span style={{ fontFamily:'Ruwudu,serif', fontSize:'1.35em', color:'#009688', letterSpacing:'.04em' }}>أهلاً بيك</span> في بيتك التاني — مع الأستاذ منصور هتذاكر اللغة العربية بطريقة عمرك ما جربتها.
+                        <span style={{ fontFamily:'Ruwudu,serif', fontSize:'1.35em', color:'#8B5E3C', letterSpacing:'.04em' }}>أهلاً بيك</span> في بيتك التاني — مع الأستاذ أحمد الشعراوي هتذاكر التاريخ بطريقة عمرك ما جربتها.
                         شرح واضح، فيديوهات تفاعلية، ومتابعة مستمرة لحد ما تلم المنهج.
                     </p>
 
                     <div style={{ display:'flex', gap:14, flexWrap:'wrap', marginBottom:52 }}>
                         <Link
                             href={auth?.user ? '/student/dashboard' : '/register'}
-                            style={{ padding:'14px 36px', borderRadius:12, background:`linear-gradient(135deg,${C.gold},${C.amber})`, color:C.dark, fontWeight:800, fontSize:16, textDecoration:'none', boxShadow:`0 8px 32px rgba(0,150,136,.35)`, transition:'transform .2s,box-shadow .2s' }}
-                            onMouseEnter={e=>{e.currentTarget.style.transform='translateY(-2px)';e.currentTarget.style.boxShadow=`0 14px 44px rgba(0,150,136,.55)`;}}
-                            onMouseLeave={e=>{e.currentTarget.style.transform='none';e.currentTarget.style.boxShadow=`0 8px 32px rgba(0,150,136,.35)`;}}
+                            style={{ padding:'14px 36px', borderRadius:12, background:`linear-gradient(135deg,${C.gold},${C.amber})`, color:C.dark, fontWeight:800, fontSize:16, textDecoration:'none', boxShadow:`0 8px 32px rgba(139,94,60,.35)`, transition:'transform .2s,box-shadow .2s' }}
+                            onMouseEnter={e=>{e.currentTarget.style.transform='translateY(-2px)';e.currentTarget.style.boxShadow=`0 14px 44px rgba(139,94,60,.55)`;}}
+                            onMouseLeave={e=>{e.currentTarget.style.transform='none';e.currentTarget.style.boxShadow=`0 8px 32px rgba(139,94,60,.35)`;}}
                         >اشترك دلوقتي !</Link>
-                        <a href="#features" style={{ padding:'14px 28px', borderRadius:12, border:`1px solid rgba(47,188,212,.35)`, color:T.text, fontSize:15, textDecoration:'none' }}>اعرف أكتر ←</a>
+                        <a href="#features" style={{ padding:'14px 28px', borderRadius:12, border:`1px solid rgba(201,169,106,.35)`, color:T.text, fontSize:15, textDecoration:'none' }}>اعرف أكتر ←</a>
                     </div>
 
                 </div>
@@ -1494,11 +1488,11 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
             <section id="features" style={{ padding:'clamp(80px,12vh,140px) clamp(24px,5vw,72px)', position:'relative', zIndex:10 }}>
                 <div style={{ textAlign:'center', marginBottom:56, position:'relative' }}>
                     <span aria-hidden="true" style={{
-                        position:'absolute', top:-46, left:'50%', transform:'translateX(-50%)',
-                        fontFamily:"'Ruwudu',serif", fontSize:'clamp(120px,16vw,220px)', lineHeight:1,
-                        color: darkMode ? C.gold : C.navy, opacity: darkMode ? 0.16 : 0.14, whiteSpace:'nowrap', pointerEvents:'none',
-                        userSelect:'none', zIndex:0,
-                    }}>ض</span>
+                        position:'absolute', top:-30, left:'50%', transform:'translateX(-50%)',
+                        fontFamily:"'Reem Kufi','Cairo',sans-serif", fontWeight:700, fontSize:'clamp(48px,7vw,84px)', lineHeight:1,
+                        color: darkMode ? C.gold : C.navy, opacity: darkMode ? 0.14 : 0.1, whiteSpace:'nowrap', pointerEvents:'none',
+                        userSelect:'none', zIndex:0, letterSpacing:'.05em',
+                    }}>التاريخ</span>
 
                     <p style={{ fontSize:12, color:C.gold, letterSpacing:'.22em', marginBottom:12, position:'relative' }} data-reveal>▸ أسباب الاختيار</p>
                     <h2 style={{ fontSize:'clamp(26px,3.5vw,52px)', fontWeight:800, margin:'0 0 14px', color:C.gold, position:'relative' }} data-reveal>ليه تشترك معانا؟</h2>
@@ -1530,8 +1524,8 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
                                 ))}
 
                                 <div className="feat-card-inner" style={{
-                                    background: darkMode ? 'linear-gradient(155deg,#0f1f36,#0a1524)' : 'linear-gradient(155deg,#f4f8fb,#e9f1f6)',
-                                    boxShadow: darkMode ? '0 4px 20px rgba(0,0,0,.3)' : '0 6px 24px rgba(27,58,96,.12)',
+                                    background: darkMode ? 'linear-gradient(155deg,#17251C,#171310)' : 'linear-gradient(155deg,#F7F3E9,#F3ECDA)',
+                                    boxShadow: darkMode ? '0 4px 20px rgba(0,0,0,.3)' : '0 6px 24px rgba(14,58,46,.12)',
                                     '--frame-c': darkMode ? `${accent}66` : `${accent}99`,
                                 }}>
                                     {/* نسيج نجمة ثمانية يغطي الكارت كله — بينوّر عند المرور */}
@@ -1556,7 +1550,7 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
                                                     <rect x="15" y="15" width="46" height="46"/>
                                                     <rect x="15" y="15" width="46" height="46" transform="rotate(45 38 38)"/>
                                                 </g>
-                                                <circle cx="38" cy="38" r="24" fill={darkMode ? '#0c1929' : '#ffffff'} stroke={accent} strokeWidth="1.4"/>
+                                                <circle cx="38" cy="38" r="24" fill={darkMode ? '#1C1916' : '#ffffff'} stroke={accent} strokeWidth="1.4"/>
                                             </svg>
                                             <svg className="feat-icon-svg" viewBox="0 0 24 24" fill="none" stroke={accent} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
                                                 {icon}
@@ -1600,12 +1594,12 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
             {/* ══════════════════════════════════════════════════════
                 THREE PORTALS
             ══════════════════════════════════════════════════════ */}
-            <section style={{ padding:'clamp(80px,12vh,140px) clamp(24px,5vw,72px)', position:'relative', zIndex:10, background: darkMode ? 'linear-gradient(180deg,#06101e 0%,#0c1829 50%,#06101e 100%)' : 'linear-gradient(180deg,#f0e6d2 0%,#e6d9be 50%,#f0e6d2 100%)', overflow:'hidden', transition:'background 0.4s ease' }}>
+            <section style={{ padding:'clamp(80px,12vh,140px) clamp(24px,5vw,72px)', position:'relative', zIndex:10, background: darkMode ? 'linear-gradient(180deg,#100E0B 0%,#171310 50%,#100E0B 100%)' : 'linear-gradient(180deg,#f0e6d2 0%,#e6d9be 50%,#f0e6d2 100%)', overflow:'hidden', transition:'background 0.4s ease' }}>
                 {/* Top & bottom gold lines */}
                 <div style={{ position:'absolute', top:0, left:0, right:0, height:1, background:`linear-gradient(90deg,transparent,${C.gold},transparent)` }}/>
                 <div style={{ position:'absolute', bottom:0, left:0, right:0, height:1, background:`linear-gradient(90deg,transparent,${C.gold},transparent)` }}/>
                 {/* Center atmospheric glow */}
-                <div style={{ position:'absolute', top:'35%', left:'50%', transform:'translate(-50%,-50%)', width:'60%', height:'45%', background:'radial-gradient(ellipse,rgba(47,188,212,.08) 0%,transparent 70%)', pointerEvents:'none' }}/>
+                <div style={{ position:'absolute', top:'35%', left:'50%', transform:'translate(-50%,-50%)', width:'60%', height:'45%', background:'radial-gradient(ellipse,rgba(201,169,106,.08) 0%,transparent 70%)', pointerEvents:'none' }}/>
 
                 <div style={{ textAlign:'center', marginBottom:64, position:'relative' }}>
                     <div style={{ display:'inline-flex', alignItems:'center', gap:14, marginBottom:18 }}>
@@ -1613,8 +1607,8 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
                         <p style={{ fontSize:11, color:C.gold, letterSpacing:'.28em', margin:0 }} data-reveal>ما الذي نقدمه</p>
                         <div style={{ width:32, height:1, background:`linear-gradient(90deg,${C.gold},transparent)` }}/>
                     </div>
-                    <h2 style={{ fontSize:'clamp(28px,3.5vw,54px)', fontWeight:800, margin:0, color: darkMode ? '#f5f0e8' : C.navy, letterSpacing:'.02em', transition:'color 0.4s ease' }} data-reveal>أقسام المنصة الثلاثة</h2>
-                    <p style={{ fontSize:14, color: darkMode ? 'rgba(47,188,212,.55)' : 'rgba(100,70,10,.55)', marginTop:10, letterSpacing:'.06em', transition:'color 0.4s ease' }} data-reveal>اختر بوابتك — وانطلق</p>
+                    <h2 style={{ fontSize:'clamp(28px,3.5vw,54px)', fontWeight:800, margin:0, color: darkMode ? '#F5EFDF' : C.navy, letterSpacing:'.02em', transition:'color 0.4s ease' }} data-reveal>أقسام المنصة الثلاثة</h2>
+                    <p style={{ fontSize:14, color: darkMode ? 'rgba(201,169,106,.55)' : 'rgba(100,70,10,.55)', marginTop:10, letterSpacing:'.06em', transition:'color 0.4s ease' }} data-reveal>اختر بوابتك — وانطلق</p>
                 </div>
 
                 <div className="port-grid" style={{ maxWidth:1160, margin:'0 auto', alignItems:'end' }}>
@@ -1623,7 +1617,7 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
 
                             {/* قلادة زخرفية نازلة فوق كل قسم — بديل شكل الخنجر القديم */}
                             <svg width="14" height="60" viewBox="0 0 14 60" fill="none"
-                                style={{ marginBottom:10, opacity: i===1 ? .88 : .65, animation:`orbitBob ${3.8+i*.5}s ${i*.3}s ease-in-out infinite`, filter:`drop-shadow(0 3px 10px rgba(47,188,212,.25))` }}>
+                                style={{ marginBottom:10, opacity: i===1 ? .88 : .65, animation:`orbitBob ${3.8+i*.5}s ${i*.3}s ease-in-out infinite`, filter:`drop-shadow(0 3px 10px rgba(201,169,106,.25))` }}>
                                 <line x1="7" y1="0" x2="7" y2="42" stroke={i===1 ? C.amber : C.gold} strokeWidth="1.4" opacity=".7"/>
                                 <rect x="1" y="42" width="12" height="12" transform="rotate(45 7 48)" fill={i===1 ? C.amber : C.gold} opacity={i===1 ? .9 : .75}/>
                             </svg>
@@ -1650,7 +1644,7 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
                 </div>
                 <div style={{ display:'flex', gap:10, flexWrap:'wrap', marginBottom:32 }} data-reveal>
                     {filters.map(f=>(
-                        <button key={f} onClick={()=>setActiveFilter(f)} style={{ padding:'9px 20px', borderRadius:999, cursor:'pointer', fontFamily:'Cairo,sans-serif', fontSize:13, fontWeight:600, transition:'all .2s', border:`1.5px solid ${activeFilter===f ? C.amber : 'rgba(47,188,212,.28)'}`, background:activeFilter===f ? `linear-gradient(135deg,rgba(0,150,136,.18),rgba(47,188,212,.1))` : 'rgba(12,25,41,.5)', color:activeFilter===f ? C.amber : 'rgba(245,240,232,.65)' }}>{f}</button>
+                        <button key={f} onClick={()=>setActiveFilter(f)} style={{ padding:'9px 20px', borderRadius:999, cursor:'pointer', fontFamily:'Cairo,sans-serif', fontSize:13, fontWeight:600, transition:'all .2s', border:`1.5px solid ${activeFilter===f ? C.amber : 'rgba(201,169,106,.28)'}`, background:activeFilter===f ? `linear-gradient(135deg,rgba(139,94,60,.18),rgba(201,169,106,.1))` : 'rgba(28,25,22,.5)', color:activeFilter===f ? C.amber : 'rgba(245,240,232,.65)' }}>{f}</button>
                     ))}
                 </div>
 
@@ -1677,8 +1671,8 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
                 padding:'clamp(80px,12vh,140px) clamp(24px,5vw,72px)',
                 position:'relative', zIndex:10,
                 background: darkMode
-                    ? 'linear-gradient(180deg,#06101e 0%,#0b1827 50%,#06101e 100%)'
-                    : 'linear-gradient(180deg,#eef4f8 0%,#e4edf3 50%,#eef4f8 100%)',
+                    ? 'linear-gradient(180deg,#100E0B 0%,#171310 50%,#100E0B 100%)'
+                    : 'linear-gradient(180deg,#F5EFDF 0%,#F5EFDF 50%,#F5EFDF 100%)',
                 overflow:'hidden', transition:'background .4s'
             }}>
                 {/* نسيج نجمة ثمانية خفيف يغطي الخلفية بالكامل */}
@@ -1693,7 +1687,7 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
                     </defs>
                     <rect width="100%" height="100%" fill="url(#honorStarPat)"/>
                 </svg>
-                <div style={{ position:'absolute', top:'40%', left:'50%', transform:'translate(-50%,-50%)', width:'65%', height:'65%', background:'radial-gradient(ellipse,rgba(47,188,212,.06) 0%,transparent 70%)', pointerEvents:'none' }}/>
+                <div style={{ position:'absolute', top:'40%', left:'50%', transform:'translate(-50%,-50%)', width:'65%', height:'65%', background:'radial-gradient(ellipse,rgba(201,169,106,.06) 0%,transparent 70%)', pointerEvents:'none' }}/>
 
                 {/* Border hairlines */}
                 <div style={{ position:'absolute', top:0, left:0, right:0, height:2, background:`linear-gradient(90deg,transparent,${C.gold} 20%,${C.gold} 80%,transparent)` }}/>
@@ -1721,7 +1715,7 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
                     </div>
 
                     <p style={{ fontSize:12, color:C.gold, letterSpacing:'.22em', marginBottom:12, position:'relative' }} data-reveal>▸ نجوم المنصة</p>
-                    <h2 style={{ fontSize:'clamp(28px,3.5vw,52px)', fontWeight:800, margin:'0 0 14px', color: darkMode?'#f5f0e8':C.navy, position:'relative' }} data-reveal>لوحة الشرف</h2>
+                    <h2 style={{ fontSize:'clamp(28px,3.5vw,52px)', fontWeight:800, margin:'0 0 14px', color: darkMode?'#F5EFDF':C.navy, position:'relative' }} data-reveal>لوحة الشرف</h2>
                     <p style={{ fontSize:15, color:T.textDim4, maxWidth:480, margin:'0 auto 18px', position:'relative' }} data-reveal>تكريماً لاجتهادهم وتفوقهم — الأبطال اللي وصلوا لقمة الترتيب الشهري</p>
 
                     <div style={{ display:'flex', alignItems:'center', justifyContent:'center', gap:10, position:'relative' }} data-reveal>
@@ -1738,9 +1732,9 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
                         return (
                             <button key={String(key)} onClick={() => setActiveTopMonth(key)}
                                 style={{ padding:'9px 24px', borderRadius:999, cursor:'pointer', fontFamily:'Cairo,sans-serif', fontSize:13, fontWeight:700, transition:'all .2s',
-                                    border:`1px solid ${active ? C.amber : darkMode ? 'rgba(47,188,212,.22)' : 'rgba(47,188,212,.38)'}`,
-                                    background: active ? `linear-gradient(135deg,${C.amber}30,${C.gold}18)` : darkMode ? 'rgba(47,188,212,.04)' : 'rgba(47,188,212,.06)',
-                                    color: active ? C.amber : darkMode ? 'rgba(245,240,232,.5)' : 'rgba(27,58,96,.5)',
+                                    border:`1px solid ${active ? C.amber : darkMode ? 'rgba(201,169,106,.22)' : 'rgba(201,169,106,.38)'}`,
+                                    background: active ? `linear-gradient(135deg,${C.amber}30,${C.gold}18)` : darkMode ? 'rgba(201,169,106,.04)' : 'rgba(201,169,106,.06)',
+                                    color: active ? C.amber : darkMode ? 'rgba(245,240,232,.5)' : 'rgba(14,58,46,.5)',
                                     boxShadow: active ? `0 0 10px ${C.amber}30` : 'none',
                                 }}>
                                 {label}
@@ -1751,7 +1745,7 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
 
                 {/* ── قائمة الأبطال ── */}
                 {filteredTop.length === 0 ? (
-                    <div style={{ textAlign:'center', padding:'60px 20px', color: darkMode?'rgba(226,232,240,.3)':'rgba(27,58,96,.25)', fontSize:16, position:'relative' }}>
+                    <div style={{ textAlign:'center', padding:'60px 20px', color: darkMode?'rgba(226,232,240,.3)':'rgba(14,58,46,.25)', fontSize:16, position:'relative' }}>
                         <svg width="44" height="44" viewBox="0 0 44 44" style={{ margin:'0 auto 14px', opacity:.35, display:'block' }}>
                             <g stroke="currentColor" strokeWidth="1" fill="none">
                                 <rect x="9" y="9" width="26" height="26"/>
@@ -1778,9 +1772,9 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
                                         padding: isTop3 ? '22px 28px' : '15px 24px',
                                         borderRadius:14,
                                         background: hov
-                                            ? darkMode ? `linear-gradient(120deg,${medal}1c,rgba(12,22,38,.98))` : `linear-gradient(120deg,${medal}14,#ffffff)`
-                                            : darkMode ? 'linear-gradient(120deg,rgba(14,24,40,.95),rgba(10,18,32,.95))' : 'linear-gradient(120deg,#ffffff,#f6f9fb)',
-                                        border:`1px solid ${hov ? medal+'88' : isTop3 ? medal+'38' : darkMode ? 'rgba(47,188,212,.1)' : 'rgba(47,188,212,.18)'}`,
+                                            ? darkMode ? `linear-gradient(120deg,${medal}1c,rgba(28,25,22,.98))` : `linear-gradient(120deg,${medal}14,#ffffff)`
+                                            : darkMode ? 'linear-gradient(120deg,rgba(28,25,22,.95),rgba(23,19,16,.95))' : 'linear-gradient(120deg,#ffffff,#F7F3E9)',
+                                        border:`1px solid ${hov ? medal+'88' : isTop3 ? medal+'38' : darkMode ? 'rgba(201,169,106,.1)' : 'rgba(201,169,106,.18)'}`,
                                         boxShadow: hov ? `0 8px 36px ${medal}30, inset 0 1px 0 ${medal}33` : isTop3 ? `0 3px 16px ${medal}14` : 'none',
                                         transform: hov ? 'translateY(-3px) scale(1.004)' : 'none',
                                         transition:'all .28s cubic-bezier(.22,1,.36,1)',
@@ -1822,12 +1816,12 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
                                     {/* Name & info */}
                                     <div style={{ flex:1 }}>
                                         <div style={{ fontSize: isTop3?18:15, fontWeight: isTop3?800:600,
-                                            color: hov ? (darkMode?'#fff':C.navy) : isTop3 ? (darkMode?'#f5f0e8':C.navy) : (darkMode?'rgba(245,240,232,.68)':'rgba(27,58,96,.6)'),
+                                            color: hov ? (darkMode?'#fff':C.navy) : isTop3 ? (darkMode?'#F5EFDF':C.navy) : (darkMode?'rgba(245,240,232,.68)':'rgba(14,58,46,.6)'),
                                             transition:'color .2s' }}>
                                             {s.student?.name ?? '—'}
                                         </div>
-                                        {s.academic_year?.name && <div style={{ fontSize:12, color: darkMode?'rgba(47,188,212,.6)':'rgba(27,58,96,.55)', marginTop:3 }}>{s.academic_year.name}</div>}
-                                        {s.notes && <div style={{ fontSize:12, color: darkMode?'rgba(245,240,232,.36)':'rgba(27,58,96,.4)', marginTop:4, fontStyle:'italic' }}>{s.notes}</div>}
+                                        {s.academic_year?.name && <div style={{ fontSize:12, color: darkMode?'rgba(201,169,106,.6)':'rgba(14,58,46,.55)', marginTop:3 }}>{s.academic_year.name}</div>}
+                                        {s.notes && <div style={{ fontSize:12, color: darkMode?'rgba(245,240,232,.36)':'rgba(14,58,46,.4)', marginTop:4, fontStyle:'italic' }}>{s.notes}</div>}
                                     </div>
 
                                     {/* الرقم المتوهج بالخلفية */}
@@ -1875,16 +1869,16 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
                     <div className="about-full-grid" style={{
                         display:'grid', gridTemplateColumns:'42% 58%', direction:'ltr',
                         borderRadius:26, overflow:'hidden', position:'relative',
-                        border:`1px solid ${darkMode ? 'rgba(47,188,212,.25)' : 'rgba(47,188,212,.3)'}`,
-                        boxShadow: darkMode ? '0 24px 64px rgba(0,0,0,.45)' : '0 14px 44px rgba(27,58,96,.12)',
+                        border:`1px solid ${darkMode ? 'rgba(201,169,106,.25)' : 'rgba(201,169,106,.3)'}`,
+                        boxShadow: darkMode ? '0 24px 64px rgba(0,0,0,.45)' : '0 14px 44px rgba(14,58,46,.12)',
                     }}>
                         {/* إطار داخلي مزدوج */}
-                        <div style={{ position:'absolute', inset:8, borderRadius:18, border:`1px solid ${darkMode?'rgba(47,188,212,.16)':'rgba(47,188,212,.22)'}`, pointerEvents:'none', zIndex:5 }}/>
+                        <div style={{ position:'absolute', inset:8, borderRadius:18, border:`1px solid ${darkMode?'rgba(201,169,106,.16)':'rgba(201,169,106,.22)'}`, pointerEvents:'none', zIndex:5 }}/>
 
                         {/* ── لوحة الصورة (يسار) — صورة كاملة بطراز تحريري ── */}
                         <div className="about-photo-side" style={{
                             position:'relative', overflow:'hidden', minHeight:460,
-                            background: darkMode ? '#050b15' : '#cfe0ea',
+                            background: darkMode ? '#141210' : '#E3D9C4',
                         }}>
                             {/* الصورة — تملأ اللوحة بالكامل مع ظهورها كاملة بدون قص */}
                             <img
@@ -1901,7 +1895,7 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
                             <div style={{
                                 position:'absolute', inset:0, pointerEvents:'none',
                                 background: darkMode
-                                    ? 'linear-gradient(180deg, rgba(5,11,21,.4) 0%, transparent 20%, transparent 68%, rgba(5,11,21,.88) 100%)'
+                                    ? 'linear-gradient(180deg, rgba(20,18,16,.4) 0%, transparent 20%, transparent 68%, rgba(20,18,16,.88) 100%)'
                                     : 'linear-gradient(180deg, rgba(255,255,255,.25) 0%, transparent 20%, transparent 68%, rgba(255,255,255,.65) 100%)',
                             }}/>
 
@@ -1927,7 +1921,7 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
                                     <svg width="9" height="9" viewBox="0 0 18 18"><rect x="4" y="4" width="10" height="10" transform="rotate(45 9 9)" fill={C.gold}/></svg>
                                     <span style={{ fontSize:11, color:C.gold, letterSpacing:'.18em', fontWeight:700 }}>الأستاذ</span>
                                 </div>
-                                <div style={{ fontFamily:"'Ruwudu',serif", fontSize:'clamp(24px,2.6vw,32px)', color:'#f5f0e8', lineHeight:1.1 }}>
+                                <div style={{ fontFamily:"'Ruwudu',serif", fontSize:'clamp(24px,2.6vw,32px)', color:'#F5EFDF', lineHeight:1.1 }}>
                                     محمد منصور
                                 </div>
                             </div>
@@ -1949,7 +1943,7 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
 
                                 {/* الاسم */}
                                 <div style={{ marginTop:14 }}>
-                                    <h2 style={{ fontSize:'clamp(34px,4vw,54px)', fontFamily:"'Ruwudu',serif", color: darkMode ? '#f5f0e8' : C.navy, lineHeight:1.15, margin:'0 0 8px' }}>
+                                    <h2 style={{ fontSize:'clamp(34px,4vw,54px)', fontFamily:"'Ruwudu',serif", color: darkMode ? '#F5EFDF' : C.navy, lineHeight:1.15, margin:'0 0 8px' }}>
                                         منصور
                                     </h2>
                                     <div style={{ display:'flex', alignItems:'center', gap:9 }}>
@@ -1959,8 +1953,8 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
                                 </div>
 
                                 {/* اقتباس */}
-                                <div style={{ position:'relative', paddingRight:20, marginTop:20, borderRight:`2px solid ${darkMode?'rgba(47,188,212,.35)':'rgba(47,188,212,.4)'}` }}>
-                                    <p style={{ fontSize:'clamp(14px,1.4vw,17px)', fontWeight:600, color: darkMode ? 'rgba(240,232,213,.78)' : 'rgba(27,58,96,.78)', lineHeight:2.05, margin:0 }}>
+                                <div style={{ position:'relative', paddingRight:20, marginTop:20, borderRight:`2px solid ${darkMode?'rgba(201,169,106,.35)':'rgba(201,169,106,.4)'}` }}>
+                                    <p style={{ fontSize:'clamp(14px,1.4vw,17px)', fontWeight:600, color: darkMode ? 'rgba(240,232,213,.78)' : 'rgba(14,58,46,.78)', lineHeight:2.05, margin:0 }}>
                                         <span style={{ fontFamily:"'Ruwudu',serif", fontSize:'1.3em', color:C.amber, letterSpacing:'.03em' }}>ركّز معايا</span> وجهّز نفسك من النهارده...<br/>
                                         هنذاكر مع بعض بأسلوب مختلف تمامًا — تفهم الدرس مش تحفظه<br/>
                                         لحد ما <span style={{ color:C.amber, fontWeight:900 }}>الدرجة الكاملة تبقى حقك المضمون</span>
@@ -1976,13 +1970,13 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
                                 ].map(({count,prefix='',suffix='',label}) => (
                                     <div key={label} style={{
                                         textAlign:'center', padding:'16px 8px', borderRadius:14,
-                                        background: darkMode ? 'rgba(47,188,212,.05)' : 'rgba(27,58,96,.03)',
-                                        border:`1px solid ${darkMode?'rgba(47,188,212,.14)':'rgba(27,58,96,.1)'}`,
+                                        background: darkMode ? 'rgba(201,169,106,.05)' : 'rgba(14,58,46,.03)',
+                                        border:`1px solid ${darkMode?'rgba(201,169,106,.14)':'rgba(14,58,46,.1)'}`,
                                     }}>
                                         <div style={{ fontSize:'clamp(19px,2vw,28px)', fontWeight:900, color:C.gold, lineHeight:1.1 }}>
                                             {prefix}<span data-count={count}>٠</span>{suffix}
                                         </div>
-                                        <div style={{ fontSize:11, color: darkMode?'rgba(47,188,212,.55)':'rgba(27,58,96,.5)', marginTop:6, letterSpacing:'.03em' }}>{label}</div>
+                                        <div style={{ fontSize:11, color: darkMode?'rgba(201,169,106,.55)':'rgba(14,58,46,.5)', marginTop:6, letterSpacing:'.03em' }}>{label}</div>
                                     </div>
                                 ))}
                             </div>
@@ -1997,7 +1991,7 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
                                 ].map((label, i) => (
                                     <div key={i} style={{ display:'flex', alignItems:'center', gap:13, padding:'10px 0' }}>
                                         <svg width="15" height="15" viewBox="0 0 18 18" style={{ flexShrink:0 }}><rect x="4" y="4" width="10" height="10" transform="rotate(45 9 9)" fill="none" stroke={C.gold} strokeWidth="1.6"/></svg>
-                                        <span style={{ fontSize:13.5, color: darkMode ? 'rgba(245,240,232,.68)' : 'rgba(27,58,96,.68)', fontWeight:500 }}>{label}</span>
+                                        <span style={{ fontSize:13.5, color: darkMode ? 'rgba(245,240,232,.68)' : 'rgba(14,58,46,.68)', fontWeight:500 }}>{label}</span>
                                     </div>
                                 ))}
                             </div>
@@ -2011,20 +2005,20 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
                                         padding:'13px 30px', borderRadius:10,
                                         background:`linear-gradient(135deg,${C.gold},${C.amber})`,
                                         color:C.dark, fontWeight:800, fontSize:14, textDecoration:'none',
-                                        boxShadow:`0 8px 28px rgba(47,188,212,.35)`,
+                                        boxShadow:`0 8px 28px rgba(201,169,106,.35)`,
                                         transition:'transform .2s, box-shadow .2s',
                                     }}
-                                    onMouseEnter={e=>{e.currentTarget.style.transform='translateY(-2px)';e.currentTarget.style.boxShadow=`0 14px 36px rgba(47,188,212,.55)`;}}
-                                    onMouseLeave={e=>{e.currentTarget.style.transform='none';e.currentTarget.style.boxShadow=`0 8px 28px rgba(47,188,212,.35)`;}}
+                                    onMouseEnter={e=>{e.currentTarget.style.transform='translateY(-2px)';e.currentTarget.style.boxShadow=`0 14px 36px rgba(201,169,106,.55)`;}}
+                                    onMouseLeave={e=>{e.currentTarget.style.transform='none';e.currentTarget.style.boxShadow=`0 8px 28px rgba(201,169,106,.35)`;}}
                                 >
                                     اشترك دلوقتي
                                     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                                         <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
                                     </svg>
                                 </Link>
-                                <a href="#courses" style={{ fontSize:13, color: darkMode ? 'rgba(47,188,212,.7)' : 'rgba(27,58,96,.6)', textDecoration:'none', fontWeight:600, transition:'color .2s' }}
+                                <a href="#courses" style={{ fontSize:13, color: darkMode ? 'rgba(201,169,106,.7)' : 'rgba(14,58,46,.6)', textDecoration:'none', fontWeight:600, transition:'color .2s' }}
                                     onMouseEnter={e=>e.currentTarget.style.color=C.gold}
-                                    onMouseLeave={e=>e.currentTarget.style.color= darkMode ? 'rgba(47,188,212,.7)' : 'rgba(27,58,96,.6)'}
+                                    onMouseLeave={e=>e.currentTarget.style.color= darkMode ? 'rgba(201,169,106,.7)' : 'rgba(14,58,46,.6)'}
                                 >شوف الكورسات ←</a>
                             </div>
                         </div>
@@ -2040,13 +2034,13 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
                 {/* Background grid */}
                 <svg style={{ position:'absolute', inset:0, width:'100%', height:'100%', opacity: darkMode ? .035 : .055, pointerEvents:'none' }}>
                     <defs><pattern id="locGrid" width="52" height="52" patternUnits="userSpaceOnUse">
-                        <path d="M 52 0 L 0 0 0 52" fill="none" stroke={darkMode ? '#2fbcd4' : '#1b3a60'} strokeWidth=".6"/>
+                        <path d="M 52 0 L 0 0 0 52" fill="none" stroke={darkMode ? '#C9A96A' : '#0E3A2E'} strokeWidth=".6"/>
                     </pattern></defs>
                     <rect width="100%" height="100%" fill="url(#locGrid)"/>
                 </svg>
 
                 {/* Ambient orb */}
-                <div style={{ position:'absolute', top:'20%', left:'50%', transform:'translateX(-50%)', width:600, height:300, background:`radial-gradient(ellipse, rgba(47,188,212,.${darkMode?'06':'09'}) 0%, transparent 70%)`, pointerEvents:'none' }}/>
+                <div style={{ position:'absolute', top:'20%', left:'50%', transform:'translateX(-50%)', width:600, height:300, background:`radial-gradient(ellipse, rgba(201,169,106,.${darkMode?'06':'09'}) 0%, transparent 70%)`, pointerEvents:'none' }}/>
 
                 {/* ── Header ── */}
                 <div style={{ textAlign:'center', marginBottom:'clamp(44px,7vh,72px)', position:'relative' }} data-reveal>
@@ -2054,7 +2048,7 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
                     <h2 style={{ fontSize:'clamp(28px,3.5vw,50px)', fontWeight:800, margin:'0 0 14px', color: darkMode ? C.white : C.navy }}>
                         أماكن تواجدنا
                     </h2>
-                    <p style={{ fontSize:14, color: darkMode ? 'rgba(226,232,240,.5)' : 'rgba(27,58,96,.55)', maxWidth:440, margin:'0 auto 18px' }}>
+                    <p style={{ fontSize:14, color: darkMode ? 'rgba(226,232,240,.5)' : 'rgba(14,58,46,.55)', maxWidth:440, margin:'0 auto 18px' }}>
                         زوروا مقرّنا وابدأوا رحلتكم مع الأستاذ منصور
                     </p>
                     <div style={{ display:'flex', alignItems:'center', justifyContent:'center', gap:10 }}>
@@ -2087,32 +2081,32 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
             <footer style={{
                 position:'relative', zIndex:10,
                 background: darkMode
-                    ? 'linear-gradient(180deg,#020710 0%,#03080f 60%,#050b15 100%)'
+                    ? 'linear-gradient(180deg,#020710 0%,#03080f 60%,#141210 100%)'
                     : '#ffffff',
-                borderTop:`1px solid ${darkMode ? 'rgba(47,188,212,.18)' : 'rgba(27,58,96,.08)'}`,
+                borderTop:`1px solid ${darkMode ? 'rgba(201,169,106,.18)' : 'rgba(14,58,46,.08)'}`,
                 overflow:'hidden',
             }}>
                 {/* Subtle grid overlay */}
                 <svg style={{ position:'absolute', inset:0, width:'100%', height:'100%', opacity:.04, pointerEvents:'none' }}>
                     <defs><pattern id="ftGrid" width="60" height="60" patternUnits="userSpaceOnUse">
-                        <path d="M 60 0 L 0 0 0 60" fill="none" stroke="#2fbcd4" strokeWidth=".6"/>
+                        <path d="M 60 0 L 0 0 0 60" fill="none" stroke="#C9A96A" strokeWidth=".6"/>
                     </pattern></defs>
                     <rect width="100%" height="100%" fill="url(#ftGrid)"/>
                 </svg>
 
                 {/* Ambient glow top-center */}
-                <div style={{ position:'absolute', top:-80, left:'50%', transform:'translateX(-50%)', width:700, height:300, background:'radial-gradient(ellipse, rgba(47,188,212,.07) 0%, transparent 70%)', pointerEvents:'none' }}/>
+                <div style={{ position:'absolute', top:-80, left:'50%', transform:'translateX(-50%)', width:700, height:300, background:'radial-gradient(ellipse, rgba(201,169,106,.07) 0%, transparent 70%)', pointerEvents:'none' }}/>
 
                 {/* ── Brand header ── */}
                 <div style={{ textAlign:'center', padding:'clamp(52px,8vh,80px) clamp(24px,5vw,72px) 0', position:'relative' }}>
                     {/* Ornamental divider */}
                     <div style={{ display:'flex', alignItems:'center', justifyContent:'center', gap:16, marginBottom:36 }}>
-                        <div style={{ height:1, width:80, background:'linear-gradient(90deg,transparent,rgba(47,188,212,.5))' }}/>
+                        <div style={{ height:1, width:80, background:'linear-gradient(90deg,transparent,rgba(201,169,106,.5))' }}/>
                         <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-                            <path d="M14 2 L16.5 11.5 L26 14 L16.5 16.5 L14 26 L11.5 16.5 L2 14 L11.5 11.5 Z" fill="#2fbcd4" opacity=".8"/>
-                            <circle cx="14" cy="14" r="3" fill="#009688" opacity=".9"/>
+                            <path d="M14 2 L16.5 11.5 L26 14 L16.5 16.5 L14 26 L11.5 16.5 L2 14 L11.5 11.5 Z" fill="#C9A96A" opacity=".8"/>
+                            <circle cx="14" cy="14" r="3" fill="#8B5E3C" opacity=".9"/>
                         </svg>
-                        <div style={{ height:1, width:80, background:'linear-gradient(90deg,rgba(47,188,212,.5),transparent)' }}/>
+                        <div style={{ height:1, width:80, background:'linear-gradient(90deg,rgba(201,169,106,.5),transparent)' }}/>
                     </div>
 
                     {/* شعار منصور */}
@@ -2122,7 +2116,7 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
                             <div style={{
                                 position:'absolute', inset:-20,
                                 borderRadius:'50%',
-                                background:'radial-gradient(ellipse,rgba(47,188,212,.14) 0%,transparent 70%)',
+                                background:'radial-gradient(ellipse,rgba(201,169,106,.14) 0%,transparent 70%)',
                                 filter:'blur(10px)',
                                 pointerEvents:'none',
                             }}/>
@@ -2149,19 +2143,19 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
                         </div>
                     </div>
 
-                    <div style={{ fontSize:10, color: darkMode ? 'rgba(47,188,212,.45)' : 'rgba(27,58,96,.4)', letterSpacing:'0.34em', marginBottom:14 }}>
+                    <div style={{ fontSize:10, color: darkMode ? 'rgba(201,169,106,.45)' : 'rgba(14,58,46,.4)', letterSpacing:'0.34em', marginBottom:14 }}>
                         لغة الضاد
                     </div>
-                    <p style={{ fontSize:14, color: darkMode ? 'rgba(226,232,240,.42)' : 'rgba(27,58,96,.5)', maxWidth:400, margin:'0 auto', lineHeight:2 }}>
+                    <p style={{ fontSize:14, color: darkMode ? 'rgba(226,232,240,.42)' : 'rgba(14,58,46,.5)', maxWidth:400, margin:'0 auto', lineHeight:2 }}>
                         نصنع لسانًا فصيحًا يصنع مستقبلك — العربية مش حفظ، دي ذوق وفهم
                     </p>
                 </div>
 
                 {/* ── Social cards ── */}
                 <div style={{ display:'flex', alignItems:'center', justifyContent:'center', gap:10, margin:'clamp(36px,5vh,56px) auto 0' }}>
-                    <div style={{ width:36, height:1, background:'linear-gradient(90deg,transparent,rgba(47,188,212,.5))' }}/>
-                    <span style={{ fontSize:11, color: darkMode ? 'rgba(47,188,212,.6)' : 'rgba(27,58,96,.5)', letterSpacing:'.24em', fontWeight:700 }}>تابعونا</span>
-                    <div style={{ width:36, height:1, background:'linear-gradient(90deg,rgba(47,188,212,.5),transparent)' }}/>
+                    <div style={{ width:36, height:1, background:'linear-gradient(90deg,transparent,rgba(201,169,106,.5))' }}/>
+                    <span style={{ fontSize:11, color: darkMode ? 'rgba(201,169,106,.6)' : 'rgba(14,58,46,.5)', letterSpacing:'.24em', fontWeight:700 }}>تابعونا</span>
+                    <div style={{ width:36, height:1, background:'linear-gradient(90deg,rgba(201,169,106,.5),transparent)' }}/>
                 </div>
                 <div className="foot-social-grid" style={{
                     display:'grid', gridTemplateColumns:'repeat(2,1fr)',
@@ -2211,12 +2205,12 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
                         <a key={tel} href={`tel:${tel}`} style={{
                             display:'inline-flex', alignItems:'center', gap:8,
                             fontSize:14, fontWeight:700, direction:'ltr',
-                            color: darkMode ? 'rgba(226,232,240,.75)' : 'rgba(27,58,96,.75)',
+                            color: darkMode ? 'rgba(226,232,240,.75)' : 'rgba(14,58,46,.75)',
                             textDecoration:'none', letterSpacing:'.02em',
                             transition:'color .25s ease',
                         }}
                         onMouseEnter={e=>e.currentTarget.style.color=C.gold}
-                        onMouseLeave={e=>e.currentTarget.style.color= darkMode ? 'rgba(226,232,240,.75)' : 'rgba(27,58,96,.75)'}
+                        onMouseLeave={e=>e.currentTarget.style.color= darkMode ? 'rgba(226,232,240,.75)' : 'rgba(14,58,46,.75)'}
                         >
                             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                 <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
@@ -2231,7 +2225,7 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
                     display:'flex', justifyContent:'center', gap:'clamp(16px,3vw,40px)',
                     flexWrap:'wrap', margin:'clamp(36px,5vh,52px) auto 0',
                     padding:'0 clamp(24px,5vw,72px)',
-                    borderTop:'1px solid rgba(47,188,212,.08)',
+                    borderTop:'1px solid rgba(201,169,106,.08)',
                     paddingTop:'clamp(28px,4vh,40px)',
                     maxWidth:900,
                 }}>
@@ -2243,12 +2237,12 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
                         ['تسجيل الدخول','/student/login'],
                     ].map(([lbl,href])=>(
                         <a key={lbl} href={href} style={{
-                            fontSize:13, color: darkMode ? 'rgba(226,232,240,.4)' : 'rgba(27,58,96,.45)',
+                            fontSize:13, color: darkMode ? 'rgba(226,232,240,.4)' : 'rgba(14,58,46,.45)',
                             textDecoration:'none', letterSpacing:'.04em',
                             transition:'color .25s ease',
                         }}
                         onMouseEnter={e=>e.currentTarget.style.color=C.gold}
-                        onMouseLeave={e=>e.currentTarget.style.color= darkMode ? 'rgba(226,232,240,.4)' : 'rgba(27,58,96,.45)'}
+                        onMouseLeave={e=>e.currentTarget.style.color= darkMode ? 'rgba(226,232,240,.4)' : 'rgba(14,58,46,.45)'}
                         >{lbl}</a>
                     ))}
                 </div>
@@ -2258,13 +2252,13 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
                     display:'flex', alignItems:'center', justifyContent:'center',
                     gap:16, padding:'clamp(20px,3vh,28px) clamp(24px,5vw,72px)',
                     marginTop:'clamp(24px,4vh,36px)',
-                    borderTop:'1px solid rgba(47,188,212,.07)',
+                    borderTop:'1px solid rgba(201,169,106,.07)',
                 }}>
-                    <div style={{ width:32, height:1, background:'linear-gradient(90deg,transparent,rgba(47,188,212,.3))' }}/>
-                    <div style={{ fontSize:12, color: darkMode ? 'rgba(47,188,212,.28)' : 'rgba(27,58,96,.3)', textAlign:'center', letterSpacing:'.06em' }}>
+                    <div style={{ width:32, height:1, background:'linear-gradient(90deg,transparent,rgba(201,169,106,.3))' }}/>
+                    <div style={{ fontSize:12, color: darkMode ? 'rgba(201,169,106,.28)' : 'rgba(14,58,46,.3)', textAlign:'center', letterSpacing:'.06em' }}>
                         © 2026 منصة منصور التعليمية — جميع الحقوق محفوظة
                     </div>
-                    <div style={{ width:32, height:1, background:'linear-gradient(90deg,rgba(47,188,212,.3),transparent)' }}/>
+                    <div style={{ width:32, height:1, background:'linear-gradient(90deg,rgba(201,169,106,.3),transparent)' }}/>
                 </div>
 
                 {/* ── Credit line ── */}
@@ -2272,7 +2266,7 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
                     textAlign:'center',
                     paddingBottom:'clamp(20px,3vh,28px)',
                     fontSize:14,
-                    color: darkMode ? 'rgba(226,232,240,.65)' : 'rgba(27,58,96,.65)',
+                    color: darkMode ? 'rgba(226,232,240,.65)' : 'rgba(14,58,46,.65)',
                     letterSpacing:'.02em',
                 }}>
                     Powered by KABOx / <a
@@ -2319,8 +2313,8 @@ function WelcomeWhatsAppBtn() {
                 title="تواصل معنا على واتساب"
                 style={{
                     position:       'fixed',
-                    bottom:         28,
-                    left:           28,
+                    bottom:         120,
+                    left:           20,
                     width:          58,
                     height:         58,
                     borderRadius:   '50%',

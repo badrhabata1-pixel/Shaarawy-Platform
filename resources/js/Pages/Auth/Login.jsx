@@ -29,22 +29,22 @@ export default function Login({ status, canResetPassword }) {
 
     const inputStyle = (hasError) => ({
         width: '100%', padding: '12px 16px', borderRadius: 12,
-        border: `1.5px solid ${hasError ? '#ef4444' : '#E2E8F0'}`,
-        background: '#F8FAFC', fontSize: 14, color: '#1b3a60',
+        border: `1.5px solid ${hasError ? '#ef4444' : '#E3D9C4'}`,
+        background: '#F7F3E9', fontSize: 14, color: '#0E3A2E',
         fontFamily: 'Cairo, sans-serif', outline: 'none',
         transition: 'border-color .2s, box-shadow .2s',
         boxSizing: 'border-box',
     });
 
     const onFocus = (e) => {
-        e.target.style.borderColor = '#2fbcd4';
-        e.target.style.boxShadow = '0 0 0 3px rgba(47,188,212,.12)';
+        e.target.style.borderColor = '#C9A96A';
+        e.target.style.boxShadow = '0 0 0 3px rgba(201,169,106,.18)';
         e.target.style.background = '#fff';
     };
     const onBlur = (e) => {
-        e.target.style.borderColor = '#E2E8F0';
+        e.target.style.borderColor = '#E3D9C4';
         e.target.style.boxShadow = 'none';
-        e.target.style.background = '#F8FAFC';
+        e.target.style.background = '#F7F3E9';
     };
 
     return (
@@ -52,77 +52,91 @@ export default function Login({ status, canResetPassword }) {
             <Head title="دخول الأستاذ" />
 
             <style>{`
-                @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Rakkas&display=swap');
+                @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Reem+Kufi:wght@400;500;600;700&display=swap');
                 * { box-sizing: border-box; }
                 body { margin: 0; font-family: 'Cairo', sans-serif; }
-                ::placeholder { color: #94a3b8; font-family: 'Cairo', sans-serif; }
-                .sb-btn:hover { opacity: .92; transform: translateY(-1px); box-shadow: 0 8px 24px rgba(47,188,212,.4) !important; }
+                ::placeholder { color: #a89f8d; font-family: 'Cairo', sans-serif; }
+                .sb-btn:hover { background: #1F5A45 !important; transform: translateY(-1px); box-shadow: 0 8px 26px rgba(14,58,46,.4), 0 0 0 1px rgba(201,169,106,.5) !important; }
                 .sb-btn:active { transform: translateY(0); }
-                .pass-toggle:hover { color: #2fbcd4 !important; }
+                .pass-toggle:hover { color: #C9A96A !important; }
             `}</style>
 
             {/* Background */}
             <div dir="rtl" style={{
                 minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center',
-                background: 'linear-gradient(135deg, #060B16 0%, #0D1829 45%, #1b3a60 75%, #0A1422 100%)',
+                background: 'linear-gradient(135deg, #141210 0%, #0E3A2E 45%, #1A3D2E 75%, #1C1916 100%)',
                 padding: '24px',
                 position: 'relative', overflow: 'hidden',
             }}>
                 {/* Decorative orbs */}
-                <div style={{ position: 'absolute', top: -80, right: -80, width: 360, height: 360, borderRadius: '50%', background: 'radial-gradient(circle, rgba(47,188,212,.18) 0%, transparent 70%)', pointerEvents: 'none' }} />
-                <div style={{ position: 'absolute', bottom: -100, left: -100, width: 400, height: 400, borderRadius: '50%', background: 'radial-gradient(circle, rgba(27,58,96,.8) 0%, transparent 70%)', pointerEvents: 'none' }} />
+                <div style={{ position: 'absolute', top: -80, right: -80, width: 360, height: 360, borderRadius: '50%', background: 'radial-gradient(circle, rgba(201,169,106,.16) 0%, transparent 70%)', pointerEvents: 'none' }} />
+                <div style={{ position: 'absolute', bottom: -100, left: -100, width: 400, height: 400, borderRadius: '50%', background: 'radial-gradient(circle, rgba(31,90,69,.55) 0%, transparent 70%)', pointerEvents: 'none' }} />
 
-                {/* نسيج نجمة ثمانية هندسي — هوية عربية إسلامية بديل الأعمدة اليونانية */}
-                <svg style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', opacity: .05, pointerEvents: 'none' }}>
-                    <defs>
-                        <pattern id="loginStarPat" width="52" height="52" patternUnits="userSpaceOnUse">
-                            <g stroke="#2fbcd4" fill="none" strokeWidth="1">
-                                <rect x="6" y="6" width="40" height="40"/>
-                                <rect x="6" y="6" width="40" height="40" transform="rotate(45 26 26)"/>
-                            </g>
-                        </pattern>
-                    </defs>
-                    <rect width="100%" height="100%" fill="url(#loginStarPat)"/>
+                {/* رموز إيموجي تاريخية خفيفة — لمسة دافئة تناسب هوية المنصة */}
+                {(() => {
+                    const emojiFont = '"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji",sans-serif';
+                    return (<>
+                        <span aria-hidden="true" style={{ position: 'absolute', top: '9%', right: '10%', fontSize: 38, opacity: .32, fontFamily: emojiFont, transform: 'rotate(8deg)', pointerEvents: 'none', userSelect: 'none' }}>👑</span>
+                        <span aria-hidden="true" style={{ position: 'absolute', top: '14%', left: '8%', fontSize: 34, opacity: .3, fontFamily: emojiFont, transform: 'rotate(-10deg)', pointerEvents: 'none', userSelect: 'none' }}>📜</span>
+                        <span aria-hidden="true" style={{ position: 'absolute', bottom: '12%', right: '8%', fontSize: 42, opacity: .28, fontFamily: emojiFont, transform: 'rotate(-6deg)', pointerEvents: 'none', userSelect: 'none' }}>🏺</span>
+                        <span aria-hidden="true" style={{ position: 'absolute', bottom: '9%', left: '10%', fontSize: 36, opacity: .26, fontFamily: emojiFont, transform: 'rotate(9deg)', pointerEvents: 'none', userSelect: 'none' }}>🏛️</span>
+                    </>);
+                })()}
+
+                {/* صورة هرم أثري — واحدة جريئة أسفل المنتصف */}
+                <svg viewBox="0 0 200 160" preserveAspectRatio="xMidYMax meet" style={{
+                    position: 'absolute', bottom: 0, left: '50%', transform: 'translateX(-50%)',
+                    height: '42%', width: 'auto', opacity: .1, pointerEvents: 'none',
+                }}>
+                    <g fill="none" stroke="#C9A96A" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M100 12 L182 150 L18 150 Z" strokeWidth="2.6" />
+                        <path d="M100 12 L100 150" strokeWidth="1" opacity="0.45" />
+                        <path d="M60 150 L100 76 L140 150" strokeWidth="1.3" opacity="0.55" />
+                        <path d="M36 150 L100 40 L164 150" strokeWidth="1" opacity="0.32" />
+                        <line x1="6" y1="150" x2="194" y2="150" strokeWidth="1.4" opacity="0.4" />
+                    </g>
                 </svg>
 
-                {/* توقيع "لغة الضاد" المائي */}
+                {/* توقيع "رحلة في التاريخ" المائي بخط كوفي أثري */}
                 <span aria-hidden="true" style={{
                     position: 'absolute', bottom: '4%', left: '50%', transform: 'translateX(-50%)',
-                    fontFamily: "'Rakkas',serif", fontSize: 'clamp(60px,10vw,110px)', lineHeight: 1,
-                    color: 'rgba(47,188,212,.07)', whiteSpace: 'nowrap', pointerEvents: 'none', userSelect: 'none',
-                }}>لغة الضاد</span>
+                    fontFamily: "'Reem Kufi', 'Cairo', sans-serif", fontWeight: 700,
+                    fontSize: 'clamp(38px,6vw,64px)', lineHeight: 1,
+                    color: 'rgba(201,169,106,.16)', whiteSpace: 'nowrap', pointerEvents: 'none', userSelect: 'none',
+                    letterSpacing: '.04em',
+                }}>رحلة في التاريخ</span>
 
                 {/* Card */}
                 <div ref={cardRef} style={{
                     width: '100%', maxWidth: 420,
                     background: '#fff', borderRadius: 24,
-                    boxShadow: '0 24px 80px rgba(0,0,0,.45), 0 0 0 1px rgba(255,255,255,.08)',
+                    boxShadow: '0 24px 80px rgba(0,0,0,.45), 0 0 0 1px rgba(201,169,106,.15)',
                     overflow: 'hidden', position: 'relative', zIndex: 1,
                 }}>
                     {/* Card top accent */}
-                    <div style={{ height: 4, background: 'linear-gradient(90deg, #2fbcd4, #009688, #2fbcd4)' }} />
+                    <div style={{ height: 4, background: 'linear-gradient(90deg, #0E3A2E, #C9A96A, #0E3A2E)' }} />
 
                     <div style={{ padding: '36px 36px 32px' }}>
                         {/* Logo + title */}
                         <div style={{ textAlign: 'center', marginBottom: 32 }}>
-                            <div role="img" aria-label="شعار منصة منصور" style={{
+                            <div role="img" aria-label="شعار منصة الشعراوي" style={{
                                 width: 60, height: 60, borderRadius: 18, margin: '0 auto 14px',
-                                background: 'linear-gradient(150deg, #1b3a60, #2fbcd4)',
-                                boxShadow: '0 0 0 4px rgba(47,188,212,.15), 0 8px 24px rgba(47,188,212,.35)',
+                                background: 'linear-gradient(150deg, #0E3A2E, #1F5A45)',
+                                boxShadow: '0 0 0 4px rgba(201,169,106,.18), 0 8px 24px rgba(14,58,46,.4)',
                                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                             }}>
-                                <span style={{ fontFamily: "'Rakkas',serif", fontSize: 30, color: '#fff' }}>ض</span>
+                                <span style={{ fontFamily: "'Reem Kufi', sans-serif", fontSize: 28, color: '#C9A96A' }}>ش</span>
                             </div>
-                            <h1 style={{ color: '#1b3a60', fontSize: 22, fontWeight: 900, margin: '0 0 4px', fontFamily: 'Cairo,sans-serif' }}>
+                            <h1 style={{ color: '#0E3A2E', fontSize: 22, fontWeight: 900, margin: '0 0 4px', fontFamily: 'Cairo,sans-serif' }}>
                                 بوابة الأستاذ
                             </h1>
-                            <p style={{ color: '#94a3b8', fontSize: 13, margin: 0, fontFamily: 'Cairo,sans-serif' }}>
-                                منصة منصور التعليمية
+                            <p style={{ color: '#a89f8d', fontSize: 13, margin: 0, fontFamily: 'Cairo,sans-serif' }}>
+                                منصة الشعراوي التعليمية
                             </p>
                             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, marginTop: 10 }}>
-                                <div style={{ width: 28, height: 1, background: 'linear-gradient(90deg,transparent,#2fbcd4)' }}/>
-                                <svg width="10" height="10" viewBox="0 0 18 18" fill="none"><rect x="4" y="4" width="10" height="10" transform="rotate(45 9 9)" stroke="#2fbcd4" strokeWidth="1.6"/></svg>
-                                <div style={{ width: 28, height: 1, background: 'linear-gradient(90deg,#2fbcd4,transparent)' }}/>
+                                <div style={{ width: 28, height: 1, background: 'linear-gradient(90deg,transparent,#C9A96A)' }}/>
+                                <svg width="10" height="10" viewBox="0 0 18 18" fill="none"><rect x="4" y="4" width="10" height="10" transform="rotate(45 9 9)" stroke="#C9A96A" strokeWidth="1.6"/></svg>
+                                <div style={{ width: 28, height: 1, background: 'linear-gradient(90deg,#C9A96A,transparent)' }}/>
                             </div>
                         </div>
 
@@ -136,11 +150,11 @@ export default function Login({ status, canResetPassword }) {
                         <form onSubmit={submit} style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
                             {/* Email */}
                             <div>
-                                <label style={{ display: 'block', color: '#374151', fontSize: 13, fontWeight: 700, marginBottom: 7, fontFamily: 'Cairo,sans-serif' }}>
+                                <label style={{ display: 'block', color: '#4a4238', fontSize: 13, fontWeight: 700, marginBottom: 7, fontFamily: 'Cairo,sans-serif' }}>
                                     البريد الإلكتروني
                                 </label>
                                 <div style={{ position: 'relative' }}>
-                                    <span style={{ position: 'absolute', right: 13, top: '50%', transform: 'translateY(-50%)', color: '#94a3b8', pointerEvents: 'none', display: 'flex' }}>
+                                    <span style={{ position: 'absolute', right: 13, top: '50%', transform: 'translateY(-50%)', color: '#a89f8d', pointerEvents: 'none', display: 'flex' }}>
                                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" width={16} height={16}>
                                             <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
                                             <polyline points="22,6 12,13 2,6"/>
@@ -165,11 +179,11 @@ export default function Login({ status, canResetPassword }) {
 
                             {/* Password */}
                             <div>
-                                <label style={{ display: 'block', color: '#374151', fontSize: 13, fontWeight: 700, marginBottom: 7, fontFamily: 'Cairo,sans-serif' }}>
+                                <label style={{ display: 'block', color: '#4a4238', fontSize: 13, fontWeight: 700, marginBottom: 7, fontFamily: 'Cairo,sans-serif' }}>
                                     كلمة المرور
                                 </label>
                                 <div style={{ position: 'relative' }}>
-                                    <span style={{ position: 'absolute', right: 13, top: '50%', transform: 'translateY(-50%)', color: '#94a3b8', pointerEvents: 'none', display: 'flex' }}>
+                                    <span style={{ position: 'absolute', right: 13, top: '50%', transform: 'translateY(-50%)', color: '#a89f8d', pointerEvents: 'none', display: 'flex' }}>
                                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" width={16} height={16}>
                                             <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
                                             <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
@@ -189,7 +203,7 @@ export default function Login({ status, canResetPassword }) {
                                         type="button"
                                         onClick={() => setShowPass(v => !v)}
                                         className="pass-toggle"
-                                        style={{ position: 'absolute', left: 12, top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', cursor: 'pointer', color: '#94a3b8', display: 'flex', padding: 0, transition: 'color .15s' }}
+                                        style={{ position: 'absolute', left: 12, top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', cursor: 'pointer', color: '#a89f8d', display: 'flex', padding: 0, transition: 'color .15s' }}
                                     >
                                         {showPass ? (
                                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" width={16} height={16}>
@@ -216,9 +230,9 @@ export default function Login({ status, canResetPassword }) {
                                         type="checkbox"
                                         checked={data.remember}
                                         onChange={e => setData('remember', e.target.checked)}
-                                        style={{ width: 16, height: 16, accentColor: '#2fbcd4', cursor: 'pointer' }}
+                                        style={{ width: 16, height: 16, accentColor: '#C9A96A', cursor: 'pointer' }}
                                     />
-                                    <span style={{ color: '#64748b', fontSize: 12, fontFamily: 'Cairo,sans-serif' }}>تذكرني</span>
+                                    <span style={{ color: '#6b6255', fontSize: 12, fontFamily: 'Cairo,sans-serif' }}>تذكرني</span>
                                 </label>
                             </div>
 
@@ -229,11 +243,11 @@ export default function Login({ status, canResetPassword }) {
                                 className="sb-btn"
                                 style={{
                                     width: '100%', padding: '13px',
-                                    background: processing ? '#94a3b8' : 'linear-gradient(135deg, #2fbcd4, #009688)',
+                                    background: processing ? '#a89f8d' : '#0E3A2E',
                                     color: '#fff', border: 'none', borderRadius: 12,
                                     fontSize: 15, fontWeight: 800, fontFamily: 'Cairo,sans-serif',
                                     cursor: processing ? 'not-allowed' : 'pointer',
-                                    boxShadow: '0 4px 16px rgba(47,188,212,.35)',
+                                    boxShadow: '0 4px 16px rgba(14,58,46,.35)',
                                     transition: 'all .2s ease', marginTop: 4,
                                 }}
                             >
@@ -242,8 +256,8 @@ export default function Login({ status, canResetPassword }) {
                         </form>
 
                         {/* Footer */}
-                        <p style={{ textAlign: 'center', marginTop: 22, color: '#94a3b8', fontSize: 11, fontFamily: 'Cairo,sans-serif' }}>
-                            منصة منصور © {new Date().getFullYear()} — جميع الحقوق محفوظة
+                        <p style={{ textAlign: 'center', marginTop: 22, color: '#a89f8d', fontSize: 11, fontFamily: 'Cairo,sans-serif' }}>
+                            منصة الشعراوي © {new Date().getFullYear()} — جميع الحقوق محفوظة
                         </p>
                     </div>
                 </div>
