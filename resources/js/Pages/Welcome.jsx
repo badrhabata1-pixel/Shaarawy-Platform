@@ -1133,22 +1133,25 @@ function LanguageBranches({ dark }) {
                                 display:'flex', flexDirection:'column', alignItems:'center', gap:9,
                             }}
                         >
-                            {/* خيط التعليق */}
-                            <div style={{ width:1, height:20, background:'linear-gradient(180deg,rgba(201,169,106,.7),rgba(201,169,106,.25))' }}/>
+                            {/* الشريط — طراز أوسمة التكريم */}
+                            <svg viewBox="0 0 40 24" width={isActive?30:24} height={isActive?18:14} style={{ transition:'all .45s cubic-bezier(.22,1,.36,1)' }}>
+                                <path d="M5,1 H35 V19 L20,12 L5,19 Z" fill={isActive ? '#0E3A2E' : (dark ? '#0F241C' : '#1A1A1A')}/>
+                                <rect x="5" y="1" width="30" height="5" fill="#C9A96A" opacity={isActive?.9:.5}/>
+                            </svg>
+                            {/* حلقة وصل صغيرة */}
+                            <div style={{ width:7, height:7, borderRadius:'50%', border:'1.4px solid rgba(201,169,106,.7)', marginTop:-5 }}/>
 
-                            {/* الميدالية — حلقة خارجية + شمسة نجمية + جواهر صغيرة حوالين الإطار */}
+                            {/* الوسام — قرص شمسي مشع بأشعة ذهبية حوالين دائرة الأيقونة */}
                             <div style={{ position:'relative', width: isActive?98:72, height: isActive?98:72, display:'flex', alignItems:'center', justifyContent:'center', transition:'all .45s cubic-bezier(.22,1,.36,1)' }}>
                                 <svg viewBox="0 0 98 98" style={{ position:'absolute', inset:0, width:'100%', height:'100%', opacity: isActive?1:.6, transition:'opacity .45s ease' }}>
-                                    <circle cx="49" cy="49" r="46" fill="none" stroke="#C9A96A" strokeWidth=".8" opacity=".55"/>
-                                    <g stroke="#C9A96A" strokeWidth="1" fill="none" opacity={isActive?.85:.4}>
-                                        <rect x="20" y="20" width="58" height="58"/>
-                                        <rect x="20" y="20" width="58" height="58" transform="rotate(45 49 49)"/>
-                                    </g>
-                                    {[0,45,90,135,180,225,270,315].map(deg => {
-                                        const a = (deg*Math.PI)/180, r = 46;
-                                        const cx = 49 + Math.cos(a)*r, cy = 49 + Math.sin(a)*r;
-                                        return <circle key={deg} cx={cx} cy={cy} r="1.7" fill="#C9A96A" opacity={isActive?.9:.4}/>;
+                                    {Array.from({length:18}).map((_, k) => {
+                                        const deg = k * (360/18);
+                                        const a = (deg*Math.PI)/180;
+                                        const x1 = 49 + Math.cos(a)*30, y1 = 49 + Math.sin(a)*30;
+                                        const x2 = 49 + Math.cos(a)*(k%2===0?47:41), y2 = 49 + Math.sin(a)*(k%2===0?47:41);
+                                        return <line key={k} x1={x1} y1={y1} x2={x2} y2={y2} stroke="#C9A96A" strokeWidth={k%2===0?2.4:1.6} strokeLinecap="round" opacity={isActive?.95:.5}/>;
                                     })}
+                                    <circle cx="49" cy="49" r="31" fill="none" stroke="#C9A96A" strokeWidth="1" opacity={isActive?.8:.45}/>
                                 </svg>
                                 <div style={{
                                     position:'relative', width: isActive ? 74 : 54, height: isActive ? 74 : 54, borderRadius:'50%',
@@ -1858,183 +1861,76 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
             {/* ══════════════════════════════════════════════════════
                 عن الأستاذ
             ══════════════════════════════════════════════════════ */}
-            <section id="about" style={{ padding:'clamp(80px,12vh,140px) clamp(8px,1.2vw,16px)', position:'relative', zIndex:10 }}>
-                <div style={{ maxWidth:'none', margin:'0 auto', position:'relative' }} data-reveal>
+            <section id="about" className="relative w-full overflow-hidden" style={{ background:'#0E3A2E' }}>
+                <div className="relative w-full min-h-[520px] flex items-center justify-center"
+                    style={{ background:'linear-gradient(to bottom, #E8DCC1 0%, #D8C39D 100%)' }} data-reveal>
 
-                    {/* زخارف أركان رفيعة بجوهرة صغيرة — طراز تذهيب المخطوطات */}
-                    {['tl','tr','bl','br'].map(pos => {
-                        const hFlip = pos[1] === 'r', vFlip = pos[0] === 'b';
-                        return (
-                            <div key={pos} style={{
-                                position:'absolute', width:32, height:32, zIndex:6, color:C.gold, opacity:.6,
-                                top: pos[0]==='t' ? -12 : 'auto', bottom: pos[0]==='b' ? -12 : 'auto',
-                                right: pos[1]==='r' ? -12 : 'auto', left: pos[1]==='l' ? -12 : 'auto',
-                                transform:`scale(${hFlip?-1:1},${vFlip?-1:1})`,
-                            }}>
-                                <svg viewBox="0 0 32 32" width="32" height="32">
-                                    <path d="M4,20 L4,4 L20,4" stroke="currentColor" strokeWidth="1.5" fill="none" strokeLinecap="round"/>
-                                    <rect x="0" y="0" width="7.5" height="7.5" transform="rotate(45 4 4)" fill="currentColor"/>
-                                </svg>
+                    {/* الإطار الذهبي الملكي — علوي وسفلي، يوحّد اللوحة كقطعة أثرية واحدة ممتدة */}
+                    <div className="absolute top-0 left-0 right-0 h-2 z-30" style={{ background:'#C9A96A' }}/>
+                    <div className="absolute bottom-0 left-0 right-0 h-2 z-30" style={{ background:'#C9A96A' }}/>
+
+                    {/* الصورة الأولى — أقصى اليمين فوق */}
+                    <img
+                        src={encodeURI('/images/ChatGPT Image Sep 28, 2026, 02_59_28 PM-2.png')}
+                        alt="الأستاذ أحمد الشعراوي"
+                        className="absolute top-0 right-0 max-h-[90%] w-auto object-contain object-right pointer-events-none z-10 hidden md:block select-none"
+                    />
+
+                    {/* الصورة الثانية — أقصى الشمال تحت */}
+                    <img
+                        src={encodeURI('/images/ChatGPT Image Sep 28, 2026, 02_59_27 PM-1.png')}
+                        alt="الأستاذ أحمد الشعراوي"
+                        className="absolute bottom-0 left-0 max-h-[90%] w-auto object-contain object-left pointer-events-none z-10 hidden md:block select-none"
+                    />
+
+                    {/* منطقة المحتوى الآمنة — في المنتصف تمامًا بعيدًا عن الصورتين */}
+                    <div className="relative z-20 max-w-3xl mx-auto text-center px-4 py-16">
+                        <span style={{ color:'#8B5E3C' }} className="font-semibold text-sm tracking-wide">عن الأستاذ</span>
+                        <h2 style={{ color:'#0E3A2E', fontFamily:"'Ruwudu',serif" }} className="text-4xl md:text-5xl font-black mt-2 mb-3">
+                            أحمد الشعراوي
+                        </h2>
+                        <p style={{ color:'#1A1A1A' }} className="text-lg font-medium mb-6">
+                            مدرس التاريخ للثانوية العامة والبكالوريا — التاريخ مش مجرد ماضٍ، هو مفتاح فهم الحاضر والمستقبل.
+                        </p>
+
+                        {/* العدادات والإحصائيات */}
+                        <div className="flex justify-center gap-6 mb-8">
+                            <div className="rounded-2xl px-6 py-3" style={{ background:'rgba(14,58,46,.1)', border:'1px solid rgba(14,58,46,.2)' }}>
+                                <span className="block text-3xl font-extrabold" style={{ color:'#0E3A2E' }}>٩٨٪</span>
+                                <span className="text-xs" style={{ color:'rgba(26,26,26,.8)' }}>نسبة تفوق الطلاب</span>
                             </div>
-                        );
-                    })}
+                            <div className="rounded-2xl px-6 py-3" style={{ background:'rgba(14,58,46,.1)', border:'1px solid rgba(14,58,46,.2)' }}>
+                                <span className="block text-3xl font-extrabold" style={{ color:'#0E3A2E' }}>+٥٠٠</span>
+                                <span className="text-xs" style={{ color:'rgba(26,26,26,.8)' }}>ساعة شرح تفاعلي</span>
+                            </div>
+                        </div>
 
-                    <div className="about-full-grid" style={{
-                        display:'grid', gridTemplateColumns:'42% 58%', direction:'ltr',
-                        borderRadius:26, overflow:'hidden', position:'relative',
-                        border:`1px solid ${darkMode ? 'rgba(201,169,106,.25)' : 'rgba(201,169,106,.3)'}`,
-                        boxShadow: darkMode ? '0 24px 64px rgba(0,0,0,.45)' : '0 14px 44px rgba(14,58,46,.12)',
-                    }}>
-                        {/* إطار داخلي مزدوج */}
-                        <div style={{ position:'absolute', inset:8, borderRadius:18, border:`1px solid ${darkMode?'rgba(201,169,106,.16)':'rgba(201,169,106,.22)'}`, pointerEvents:'none', zIndex:5 }}/>
+                        {/* مميزات */}
+                        <div className="grid grid-cols-2 gap-x-6 gap-y-2 mb-8 text-right max-w-md mx-auto">
+                            {[
+                                'شروحات فيديو تفصيلية لكل درس ووحدة',
+                                'خرائط ذهنية ونماذج تثبّت المعلومة',
+                                'اختبارات بنظام الوزارة ومتابعة مستمرة',
+                                'دعم مباشر للطالب وولي الأمر طوال الأسبوع',
+                            ].map((label, i) => (
+                                <div key={i} className="flex items-center gap-2 py-1">
+                                    <svg width="13" height="13" viewBox="0 0 18 18" style={{ flexShrink:0 }}><rect x="4" y="4" width="10" height="10" transform="rotate(45 9 9)" fill="none" stroke="#0E3A2E" strokeWidth="1.6"/></svg>
+                                    <span className="text-xs font-medium" style={{ color:'rgba(26,26,26,.75)' }}>{label}</span>
+                                </div>
+                            ))}
+                        </div>
 
-                        {/* ── لوحة الصورة (يسار) — صورة كاملة بطراز تحريري ── */}
-                        <div className="about-photo-side" style={{
-                            position:'relative', overflow:'hidden', minHeight:460,
-                            background: darkMode ? '#141210' : '#E3D9C4',
-                        }}>
-                            {/* الصورة — تملأ اللوحة بالكامل مع ظهورها كاملة بدون قص */}
-                            <img
-                                src={encodeURI('/images/فوتيه منصور.png')}
-                                alt="الأستاذ منصور"
-                                style={{
-                                    position:'absolute', inset:0, width:'100%', height:'100%',
-                                    objectFit:'contain', objectPosition:'center',
-                                    filter: darkMode ? 'brightness(.96) saturate(1.05)' : 'none',
-                                }}
-                            />
-
-                            {/* تدرّج للدمج مع لوحة النص ولتثبيت القراءة عند الحواف */}
-                            <div style={{
-                                position:'absolute', inset:0, pointerEvents:'none',
-                                background: darkMode
-                                    ? 'linear-gradient(180deg, rgba(20,18,16,.4) 0%, transparent 20%, transparent 68%, rgba(20,18,16,.88) 100%)'
-                                    : 'linear-gradient(180deg, rgba(255,255,255,.25) 0%, transparent 20%, transparent 68%, rgba(255,255,255,.65) 100%)',
-                            }}/>
-
-                            {/* نسيج نجمة ثمانية خافت فوق الصورة */}
-                            <svg style={{ position:'absolute', inset:0, width:'100%', height:'100%', opacity:.05, pointerEvents:'none' }}>
-                                <defs>
-                                    <pattern id="aboutStarPat2" width="48" height="48" patternUnits="userSpaceOnUse">
-                                        <g stroke={C.gold} fill="none" strokeWidth="1">
-                                            <rect x="5" y="5" width="38" height="38"/>
-                                            <rect x="5" y="5" width="38" height="38" transform="rotate(45 24 24)"/>
-                                        </g>
-                                    </pattern>
-                                </defs>
-                                <rect width="100%" height="100%" fill="url(#aboutStarPat2)"/>
+                        {/* زر الاشتراك */}
+                        <Link
+                            href={auth?.user ? '/student/dashboard' : '/register'}
+                            className="inline-flex items-center gap-2 font-bold px-8 py-3.5 rounded-xl shadow-lg transition-all duration-300 transform hover:scale-105"
+                            style={{ background:'#0E3A2E', color:'#C9A96A' }}
+                        >
+                            اشترك الآن في الرحلة
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                                <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
                             </svg>
-
-                            {/* حافة ذهبية علوية رفيعة */}
-                            <div style={{ position:'absolute', top:0, left:0, right:0, height:3, background:`linear-gradient(90deg, transparent, ${C.gold}, ${C.amber}, ${C.gold}, transparent)`, opacity:.85 }}/>
-
-                            {/* شارة الاسم أسفل الصورة */}
-                            <div style={{ position:'absolute', bottom:22, left:26, right:26, zIndex:2 }}>
-                                <div style={{ display:'inline-flex', alignItems:'center', gap:9, marginBottom:8 }}>
-                                    <svg width="9" height="9" viewBox="0 0 18 18"><rect x="4" y="4" width="10" height="10" transform="rotate(45 9 9)" fill={C.gold}/></svg>
-                                    <span style={{ fontSize:11, color:C.gold, letterSpacing:'.18em', fontWeight:700 }}>الأستاذ</span>
-                                </div>
-                                <div style={{ fontFamily:"'Ruwudu',serif", fontSize:'clamp(24px,2.6vw,32px)', color:'#F5EFDF', lineHeight:1.1 }}>
-                                    محمد منصور
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* ── لوحة المحتوى (يمين) ── */}
-                        <div className="about-text-side" style={{
-                            background: darkMode ? '#0a1424' : '#ffffff',
-                            padding:'clamp(40px,4vw,64px)',
-                            display:'flex', flexDirection:'column', justifyContent:'center', gap:24,
-                            position:'relative', direction:'rtl',
-                        }}>
-                            <div style={{ maxWidth:640 }}>
-                                {/* Tag */}
-                                <div style={{ display:'inline-flex', alignItems:'center', gap:10, alignSelf:'flex-start' }}>
-                                    <svg width="12" height="12" viewBox="0 0 18 18" fill="none"><rect x="4" y="4" width="10" height="10" transform="rotate(45 9 9)" stroke={C.gold} strokeWidth="1.6"/></svg>
-                                    <span style={{ fontSize:11, color:C.gold, letterSpacing:'.24em', fontWeight:700 }}>عن الأستاذ</span>
-                                </div>
-
-                                {/* الاسم */}
-                                <div style={{ marginTop:14 }}>
-                                    <h2 style={{ fontSize:'clamp(34px,4vw,54px)', fontFamily:"'Ruwudu',serif", color: darkMode ? '#F5EFDF' : C.navy, lineHeight:1.15, margin:'0 0 8px' }}>
-                                        منصور
-                                    </h2>
-                                    <div style={{ display:'flex', alignItems:'center', gap:9 }}>
-                                        <svg width="9" height="9" viewBox="0 0 18 18"><rect x="4" y="4" width="10" height="10" transform="rotate(45 9 9)" fill={C.amber}/></svg>
-                                        <span style={{ fontSize:13, color:C.amber, fontWeight:700, letterSpacing:'.04em' }}>أستاذ اللغة العربية — الثانوية العامة</span>
-                                    </div>
-                                </div>
-
-                                {/* اقتباس */}
-                                <div style={{ position:'relative', paddingRight:20, marginTop:20, borderRight:`2px solid ${darkMode?'rgba(201,169,106,.35)':'rgba(201,169,106,.4)'}` }}>
-                                    <p style={{ fontSize:'clamp(14px,1.4vw,17px)', fontWeight:600, color: darkMode ? 'rgba(240,232,213,.78)' : 'rgba(14,58,46,.78)', lineHeight:2.05, margin:0 }}>
-                                        <span style={{ fontFamily:"'Ruwudu',serif", fontSize:'1.3em', color:C.amber, letterSpacing:'.03em' }}>ركّز معايا</span> وجهّز نفسك من النهارده...<br/>
-                                        هنذاكر مع بعض بأسلوب مختلف تمامًا — تفهم الدرس مش تحفظه<br/>
-                                        لحد ما <span style={{ color:C.amber, fontWeight:900 }}>الدرجة الكاملة تبقى حقك المضمون</span>
-                                    </p>
-                                </div>
-                            </div>
-
-                            {/* إحصائيات — بطاقات مستقلة بدل الخط الفاصل */}
-                            <div className="about-stats-grid" style={{ display:'grid', gridTemplateColumns:'repeat(2,1fr)', gap:14, maxWidth:340 }}>
-                                {[
-                                    { count:98,      suffix:'٪',  label:'نسبة النجاح' },
-                                    { count:500,     prefix:'+',  label:'ساعة محتوى' },
-                                ].map(({count,prefix='',suffix='',label}) => (
-                                    <div key={label} style={{
-                                        textAlign:'center', padding:'16px 8px', borderRadius:14,
-                                        background: darkMode ? 'rgba(201,169,106,.05)' : 'rgba(14,58,46,.03)',
-                                        border:`1px solid ${darkMode?'rgba(201,169,106,.14)':'rgba(14,58,46,.1)'}`,
-                                    }}>
-                                        <div style={{ fontSize:'clamp(19px,2vw,28px)', fontWeight:900, color:C.gold, lineHeight:1.1 }}>
-                                            {prefix}<span data-count={count}>٠</span>{suffix}
-                                        </div>
-                                        <div style={{ fontSize:11, color: darkMode?'rgba(201,169,106,.55)':'rgba(14,58,46,.5)', marginTop:6, letterSpacing:'.03em' }}>{label}</div>
-                                    </div>
-                                ))}
-                            </div>
-
-                            {/* مميزات — شبكة عمودين لاستغلال العرض المتاح */}
-                            <div className="about-feats-grid" style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'4px 20px' }}>
-                                {[
-                                    'شروحات فيديو تفصيلية لكل درس ووحدة',
-                                    'خرائط ذهنية ونماذج إعراب تثبّت المعلومة',
-                                    'اختبارات بنظام الوزارة ومتابعة مستمرة',
-                                    'دعم مباشر للطالب وولي الأمر طوال الأسبوع',
-                                ].map((label, i) => (
-                                    <div key={i} style={{ display:'flex', alignItems:'center', gap:13, padding:'10px 0' }}>
-                                        <svg width="15" height="15" viewBox="0 0 18 18" style={{ flexShrink:0 }}><rect x="4" y="4" width="10" height="10" transform="rotate(45 9 9)" fill="none" stroke={C.gold} strokeWidth="1.6"/></svg>
-                                        <span style={{ fontSize:13.5, color: darkMode ? 'rgba(245,240,232,.68)' : 'rgba(14,58,46,.68)', fontWeight:500 }}>{label}</span>
-                                    </div>
-                                ))}
-                            </div>
-
-                            {/* CTA */}
-                            <div style={{ display:'flex', gap:14, alignItems:'center', flexWrap:'wrap', paddingTop:6 }}>
-                                <Link
-                                    href={auth?.user ? '/student/dashboard' : '/register'}
-                                    style={{
-                                        display:'inline-flex', alignItems:'center', gap:10,
-                                        padding:'13px 30px', borderRadius:10,
-                                        background:`linear-gradient(135deg,${C.gold},${C.amber})`,
-                                        color:C.dark, fontWeight:800, fontSize:14, textDecoration:'none',
-                                        boxShadow:`0 8px 28px rgba(201,169,106,.35)`,
-                                        transition:'transform .2s, box-shadow .2s',
-                                    }}
-                                    onMouseEnter={e=>{e.currentTarget.style.transform='translateY(-2px)';e.currentTarget.style.boxShadow=`0 14px 36px rgba(201,169,106,.55)`;}}
-                                    onMouseLeave={e=>{e.currentTarget.style.transform='none';e.currentTarget.style.boxShadow=`0 8px 28px rgba(201,169,106,.35)`;}}
-                                >
-                                    اشترك دلوقتي
-                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                                        <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
-                                    </svg>
-                                </Link>
-                                <a href="#courses" style={{ fontSize:13, color: darkMode ? 'rgba(201,169,106,.7)' : 'rgba(14,58,46,.6)', textDecoration:'none', fontWeight:600, transition:'color .2s' }}
-                                    onMouseEnter={e=>e.currentTarget.style.color=C.gold}
-                                    onMouseLeave={e=>e.currentTarget.style.color= darkMode ? 'rgba(201,169,106,.7)' : 'rgba(14,58,46,.6)'}
-                                >شوف الكورسات ←</a>
-                            </div>
-                        </div>
+                        </Link>
                     </div>
                 </div>
             </section>
