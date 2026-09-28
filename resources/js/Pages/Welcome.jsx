@@ -2,6 +2,7 @@ import React, { Component, useState, useRef, useEffect } from 'react';
 import { Head, Link } from '@inertiajs/react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { motion, AnimatePresence } from 'framer-motion';
 import PopOutCard from '@/Components/PopOutCard';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -900,11 +901,51 @@ function TeacherHero({ dark }) {
                 transform:'rotate(45deg)', pointerEvents:'none',
             }}/>
 
-            {/* مكان اللوحة الرئيسية — هتتحط لاحقًا */}
+            {/* اللوحة الرئيسية — صورة بانورامية بإطار ذهبي احترافي */}
             <div className="th-img" style={{
                 position:'relative', zIndex:5, width:'100%',
                 display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center',
-            }}/>
+            }}>
+                <div className="teacher-hero-img" style={{
+                    width:'100%', position:'relative', borderRadius:22, overflow:'hidden',
+                    border:`1.5px solid ${dark ? 'rgba(201,169,106,.4)' : 'rgba(201,169,106,.5)'}`,
+                    boxShadow: dark
+                        ? '0 30px 70px rgba(0,0,0,.55), 0 0 0 1px rgba(201,169,106,.12), inset 0 1px 0 rgba(255,255,255,.06)'
+                        : '0 24px 56px rgba(14,58,46,.22), 0 0 0 1px rgba(201,169,106,.18)',
+                }}>
+                    {/* صورة الأستاذ أحمد الشعراوي */}
+                    <img
+                        src={encodeURI('/images/ChatGPT Image Sep 28, 2026, 02_22_20 PM.png')}
+                        alt="الأستاذ أحمد الشعراوي — منصة التاريخ للثانوية العامة والبكالوريا"
+                        style={{ display:'block', width:'100%', height:'auto', position:'relative', zIndex:2 }}
+                    />
+
+                    {/* إطار داخلي رفيع — لمسة تذهيب المخطوطات */}
+                    <div style={{ position:'absolute', inset:8, borderRadius:15, border:'1px solid rgba(201,169,106,.35)', pointerEvents:'none', zIndex:3 }}/>
+
+                    {/* زخارف أركان ذهبية */}
+                    {['tl','tr','bl','br'].map(pos => (
+                        <div key={pos} style={{
+                            position:'absolute', width:26, height:26, zIndex:3, color:'#C9A96A', opacity:.85,
+                            top: pos[0]==='t' ? 10 : 'auto', bottom: pos[0]==='b' ? 10 : 'auto',
+                            right: pos[1]==='r' ? 10 : 'auto', left: pos[1]==='l' ? 10 : 'auto',
+                            transform:`scale(${pos[1]==='r'?-1:1},${pos[0]==='b'?-1:1})`,
+                        }}>
+                            <svg viewBox="0 0 30 30" width="26" height="26">
+                                <path d="M3,19 L3,3 L19,3" stroke="currentColor" strokeWidth="1.6" fill="none" strokeLinecap="round"/>
+                                <rect x="0" y="0" width="7" height="7" transform="rotate(45 3.2 3.2)" fill="currentColor"/>
+                            </svg>
+                        </div>
+                    ))}
+
+                    {/* Ground glow */}
+                    <div style={{
+                        position:'absolute', bottom:0, left:'10%', right:'10%', height:55, zIndex:1,
+                        background:`radial-gradient(ellipse at center, rgba(201,169,106,.${dark?'22':'10'}) 0%, transparent 72%)`,
+                        filter:'blur(10px)', pointerEvents:'none',
+                    }}/>
+                </div>
+            </div>
         </div>
     );
 }
@@ -1030,55 +1071,78 @@ function NavLogo({ dark = true }) {
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   NAV DROPDOWN — بطاقة منسدلة زجاجية تتمدد فوق الناف بار الثابت أسفل الشاشة
-   (بديل قائمة الروابط البسيطة — بطاقة معاينة حقيقية تفتح لأعلى)
+   MORPHING NAV MENU — بطاقة منسدلة واحدة بتتمدد وتتغيّر (شكل وحجم وموضع)
+   بسلاسة بين العناصر بطراز Stripe / Flowbase، بدل بطاقات منفصلة لكل عنصر
 ═══════════════════════════════════════════════════════════════ */
-function NavDropdownItem({ label, dark, T, children, width = 320 }) {
-    const [open, setOpen] = useState(false);
+function MorphingNavMenu({ items, T }) {
+    const [active, setActive] = useState(null);
     const closeTimer = useRef(null);
-    const onEnter = () => { clearTimeout(closeTimer.current); setOpen(true); };
-    const onLeave = () => { closeTimer.current = setTimeout(() => setOpen(false), 160); };
+
+    const open = (i) => { clearTimeout(closeTimer.current); setActive(i); };
+    const scheduleClose = () => { closeTimer.current = setTimeout(() => setActive(null), 160); };
     useEffect(() => () => clearTimeout(closeTimer.current), []);
 
     return (
-        <div onMouseEnter={onEnter} onMouseLeave={onLeave} style={{ position: 'relative' }}>
-            <button
-                type="button"
-                className="nav-link-item"
-                onClick={() => setOpen(v => !v)}
-                style={{
-                    color: T.navLink, background: 'none', border: 'none', cursor: 'pointer',
-                    fontFamily: "'Cairo',sans-serif",
-                    fontSize: 13, fontWeight: 600, padding: '8px 14px', borderRadius: 8,
-                    display: 'flex', alignItems: 'center', gap: 5,
-                    transition: 'color .2s ease',
-                }}
-                onFocus={onEnter} onBlur={onLeave}
-            >
-                {label}
-                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"
-                    style={{ transition: 'transform .3s cubic-bezier(.22,1,.36,1)', transform: open ? 'rotate(180deg)' : 'none' }}>
-                    <polyline points="6 9 12 15 18 9" />
-                </svg>
-            </button>
+        <div onMouseLeave={scheduleClose} style={{ position: 'relative', display: 'flex', alignItems: 'center', gap: 4 }}>
+            {items.map((item, i) => (
+                <button key={item.label}
+                    type="button"
+                    className="nav-link-item"
+                    onMouseEnter={() => open(i)}
+                    onFocus={() => open(i)}
+                    onClick={() => setActive(v => v === i ? null : i)}
+                    style={{
+                        color: T.navLink, background: 'none', border: 'none', cursor: 'pointer',
+                        fontFamily: "'Cairo',sans-serif",
+                        fontSize: 13, fontWeight: 600, padding: '8px 14px', borderRadius: 8,
+                        display: 'flex', alignItems: 'center', gap: 5,
+                        transition: 'color .2s ease',
+                    }}
+                >
+                    {item.label}
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"
+                        style={{ transition: 'transform .3s cubic-bezier(.22,1,.36,1)', transform: active === i ? 'rotate(180deg)' : 'none' }}>
+                        <polyline points="6 9 12 15 18 9" />
+                    </svg>
+                </button>
+            ))}
 
-            <div style={{
-                position: 'absolute', bottom: 'calc(100% + 18px)', left: '50%', width,
-                transform: `translateX(-50%) translateY(${open ? 0 : 12}px) scale(${open ? 1 : 0.92})`,
-                transformOrigin: 'bottom center',
-                opacity: open ? 1 : 0,
-                visibility: open ? 'visible' : 'hidden',
-                pointerEvents: open ? 'auto' : 'none',
-                transition: 'opacity .3s cubic-bezier(.22,1,.36,1), transform .34s cubic-bezier(.22,1,.36,1), visibility 0s linear ' + (open ? '0s' : '.3s'),
-                background: dark ? 'rgba(20,18,16,.7)' : 'rgba(255,252,245,.85)',
-                backdropFilter: 'blur(30px) saturate(1.7)', WebkitBackdropFilter: 'blur(30px) saturate(1.7)',
-                borderRadius: 20,
-                border: `1px solid ${dark ? 'rgba(201,169,106,.2)' : 'rgba(201,169,106,.3)'}`,
-                boxShadow: dark ? '0 24px 60px rgba(0,0,0,.6)' : '0 20px 50px rgba(14,58,46,.18)',
-                padding: 16, zIndex: 60,
-            }}>
-                {children}
-            </div>
+            <AnimatePresence>
+                {active !== null && (
+                    <motion.div
+                        key="morph-panel"
+                        layout
+                        initial={{ opacity: 0, scale: .94, y: 10 }}
+                        animate={{ opacity: 1, scale: 1, y: 0 }}
+                        exit={{ opacity: 0, scale: .94, y: 10 }}
+                        transition={{ type: 'spring', stiffness: 350, damping: 30 }}
+                        onMouseEnter={() => clearTimeout(closeTimer.current)}
+                        onMouseLeave={scheduleClose}
+                        style={{
+                            position: 'absolute', bottom: 'calc(100% + 18px)', left: '50%', x: '-50%',
+                            transformOrigin: 'bottom center',
+                            background: 'rgba(14,42,32,.88)',
+                            backdropFilter: 'blur(24px) saturate(1.6)', WebkitBackdropFilter: 'blur(24px) saturate(1.6)',
+                            borderRadius: 20,
+                            border: '1px solid rgba(201,169,106,.3)',
+                            boxShadow: '0 20px 50px rgba(0,0,0,.5), 0 0 20px rgba(201,169,106,.15)',
+                            padding: 16, zIndex: 60, overflow: 'hidden',
+                        }}
+                    >
+                        <AnimatePresence mode="wait">
+                            <motion.div
+                                key={active}
+                                initial={{ opacity: 0, x: 10 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                exit={{ opacity: 0, x: -10 }}
+                                transition={{ duration: .18 }}
+                            >
+                                {items[active].content}
+                            </motion.div>
+                        </AnimatePresence>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </div>
     );
 }
@@ -1147,28 +1211,22 @@ function LanguageBranches({ dark }) {
                             {/* حلقة وصل صغيرة */}
                             <div style={{ width:7, height:7, borderRadius:'50%', border:'1.4px solid rgba(201,169,106,.7)', marginTop:-5 }}/>
 
-                            {/* الوسام — قرص شمسي مشع بأشعة ذهبية حوالين دائرة الأيقونة */}
+                            {/* الوسام — حلقة ذهبية نظيفة حوالين دائرة الأيقونة، من غير أشعة بارزة */}
                             <div style={{ position:'relative', width: isActive?98:72, height: isActive?98:72, display:'flex', alignItems:'center', justifyContent:'center', transition:'all .45s cubic-bezier(.22,1,.36,1)' }}>
                                 <svg viewBox="0 0 98 98" style={{ position:'absolute', inset:0, width:'100%', height:'100%', opacity: isActive?1:.6, transition:'opacity .45s ease' }}>
-                                    {Array.from({length:18}).map((_, k) => {
-                                        const deg = k * (360/18);
-                                        const a = (deg*Math.PI)/180;
-                                        const x1 = 49 + Math.cos(a)*30, y1 = 49 + Math.sin(a)*30;
-                                        const x2 = 49 + Math.cos(a)*(k%2===0?47:41), y2 = 49 + Math.sin(a)*(k%2===0?47:41);
-                                        return <line key={k} x1={x1} y1={y1} x2={x2} y2={y2} stroke="#C9A96A" strokeWidth={k%2===0?2.4:1.6} strokeLinecap="round" opacity={isActive?.95:.5}/>;
-                                    })}
-                                    <circle cx="49" cy="49" r="31" fill="none" stroke="#C9A96A" strokeWidth="1" opacity={isActive?.8:.45}/>
+                                    <circle cx="49" cy="49" r="46" fill="none" stroke="#C9A96A" strokeWidth="1.4" opacity={isActive?.85:.45}/>
+                                    <circle cx="49" cy="49" r="39" fill="none" stroke="#C9A96A" strokeWidth=".7" opacity={isActive?.6:.3}/>
                                 </svg>
                                 <div style={{
                                     position:'relative', width: isActive ? 74 : 54, height: isActive ? 74 : 54, borderRadius:'50%',
                                     display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0,
-                                    background: isActive ? 'linear-gradient(155deg,#1F5A45,#0E3A2E)' : (dark ? 'rgba(226,232,240,.05)' : '#fff'),
+                                    background: isActive ? 'linear-gradient(155deg,#1F5A45,#0E3A2E)' : (dark ? 'rgba(232,220,193,.05)' : '#fff'),
                                     border: `2px solid ${isActive ? '#C9A96A' : 'rgba(201,169,106,.35)'}`,
                                     boxShadow: isActive ? '0 0 0 6px rgba(201,169,106,.14), 0 12px 30px rgba(0,0,0,.35)' : (dark ? 'none' : '0 2px 10px rgba(14,58,46,.1)'),
                                     transition:'all .45s cubic-bezier(.22,1,.36,1)',
                                 }}>
                                     <svg width={isActive?28:20} height={isActive?28:20} viewBox="0 0 24 24" fill="none"
-                                        stroke={isActive ? '#C9A96A' : (dark ? 'rgba(226,232,240,.6)' : '#0E3A2E')}
+                                        stroke={isActive ? '#C9A96A' : (dark ? 'rgba(201,169,106,.5)' : '#0E3A2E')}
                                         strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"
                                         style={{ transition:'all .45s cubic-bezier(.22,1,.36,1)' }}>
                                         {b.icon}
@@ -1177,7 +1235,7 @@ function LanguageBranches({ dark }) {
                             </div>
                             <span style={{
                                 fontFamily:"'Cairo',sans-serif", fontSize:12.5, fontWeight: isActive?800:600,
-                                color: isActive ? '#C9A96A' : (dark ? 'rgba(226,232,240,.55)' : 'rgba(14,58,46,.6)'),
+                                color: isActive ? '#C9A96A' : (dark ? 'rgba(232,220,193,.55)' : 'rgba(14,58,46,.6)'),
                                 transition:'color .4s ease', whiteSpace:'nowrap',
                             }}>{b.title}</span>
                         </button>
@@ -1410,49 +1468,73 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
                     onMouseLeave={e=>{e.currentTarget.style.color=T.navLink;}}
                     >الرئيسية</a>
 
-                    <NavDropdownItem label="المقررات" dark={darkMode} T={T} width={360}>
-                        <p style={{ fontFamily:"'Cairo',sans-serif", fontSize:11, fontWeight:700, letterSpacing:'.12em', color:C.gold, margin:'2px 4px 12px' }}>فروع التاريخ</p>
-                        <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:8 }}>
-                            {BRANCHES.map(b => (
-                                <a key={b.title} href="#branches" style={{
-                                    display:'flex', alignItems:'center', gap:9, padding:'10px 11px', borderRadius:12,
-                                    textDecoration:'none', color:T.text,
-                                    background: darkMode ? 'rgba(201,169,106,.06)' : 'rgba(14,58,46,.04)',
-                                    border:`1px solid ${darkMode ? 'rgba(201,169,106,.12)' : 'rgba(14,58,46,.08)'}`,
-                                    transition:'background .2s ease, transform .2s ease',
-                                }}
-                                onMouseEnter={e=>{e.currentTarget.style.background=darkMode?'rgba(201,169,106,.14)':'rgba(14,58,46,.08)'; e.currentTarget.style.transform='translateY(-2px)';}}
-                                onMouseLeave={e=>{e.currentTarget.style.background=darkMode?'rgba(201,169,106,.06)':'rgba(14,58,46,.04)'; e.currentTarget.style.transform='none';}}
-                                >
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={C.gold} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink:0 }}>{b.icon}</svg>
-                                    <span style={{ fontFamily:"'Cairo',sans-serif", fontSize:12.5, fontWeight:700 }}>{b.title}</span>
-                                </a>
-                            ))}
-                        </div>
-                    </NavDropdownItem>
-
-                    <NavDropdownItem label="عن المنصة" dark={darkMode} T={T} width={280}>
-                        <div style={{ display:'flex', alignItems:'center', gap:12, marginBottom:12 }}>
-                            <div style={{
-                                width:44, height:44, borderRadius:13, flexShrink:0,
-                                background:'linear-gradient(150deg,#0E3A2E,#1F5A45)',
-                                display:'flex', alignItems:'center', justifyContent:'center',
-                                boxShadow:'0 0 0 2px rgba(201,169,106,.25)',
-                            }}>
-                                <span style={{ fontFamily:"'Reem Kufi',sans-serif", fontSize:20, color:'#C9A96A' }}>ش</span>
-                            </div>
-                            <div>
-                                <p style={{ fontFamily:"'Cairo',sans-serif", fontSize:13, fontWeight:800, color:T.text, margin:0 }}>أ. أحمد الشعراوي</p>
-                                <p style={{ fontFamily:"'Cairo',sans-serif", fontSize:11, fontWeight:600, color:C.gold, margin:'2px 0 0' }}>أستاذ التاريخ — الثانوية العامة</p>
-                            </div>
-                        </div>
-                        <p style={{ fontFamily:"'Cairo',sans-serif", fontSize:12, lineHeight:1.9, color:T.textDim2, margin:'0 0 12px' }}>
-                            منصة متكاملة بتفهّمك التاريخ بأسلوب مبسّط، فيديوهات وخرائط توضيحية، ومتابعة حقيقية لتقدمك.
-                        </p>
-                        <a href="#about" style={{ display:'inline-flex', alignItems:'center', gap:5, fontFamily:"'Cairo',sans-serif", fontSize:12, fontWeight:800, color:C.gold, textDecoration:'none' }}>
-                            اعرف أكتر عن المنصة ←
-                        </a>
-                    </NavDropdownItem>
+                    <MorphingNavMenu T={T} items={[
+                        {
+                            label: 'المقررات',
+                            content: (
+                                <div style={{ width: 440 }}>
+                                    <p style={{ fontFamily:"'Cairo',sans-serif", fontSize:11, fontWeight:700, letterSpacing:'.12em', color:'#C9A96A', margin:'2px 6px 12px' }}>فروع التاريخ</p>
+                                    <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:4 }}>
+                                        {[
+                                            { ...BRANCHES[0], tag:'الأهرامات والفراعنة' },
+                                            { ...BRANCHES[1], tag:'من البعثة للخلافة' },
+                                            { ...BRANCHES[2], tag:'بلاد الرافدين واليونان' },
+                                            { ...BRANCHES[3], tag:'من محمد علي لثورة يوليو' },
+                                            { ...BRANCHES[4], tag:'من النهضة للحرب العالمية' },
+                                        ].map(b => (
+                                            <a key={b.title} href="#branches" style={{
+                                                display:'flex', alignItems:'center', gap:11, padding:10, borderRadius:14,
+                                                textDecoration:'none', color:'#E8DCC1',
+                                                transition:'background .2s ease',
+                                            }}
+                                            onMouseEnter={e=>{e.currentTarget.style.background='rgba(201,169,106,.1)';}}
+                                            onMouseLeave={e=>{e.currentTarget.style.background='transparent';}}
+                                            >
+                                                <div style={{
+                                                    width:42, height:42, borderRadius:12, flexShrink:0,
+                                                    display:'flex', alignItems:'center', justifyContent:'center',
+                                                    background:'rgba(201,169,106,.12)',
+                                                }}>
+                                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C9A96A" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">{b.icon}</svg>
+                                                </div>
+                                                <div style={{ minWidth:0 }}>
+                                                    <p style={{ fontFamily:"'Cairo',sans-serif", fontSize:13, fontWeight:800, margin:0 }}>{b.title}</p>
+                                                    <p style={{ fontFamily:"'Cairo',sans-serif", fontSize:10.5, fontWeight:500, color:'rgba(232,220,193,.6)', margin:'2px 0 0', whiteSpace:'nowrap', overflow:'hidden', textOverflow:'ellipsis' }}>{b.tag}</p>
+                                                </div>
+                                            </a>
+                                        ))}
+                                    </div>
+                                </div>
+                            ),
+                        },
+                        {
+                            label: 'عن المنصة',
+                            content: (
+                                <div style={{ width: 280 }}>
+                                    <div style={{ display:'flex', alignItems:'center', gap:12, marginBottom:12 }}>
+                                        <div style={{
+                                            width:44, height:44, borderRadius:13, flexShrink:0,
+                                            background:'linear-gradient(150deg,#0E3A2E,#1F5A45)',
+                                            display:'flex', alignItems:'center', justifyContent:'center',
+                                            boxShadow:'0 0 0 2px rgba(201,169,106,.25)',
+                                        }}>
+                                            <span style={{ fontFamily:"'Reem Kufi',sans-serif", fontSize:20, color:'#C9A96A' }}>ش</span>
+                                        </div>
+                                        <div>
+                                            <p style={{ fontFamily:"'Cairo',sans-serif", fontSize:13, fontWeight:800, color:'#E8DCC1', margin:0 }}>أ. أحمد الشعراوي</p>
+                                            <p style={{ fontFamily:"'Cairo',sans-serif", fontSize:11, fontWeight:600, color:'#C9A96A', margin:'2px 0 0' }}>أستاذ التاريخ — الثانوية العامة</p>
+                                        </div>
+                                    </div>
+                                    <p style={{ fontFamily:"'Cairo',sans-serif", fontSize:12, lineHeight:1.9, color:'rgba(232,220,193,.75)', margin:'0 0 12px' }}>
+                                        منصة متكاملة بتفهّمك التاريخ بأسلوب مبسّط، فيديوهات وخرائط توضيحية، ومتابعة حقيقية لتقدمك.
+                                    </p>
+                                    <a href="#about" style={{ display:'inline-flex', alignItems:'center', gap:5, fontFamily:"'Cairo',sans-serif", fontSize:12, fontWeight:800, color:'#C9A96A', textDecoration:'none' }}>
+                                        اعرف أكتر عن المنصة ←
+                                    </a>
+                                </div>
+                            ),
+                        },
+                    ]} />
                 </div>
 
                 {/* Left group: auth buttons */}
@@ -1867,61 +1949,55 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
             {/* ══════════════════════════════════════════════════════
                 عن الأستاذ
             ══════════════════════════════════════════════════════ */}
-            <section id="about" className="relative w-full overflow-hidden" style={{ background:'#0E3A2E' }}>
-                <div className="relative w-full min-h-[520px] flex items-center justify-center"
+            <section id="about" className="relative w-full" style={{ background:'#0E3A2E' }}>
+                <div className="relative w-full flex flex-col items-center px-6 pt-12 pb-16"
                     style={{ background:'linear-gradient(to bottom, #E8DCC1 0%, #D8C39D 100%)' }} data-reveal>
 
                     {/* الإطار الذهبي الملكي — علوي وسفلي، يوحّد اللوحة كقطعة أثرية واحدة ممتدة */}
                     <div className="absolute top-0 left-0 right-0 h-2 z-30" style={{ background:'#C9A96A' }}/>
                     <div className="absolute bottom-0 left-0 right-0 h-2 z-30" style={{ background:'#C9A96A' }}/>
 
-                    {/* الصورة الأولى — أقصى اليمين فوق */}
+                    <span style={{ color:'#8B5E3C' }} className="relative z-20 font-semibold text-sm tracking-wide">عن الأستاذ</span>
+                    <h2 style={{ color:'#0E3A2E', fontFamily:"'Ruwudu',serif" }} className="relative z-20 text-4xl md:text-5xl font-black mt-2 mb-2 text-center">
+                        أحمد الشعراوي
+                    </h2>
+
+                    {/* الصورة — كبيرة ومتسنترة في المنتصف، طالعة شوية فوق العنوان */}
                     <img
-                        src={encodeURI('/images/ChatGPT Image Sep 28, 2026, 02_59_28 PM-2.png')}
+                        src="/images/erasebg-transformed.png"
                         alt="الأستاذ أحمد الشعراوي"
-                        className="absolute top-0 right-0 max-h-[90%] w-auto object-contain object-right pointer-events-none z-10 hidden md:block select-none"
+                        className="relative z-10 -mt-4 -mb-2 max-h-[460px] w-auto object-contain pointer-events-none select-none hidden md:block"
                     />
 
-                    {/* الصورة الثانية — أقصى الشمال تحت */}
-                    <img
-                        src={encodeURI('/images/ChatGPT Image Sep 28, 2026, 02_59_27 PM-1.png')}
-                        alt="الأستاذ أحمد الشعراوي"
-                        className="absolute bottom-0 left-0 max-h-[90%] w-auto object-contain object-left pointer-events-none z-10 hidden md:block select-none"
-                    />
-
-                    {/* منطقة المحتوى الآمنة — في المنتصف تمامًا بعيدًا عن الصورتين */}
-                    <div className="relative z-20 max-w-3xl mx-auto text-center px-4 py-16">
-                        <span style={{ color:'#8B5E3C' }} className="font-semibold text-sm tracking-wide">عن الأستاذ</span>
-                        <h2 style={{ color:'#0E3A2E', fontFamily:"'Ruwudu',serif" }} className="text-4xl md:text-5xl font-black mt-2 mb-3">
-                            أحمد الشعراوي
-                        </h2>
-                        <p style={{ color:'#1A1A1A' }} className="text-lg font-medium mb-6">
+                    {/* منطقة المحتوى */}
+                    <div className="relative z-20 w-full max-w-2xl mx-auto text-center mt-4">
+                        <p style={{ color:'#1A1A1A' }} className="text-lg font-medium mb-10">
                             مدرس التاريخ للثانوية العامة والبكالوريا — التاريخ مش مجرد ماضٍ، هو مفتاح فهم الحاضر والمستقبل.
                         </p>
 
                         {/* العدادات والإحصائيات */}
-                        <div className="flex justify-center gap-6 mb-8">
-                            <div className="rounded-2xl px-6 py-3" style={{ background:'rgba(14,58,46,.1)', border:'1px solid rgba(14,58,46,.2)' }}>
-                                <span className="block text-3xl font-extrabold" style={{ color:'#0E3A2E' }}>٩٨٪</span>
-                                <span className="text-xs" style={{ color:'rgba(26,26,26,.8)' }}>نسبة تفوق الطلاب</span>
+                        <div className="flex justify-center gap-12 mb-10">
+                            <div className="rounded-2xl px-10 py-5" style={{ background:'rgba(14,58,46,.1)', border:'1px solid rgba(14,58,46,.2)' }}>
+                                <span className="block text-4xl font-extrabold" style={{ color:'#0E3A2E' }}>٩٨٪</span>
+                                <span className="text-sm" style={{ color:'rgba(26,26,26,.8)' }}>نسبة تفوق الطلاب</span>
                             </div>
-                            <div className="rounded-2xl px-6 py-3" style={{ background:'rgba(14,58,46,.1)', border:'1px solid rgba(14,58,46,.2)' }}>
-                                <span className="block text-3xl font-extrabold" style={{ color:'#0E3A2E' }}>+٥٠٠</span>
-                                <span className="text-xs" style={{ color:'rgba(26,26,26,.8)' }}>ساعة شرح تفاعلي</span>
+                            <div className="rounded-2xl px-10 py-5" style={{ background:'rgba(14,58,46,.1)', border:'1px solid rgba(14,58,46,.2)' }}>
+                                <span className="block text-4xl font-extrabold" style={{ color:'#0E3A2E' }}>+٥٠٠</span>
+                                <span className="text-sm" style={{ color:'rgba(26,26,26,.8)' }}>ساعة شرح تفاعلي</span>
                             </div>
                         </div>
 
                         {/* مميزات */}
-                        <div className="grid grid-cols-2 gap-x-6 gap-y-2 mb-8 text-right max-w-md mx-auto">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-14 gap-y-4 mb-10 text-right max-w-2xl mx-auto">
                             {[
                                 'شروحات فيديو تفصيلية لكل درس ووحدة',
                                 'خرائط ذهنية ونماذج تثبّت المعلومة',
                                 'اختبارات بنظام الوزارة ومتابعة مستمرة',
                                 'دعم مباشر للطالب وولي الأمر طوال الأسبوع',
                             ].map((label, i) => (
-                                <div key={i} className="flex items-center gap-2 py-1">
-                                    <svg width="13" height="13" viewBox="0 0 18 18" style={{ flexShrink:0 }}><rect x="4" y="4" width="10" height="10" transform="rotate(45 9 9)" fill="none" stroke="#0E3A2E" strokeWidth="1.6"/></svg>
-                                    <span className="text-xs font-medium" style={{ color:'rgba(26,26,26,.75)' }}>{label}</span>
+                                <div key={i} className="flex items-center gap-2.5 py-1">
+                                    <svg width="14" height="14" viewBox="0 0 18 18" style={{ flexShrink:0 }}><rect x="4" y="4" width="10" height="10" transform="rotate(45 9 9)" fill="none" stroke="#0E3A2E" strokeWidth="1.6"/></svg>
+                                    <span className="text-sm font-medium" style={{ color:'rgba(26,26,26,.75)' }}>{label}</span>
                                 </div>
                             ))}
                         </div>

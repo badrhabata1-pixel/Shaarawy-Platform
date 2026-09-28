@@ -28,6 +28,7 @@
         "@splinetool/react-spline": "^4.1.0",
         "@splinetool/runtime": "^1.12.97",
         "aos": "^2.3.4",
+        "framer-motion": "^13.4.4",
         "gsap": "^3.15.0",
         "three": "^0.184.0"
     }
