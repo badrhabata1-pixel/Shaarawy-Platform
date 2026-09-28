@@ -2,9 +2,9 @@ import { Head, Link } from '@inertiajs/react';
 import { useState, useEffect } from 'react';
 import StudentLayout from '@/Layouts/StudentLayout';
 
-const O = '#0D9488';
-const N = '#14213D';
-const G = '#2DD4BF';
+const O = '#1F5A45';
+const N = '#0E3A2E';
+const G = '#C9A96A';
 
 function useStudentDark() {
     const [dark, setDark] = useState(() => {
@@ -23,16 +23,16 @@ function useStudentDark() {
 
 const STATUS_META = {
     active:   { label: 'جاري الآن', gradient: 'linear-gradient(135deg,#059669,#047857)', pulse: true },
-    upcoming: { label: 'قادم',      gradient: 'linear-gradient(135deg,#4F46E5,#3730a3)', pulse: false },
+    upcoming: { label: 'قادم',      gradient: 'linear-gradient(135deg,#8B5E3C,#6B4226)', pulse: false },
     open:     { label: 'مفتوح',     gradient: 'linear-gradient(135deg,#D97706,#b45309)', pulse: false },
-    ended:    { label: 'انتهى',     gradient: 'linear-gradient(135deg,#64748b,#475569)', pulse: false },
+    ended:    { label: 'انتهى',     gradient: 'linear-gradient(135deg,#6B6255,#475569)', pulse: false },
 };
 
 const GROUP_HEADERS = {
     active:   { icon: '⚡', title: 'جارية الآن',  color: '#059669', border: '#d1fae5', borderDark: 'rgba(52,211,153,.2)' },
     open:     { icon: '📜', title: 'مفتوحة',       color: '#D97706', border: '#fef3c7', borderDark: 'rgba(217,119,6,.2)'   },
-    upcoming: { icon: '🕰️', title: 'قادمة',        color: '#4F46E5', border: '#ede9fe', borderDark: 'rgba(79,70,229,.2)'   },
-    ended:    { icon: '📚', title: 'منتهية',        color: '#64748b', border: '#f1f5f9', borderDark: 'rgba(255,255,255,.08)' },
+    upcoming: { icon: '🕰️', title: 'قادمة',        color: '#8B5E3C', border: '#F3ECD9', borderDark: 'rgba(139,94,60,.24)'   },
+    ended:    { icon: '📚', title: 'منتهية',        color: '#6B6255', border: '#F7F3E9', borderDark: 'rgba(255,255,255,.08)' },
 };
 
 export default function Exams({ exams }) {
@@ -47,7 +47,7 @@ export default function Exams({ exams }) {
 
     return (
         <StudentLayout>
-            <Head title="الامتحانات — منصة منصور" />
+            <Head title="الامتحانات — منصة أحمد الشعراوي" />
 
             <style>{`
                 @keyframes fadeUp { from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:translateY(0)} }
@@ -60,12 +60,12 @@ export default function Exams({ exams }) {
             {/* Hero */}
             <div className="eu" style={{
                 position: 'relative', overflow: 'hidden',
-                background: `linear-gradient(135deg,${N} 0%,#1a2d52 55%,#0f1e3a 100%)`,
+                background: `linear-gradient(135deg,${N} 0%,#1F5A45 55%,#081F19 100%)`,
                 borderRadius: 22, padding: '2rem 2.25rem',
                 marginBottom: '1.75rem',
-                boxShadow: `0 8px 40px rgba(20,33,61,.25), inset 0 0 0 1px rgba(201,161,74,.15)`,
+                boxShadow: `0 8px 40px rgba(14,58,46,.25), inset 0 0 0 1px rgba(201,169,106,.15)`,
             }}>
-                <div style={{ position: 'absolute', inset: 0, opacity: .04, backgroundImage: 'repeating-linear-gradient(0deg,transparent,transparent 28px,rgba(201,161,74,1) 28px,rgba(201,161,74,1) 29px)', pointerEvents: 'none' }} />
+                <div style={{ position: 'absolute', inset: 0, opacity: .04, backgroundImage: 'repeating-linear-gradient(0deg,transparent,transparent 28px,rgba(201,169,106,1) 28px,rgba(201,169,106,1) 29px)', pointerEvents: 'none' }} />
                 <div style={{ position: 'absolute', top: 14, left: 20, fontSize: 48, opacity: .08, userSelect: 'none' }}>📜</div>
                 <div style={{ position: 'absolute', bottom: 10, right: 20, fontSize: 38, opacity: .06, userSelect: 'none' }}>⚖️</div>
 
@@ -84,10 +84,10 @@ export default function Exams({ exams }) {
                     </div>
                     <Link href={route('student.dashboard')} style={{
                         display: 'inline-flex', alignItems: 'center', gap: 6,
-                        background: 'rgba(201,161,74,.12)', color: G,
+                        background: 'rgba(201,169,106,.12)', color: G,
                         borderRadius: 12, padding: '9px 20px',
                         fontSize: 13, fontWeight: 700, textDecoration: 'none',
-                        border: `1px solid rgba(201,161,74,.25)`,
+                        border: `1px solid rgba(201,169,106,.25)`,
                     }}>
                         ← لوحة التحكم
                     </Link>
@@ -111,7 +111,7 @@ export default function Exams({ exams }) {
 
 function ExamGroup({ groupKey, items, dark }) {
     const h      = GROUP_HEADERS[groupKey];
-    const labelBg = dark ? 'rgba(255,255,255,.04)' : '#fff';
+    const labelBg = dark ? 'rgba(255,255,255,.04)' : 'rgba(255,252,245,.30)';
     const labelBd = dark ? h.borderDark : h.border;
 
     return (
@@ -122,7 +122,7 @@ function ExamGroup({ groupKey, items, dark }) {
                     background: labelBg,
                     border: `1.5px solid ${labelBd}`,
                     borderRadius: 10, padding: '6px 16px',
-                    boxShadow: dark ? 'none' : '0 2px 8px rgba(20,33,61,.05)',
+                    boxShadow: dark ? 'none' : '0 2px 8px rgba(14,58,46,.05)',
                 }}>
                     <span style={{ fontSize: 16 }}>{h.icon}</span>
                     <span style={{ fontSize: 13, fontWeight: 800, color: h.color }}>{h.title}</span>
@@ -147,12 +147,12 @@ function ExamCard({ exam, delay, dark }) {
     const s  = STATUS_META[exam.status] || STATUS_META.open;
     const rs = exam.result_status;
 
-    const cardBg  = dark ? '#152238' : '#fff';
-    const cardBd  = dark ? 'rgba(255,255,255,.07)' : '#f0ede8';
-    const txtMain = dark ? '#f0f4f8' : N;
-    const txtSub  = dark ? 'rgba(220,201,163,.5)' : '#64748b';
-    const metaBg  = dark ? 'rgba(255,255,255,.05)' : '#f8f7f4';
-    const metaBd  = dark ? 'rgba(255,255,255,.09)' : '#ede9e0';
+    const cardBg  = dark ? '#1C1916' : 'rgba(255,252,245,.30)';
+    const cardBd  = dark ? 'rgba(255,255,255,.07)' : '#E3D9C4';
+    const txtMain = dark ? '#E8DCC1' : N;
+    const txtSub  = dark ? 'rgba(220,201,163,.5)' : '#6B6255';
+    const metaBg  = dark ? 'rgba(255,255,255,.05)' : '#F7F3E9';
+    const metaBd  = dark ? 'rgba(255,255,255,.09)' : '#E3D9C4';
 
     const resultColor  = rs === 'passed' ? '#059669' : rs === 'failed' ? '#dc2626' : '#d97706';
     const resultBg     = dark
@@ -170,7 +170,7 @@ function ExamCard({ exam, delay, dark }) {
             background: cardBg,
             borderRadius: 18,
             overflow: 'hidden',
-            boxShadow: dark ? '0 4px 20px rgba(0,0,0,.3)' : '0 2px 20px rgba(20,33,61,.07)',
+            boxShadow: dark ? '0 4px 20px rgba(0,0,0,.3)' : '0 2px 20px rgba(14,58,46,.07)',
             border: `1px solid ${cardBd}`,
             display: 'flex', flexDirection: 'column',
         }}>
@@ -188,9 +188,9 @@ function ExamCard({ exam, delay, dark }) {
                     }}>{s.label}</span>
                     {/* Exam mode badge */}
                     <span style={{
-                        background: exam.exam_mode === 'gate' ? 'rgba(99,102,241,.15)' : 'rgba(217,119,6,.15)',
-                        color:      exam.exam_mode === 'gate' ? '#818cf8' : '#D97706',
-                        border:     `1px solid ${exam.exam_mode === 'gate' ? 'rgba(99,102,241,.3)' : 'rgba(217,119,6,.3)'}`,
+                        background: exam.exam_mode === 'gate' ? 'rgba(139,94,60,.15)' : 'rgba(217,119,6,.15)',
+                        color:      exam.exam_mode === 'gate' ? '#C9A96A' : '#D97706',
+                        border:     `1px solid ${exam.exam_mode === 'gate' ? 'rgba(139,94,60,.3)' : 'rgba(217,119,6,.3)'}`,
                         borderRadius: 99, padding: '2px 9px',
                         fontSize: 10, fontWeight: 700,
                     }}>
@@ -266,11 +266,11 @@ function ExamCard({ exam, delay, dark }) {
                     {exam.can_retake && (exam.status === 'active' || exam.status === 'open') && (
                         <Link href={route('student.exams.show', exam.id)} style={{
                             display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6,
-                            background: 'linear-gradient(135deg,#6366f1,#4338ca)',
+                            background: 'linear-gradient(135deg,#8B5E3C,#6B4226)',
                             color: '#fff', borderRadius: 12,
                             padding: '11px 0', fontSize: 13, fontWeight: 800,
                             textDecoration: 'none',
-                            boxShadow: '0 4px 18px rgba(99,102,241,.35)',
+                            boxShadow: '0 4px 18px rgba(139,94,60,.35)',
                         }}>
                             🔄 أعد المحاولة
                         </Link>
@@ -280,11 +280,11 @@ function ExamCard({ exam, delay, dark }) {
                     {(exam.status === 'active' || exam.status === 'open') && !rs && (
                         <Link href={route('student.exams.show', exam.id)} style={{
                             display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6,
-                            background: `linear-gradient(135deg,${O},#d96a12)`,
+                            background: `linear-gradient(135deg,${O},#8B5E3C)`,
                             color: '#fff', borderRadius: 12,
                             padding: '11px 0', fontSize: 13, fontWeight: 800,
                             textDecoration: 'none',
-                            boxShadow: `0 4px 18px rgba(244,124,32,.3)`,
+                            boxShadow: `0 4px 18px rgba(139,94,60,.3)`,
                         }}>
                             ✍️ ابدأ الامتحان
                         </Link>
@@ -321,15 +321,15 @@ function ExamCard({ exam, delay, dark }) {
 }
 
 function EmptyState({ dark }) {
-    const cardBg = dark ? '#152238' : '#fff';
-    const cardBd = dark ? 'rgba(255,255,255,.07)' : '#f0ede8';
-    const txtSub = dark ? 'rgba(220,201,163,.45)' : '#94a3b8';
+    const cardBg = dark ? '#1C1916' : 'rgba(255,252,245,.30)';
+    const cardBd = dark ? 'rgba(255,255,255,.07)' : '#E3D9C4';
+    const txtSub = dark ? 'rgba(220,201,163,.45)' : '#A89A78';
 
     return (
         <div className="eu" style={{
             background: cardBg, borderRadius: 24,
             padding: '4rem 2rem', textAlign: 'center',
-            boxShadow: dark ? '0 4px 20px rgba(0,0,0,.3)' : '0 2px 20px rgba(20,33,61,.06)',
+            boxShadow: dark ? '0 4px 20px rgba(0,0,0,.3)' : '0 2px 20px rgba(14,58,46,.06)',
             border: `1px solid ${cardBd}`,
             position: 'relative', overflow: 'hidden',
         }}>
@@ -337,7 +337,7 @@ function EmptyState({ dark }) {
             <div style={{ position: 'absolute', bottom: 20, left: 30, fontSize: 50, opacity: .05 }}>⚖️</div>
 
             <div style={{ fontSize: 56, marginBottom: 16 }}>📭</div>
-            <h3 style={{ color: dark ? '#DCC9A3' : N, fontSize: 18, fontWeight: 900, margin: '0 0 10px' }}>
+            <h3 style={{ color: dark ? '#E8DCC1' : N, fontSize: 18, fontWeight: 900, margin: '0 0 10px' }}>
                 لا توجد امتحانات بعد
             </h3>
             <p style={{ color: txtSub, fontSize: 13, maxWidth: 320, margin: '0 auto' }}>
@@ -346,5 +346,3 @@ function EmptyState({ dark }) {
         </div>
     );
 }
-
-

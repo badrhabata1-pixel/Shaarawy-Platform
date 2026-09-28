@@ -1089,14 +1089,14 @@ function ThemeToggle({ dark, setDark }) {
 function NavLogo({ dark = true }) {
     const logoFilter = dark
         ? 'drop-shadow(0 0 10px rgba(201,169,106,.35))'
-        : 'brightness(0) saturate(100%) invert(16%) sepia(26%) saturate(1532%) hue-rotate(175deg) brightness(92%) contrast(94%) drop-shadow(0 2px 8px rgba(14,58,46,.18))';
+        : 'invert(1) drop-shadow(0 2px 8px rgba(14,58,46,.18))';
 
     return (
         <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexShrink: 0 }}>
             <div className="nav-logo-box" style={{ height: 100, width: 86, overflow: 'hidden', flexShrink: 0 }}>
                 <img
-                    src="/images/منصور لوجو.png"
-                    alt="منصور"
+                    src="/images/ahmed-elshaarawy-logo-transparent.png"
+                    alt="أحمد الشعراوي"
                     style={{
                         height: '100%',
                         width: 'auto',
@@ -2127,16 +2127,14 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
                                 position:'relative',
                             }}>
                                 <img
-                                    src="/images/منصور لوجو.png"
-                                    alt="منصور"
+                                    src="/images/ahmed-elshaarawy-logo-transparent.png"
+                                    alt="أحمد الشعراوي"
                                     style={{
-                                        height:'150%',
-                                        width:'auto',
+                                        height:'100%',
+                                        width:'100%',
                                         objectFit:'contain',
-                                        objectPosition:'left center',
-                                        filter:'drop-shadow(0 10px 28px rgba(0,0,0,.35))',
+                                        filter: darkMode ? 'drop-shadow(0 10px 28px rgba(0,0,0,.35))' : 'invert(1) drop-shadow(0 10px 28px rgba(0,0,0,.2))',
                                         display:'block',
-                                        transform:'translateY(-16%)',
                                     }}
                                 />
                             </div>

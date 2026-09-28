@@ -1,9 +1,9 @@
-﻿import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { Head, useForm, router, usePage } from '@inertiajs/react';
 import AssistantLayout from '@/Layouts/AssistantLayout';
 
-const O = '#208ef4';
-const N = '#14213D';
+const O = '#1F5A45';
+const N = '#0E3A2E';
 const G = '#C9A14A';
 
 function useDark() {
@@ -26,16 +26,16 @@ export default function Index({ assistant, notifications = [], academic_years = 
     const dark = useDark();
 
     /* ── tokens ── */
-    const cardBg   = dark ? '#152238'                   : '#fff';
-    const cardBd   = dark ? 'rgba(255,255,255,.07)'     : '#f1f5f9';
-    const txtMain  = dark ? '#f0f4f8'                   : N;
-    const txtSub   = dark ? 'rgba(220,201,163,.5)'      : '#64748b';
-    const inputBg  = dark ? '#0d1826'                   : '#fff';
-    const inputBd  = dark ? 'rgba(255,255,255,.12)'     : '#e2e8f0';
-    const inputClr = dark ? '#f0f4f8'                   : N;
+    const cardBg   = dark ? '#1C1916'                   : '#fff';
+    const cardBd   = dark ? 'rgba(255,255,255,.07)'     : '#F7F3E9';
+    const txtMain  = dark ? '#E8DCC1'                   : N;
+    const txtSub   = dark ? 'rgba(220,201,163,.5)'      : '#6B6255';
+    const inputBg  = dark ? '#1C1916'                   : '#fff';
+    const inputBd  = dark ? 'rgba(255,255,255,.12)'     : '#E3D9C4';
+    const inputClr = dark ? '#E8DCC1'                   : N;
     const secBg    = dark ? 'rgba(255,255,255,.03)'     : '#f8fafc';
-    const secBd    = dark ? 'rgba(255,255,255,.07)'     : '#e2e8f0';
-    const divider  = dark ? 'rgba(255,255,255,.05)'     : '#f1f5f9';
+    const secBd    = dark ? 'rgba(255,255,255,.07)'     : '#E3D9C4';
+    const divider  = dark ? 'rgba(255,255,255,.05)'     : '#F7F3E9';
     const hdrBg    = dark ? 'rgba(255,255,255,.02)'     : '#f8fafc';
     const delBg    = dark ? 'rgba(239,68,68,.12)'       : '#fef2f2';
     const delClr   = dark ? '#f87171'                   : '#ef4444';
@@ -232,8 +232,8 @@ export default function Index({ assistant, notifications = [], academic_years = 
                             disabled={isDisabled}
                             style={{
                                 background: isDisabled
-                                    ? (dark ? 'rgba(255,255,255,.08)' : '#cbd5e1')
-                                    : `linear-gradient(135deg,${N},#1e3a6e)`,
+                                    ? (dark ? 'rgba(255,255,255,.08)' : '#CFC2A6')
+                                    : `linear-gradient(135deg,${N},#1F5A45)`,
                                 color: isDisabled ? txtSub : '#fff',
                                 border: 'none', borderRadius: 12,
                                 padding: '13px 28px', fontSize: 15, fontWeight: 900,
@@ -242,8 +242,8 @@ export default function Index({ assistant, notifications = [], academic_years = 
                                 boxShadow: isDisabled ? 'none' : '0 4px 16px rgba(20,33,61,.25)',
                                 transition: 'all .2s', alignSelf: 'flex-start',
                             }}
-                            onMouseEnter={e => { if (!isDisabled) e.currentTarget.style.background = `linear-gradient(135deg,${O},#d9620a)`; }}
-                            onMouseLeave={e => { if (!isDisabled) e.currentTarget.style.background = `linear-gradient(135deg,${N},#1e3a6e)`; }}
+                            onMouseEnter={e => { if (!isDisabled) e.currentTarget.style.background = `linear-gradient(135deg,${O},#8B5E3C)`; }}
+                            onMouseLeave={e => { if (!isDisabled) e.currentTarget.style.background = `linear-gradient(135deg,${N},#1F5A45)`; }}
                         >
                             {processing ? '⏳ جاري الإرسال...' : '📢 إرسال الإشعار فوراً'}
                         </button>
@@ -267,7 +267,7 @@ export default function Index({ assistant, notifications = [], academic_years = 
                             الإشعارات المرسلة سابقاً
                         </h3>
                         <span style={{
-                            background: dark ? 'rgba(255,255,255,.06)' : '#e2e8f0',
+                            background: dark ? 'rgba(255,255,255,.06)' : '#E3D9C4',
                             borderRadius: 999, padding: '3px 12px',
                             fontSize: 12, fontWeight: 700, color: txtSub,
                         }}>
@@ -294,14 +294,14 @@ export default function Index({ assistant, notifications = [], academic_years = 
                                     <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', alignItems: 'center' }}>
                                         <Chip
                                             text={`📌 ${n.academic_year}`}
-                                            bg={dark ? 'rgba(14,165,233,.12)' : '#e0f2fe'}
-                                            clr={dark ? '#7dd3fc' : '#0369a1'}
+                                            bg={dark ? 'rgba(31,90,69,.18)' : 'rgba(31,90,69,.10)'}
+                                            clr={dark ? '#D8B978' : '#1F5A45'}
                                         />
                                         {n.student_name && (
                                             <Chip
                                                 text={`👤 ${n.student_name}`}
-                                                bg={dark ? 'rgba(217,119,6,.12)' : '#fef3c7'}
-                                                clr={dark ? '#fbbf24' : '#92400e'}
+                                                bg={dark ? 'rgba(201,169,106,.16)' : 'rgba(201,169,106,.14)'}
+                                                clr={dark ? '#E8DCC1' : '#8B5E3C'}
                                             />
                                         )}
                                         <span style={{ fontSize: 11, color: txtSub }}>🕐 {n.created_at}</span>
@@ -338,11 +338,11 @@ function StudentPicker({ students, value, onChange, dark, inp }) {
         [students, query]
     );
 
-    const listBg  = dark ? '#0d1826'                : '#fff';
-    const listBd  = dark ? 'rgba(255,255,255,.1)'   : '#e2e8f0';
+    const listBg  = dark ? '#1C1916'                : '#fff';
+    const listBd  = dark ? 'rgba(255,255,255,.1)'   : '#E3D9C4';
     const rowBd   = dark ? 'rgba(255,255,255,.04)'  : '#f8fafc';
     const hoverBg = dark ? 'rgba(255,255,255,.04)'  : '#f8fafc';
-    const txtBase = dark ? '#f0f4f8'                : N;
+    const txtBase = dark ? '#E8DCC1'                : N;
 
     return (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
@@ -355,7 +355,7 @@ function StudentPicker({ students, value, onChange, dark, inp }) {
                 style={{ ...inp, padding: '9px 12px', fontSize: 13 }}
             />
             {filtered.length === 0 ? (
-                <p style={{ fontSize: 12, color: dark ? 'rgba(220,201,163,.4)' : '#94a3b8', margin: 0 }}>
+                <p style={{ fontSize: 12, color: dark ? 'rgba(220,201,163,.4)' : '#A89A78', margin: 0 }}>
                     لا يوجد طلاب مطابقون
                 </p>
             ) : (
@@ -420,7 +420,7 @@ function radioWrap(active, dark) {
     return {
         display: 'flex', alignItems: 'flex-start', gap: 12,
         padding: '12px 14px', borderRadius: 12, cursor: 'pointer',
-        border: `2px solid ${active ? O : (dark ? 'rgba(255,255,255,.1)' : '#e2e8f0')}`,
+        border: `2px solid ${active ? O : (dark ? 'rgba(255,255,255,.1)' : '#E3D9C4')}`,
         background: active
             ? 'rgba(244,124,32,.06)'
             : (dark ? 'rgba(255,255,255,.02)' : '#fff'),
@@ -431,10 +431,8 @@ function radioWrap(active, dark) {
 function radioDot(active) {
     return {
         width: 18, height: 18, borderRadius: '50%', flexShrink: 0, marginTop: 2,
-        border: `2px solid ${active ? O : '#94a3b8'}`,
+        border: `2px solid ${active ? O : '#A89A78'}`,
         background: active ? O : 'transparent',
         transition: 'all .15s',
     };
 }
-
-

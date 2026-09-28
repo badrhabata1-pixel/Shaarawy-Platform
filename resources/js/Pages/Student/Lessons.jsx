@@ -4,11 +4,11 @@ import StudentLayout from '@/Layouts/StudentLayout';
 import LockOverlay from '@/Components/LockOverlay';
 import PromoModal from '@/Components/PromoModal';
 
-const O  = '#0D9488';
-const N  = '#14213D';
-const G  = '#2DD4BF';
-const B  = '#DCC9A3';
-const DK = '#050a16';
+const O  = '#1F5A45';
+const N  = '#0E3A2E';
+const G  = '#C9A96A';
+const B  = '#E8DCC1';
+const DK = '#141210';
 
 export default function Lessons({ student, unit, lessons }) {
     const [modalLesson, setModalLesson] = useState(null);
@@ -25,15 +25,15 @@ export default function Lessons({ student, unit, lessons }) {
 
     return (
         <StudentLayout title="🎬 دار العرض">
-            <Head title={`${unit?.title ?? 'المحاضرات'} — منصة منصور`} />
+            <Head title={`${unit?.title ?? 'المحاضرات'} — منصة أحمد الشعراوي`} />
 
             <style>{`
                 @keyframes bulbChase   { 0%,100%{opacity:.25} 50%{opacity:1} }
                 @keyframes posterIn    { from{opacity:0;transform:translateY(26px) scale(.97)} to{opacity:1;transform:translateY(0) scale(1)} }
                 @keyframes spotSweep   { 0%,100%{transform:translateX(-8%) rotate(0deg)} 50%{transform:translateX(8%) rotate(2deg)} }
                 @keyframes beaconPulse {
-                    0%,100% { box-shadow: 0 0 0 0 rgba(244,124,32,.5), 0 0 0 0 rgba(244,124,32,.25); }
-                    50%     { box-shadow: 0 0 0 8px rgba(244,124,32,0), 0 0 0 16px rgba(244,124,32,0); }
+                    0%,100% { box-shadow: 0 0 0 0 rgba(139,94,60,.5), 0 0 0 0 rgba(139,94,60,.25); }
+                    50%     { box-shadow: 0 0 0 8px rgba(139,94,60,0), 0 0 0 16px rgba(139,94,60,0); }
                 }
                 .poster { transition: transform .3s cubic-bezier(.22,1,.36,1), box-shadow .3s; }
                 .poster:hover { transform: translateY(-8px) rotate(-.4deg); }
@@ -59,9 +59,9 @@ export default function Lessons({ student, unit, lessons }) {
             {/* ── Hero: Cinema marquee ───────────────────────────── */}
             <div style={{
                 position: 'relative', overflow: 'hidden',
-                background: `radial-gradient(ellipse 80% 120% at 50% -20%, rgba(244,124,32,.12) 0%, transparent 55%), linear-gradient(135deg,${N} 0%,#1a2d52 55%,${DK} 100%)`,
+                background: `radial-gradient(ellipse 80% 120% at 50% -20%, rgba(139,94,60,.12) 0%, transparent 55%), linear-gradient(135deg,${N} 0%,#1F5A45 55%,${DK} 100%)`,
                 borderRadius: 24, padding: '2.2rem 2.25rem', marginBottom: '2.5rem',
-                boxShadow: `0 10px 46px rgba(20,33,61,.3), inset 0 0 0 1px rgba(201,161,74,.18)`,
+                boxShadow: `0 10px 46px rgba(14,58,46,.3), inset 0 0 0 1px rgba(201,169,106,.18)`,
                 border: '2px solid transparent',
                 backgroundClip: 'padding-box',
             }}>
@@ -119,15 +119,15 @@ export default function Lessons({ student, unit, lessons }) {
                 {[
                     { color: '#059669', label: 'انتهى عرضه', icon: '✅' },
                     { color: O,         label: 'العرض القادم', icon: '🎯' },
-                    { color: '#CBD5E1', label: 'قريباً',   icon: '🔒' },
-                    { color: '#818cf8', label: 'يتطلب تذكرة امتحان', icon: '✏️' },
+                    { color: '#CFC2A6', label: 'قريباً',   icon: '🔒' },
+                    { color: '#C9A96A', label: 'يتطلب تذكرة امتحان', icon: '✏️' },
                 ].map(l => (
                     <div key={l.label} style={{
                         display: 'flex', alignItems: 'center', gap: 6,
-                        background: '#fff', border: '1px solid #e8e4dc',
+                        background: 'rgba(255,252,245,.30)', border: '1px solid #E3D9C4',
                         borderRadius: 99, padding: '4px 12px',
                         fontSize: 12, color: '#475569', fontWeight: 600,
-                        boxShadow: '0 1px 4px rgba(20,33,61,.05)',
+                        boxShadow: '0 1px 4px rgba(14,58,46,.05)',
                     }}>
                         <div style={{ width: 8, height: 8, borderRadius: '50%', background: l.color }} />
                         {l.icon} {l.label}
@@ -204,10 +204,10 @@ function TicketStat({ icon, label, value }) {
 /* ── Status ribbon — diagonal banner across the poster corner ──── */
 function StatusRibbon({ isExamLocked, isLocked, isCompleted, isCurrent }) {
     let label, bg;
-    if (isExamLocked)      { label = 'يتطلب تذكرة'; bg = 'linear-gradient(135deg,#6366f1,#4f46e5)'; }
-    else if (isLocked)     { label = 'قريباً';        bg = 'linear-gradient(135deg,#64748b,#475569)'; }
+    if (isExamLocked)      { label = 'يتطلب تذكرة'; bg = 'linear-gradient(135deg,#8B5E3C,#8B5E3C)'; }
+    else if (isLocked)     { label = 'قريباً';        bg = 'linear-gradient(135deg,#6B6255,#475569)'; }
     else if (isCompleted)  { label = 'انتهى عرضه';    bg = 'linear-gradient(135deg,#059669,#047857)'; }
-    else if (isCurrent)    { label = 'يُعرض الآن';     bg = `linear-gradient(135deg,${O},#d9620a)`; }
+    else if (isCurrent)    { label = 'يُعرض الآن';     bg = `linear-gradient(135deg,${O},#8B5E3C)`; }
     else return null;
 
     return (
@@ -225,7 +225,7 @@ function StatusRibbon({ isExamLocked, isLocked, isCompleted, isCurrent }) {
 /* ── Reel sprocket number badge ──────────────────────────────── */
 function ReelBadge({ lesson, isLocked, isExamLocked, isCompleted, isCurrent }) {
     const icon = isExamLocked ? '✏️' : isLocked ? '🔒' : isCompleted ? '✓' : (lesson.order || lesson.lesson_number);
-    const ring = isExamLocked ? '#818cf8' : isCompleted ? '#059669' : isCurrent ? O : (isLocked ? '#94a3b8' : G);
+    const ring = isExamLocked ? '#C9A96A' : isCompleted ? '#059669' : isCurrent ? O : (isLocked ? '#A89A78' : G);
 
     return (
         <div style={{
@@ -260,7 +260,7 @@ function PosterCard({ lesson, index, isCurrent, onUnlock, mode }) {
             <div
                 className="poster-frame"
                 style={{
-                    background: 'rgba(10, 20, 38, 0.68)',
+                    background: 'rgba(28,25,22,.76)',
                     backdropFilter: 'blur(24px) saturate(1.7)',
                     WebkitBackdropFilter: 'blur(24px) saturate(1.7)',
                     borderRadius: 18,
@@ -277,7 +277,7 @@ function PosterCard({ lesson, index, isCurrent, onUnlock, mode }) {
             >
                 {/* الملصق (poster) */}
                 <div style={{
-                    position: 'relative', aspectRatio: '16/9', background: '#040914',
+                    position: 'relative', aspectRatio: '16/9', background: '#141210',
                     overflow: 'hidden', flexShrink: 0,
                 }}>
                     <ReelBadge lesson={lesson} isLocked={isLocked} isExamLocked={isExamLocked} isCompleted={isCompleted} isCurrent={isCurrent} />
@@ -367,10 +367,10 @@ function PosterCard({ lesson, index, isCurrent, onUnlock, mode }) {
                                     position: 'relative', overflow: 'hidden',
                                     display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
                                     width: '100%',
-                                    background: isCompleted ? 'linear-gradient(135deg,#059669,#047857)' : `linear-gradient(135deg, ${O} 0%, #d9620a 100%)`,
+                                    background: isCompleted ? 'linear-gradient(135deg,#059669,#047857)' : `linear-gradient(135deg, ${O} 0%, #8B5E3C 100%)`,
                                     color: '#fff', borderRadius: 12, padding: '12px',
                                     fontSize: 13.5, fontWeight: 800, textDecoration: 'none',
-                                    boxShadow: isHovered ? (isCompleted ? '0 12px 28px rgba(5,150,105,0.45)' : `0 12px 28px rgba(244,124,32,0.45)`) : 'none',
+                                    boxShadow: isHovered ? (isCompleted ? '0 12px 28px rgba(5,150,105,0.45)' : `0 12px 28px rgba(139,94,60,0.45)`) : 'none',
                                     transform: isHovered ? 'translateY(-2px)' : 'none',
                                     transition: 'all 0.3s cubic-bezier(0.22, 1, 0.36, 1)',
                                 }}
@@ -409,18 +409,18 @@ function DefaultPoster({ isLocked, isParentHovered }) {
     return (
         <div style={{
             width: '100%', height: '100%',
-            background: `radial-gradient(circle at center, #142544 0%, #060e1c 100%)`,
+            background: `radial-gradient(circle at center, #0E3A2E 0%, #141210 100%)`,
             display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
             gap: 12, position: 'relative',
         }}>
             <div style={{
                 position: 'absolute', inset: 0, opacity: isParentHovered ? 0.08 : 0.04,
-                backgroundImage: 'repeating-linear-gradient(0deg,transparent,transparent 18px,rgba(201,161,74,1) 18px,rgba(201,161,74,1) 19px), repeating-linear-gradient(90deg,transparent,transparent 18px,rgba(201,161,74,1) 18px,rgba(201,161,74,1) 19px)',
+                backgroundImage: 'repeating-linear-gradient(0deg,transparent,transparent 18px,rgba(201,169,106,1) 18px,rgba(201,169,106,1) 19px), repeating-linear-gradient(90deg,transparent,transparent 18px,rgba(201,169,106,1) 18px,rgba(201,169,106,1) 19px)',
                 transition: 'opacity 0.4s ease',
             }} />
             <div style={{
                 width: 48, height: 48, borderRadius: '50%',
-                background: isLocked ? 'rgba(255,255,255,0.02)' : isParentHovered ? `rgba(244,124,32,0.2)` : `rgba(201,161,74,0.08)`,
+                background: isLocked ? 'rgba(255,255,255,0.02)' : isParentHovered ? `rgba(139,94,60,0.2)` : `rgba(201,169,106,0.08)`,
                 border: `1.5px solid ${isLocked ? 'rgba(148,163,184,.2)' : isParentHovered ? O : G}`,
                 display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18,
                 boxShadow: isLocked ? 'none' : isParentHovered ? `0 0 25px ${O}50` : `0 0 12px ${G}20`,
@@ -445,7 +445,7 @@ function ExamTicketCTA({ gateExamId, gateExamTitle }) {
     return (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
             <div style={{
-                background: 'rgba(99,102,241,.1)', border: '1px solid rgba(99,102,241,.3)',
+                background: 'rgba(139,94,60,.10)', border: '1px solid rgba(139,94,60,.3)',
                 borderRadius: 10, padding: '7px 12px', fontSize: 11.5, fontWeight: 700, color: '#a5b4fc',
                 display: 'flex', alignItems: 'center', gap: 6,
             }}>
@@ -455,10 +455,10 @@ function ExamTicketCTA({ gateExamId, gateExamTitle }) {
                 href={examUrl}
                 style={{
                     width: '100%', boxSizing: 'border-box',
-                    background: 'linear-gradient(135deg,#6366f1,#4f46e5)',
+                    background: 'linear-gradient(135deg,#8B5E3C,#8B5E3C)',
                     color: '#fff', borderRadius: 12, padding: '10px', fontSize: 13, fontWeight: 800, textDecoration: 'none',
                     display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6,
-                    boxShadow: '0 4px 16px rgba(99,102,241,.35)', transition: 'opacity .2s',
+                    boxShadow: '0 4px 16px rgba(139,94,60,.35)', transition: 'opacity .2s',
                 }}
                 onMouseEnter={e => e.currentTarget.style.opacity = '.88'}
                 onMouseLeave={e => e.currentTarget.style.opacity = '1'}
@@ -508,10 +508,10 @@ function LockedTicketCTA({ paymentStatus, unitId, onUnlock, mode }) {
             href={payUrl}
             style={{
                 width: '100%', boxSizing: 'border-box',
-                background: `linear-gradient(135deg,${O},#d96a12)`,
+                background: `linear-gradient(135deg,${O},#8B5E3C)`,
                 color: '#fff', borderRadius: 12, padding: '10px', fontSize: 13, fontWeight: 800, textDecoration: 'none',
                 display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6,
-                boxShadow: `0 4px 16px rgba(244,124,32,.3)`, transition: 'opacity .2s',
+                boxShadow: `0 4px 16px rgba(139,94,60,.3)`, transition: 'opacity .2s',
             }}
             onMouseEnter={e => e.currentTarget.style.opacity = '.88'}
             onMouseLeave={e => e.currentTarget.style.opacity = '1'}
@@ -525,8 +525,8 @@ function LockedTicketCTA({ paymentStatus, unitId, onUnlock, mode }) {
 function EmptyState() {
     return (
         <div style={{
-            background: '#fff', borderRadius: 24, padding: '4rem 2rem', textAlign: 'center',
-            boxShadow: '0 2px 20px rgba(20,33,61,.06)', border: '1px solid #f0ede8',
+            background: 'rgba(255,252,245,.30)', borderRadius: 24, padding: '4rem 2rem', textAlign: 'center',
+            boxShadow: '0 2px 20px rgba(14,58,46,.06)', border: '1px solid #E3D9C4',
             position: 'relative', overflow: 'hidden',
         }}>
             <div style={{ position: 'absolute', top: 20, right: 30, fontSize: 60, opacity: .05 }}>🎬</div>
@@ -535,11 +535,9 @@ function EmptyState() {
             <h3 style={{ color: N, fontSize: 18, fontWeight: 900, margin: '0 0 10px' }}>
                 لا توجد محاضرات بعد
             </h3>
-            <p style={{ color: '#94a3b8', fontSize: 13, maxWidth: 320, margin: '0 auto' }}>
+            <p style={{ color: '#A89A78', fontSize: 13, maxWidth: 320, margin: '0 auto' }}>
                 سيتم إضافة محاضرات لصفك قريباً. ترقّبها!
             </p>
         </div>
     );
 }
-
-

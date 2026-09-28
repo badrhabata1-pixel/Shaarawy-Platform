@@ -500,22 +500,19 @@ export default function AdminLayout({ children, title = 'لوحة التحكم' 
                     transition: 'all .3s ease',
                     minHeight: 72,
                 }}>
-                    <div role="img" aria-label="شعار منصة الشعراوي" style={{
-                        width: 44, height: 44, borderRadius: 12, flexShrink: 0,
-                        background: 'linear-gradient(135deg, #0E3A2E, #1F5A45)',
-                        boxShadow: '0 0 0 2px rgba(31,90,69,.35),0 0 20px rgba(31,90,69,.3)',
+                    <div role="img" aria-label="شعار أحمد الشعراوي" style={{
+                        width: 68, height: 44, borderRadius: 8, flexShrink: 0,
+                        background: 'transparent',
+                        boxShadow: '0 0 0 2px rgba(201,169,106,.28),0 0 20px rgba(31,90,69,.18)',
                         position: 'relative', overflow: 'hidden',
                         display: 'flex', alignItems: 'center', justifyContent: 'center',
                     }}>
-                        <span style={{ color: '#fff', fontFamily: 'Cairo, sans-serif', fontWeight: 900, fontSize: 24, lineHeight: 1 }}>ش</span>
-                        <svg width="13" height="13" viewBox="0 0 14 14" style={{ position: 'absolute', bottom: 4, left: 4, opacity: 0.55 }}>
-                            <rect x="3" y="3" width="8" height="8" transform="rotate(45 7 7)" fill="none" stroke="#fff" strokeWidth="1" />
-                        </svg>
+                        <img src="/images/ahmed-elshaarawy-logo-transparent.png" alt="أحمد الشعراوي" style={{ width: '100%', height: '100%', objectFit: 'contain', display: 'block', filter: dark ? 'none' : 'invert(1)' }} />
                     </div>
 
                     {!collapsed && (
                         <div style={{ flex: 1, minWidth: 0, overflow: 'hidden' }}>
-                            <p style={{ color: C.textHi, fontWeight: 900, fontSize: 14, lineHeight: 1.2, fontFamily: 'Cairo,sans-serif', whiteSpace: 'nowrap' }}>منصة الشعراوي</p>
+                            <p style={{ color: C.textHi, fontWeight: 900, fontSize: 14, lineHeight: 1.2, fontFamily: 'Cairo,sans-serif', whiteSpace: 'nowrap' }}>أحمد الشعراوي</p>
                             <p style={{ color: '#1F5A45', fontSize: 9.5, fontWeight: 600, letterSpacing: '.15em', opacity: .85, marginTop: 2, whiteSpace: 'nowrap' }}>ELSHARAWY PLATFORM</p>
                             <p style={{ color: C.textMuted, fontSize: 9.5, fontWeight: 600, marginTop: 2, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>أستاذ التاريخ للثانوية العامة والبكالوريا</p>
                         </div>

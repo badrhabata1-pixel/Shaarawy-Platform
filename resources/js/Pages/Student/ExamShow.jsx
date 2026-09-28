@@ -3,9 +3,9 @@ import StudentLayout from '@/Layouts/StudentLayout';
 import { useState, useEffect, useRef } from 'react';
 import { teacherReactionImage } from '@/Utils/teacherReaction';
 
-const O = '#0D9488';
-const N = '#14213D';
-const G = '#2DD4BF';
+const O = '#1F5A45';
+const N = '#0E3A2E';
+const G = '#C9A96A';
 
 /* ═══════════════════════════════════════════════════════
    EXAM SHOW
@@ -15,7 +15,7 @@ export default function ExamShow({ exam, result }) {
 
     return (
         <StudentLayout>
-            <Head title={`${exam.title} — منصة منصور`} />
+            <Head title={`${exam.title} — منصة أحمد الشعراوي`} />
 
             <style>{`
                 @keyframes fadeUp  { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
@@ -24,18 +24,18 @@ export default function ExamShow({ exam, result }) {
                 @keyframes glow    { 0%,100%{box-shadow:0 0 0 0 rgba(5,150,105,.35)} 50%{box-shadow:0 0 0 12px rgba(5,150,105,0)} }
                 @keyframes glowR   { 0%,100%{box-shadow:0 0 0 0 rgba(220,38,38,.3)} 50%{box-shadow:0 0 0 12px rgba(220,38,38,0)} }
                 .eu  { animation: fadeUp .4s both }
-                .ropt:hover { background:#f1f5f9!important }
+                .ropt:hover { background:#F7F3E9!important }
                 .ropt.sel   { background:#fff7ed!important; border-color:${O}!important }
             `}</style>
 
             {/* Back */}
             <Link href={route('student.exams')} style={{
                 display: 'inline-flex', alignItems: 'center', gap: 6,
-                color: '#64748b', fontSize: 13, fontWeight: 600,
+                color: '#6B6255', fontSize: 13, fontWeight: 600,
                 textDecoration: 'none', marginBottom: 18,
-                padding: '6px 14px', background: '#fff',
-                borderRadius: 10, border: '1px solid #e8e4dc',
-                boxShadow: '0 1px 4px rgba(20,33,61,.06)',
+                padding: '6px 14px', background: 'rgba(255,252,245,.30)',
+                borderRadius: 10, border: '1px solid #E3D9C4',
+                boxShadow: '0 1px 4px rgba(14,58,46,.06)',
                 transition: 'all .2s',
             }}>
                 ← الامتحانات
@@ -44,11 +44,11 @@ export default function ExamShow({ exam, result }) {
             {/* Exam header card */}
             <div className="eu" style={{
                 position: 'relative', overflow: 'hidden',
-                background: `linear-gradient(135deg,${N} 0%,#1a2d52 60%,#0f1e3a 100%)`,
+                background: `linear-gradient(135deg,${N} 0%,#1F5A45 60%,#081F19 100%)`,
                 borderRadius: 20, padding: '1.75rem 2rem', marginBottom: '1.5rem',
-                boxShadow: `0 8px 36px rgba(20,33,61,.22), inset 0 0 0 1px rgba(201,161,74,.12)`,
+                boxShadow: `0 8px 36px rgba(14,58,46,.22), inset 0 0 0 1px rgba(201,169,106,.12)`,
             }}>
-                <div style={{ position: 'absolute', inset: 0, opacity: .035, backgroundImage: 'repeating-linear-gradient(0deg,transparent,transparent 28px,rgba(201,161,74,1) 28px,rgba(201,161,74,1) 29px)', pointerEvents: 'none' }} />
+                <div style={{ position: 'absolute', inset: 0, opacity: .035, backgroundImage: 'repeating-linear-gradient(0deg,transparent,transparent 28px,rgba(201,169,106,1) 28px,rgba(201,169,106,1) 29px)', pointerEvents: 'none' }} />
                 <div style={{ position: 'absolute', bottom: 8, left: 16, fontSize: 48, opacity: .06, userSelect: 'none' }}>📜</div>
 
                 <h1 style={{ color: '#fff', fontSize: 21, fontWeight: 900, margin: '0 0 6px', position: 'relative' }}>
@@ -142,7 +142,7 @@ function ResultView({ exam, result }) {
                             </div>
 
                             {result.finished_at && (
-                                <div style={{ fontSize: 11, color: '#94a3b8', display: 'flex', alignItems: 'center', gap: 5 }}>
+                                <div style={{ fontSize: 11, color: '#A89A78', display: 'flex', alignItems: 'center', gap: 5 }}>
                                     <span style={{ width: 5, height: 5, borderRadius: '50%', background: '#475569', display: 'inline-block' }} />
                                     سُلِّم في {result.finished_at}
                                 </div>
@@ -187,11 +187,11 @@ function ResultView({ exam, result }) {
                     <div style={{
                         display: 'flex', alignItems: 'center', gap: 10, marginBottom: 16,
                     }}>
-                        <div style={{ flex: 1, height: 1, background: '#e8e4dc' }} />
-                        <span style={{ fontSize: 13, fontWeight: 800, color: '#64748b', display: 'flex', alignItems: 'center', gap: 6 }}>
+                        <div style={{ flex: 1, height: 1, background: '#E3D9C4' }} />
+                        <span style={{ fontSize: 13, fontWeight: 800, color: '#6B6255', display: 'flex', alignItems: 'center', gap: 6 }}>
                             📋 مراجعة الإجابات
                         </span>
-                        <div style={{ flex: 1, height: 1, background: '#e8e4dc' }} />
+                        <div style={{ flex: 1, height: 1, background: '#E3D9C4' }} />
                     </div>
 
                     <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
@@ -273,8 +273,8 @@ function ScoreRing({ score, total, passed }) {
                         {score}
                     </span>
                     <div style={{ display: 'flex', alignItems: 'center', gap: 3 }}>
-                        <span style={{ fontSize: 11, color: '#94a3b8', fontWeight: 500 }}>من</span>
-                        <span style={{ fontSize: 14, fontWeight: 800, color: '#64748b' }}>{total}</span>
+                        <span style={{ fontSize: 11, color: '#A89A78', fontWeight: 500 }}>من</span>
+                        <span style={{ fontSize: 14, fontWeight: 800, color: '#6B6255' }}>{total}</span>
                     </div>
                 </div>
             </div>
@@ -287,7 +287,7 @@ function ScoreRing({ score, total, passed }) {
                     borderRadius: 99, padding: '4px 14px',
                 }}>
                     <span style={{ fontSize: 18, fontWeight: 900, color: colorA }}>{Math.round(pct)}%</span>
-                    <span style={{ fontSize: 11, color: '#94a3b8' }}>من الدرجة الكلية</span>
+                    <span style={{ fontSize: 11, color: '#A89A78' }}>من الدرجة الكلية</span>
                 </div>
             </div>
         </div>
@@ -302,16 +302,16 @@ function QuestionResult({ question, response, index }) {
 
     const headerBg = isMcq && answered
         ? (isCorrect ? '#f0fdf4' : '#fef2f2')
-        : '#f8f7f4';
+        : '#F7F3E9';
     const borderColor = isMcq && answered
         ? (isCorrect ? '#86efac' : '#fca5a5')
-        : '#e8e4dc';
+        : '#E3D9C4';
 
     return (
         <div style={{
-            background: '#fff', borderRadius: 16, overflow: 'hidden',
+            background: 'rgba(255,252,245,.30)', borderRadius: 16, overflow: 'hidden',
             border: `1.5px solid ${borderColor}`,
-            boxShadow: '0 2px 14px rgba(20,33,61,.05)',
+            boxShadow: '0 2px 14px rgba(14,58,46,.05)',
         }}>
             {/* Header */}
             <div style={{
@@ -324,8 +324,8 @@ function QuestionResult({ question, response, index }) {
                         width: 28, height: 28, borderRadius: '50%', flexShrink: 0,
                         background: isMcq && answered
                             ? (isCorrect ? '#059669' : '#dc2626')
-                            : '#e2e8f0',
-                        color: isMcq && answered ? '#fff' : '#94a3b8',
+                            : '#E3D9C4',
+                        color: isMcq && answered ? '#fff' : '#A89A78',
                         display: 'flex', alignItems: 'center', justifyContent: 'center',
                         fontSize: 11, fontWeight: 900,
                     }}>
@@ -365,7 +365,7 @@ function QuestionResult({ question, response, index }) {
                 {isMcq && question.choices?.map((c, ci) => {
                     const isSelected = answered === c.choice_text;
                     const isRight    = question.correct_answer === c.choice_text;
-                    let bg = '#f8f7f4', border = '#e8e4dc', clr = '#475569';
+                    let bg = '#F7F3E9', border = '#E3D9C4', clr = '#475569';
                     if (isRight)                { bg = '#f0fdf4'; border = '#86efac'; clr = '#059669'; }
                     if (isSelected && !isRight) { bg = '#fef2f2'; border = '#fca5a5'; clr = '#dc2626'; }
                     return (
@@ -399,13 +399,13 @@ function QuestionResult({ question, response, index }) {
                 {!isMcq && (
                     <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
                         <div>
-                            <div style={{ fontSize: 11, color: '#64748b', fontWeight: 700, marginBottom: 6 }}>إجابتك:</div>
+                            <div style={{ fontSize: 11, color: '#6B6255', fontWeight: 700, marginBottom: 6 }}>إجابتك:</div>
                             <div style={{
-                                background: '#f8f7f4', border: '1.5px solid #e8e4dc',
+                                background: '#F7F3E9', border: '1.5px solid #E3D9C4',
                                 borderRadius: 10, padding: '10px 14px',
                                 fontSize: 13, color: N, lineHeight: 1.8, whiteSpace: 'pre-wrap', minHeight: 44,
                             }}>
-                                {answered || <span style={{ color: '#94a3b8' }}>لم تتم الإجابة</span>}
+                                {answered || <span style={{ color: '#A89A78' }}>لم تتم الإجابة</span>}
                             </div>
                         </div>
                         {question.correct_answer && (
@@ -465,9 +465,9 @@ function ExamForm({ exam }) {
             {/* Sticky timer */}
             <div style={{
                 position: 'sticky', top: 0, zIndex: 50,
-                background: '#fff',
+                background: 'rgba(255,252,245,.30)',
                 borderRadius: 14, margin: '0 0 20px',
-                boxShadow: '0 4px 24px rgba(20,33,61,.10)',
+                boxShadow: '0 4px 24px rgba(14,58,46,.10)',
                 border: `2px solid ${timerColor}`,
                 overflow: 'hidden',
                 animation: urgent ? 'pulse .8s ease-in-out infinite' : 'none',
@@ -488,12 +488,12 @@ function ExamForm({ exam }) {
                             </span>
                         )}
                     </div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 13, color: '#64748b' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 13, color: '#6B6255' }}>
                         <div style={{ display: 'flex', gap: 4 }}>
                             {Array.from({ length: total }).map((_, i) => (
                                 <div key={i} style={{
                                     width: 8, height: 8, borderRadius: '50%',
-                                    background: i < answered ? O : '#e2e8f0',
+                                    background: i < answered ? O : '#E3D9C4',
                                     transition: 'background .2s',
                                 }} />
                             ))}
@@ -518,13 +518,13 @@ function ExamForm({ exam }) {
 
             {/* Submit footer */}
             <div style={{
-                background: '#fff', borderRadius: 18, padding: '1.25rem 1.5rem',
-                boxShadow: '0 4px 24px rgba(20,33,61,.08)',
-                border: '1px solid #e8e4dc',
+                background: 'rgba(255,252,245,.30)', borderRadius: 18, padding: '1.25rem 1.5rem',
+                boxShadow: '0 4px 24px rgba(14,58,46,.08)',
+                border: '1px solid #E3D9C4',
                 display: 'flex', alignItems: 'center', justifyContent: 'space-between',
                 flexWrap: 'wrap', gap: 12,
             }}>
-                <div style={{ fontSize: 13, color: '#64748b' }}>
+                <div style={{ fontSize: 13, color: '#6B6255' }}>
                     {answered < total
                         ? <span style={{ color: '#d97706' }}>⚠️ لديك <strong>{total - answered}</strong> سؤال غير مجاب</span>
                         : <span style={{ color: '#059669' }}>✅ أجبت على جميع الأسئلة</span>
@@ -535,11 +535,11 @@ function ExamForm({ exam }) {
                     onClick={handleSubmit}
                     disabled={processing || submitted}
                     style={{
-                        background: processing || submitted ? '#94a3b8' : `linear-gradient(135deg,${O},#d96a12)`,
+                        background: processing || submitted ? '#A89A78' : `linear-gradient(135deg,${O},#8B5E3C)`,
                         color: '#fff', border: 'none', borderRadius: 12,
                         padding: '12px 32px', fontSize: 14, fontWeight: 800,
                         cursor: processing || submitted ? 'not-allowed' : 'pointer',
-                        boxShadow: processing || submitted ? 'none' : `0 6px 20px rgba(244,124,32,.35)`,
+                        boxShadow: processing || submitted ? 'none' : `0 6px 20px rgba(139,94,60,.35)`,
                         fontFamily: 'Cairo,sans-serif', transition: 'all .2s',
                     }}
                 >
@@ -556,24 +556,24 @@ function QuestionCard({ question, index, answer, onChange }) {
 
     return (
         <div style={{
-            background: '#fff', borderRadius: 16,
-            border: answer ? `1.5px solid ${O}50` : '1.5px solid #e8e4dc',
-            boxShadow: answer ? `0 4px 18px rgba(244,124,32,.08)` : '0 2px 12px rgba(20,33,61,.05)',
+            background: 'rgba(255,252,245,.30)', borderRadius: 16,
+            border: answer ? `1.5px solid ${O}50` : '1.5px solid #E3D9C4',
+            boxShadow: answer ? `0 4px 18px rgba(139,94,60,.08)` : '0 2px 12px rgba(14,58,46,.05)',
             overflow: 'hidden',
             transition: 'border-color .2s, box-shadow .2s',
         }}>
             {/* Header */}
             <div style={{
-                background: answer ? `${O}0D` : '#f8f7f4',
-                borderBottom: `1px solid ${answer ? `${O}30` : '#e8e4dc'}`,
+                background: answer ? `${O}0D` : '#F7F3E9',
+                borderBottom: `1px solid ${answer ? `${O}30` : '#E3D9C4'}`,
                 padding: '10px 18px',
                 display: 'flex', alignItems: 'center', gap: 12,
                 transition: 'background .2s',
             }}>
                 <div style={{
                     width: 30, height: 30, borderRadius: '50%', flexShrink: 0,
-                    background: answer ? O : '#e2e8f0',
-                    color: answer ? '#fff' : '#94a3b8',
+                    background: answer ? O : '#E3D9C4',
+                    color: answer ? '#fff' : '#A89A78',
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
                     fontSize: answer ? 14 : 12, fontWeight: 900,
                     transition: 'background .2s',
@@ -590,8 +590,8 @@ function QuestionCard({ question, index, answer, onChange }) {
                     {question.marks} درجة
                 </span>
                 <span style={{
-                    background: isMcq ? '#eff6ff' : '#fefce8',
-                    color: isMcq ? '#3b82f6' : '#ca8a04',
+                    background: isMcq ? '#F7F3E9' : '#fefce8',
+                    color: isMcq ? '#1F5A45' : '#ca8a04',
                     borderRadius: 99, padding: '2px 10px', fontSize: 11, fontWeight: 600,
                 }}>
                     {isMcq ? 'اختياري' : 'مقالي'}
@@ -621,8 +621,8 @@ function QuestionCard({ question, index, answer, onChange }) {
                             onClick={() => onChange(c.choice_text)}
                             style={{
                                 display: 'flex', alignItems: 'center', gap: 10,
-                                background: isSelected ? '#fff7ed' : '#f8f7f4',
-                                border: `1.5px solid ${isSelected ? O : '#e8e4dc'}`,
+                                background: isSelected ? '#fff7ed' : '#F7F3E9',
+                                border: `1.5px solid ${isSelected ? O : '#E3D9C4'}`,
                                 borderRadius: 10, padding: '10px 14px',
                                 marginBottom: 8, cursor: 'pointer',
                                 transition: 'border-color .15s, background .15s',
@@ -630,12 +630,12 @@ function QuestionCard({ question, index, answer, onChange }) {
                         >
                             <div style={{
                                 width: 20, height: 20, borderRadius: '50%', flexShrink: 0,
-                                border: `2px solid ${isSelected ? O : '#cbd5e1'}`,
+                                border: `2px solid ${isSelected ? O : '#CFC2A6'}`,
                                 background: isSelected ? O : '#fff',
                                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                                 transition: 'all .15s',
                             }}>
-                                {isSelected && <div style={{ width: 7, height: 7, borderRadius: '50%', background: '#fff' }} />}
+                                {isSelected && <div style={{ width: 7, height: 7, borderRadius: '50%', background: 'rgba(255,252,245,.30)' }} />}
                             </div>
                             <span style={{ fontSize: 13, color: isSelected ? N : '#475569', fontWeight: isSelected ? 700 : 400, flex: 1 }}>
                                 {c.choice_text}
@@ -653,13 +653,13 @@ function QuestionCard({ question, index, answer, onChange }) {
                         style={{
                             width: '100%', padding: '11px 14px', boxSizing: 'border-box',
                             borderRadius: 10, resize: 'vertical', lineHeight: 1.8,
-                            background: '#f8f7f4',
-                            border: `1.5px solid ${answer ? `${O}60` : '#e8e4dc'}`,
+                            background: '#F7F3E9',
+                            border: `1.5px solid ${answer ? `${O}60` : '#E3D9C4'}`,
                             color: N, fontSize: 13, fontFamily: 'Cairo, sans-serif',
                             outline: 'none', transition: 'border-color .15s',
                         }}
                         onFocus={e  => e.target.style.borderColor = O}
-                        onBlur={e   => e.target.style.borderColor = answer ? `${O}60` : '#e8e4dc'}
+                        onBlur={e   => e.target.style.borderColor = answer ? `${O}60` : '#E3D9C4'}
                     />
                 )}
             </div>
@@ -680,5 +680,3 @@ function MetaBadge({ icon, label }) {
         </div>
     );
 }
-
-

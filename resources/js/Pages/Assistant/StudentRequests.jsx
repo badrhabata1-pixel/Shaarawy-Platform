@@ -1,8 +1,8 @@
-﻿import { Head, useForm, router } from '@inertiajs/react';
+import { Head, useForm, router } from '@inertiajs/react';
 import AssistantLayout from '@/Layouts/AssistantLayout';
 import { useState, useEffect } from 'react';
 
-const C = { navy: '#14213D', orange: '#208ef4', gold: '#DCC9A3', navyL: '#1e2e50' };
+const C = { navy: '#0E3A2E', orange: '#1F5A45', gold: '#E8DCC1', navyL: '#1e2e50' };
 
 function useAssistantDark() {
     const [dark, setDark] = useState(() => {
@@ -41,12 +41,12 @@ function StudentCard({ student, dark }) {
     const isOffline = student.student_type === 'offline';
     const initials  = student.name ? student.name.split(' ').map(w => w[0]).slice(0, 2).join('') : '?';
 
-    const card    = dark ? '#152238' : '#fff';
-    const cardBd  = dark ? 'rgba(255,255,255,.07)' : '#e8edf5';
+    const card    = dark ? '#1C1916' : '#fff';
+    const cardBd  = dark ? 'rgba(255,255,255,.07)' : '#E3D9C4';
     const detBg   = dark ? 'rgba(255,255,255,.04)' : '#f8fafc';
-    const detBd   = dark ? 'rgba(255,255,255,.05)' : '#f1f5f9';
-    const txtMain = dark ? '#f0f4f8' : C.navy;
-    const txtSub  = dark ? 'rgba(220,201,163,.45)' : '#94a3b8';
+    const detBd   = dark ? 'rgba(255,255,255,.05)' : '#F7F3E9';
+    const txtMain = dark ? '#E8DCC1' : C.navy;
+    const txtSub  = dark ? 'rgba(220,201,163,.45)' : '#A89A78';
 
     return (
         <>
@@ -136,7 +136,7 @@ function StudentCard({ student, dark }) {
                     display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 20,
                 }} onClick={() => setShowModal(false)}>
                     <div style={{
-                        background: dark ? '#152238' : '#fff', borderRadius: 20,
+                        background: dark ? '#1C1916' : '#fff', borderRadius: 20,
                         border: dark ? '1px solid rgba(255,255,255,.08)' : 'none',
                         padding: '28px 30px', width: '100%', maxWidth: 400,
                         boxShadow: '0 24px 80px rgba(0,0,0,.4)',
@@ -156,16 +156,16 @@ function StudentCard({ student, dark }) {
                                     dir="ltr"
                                     style={{
                                         width: '100%', padding: '10px 14px',
-                                        border: `1.5px solid ${dark ? 'rgba(255,255,255,.12)' : '#e2e8f0'}`,
-                                        borderRadius: 10, background: dark ? '#0d1826' : '#fff',
-                                        color: dark ? '#f0f4f8' : '#14213D',
+                                        border: `1.5px solid ${dark ? 'rgba(255,255,255,.12)' : '#E3D9C4'}`,
+                                        borderRadius: 10, background: dark ? '#1C1916' : '#fff',
+                                        color: dark ? '#E8DCC1' : '#0E3A2E',
                                         fontFamily: 'Cairo,sans-serif', fontSize: 14,
                                         outline: 'none', boxSizing: 'border-box',
                                     }}
                                 />
                             </div>
                         )}
-                        <p style={{ color: dark ? 'rgba(220,201,163,.5)' : '#64748b', fontSize: 13, marginBottom: 20 }}>
+                        <p style={{ color: dark ? 'rgba(220,201,163,.5)' : '#6B6255', fontSize: 13, marginBottom: 20 }}>
                             هل تريد تفعيل هذا الحساب؟ سيتمكن الطالب من الدخول للمنصة بعد التفعيل.
                         </p>
                         <div style={{ display: 'flex', gap: 10 }}>
@@ -179,7 +179,7 @@ function StudentCard({ student, dark }) {
                             </button>
                             <button onClick={() => setShowModal(false)} style={{
                                 padding: '11px 20px',
-                                background: dark ? 'rgba(255,255,255,.06)' : '#f1f5f9',
+                                background: dark ? 'rgba(255,255,255,.06)' : '#F7F3E9',
                                 color: dark ? 'rgba(220,201,163,.6)' : '#475569',
                                 border: dark ? '1px solid rgba(255,255,255,.08)' : 'none',
                                 borderRadius: 10, fontFamily: 'Cairo,sans-serif', fontWeight: 700, fontSize: 14, cursor: 'pointer',
@@ -202,7 +202,7 @@ export default function StudentRequests({ assistant, students }) {
             <div style={{ marginBottom: 24, display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 12 }}>
                 <div>
                     <h2 style={{ color: dark ? C.gold : C.navy, fontSize: 20, fontWeight: 900, margin: 0 }}>طلبات التفعيل والتسجيل</h2>
-                    <p style={{ color: dark ? 'rgba(220,201,163,.45)' : '#64748b', fontSize: 14, margin: '4px 0 0' }}>
+                    <p style={{ color: dark ? 'rgba(220,201,163,.45)' : '#6B6255', fontSize: 14, margin: '4px 0 0' }}>
                         طلاب جدد ينتظرون مراجعتك وتفعيل حساباتهم
                     </p>
                 </div>
@@ -217,14 +217,14 @@ export default function StudentRequests({ assistant, students }) {
 
             {students.length === 0 ? (
                 <div style={{
-                    background: dark ? '#152238' : '#fff', borderRadius: 20, padding: '60px 40px',
+                    background: dark ? '#1C1916' : '#fff', borderRadius: 20, padding: '60px 40px',
                     textAlign: 'center',
-                    border: `1px solid ${dark ? 'rgba(255,255,255,.07)' : '#e8edf5'}`,
+                    border: `1px solid ${dark ? 'rgba(255,255,255,.07)' : '#E3D9C4'}`,
                     boxShadow: dark ? '0 4px 20px rgba(0,0,0,.25)' : '0 4px 20px rgba(20,33,61,.04)',
                 }}>
                     <div style={{ fontSize: 56, marginBottom: 16 }}>🎉</div>
                     <div style={{ fontWeight: 700, fontSize: 18, color: '#16a34a', marginBottom: 6 }}>لا توجد طلبات معلقة</div>
-                    <div style={{ color: dark ? 'rgba(220,201,163,.4)' : '#94a3b8', fontSize: 14 }}>جميع الطلاب تم مراجعة طلباتهم</div>
+                    <div style={{ color: dark ? 'rgba(220,201,163,.4)' : '#A89A78', fontSize: 14 }}>جميع الطلاب تم مراجعة طلباتهم</div>
                 </div>
             ) : (
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(320px,1fr))', gap: 20 }}>
@@ -236,5 +236,3 @@ export default function StudentRequests({ assistant, students }) {
         </AssistantLayout>
     );
 }
-
-

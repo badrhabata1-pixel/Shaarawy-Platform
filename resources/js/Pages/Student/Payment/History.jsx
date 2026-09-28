@@ -2,10 +2,10 @@ import { Head, Link } from '@inertiajs/react';
 import { useState, useEffect } from 'react';
 import StudentLayout from '@/Layouts/StudentLayout';
 
-const O = '#0D9488';
-const BRAND_GRAD = 'linear-gradient(135deg,#0D9488 0%,#d9620a 100%)';
-const N = '#14213D';
-const G = '#C9A14A';
+const O = '#1F5A45';
+const BRAND_GRAD = 'linear-gradient(135deg,#1F5A45 0%,#8B5E3C 100%)';
+const N = '#0E3A2E';
+const G = '#C9A96A';
 
 function useStudentDark() {
     const [dark, setDark] = useState(() => {
@@ -42,15 +42,15 @@ export default function PaymentHistory({ requests = [] }) {
     const dark = useStudentDark();
     const [zoom, setZoom] = useState(null);
 
-    const cardBg  = dark ? '#152238' : '#fff';
+    const cardBg  = dark ? '#1C1916' : 'rgba(255,252,245,.30)';
     const cardBd  = dark ? 'rgba(255,255,255,.07)' : '#eee';
-    const txtMain = dark ? '#f0f4f8' : N;
+    const txtMain = dark ? '#E8DCC1' : N;
     const txtSub  = dark ? 'rgba(220,201,163,.5)'  : '#555';
     const txtDim  = dark ? 'rgba(220,201,163,.3)'  : '#aaa';
 
     return (
         <StudentLayout>
-            <Head title="سجل الدفع — منصة منصور" />
+            <Head title="سجل الدفع — منصة أحمد الشعراوي" />
 
             <div style={{ maxWidth: 720, margin: '0 auto', padding: '32px 20px', fontFamily: "'Cairo',sans-serif", direction: 'rtl' }}>
 

@@ -1,9 +1,9 @@
-﻿import { Head, Link } from '@inertiajs/react';
+import { Head, Link } from '@inertiajs/react';
 import { useState, useEffect } from 'react';
 import StudentLayout from '@/Layouts/StudentLayout';
 
-const O = '#0D9488';
-const N = '#14213D';
+const O = '#1F5A45';
+const N = '#0E3A2E';
 
 function useStudentDark() {
     const [dark, setDark] = useState(() => {
@@ -30,8 +30,8 @@ export default function Sheets({ sheets }) {
     const answered  = sheets.filter(s => s.answer).length;
     const unanswered = sheets.filter(s => !s.answer && s.questions_count > 0).length;
 
-    const cardBg  = dark ? '#152238' : '#fff';
-    const cardBd  = dark ? 'rgba(255,255,255,.07)' : '#E2E8F0';
+    const cardBg  = dark ? '#1C1916' : 'rgba(255,252,245,.30)';
+    const cardBd  = dark ? 'rgba(255,255,255,.07)' : '#E3D9C4';
 
     return (
         <StudentLayout>
@@ -41,13 +41,13 @@ export default function Sheets({ sheets }) {
                 @keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
                 .sh{animation:fadeUp .4s both}
                 .sh-card{transition:transform .2s,box-shadow .2s}
-                .sh-card:hover{transform:translateY(-3px);box-shadow:0 10px 32px rgba(20,33,61,.18)!important}
-                .pdf-btn:hover{background:#e8641a!important;color:#fff!important;border-color:#e8641a!important}
+                .sh-card:hover{transform:translateY(-3px);box-shadow:0 10px 32px rgba(14,58,46,.18)!important}
+                .pdf-btn:hover{background:#8B5E3C!important;color:#fff!important;border-color:#8B5E3C!important}
             `}</style>
 
             {/* Header */}
             <div className="sh" style={{
-                background: `linear-gradient(135deg,${N} 0%,#1e3a6e 100%)`,
+                background: `linear-gradient(135deg,${N} 0%,#1F5A45 100%)`,
                 borderRadius: 20, padding: '1.75rem 2rem', marginBottom: '1.5rem',
                 display: 'flex', alignItems: 'center', justifyContent: 'space-between',
                 flexWrap: 'wrap', gap: 12,
@@ -76,10 +76,10 @@ export default function Sheets({ sheets }) {
                     textAlign: 'center', padding: '4rem 2rem',
                     background: cardBg,
                     borderRadius: 20,
-                    color: dark ? 'rgba(220,201,163,.45)' : '#94A3B8',
+                    color: dark ? 'rgba(220,201,163,.45)' : '#A89A78',
                     fontSize: 15,
                     border: `1px solid ${cardBd}`,
-                    boxShadow: dark ? '0 4px 20px rgba(0,0,0,.25)' : '0 2px 20px rgba(20,33,61,.06)',
+                    boxShadow: dark ? '0 4px 20px rgba(0,0,0,.25)' : '0 2px 20px rgba(14,58,46,.06)',
                 }}>
                     <div style={{ fontSize: 48, marginBottom: 16 }}>📭</div>
                     لا توجد شيتات متاحة لصفك حالياً.
@@ -105,12 +105,12 @@ function SheetCard({ sheet, delay, dark }) {
     const hasPdf      = sheet.has_pdf;
     const hasQuestions = sheet.questions_count > 0;
 
-    const cardBg  = dark ? '#152238' : '#fff';
-    const cardBd  = dark ? 'rgba(255,255,255,.07)' : '#E2E8F0';
-    const txtMain = dark ? '#f0f4f8' : N;
-    const txtSub  = dark ? 'rgba(220,201,163,.5)' : '#64748B';
-    const metaBg  = dark ? 'rgba(255,255,255,.05)' : '#F1F5F9';
-    const metaBd  = dark ? 'rgba(255,255,255,.1)'  : '#E2E8F0';
+    const cardBg  = dark ? '#1C1916' : 'rgba(255,252,245,.30)';
+    const cardBd  = dark ? 'rgba(255,255,255,.07)' : '#E3D9C4';
+    const txtMain = dark ? '#E8DCC1' : N;
+    const txtSub  = dark ? 'rgba(220,201,163,.5)' : '#6B6255';
+    const metaBg  = dark ? 'rgba(255,255,255,.05)' : '#F7F3E9';
+    const metaBd  = dark ? 'rgba(255,255,255,.1)'  : '#E3D9C4';
 
     return (
         <div className="sh sh-card" style={{
@@ -118,7 +118,7 @@ function SheetCard({ sheet, delay, dark }) {
             background: cardBg,
             borderRadius: 18,
             border: `1px solid ${cardBd}`,
-            boxShadow: dark ? '0 4px 20px rgba(0,0,0,.3)' : '0 2px 16px rgba(20,33,61,.06)',
+            boxShadow: dark ? '0 4px 20px rgba(0,0,0,.3)' : '0 2px 16px rgba(14,58,46,.06)',
             overflow: 'hidden',
         }}>
             {/* Top accent */}
@@ -126,7 +126,7 @@ function SheetCard({ sheet, delay, dark }) {
                 height: 4,
                 background: ans
                     ? (ans.status === 'graded' ? '#059669' : '#d97706')
-                    : `linear-gradient(90deg,${O},#e8641a)`,
+                    : `linear-gradient(90deg,${O},#8B5E3C)`,
             }} />
 
             <div style={{ padding: '1.25rem 1.5rem' }}>
@@ -181,7 +181,7 @@ function SheetCard({ sheet, delay, dark }) {
                                 flex: 1, textAlign: 'center',
                                 background: ans
                                     ? (ans.status === 'graded' ? 'linear-gradient(135deg,#059669,#047857)' : 'linear-gradient(135deg,#d97706,#b45309)')
-                                    : `linear-gradient(135deg,${O},#e8641a)`,
+                                    : `linear-gradient(135deg,${O},#8B5E3C)`,
                                 color: '#fff', borderRadius: 10,
                                 padding: '10px 0', fontSize: 13, fontWeight: 800,
                                 textDecoration: 'none', display: 'block',
@@ -241,5 +241,3 @@ function MetaBadge({ icon, label, color }) {
         </div>
     );
 }
-
-

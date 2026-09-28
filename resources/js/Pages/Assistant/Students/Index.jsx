@@ -1,9 +1,9 @@
-﻿import React, { useState } from 'react';
+import React, { useState } from 'react';
 import { Head, Link, router } from '@inertiajs/react';
 import AssistantLayout from '@/Layouts/AssistantLayout';
 
-const O = '#208ef4';
-const N = '#14213D';
+const O = '#1F5A45';
+const N = '#0E3A2E';
 
 export default function Index({ assistant, students = [], filters = {} }) {
     const [search, setSearch] = useState(filters.search || '');
@@ -29,21 +29,21 @@ export default function Index({ assistant, students = [], filters = {} }) {
             <Head title="قائمة الطلاب — بوابة السكرتارية" />
 
             <div className="max-w-6xl mx-auto space-y-6 text-right" dir="rtl" style={{ fontFamily: 'Cairo, sans-serif' }}>
-                
+
                 {/* مربع البحث التفاعلي الفخم */}
-                <div className="bg-white dark:bg-[#152238] p-6 rounded-2xl shadow-md border border-gray-100 dark:border-gray-800 transition-colors duration-300">
+                <div className="bg-white dark:bg-[#1C1916] p-6 rounded-2xl shadow-md border border-gray-100 dark:border-gray-800 transition-colors duration-300">
                     <form onSubmit={handleSearchSubmit} className="flex flex-col md:flex-row items-center gap-4">
                         <div className="flex-1 space-y-2 w-full">
-                            <label className="block text-sm font-black text-[#14213D] dark:text-[#f8f9fa]">بحث سريع ببيانات الطالب:</label>
-                            <input 
+                            <label className="block text-sm font-black text-[#0E3A2E] dark:text-[#E8DCC1]">بحث سريع ببيانات الطالب:</label>
+                            <input
                                 type="text"
                                 value={search}
                                 onChange={e => setSearch(e.target.value)}
                                 placeholder="ابحث باسم الطالب، البريد الإلكتروني، أو رقم الهاتف..."
-                                className="w-full border border-gray-200 dark:border-gray-800 bg-white dark:bg-[#0e1726] text-[#14213D] dark:text-white rounded-lg p-3 text-sm focus:border-[#F47C20] focus:ring-0 outline-none transition"
+                                className="w-full border border-gray-200 dark:border-gray-800 bg-white dark:bg-[#141210] text-[#0E3A2E] dark:text-white rounded-lg p-3 text-sm focus:border-[#C9A96A] focus:ring-0 outline-none transition"
                             />
                         </div>
-                        <button 
+                        <button
                             type="submit"
                             className="brand-cta w-full md:w-auto px-8 py-3 text-sm self-end"
                         >
@@ -53,16 +53,16 @@ export default function Index({ assistant, students = [], filters = {} }) {
                 </div>
 
                 {/* جدول استعراض وتفاصيل وحذف الطلاب */}
-                <div className="bg-white dark:bg-[#152238] rounded-2xl shadow-xl overflow-hidden border border-gray-100 dark:border-gray-800 transition-colors duration-300">
+                <div className="bg-white dark:bg-[#1C1916] rounded-2xl shadow-xl overflow-hidden border border-gray-100 dark:border-gray-800 transition-colors duration-300">
                     <div className="p-6 border-b dark:border-gray-800 bg-gray-50 dark:bg-gray-900/30 flex justify-between items-center">
-                        <h3 className="text-base font-black text-[#14213D] dark:text-[#f8f9fa]">قائمة الطلاب المقيدين</h3>
+                        <h3 className="text-base font-black text-[#0E3A2E] dark:text-[#E8DCC1]">قائمة الطلاب المقيدين</h3>
                         <span className="bg-gray-100 dark:bg-gray-800 px-3 py-1 rounded-full text-xs font-bold text-gray-500 dark:text-gray-400">{students.length} طالب مقيد</span>
                     </div>
 
                     <div className="overflow-x-auto">
                         <table className="w-full text-center border-collapse text-xs">
                             <thead>
-                                <tr className="bg-gray-100 dark:bg-gray-900 text-[#14213D] dark:text-[#f8f9fa] font-black border-b border-gray-200 dark:border-gray-800">
+                                <tr className="bg-gray-100 dark:bg-gray-900 text-[#0E3A2E] dark:text-[#E8DCC1] font-black border-b border-gray-200 dark:border-gray-800">
                                     <th className="p-4">#</th>
                                     <th className="p-4 text-right">بيانات الطالب</th>
                                     <th className="p-4">الصف الدراسي</th>
@@ -85,17 +85,17 @@ export default function Index({ assistant, students = [], filters = {} }) {
                                     students.map((student, idx) => (
                                         <tr key={student.id} className="hover:bg-gray-50/50 dark:hover:bg-gray-900/30 transition">
                                             <td className="p-4 text-gray-400">{idx + 1}</td>
-                                            <td className="p-4 text-right font-black text-sm text-[#14213D] dark:text-[#f8f9fa]">
+                                            <td className="p-4 text-right font-black text-sm text-[#0E3A2E] dark:text-[#E8DCC1]">
                                                 <div>{student.name}</div>
                                                 <span className="text-[10px] text-gray-400 block font-normal mt-0.5" style={{ direction: 'ltr' }}>{student.email}</span>
                                             </td>
                                             <td className="p-4">
-                                                <span className="bg-[#14213D]/10 text-[#14213D] dark:text-white px-3 py-1 rounded-full text-[10px]">
+                                                <span className="bg-[#0E3A2E]/10 text-[#0E3A2E] dark:text-white px-3 py-1 rounded-full text-[10px]">
                                                     {student.academic_year}
                                                 </span>
                                             </td>
                                             <td className="p-4">
-                                                <span className="bg-[#F47C20]/15 text-[#F47C20] px-3 py-1 rounded-full text-[10px]">
+                                                <span className="bg-[#C9A96A]/15 text-[#C9A96A] px-3 py-1 rounded-full text-[10px]">
                                                     {student.group_name}
                                                 </span>
                                             </td>
@@ -107,12 +107,12 @@ export default function Index({ assistant, students = [], filters = {} }) {
                                                 )}
                                             </td>
                                             <td className="p-4">
-                                                <div style={{ direction: 'ltr' }} className="text-[#14213D] dark:text-[#f8f9fa]">{student.phone}</div>
+                                                <div style={{ direction: 'ltr' }} className="text-[#0E3A2E] dark:text-[#E8DCC1]">{student.phone}</div>
                                                 <span className="text-[10px] text-orange-400 block font-normal mt-0.5" style={{ direction: 'ltr' }}>ولي الأمر: {student.parent_phone || '—'}</span>
                                             </td>
                                             <td className="p-4 text-gray-400">{student.created_at}</td>
                                             <td className="p-4">
-                                                <button 
+                                                <button
                                                     onClick={() => handleDelete(student.id, student.name)}
                                                     className="w-8 h-8 rounded-full bg-red-50 text-red-500 hover:bg-red-100 transition flex items-center justify-center mx-auto"
                                                     title="حذف حساب الطالب نهائياً"
@@ -141,4 +141,3 @@ function GoogleFonts() {
         />
     );
 }
-

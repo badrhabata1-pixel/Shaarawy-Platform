@@ -4,18 +4,18 @@ import { useState, useEffect, useRef } from 'react';
 
 
 
-import ReceiptsReviewModal from '@/Components/ReceiptsReviewModal'; 
+import ReceiptsReviewModal from '@/Components/ReceiptsReviewModal';
 
 
-const O = '#2043f4'; // برتقالي
-const N = '#14213D'; // كحلي
-const B = '#DCC9A3'; // ذهبي
+const O = '#1F5A45';
+const N = '#0E3A2E';
+const B = '#C9A96A';
 const C = {
-    navy: '#14213D', orange: '#207ff4', gold: '#DCC9A3',
-    orangeD: '#129dd9', navyL: '#1e2e50',
+    navy: '#0E3A2E', orange: '#1F5A45', gold: '#E8DCC1',
+    orangeD: '#8B5E3C', navyL: '#1F5A45',
 };
 
-function CardOrnaments({ color = '#2fbcd4', soft = false }) {
+function CardOrnaments({ color = '#C9A96A', soft = false }) {
     const opacity = soft ? .07 : .12;
     const size = soft ? 34 : 48;
     const patId = useRef(`as-ip-${Math.random().toString(36).slice(2)}`).current;
@@ -97,7 +97,7 @@ function StatCard({ label, value, color, icon, href, delay = 0, theme }) {
             <div style={{ position: 'absolute', inset: 0, background: `linear-gradient(135deg, ${color}10, transparent 65%)`, pointerEvents: 'none' }} />
             {/* Accent bar */}
             <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 3, background: `linear-gradient(90deg, ${color}, ${color}00)` }} />
-            
+
             <div style={{ display: 'flex', alignItems: 'center', gap: 14, position: 'relative', zIndex: 1 }}>
                 <div style={{ width: 46, height: 46, borderRadius: 14, display: 'flex', alignItems: 'center', justifyContent: 'center', background: `${color}15`, fontSize: 20 }}>
                     {icon}
@@ -119,7 +119,7 @@ function StatCard({ label, value, color, icon, href, delay = 0, theme }) {
 function GroupCard({ group, delay, theme }) {
     const [hov, setHov] = useState(false);
     const ref = useRef(null);
-    
+
     useEffect(() => {
         if (!ref.current) return;
         ref.current.style.opacity = '0';
@@ -202,12 +202,12 @@ export default function AssistantDashboard({ assistant, stats, my_groups = [], r
     }, []);
 
     // ألوان تفاعلية بناءً على تفعيل الوضع المظلم
-    const bgCard = darkMode ? '#152238' : '#ffffff';
-    const borderCard = darkMode ? '1px solid rgba(220,201,163,0.15)' : '1px solid #e8edf5';
-    const borderCell = darkMode ? '1px solid rgba(255,255,255,0.05)' : '1px solid #f1f5f9';
-    const textMain = darkMode ? '#f8f9fa' : '#14213D';
-    const textMuted = darkMode ? '#94a3b8' : '#64748b';
-    const bgRowHover = darkMode ? 'rgba(255,255,255,0.02)' : '#fafbff';
+    const bgCard = darkMode ? '#1C1916' : '#ffffff';
+    const borderCard = darkMode ? '1px solid rgba(201,169,106,0.18)' : '1px solid rgba(201,169,106,.30)';
+    const borderCell = darkMode ? '1px solid rgba(201,169,106,0.10)' : '1px solid rgba(201,169,106,.15)';
+    const textMain = darkMode ? '#E8DCC1' : '#0E3A2E';
+    const textMuted = darkMode ? '#A89A78' : '#6B6255';
+    const bgRowHover = darkMode ? 'rgba(201,169,106,0.06)' : 'rgba(201,169,106,.06)';
 
     const theme = { darkMode, bgCard, borderCard, borderCell, textMain, textMuted, bgRowHover };
 
@@ -224,7 +224,7 @@ export default function AssistantDashboard({ assistant, stats, my_groups = [], r
 
             {/* ── Greeting ── */}
             <div style={{
-                background: `linear-gradient(135deg, ${C.navy} 0%, ${C.navyL} 100%)`,
+                background: 'linear-gradient(135deg, #141210 0%, #0E3A2E 45%, #1A3D2E 75%, #1C1916 100%)',
                 borderRadius: 20,
                 padding: '24px 28px',
                 marginBottom: 28,
@@ -233,16 +233,16 @@ export default function AssistantDashboard({ assistant, stats, my_groups = [], r
                 justifyContent: 'space-between',
                 flexWrap: 'wrap',
                 gap: 14,
-                boxShadow: '0 8px 32px rgba(20,33,61,.2)',
+                boxShadow: '0 12px 34px rgba(14,58,46,.24)',
                 position: 'relative',
                 overflow: 'hidden',
             }}>
                 <CardOrnaments color={C.orange} />
-                <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(100deg, transparent 30%, rgba(47,188,212,0.09) 50%, transparent 70%)', pointerEvents: 'none' }} />
+                <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(100deg, transparent 30%, rgba(201,169,106,0.10) 50%, transparent 70%)', pointerEvents: 'none' }} />
                 <div style={{
                     position: 'absolute', top: -40, left: -40,
                     width: 200, height: 200, borderRadius: '50%',
-                    background: 'rgba(244,124,32,.08)', pointerEvents: 'none',
+                    background: 'rgba(201,169,106,.11)', pointerEvents: 'none',
                 }} />
                 <div style={{ position: 'relative', zIndex: 1 }}>
                     <h2 style={{ color: '#fff', fontSize: 22, fontWeight: 900, margin: '0 0 6px' }}>
@@ -282,7 +282,7 @@ export default function AssistantDashboard({ assistant, stats, my_groups = [], r
                 <StatCard
                     label="امتحانات تنتظر التصحيح"
                     value={stats?.pending_exams ?? 0}
-                    color="#2563eb"
+                    color="#C9A96A"
                     icon="📝"
                     href={route('assistant.exams.pending')}
                     delay={80}
@@ -291,7 +291,7 @@ export default function AssistantDashboard({ assistant, stats, my_groups = [], r
                 <StatCard
                     label="شيتات تنتظر التصحيح"
                     value={stats?.pending_sheets ?? 0}
-                    color="#16a34a"
+                    color="#8B5E3C"
                     icon="📋"
                     href={route('assistant.sheets.pending')}
                     delay={160}
@@ -300,7 +300,7 @@ export default function AssistantDashboard({ assistant, stats, my_groups = [], r
                 <StatCard
                     label="طلاب متأخرون في الفيديوهات"
                     value={stats?.unwatched_count ?? 0}
-                    color="#dc2626"
+                    color="#6FA98A"
                     icon="🎬"
                     delay={240}
                     theme={theme}
@@ -325,7 +325,7 @@ export default function AssistantDashboard({ assistant, stats, my_groups = [], r
                         مجموعاتي
                     </h3>
                     {my_groups.length === 0 ? (
-                        <p style={{ color: '#94a3b8', textAlign: 'center', padding: '20px 0', fontSize: 14 }}>
+                        <p style={{ color: '#A89A78', textAlign: 'center', padding: '20px 0', fontSize: 14 }}>
                             لا توجد مجموعات مُعيّنة لك بعد
                         </p>
                     ) : (
@@ -355,10 +355,10 @@ export default function AssistantDashboard({ assistant, stats, my_groups = [], r
                     <div style={{ display: 'flex', flexDirection: 'column', gap: 10, position: 'relative', zIndex: 1 }}>
                         {[
                             { label: 'تفعيل طلاب جدد', href: route('assistant.students.requests'), color: C.orange, icon: '✅' },
-                            { label: 'إيصالات الدفع', onClick: () => setShowReceipts(true), count: pendingReceiptsCount, color: '#d97706', icon: '🧾' },
-                            { label: 'تصحيح الشيتات',   href: route('assistant.sheets.pending'),  color: '#16a34a', icon: '📋' },
-                            { label: 'تصحيح الامتحانات',href: route('assistant.exams.pending'),   color: '#2563eb', icon: '📝' },
-                            { label: 'أكواد التفعيل',   href: route('assistant.promo.index'),     color: '#0891b2', icon: '🎫' },
+                            { label: 'إيصالات الدفع', onClick: () => setShowReceipts(true), count: pendingReceiptsCount, color: '#C9A96A', icon: '🧾' },
+                            { label: 'تصحيح الشيتات',   href: route('assistant.sheets.pending'),  color: '#8B5E3C', icon: '📋' },
+                            { label: 'تصحيح الامتحانات',href: route('assistant.exams.pending'),   color: '#6FA98A', icon: '📝' },
+                            { label: 'أكواد التفعيل',   href: route('assistant.promo.index'),     color: '#1F5A45', icon: '🎫' },
                         ].map(action => {
                             const actionStyle = {
                                 display: 'flex', alignItems: 'center', gap: 12,

@@ -1,10 +1,10 @@
-﻿import { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useForm, Head, usePage } from '@inertiajs/react';
 import StudentLayout from '@/Layouts/StudentLayout';
 
-const O  = '#0D9488';
-const N  = '#14213D';
-const G  = '#2DD4BF';
+const O  = '#1F5A45';
+const N  = '#0E3A2E';
+const G  = '#C9A96A';
 
 function useStudentDark() {
     const [dark, setDark] = useState(() => {
@@ -38,15 +38,15 @@ export default function StudentProfile({ student }) {
     };
 
     /* ── tokens ── */
-    const cardBg  = dark ? '#152238'                    : '#fff';
+    const cardBg  = dark ? '#1C1916'                    : 'rgba(255,252,245,.30)';
     const cardBd  = dark ? 'rgba(255,255,255,.07)'      : '#e8edf5';
-    const txtMain = dark ? '#f0f4f8'                    : N;
-    const txtSub  = dark ? 'rgba(220,201,163,.5)'       : '#64748b';
-    const inputBg = dark ? '#0d1826'                    : '#fff';
+    const txtMain = dark ? '#E8DCC1'                    : N;
+    const txtSub  = dark ? 'rgba(220,201,163,.5)'       : '#6B6255';
+    const inputBg = dark ? '#1C1916'                    : '#fff';
     const inputBd = dark ? 'rgba(255,255,255,.12)'      : '#d1d5db';
-    const inputClr= dark ? '#f0f4f8'                    : N;
-    const disabledBg = dark ? 'rgba(255,255,255,.04)'   : '#f8fafc';
-    const divider = dark ? 'rgba(255,255,255,.07)'      : '#f1f5f9';
+    const inputClr= dark ? '#E8DCC1'                    : N;
+    const disabledBg = dark ? 'rgba(255,255,255,.04)'   : '#F7F3E9';
+    const divider = dark ? 'rgba(255,255,255,.07)'      : '#F7F3E9';
 
     const inp = (hasErr) => ({
         width: '100%', boxSizing: 'border-box', direction: 'rtl',
@@ -60,7 +60,7 @@ export default function StudentProfile({ student }) {
 
     return (
         <StudentLayout title="👤 ملفي الشخصي">
-            <Head title="تعديل حسابي — منصة منصور" />
+            <Head title="تعديل حسابي — منصة أحمد الشعراوي" />
 
             <style>{`
                 @keyframes fadeUp { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:translateY(0)} }
@@ -89,7 +89,7 @@ export default function StudentProfile({ student }) {
                     background: cardBg,
                     borderRadius: 20,
                     border: `1px solid ${cardBd}`,
-                    boxShadow: dark ? '0 4px 24px rgba(0,0,0,.3)' : '0 4px 24px rgba(20,33,61,.08)',
+                    boxShadow: dark ? '0 4px 24px rgba(0,0,0,.3)' : '0 4px 24px rgba(14,58,46,.08)',
                     overflow: 'hidden',
                 }}>
                     {/* Avatar header */}
@@ -100,11 +100,11 @@ export default function StudentProfile({ student }) {
                     }}>
                         <div style={{
                             width: 76, height: 76, borderRadius: '50%',
-                            background: `linear-gradient(135deg,${O},#d9620a)`,
-                            border: `3px solid ${dark ? 'rgba(220,201,163,.35)' : '#DCC9A3'}`,
+                            background: `linear-gradient(135deg,${O},#8B5E3C)`,
+                            border: `3px solid ${dark ? 'rgba(220,201,163,.35)' : '#E8DCC1'}`,
                             display: 'flex', alignItems: 'center', justifyContent: 'center',
                             fontSize: 26, fontWeight: 900, color: '#fff',
-                            boxShadow: '0 4px 16px rgba(244,124,32,.35)',
+                            boxShadow: '0 4px 16px rgba(139,94,60,.35)',
                             flexShrink: 0,
                         }}>
                             {initials}
@@ -199,12 +199,12 @@ export default function StudentProfile({ student }) {
                                 width: '100%', padding: '13px', borderRadius: 12, border: 'none',
                                 background: processing
                                     ? (dark ? 'rgba(255,255,255,.1)' : '#d1d5db')
-                                    : `linear-gradient(135deg,${O},#d9620a)`,
+                                    : `linear-gradient(135deg,${O},#8B5E3C)`,
                                 color: processing ? txtSub : '#fff',
                                 fontSize: 15, fontWeight: 800,
                                 cursor: processing ? 'not-allowed' : 'pointer',
                                 fontFamily: "'Cairo',sans-serif",
-                                boxShadow: processing ? 'none' : '0 4px 20px rgba(244,124,32,.4)',
+                                boxShadow: processing ? 'none' : '0 4px 20px rgba(139,94,60,.4)',
                                 transition: 'all .2s',
                             }}
                         >
@@ -221,5 +221,3 @@ export default function StudentProfile({ student }) {
 function Err({ children }) {
     return <p style={{ color: '#f87171', fontSize: 12, marginTop: 5 }}>⚠ {children}</p>;
 }
-
-

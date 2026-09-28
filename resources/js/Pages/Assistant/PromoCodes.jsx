@@ -1,8 +1,8 @@
-﻿import { Head, useForm, router } from '@inertiajs/react';
+import { Head, useForm, router } from '@inertiajs/react';
 import { useState, useEffect } from 'react';
 import AssistantLayout from '@/Layouts/AssistantLayout';
 
-const O = '#208ef4';
+const O = '#1F5A45';
 const G = '#059669';
 const R = '#DC2626';
 
@@ -52,13 +52,13 @@ export default function PromoCodes({ assistant, promoCodes, academicYears = [], 
         });
     };
 
-    const card   = dark ? '#152238' : '#fff';
-    const cardBd = dark ? 'rgba(255,255,255,.07)' : '#e8edf5';
+    const card   = dark ? '#1C1916' : '#fff';
+    const cardBd = dark ? 'rgba(255,255,255,.07)' : '#E3D9C4';
     const secBg  = dark ? 'rgba(255,255,255,.03)' : '#f8fafc';
-    const txtMain= dark ? '#f0f4f8' : '#14213D';
-    const txtSub = dark ? 'rgba(220,201,163,.45)' : '#64748b';
-    const inputBg= dark ? '#0d1826' : '#fff';
-    const inputBd= dark ? 'rgba(255,255,255,.12)' : '#e2e8f0';
+    const txtMain= dark ? '#E8DCC1' : '#0E3A2E';
+    const txtSub = dark ? 'rgba(220,201,163,.45)' : '#6B6255';
+    const inputBg= dark ? '#1C1916' : '#fff';
+    const inputBd= dark ? 'rgba(255,255,255,.12)' : '#E3D9C4';
 
     const sel = (err) => ({
         width: '100%', padding: '10px 12px', borderRadius: 8,
@@ -75,7 +75,7 @@ export default function PromoCodes({ assistant, promoCodes, academicYears = [], 
             <div style={{ fontFamily: "'Cairo',sans-serif", direction: 'rtl', maxWidth: 960, margin: '0 auto' }}>
 
                 <div style={{ marginBottom: 28 }}>
-                    <h1 style={{ fontSize: 22, fontWeight: 800, color: dark ? '#DCC9A3' : '#14213D', margin: 0 }}>🎟️ أكواد شحن وتفعيل المحاضرات</h1>
+                    <h1 style={{ fontSize: 22, fontWeight: 800, color: dark ? '#E8DCC1' : '#0E3A2E', margin: 0 }}>🎟️ أكواد شحن وتفعيل المحاضرات</h1>
                     <p style={{ fontSize: 13, color: txtSub, marginTop: 6 }}>توليد أكواد تفعيل للطلاب وإدارة الأكواد النشطة</p>
                 </div>
 
@@ -86,7 +86,7 @@ export default function PromoCodes({ assistant, promoCodes, academicYears = [], 
                     boxShadow: dark ? '0 4px 20px rgba(0,0,0,.3)' : '0 2px 12px rgba(20,33,61,.06)',
                     marginBottom: 28,
                 }}>
-                    <h2 style={{ fontSize: 16, fontWeight: 800, color: dark ? '#DCC9A3' : '#14213D', marginBottom: 18, display: 'flex', alignItems: 'center', gap: 8 }}>
+                    <h2 style={{ fontSize: 16, fontWeight: 800, color: dark ? '#E8DCC1' : '#0E3A2E', marginBottom: 18, display: 'flex', alignItems: 'center', gap: 8 }}>
                         <span style={{ color: O }}>⚡</span> توليد أكواد شحن جديدة لطلاب الساتر
                     </h2>
 
@@ -124,7 +124,7 @@ export default function PromoCodes({ assistant, promoCodes, academicYears = [], 
                             <div>
                                 <button type="submit" disabled={processing} style={{
                                     padding: '10px 22px', borderRadius: 10, border: 'none',
-                                    background: processing ? (dark ? 'rgba(255,255,255,.1)' : '#94a3b8') : `linear-gradient(135deg,${O},#d9620a)`,
+                                    background: processing ? (dark ? 'rgba(255,255,255,.1)' : '#A89A78') : `linear-gradient(135deg,${O},#8B5E3C)`,
                                     color: processing ? txtSub : '#fff',
                                     fontSize: 14, fontWeight: 800,
                                     cursor: processing ? 'not-allowed' : 'pointer',
@@ -150,7 +150,7 @@ export default function PromoCodes({ assistant, promoCodes, academicYears = [], 
                         padding: '18px 24px', borderBottom: `1px solid ${cardBd}`,
                         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
                     }}>
-                        <h2 style={{ fontSize: 15, fontWeight: 800, color: dark ? '#DCC9A3' : '#14213D', margin: 0 }}>🎟️ أكواد الشحن النشطة بالمنصة</h2>
+                        <h2 style={{ fontSize: 15, fontWeight: 800, color: dark ? '#E8DCC1' : '#0E3A2E', margin: 0 }}>🎟️ أكواد الشحن النشطة بالمنصة</h2>
                         <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
                             <span style={{
                                 padding: '4px 12px', borderRadius: 999,
@@ -192,11 +192,11 @@ export default function PromoCodes({ assistant, promoCodes, academicYears = [], 
                                 <tbody>
                                     {codes.map((code, i) => (
                                         <tr key={code.id} style={{
-                                            borderBottom: `1px solid ${dark ? 'rgba(255,255,255,.04)' : '#f1f5f9'}`,
+                                            borderBottom: `1px solid ${dark ? 'rgba(255,255,255,.04)' : '#F7F3E9'}`,
                                             background: i % 2 === 0 ? card : (dark ? 'rgba(255,255,255,.02)' : '#fafbfd'),
                                         }}>
                                             <td style={{ padding: '11px 16px', color: txtSub, fontWeight: 600 }}>{i + 1}</td>
-                                            <td style={{ padding: '11px 16px', fontWeight: 800, color: dark ? '#DCC9A3' : '#14213D', fontFamily: 'monospace', fontSize: 14, direction: 'ltr' }}>
+                                            <td style={{ padding: '11px 16px', fontWeight: 800, color: dark ? '#E8DCC1' : '#0E3A2E', fontFamily: 'monospace', fontSize: 14, direction: 'ltr' }}>
                                                 {code.code}
                                             </td>
                                             <td style={{ padding: '11px 16px', color: txtMain }}>
@@ -314,5 +314,3 @@ export default function PromoCodes({ assistant, promoCodes, academicYears = [], 
         </AssistantLayout>
     );
 }
-
-

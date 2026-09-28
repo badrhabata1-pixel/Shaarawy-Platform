@@ -2,11 +2,11 @@ import { useState, useEffect } from 'react';
 import { Head, useForm } from '@inertiajs/react';
 import StudentLayout from '@/Layouts/StudentLayout';
 
-const O = '#0D9488';
-const BRAND_GRAD = 'linear-gradient(135deg,#0D9488 0%,#d9620a 100%)';
-const N = '#14213D';
-const G = '#C9A14A';
-const B = '#DCC9A3';
+const O = '#1F5A45';
+const BRAND_GRAD = 'linear-gradient(135deg,#1F5A45 0%,#8B5E3C 100%)';
+const N = '#0E3A2E';
+const G = '#C9A96A';
+const B = '#E8DCC1';
 
 export default function PaymentCreate({ units = [], settings = {}, preUnit = null }) {
     const [method, setMethod]   = useState('');
@@ -66,30 +66,30 @@ export default function PaymentCreate({ units = [], settings = {}, preUnit = nul
     const currentStep  = !data.unit_id ? 1 : !method ? 2 : !data.account_name ? 3 : 4;
 
     /* ── tokens ──────────────────────────────────────── */
-    const bg      = dark ? '#090f1d'            : '#f4ede0';
-    const cardBg  = dark ? 'rgba(14,24,46,.85)' : 'rgba(255,252,245,.95)';
-    const cardBdr = dark ? 'rgba(201,161,74,.14)': 'rgba(201,161,74,.22)';
+    const bg      = dark ? '#141210'            : '#f4ede0';
+    const cardBg  = dark ? 'rgba(28,25,22,.85)' : 'rgba(255,252,245,.32)';
+    const cardBdr = dark ? 'rgba(201,169,106,.14)': 'rgba(201,169,106,.22)';
     const txt     = dark ? '#f0e8d5'            : N;
-    const txtDim  = dark ? 'rgba(220,201,163,.55)': 'rgba(20,33,61,.5)';
-    const inputBg = dark ? 'rgba(255,255,255,.05)': '#fff';
+    const txtDim  = dark ? 'rgba(220,201,163,.55)': 'rgba(14,58,46,.5)';
+    const inputBg = dark ? 'rgba(255,255,255,.05)': 'rgba(255,252,245,.42)';
     const inputBdr= dark ? 'rgba(220,201,163,.18)': '#d4c9b0';
     const inputClr= dark ? B                    : N;
 
     return (
         <StudentLayout>
-            <Head title="طلب دفع — منصة منصور" />
+            <Head title="طلب دفع — منصة أحمد الشعراوي" />
 
             <style>{`
                 @keyframes fadeUp   { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
-                select option { background: ${dark ? '#090f1d' : '#fff'}; color: ${dark ? '#f0e8d5' : N}; }
+                select option { background: ${dark ? '#141210' : '#fff'}; color: ${dark ? '#f0e8d5' : N}; }
                 @keyframes shimmer  { 0%{background-position:200% center} 100%{background-position:-200% center} }
                 @keyframes glyph    { 0%,100%{opacity:.035} 50%{opacity:.06} }
                 .pu { animation: fadeUp .45s both }
                 .pay-method:hover { transform: translateY(-3px); }
-                .pay-upload:hover { border-color: ${G} !important; background: ${dark ? 'rgba(201,161,74,.06)' : 'rgba(201,161,74,.04)'} !important; }
+                .pay-upload:hover { border-color: ${G} !important; background: ${dark ? 'rgba(201,169,106,.06)' : 'rgba(201,169,106,.04)'} !important; }
                 .pay-submit:hover:not(:disabled) { transform: translateY(-2px); box-shadow: var(--brand-cta-shadow) !important; }
-                .pay-copy:hover  { background: rgba(201,161,74,.22) !important; }
-                select option { background: ${dark ? '#0e1a2e' : '#fff'}; color: ${txt}; }
+                .pay-copy:hover  { background: rgba(201,169,106,.22) !important; }
+                select option { background: ${dark ? '#1C1916' : 'rgba(255,252,245,.30)'}; color: ${txt}; }
             `}</style>
 
             {/* ── Page wrapper ──────────────────────────────── */}
@@ -113,17 +113,17 @@ export default function PaymentCreate({ units = [], settings = {}, preUnit = nul
                     <div className="pu" style={{
                         position:'relative', overflow:'hidden',
                         background: dark
-                            ? 'linear-gradient(135deg,#0a1628 0%,#0f2040 55%,#07111f 100%)'
-                            : 'linear-gradient(135deg,#14213D 0%,#1a2d52 55%,#0f1e3a 100%)',
+                            ? 'linear-gradient(135deg,#081F19 0%,#1F5A45 55%,#081F19 100%)'
+                            : 'linear-gradient(135deg,#0E3A2E 0%,#1F5A45 55%,#081F19 100%)',
                         borderRadius:22,
                         padding:'2rem 2.25rem',
                         marginBottom:28,
                         boxShadow: dark
-                            ? '0 8px 48px rgba(0,0,0,.6), inset 0 0 0 1px rgba(201,161,74,.15)'
-                            : '0 8px 40px rgba(20,33,61,.3), inset 0 0 0 1px rgba(201,161,74,.2)',
+                            ? '0 8px 48px rgba(0,0,0,.6), inset 0 0 0 1px rgba(201,169,106,.15)'
+                            : '0 8px 40px rgba(14,58,46,.3), inset 0 0 0 1px rgba(201,169,106,.2)',
                     }}>
                         {/* Paper lines */}
-                        <div style={{ position:'absolute', inset:0, opacity:.035, backgroundImage:'repeating-linear-gradient(0deg,transparent,transparent 26px,rgba(201,161,74,1) 26px,rgba(201,161,74,1) 27px)', pointerEvents:'none' }}/>
+                        <div style={{ position:'absolute', inset:0, opacity:.035, backgroundImage:'repeating-linear-gradient(0deg,transparent,transparent 26px,rgba(201,169,106,1) 26px,rgba(201,169,106,1) 27px)', pointerEvents:'none' }}/>
                         {/* Glyph decoration */}
                         <div style={{ position:'absolute', top:14, left:22, fontSize:52, opacity:.07, userSelect:'none', fontFamily:'serif' }}>𓊹</div>
                         <div style={{ position:'absolute', bottom:10, right:24, fontSize:40, opacity:.05, userSelect:'none', fontFamily:'serif' }}>𓂀</div>
@@ -150,8 +150,8 @@ export default function PaymentCreate({ units = [], settings = {}, preUnit = nul
                                     <div key={i} style={{
                                         display:'flex', alignItems:'center', gap:6,
                                         padding:'5px 12px', borderRadius:99,
-                                        background: done ? `rgba(52,211,153,.15)` : active ? `rgba(201,161,74,.18)` : 'rgba(255,255,255,.06)',
-                                        border: `1px solid ${done ? 'rgba(52,211,153,.3)' : active ? `rgba(201,161,74,.4)` : 'rgba(255,255,255,.1)'}`,
+                                        background: done ? `rgba(52,211,153,.15)` : active ? `rgba(201,169,106,.18)` : 'rgba(255,255,255,.06)',
+                                        border: `1px solid ${done ? 'rgba(52,211,153,.3)' : active ? `rgba(201,169,106,.4)` : 'rgba(255,255,255,.1)'}`,
                                         fontSize:11, fontWeight:700,
                                         color: done ? '#34d399' : active ? G : 'rgba(255,255,255,.4)',
                                     }}>
@@ -211,7 +211,7 @@ export default function PaymentCreate({ units = [], settings = {}, preUnit = nul
                                         >
                                             <div style={{
                                                 width:52, height:52, borderRadius:'50%',
-                                                background: sel ? info.grad : dark ? 'rgba(220,201,163,.08)' : 'rgba(20,33,61,.06)',
+                                                background: sel ? info.grad : dark ? 'rgba(220,201,163,.08)' : 'rgba(14,58,46,.06)',
                                                 display:'flex', alignItems:'center', justifyContent:'center',
                                                 fontSize:26, transition:'all .2s',
                                                 boxShadow: sel ? `0 4px 16px ${info.color}40` : 'none',
@@ -232,13 +232,13 @@ export default function PaymentCreate({ units = [], settings = {}, preUnit = nul
                             <StepCard step={3} title="ابعت المبلغ على الرقم ده" dark={dark} cardBg={cardBg} cardBdr={cardBdr} txt={txt}>
                                 <div style={{
                                     position:'relative', overflow:'hidden',
-                                    background:'linear-gradient(135deg,#0a1628 0%,#0f2040 60%,#07111f 100%)',
+                                    background:'linear-gradient(135deg,#081F19 0%,#1F5A45 60%,#081F19 100%)',
                                     borderRadius:16, padding:'28px 24px', textAlign:'center',
                                     border:`1px solid ${G}33`,
-                                    boxShadow:`0 4px 32px rgba(0,0,0,.35), inset 0 0 0 1px rgba(201,161,74,.08)`,
+                                    boxShadow:`0 4px 32px rgba(0,0,0,.35), inset 0 0 0 1px rgba(201,169,106,.08)`,
                                 }}>
                                     {/* Paper lines */}
-                                    <div style={{ position:'absolute', inset:0, opacity:.03, backgroundImage:'repeating-linear-gradient(0deg,transparent,transparent 24px,rgba(201,161,74,1) 24px,rgba(201,161,74,1) 25px)', pointerEvents:'none' }}/>
+                                    <div style={{ position:'absolute', inset:0, opacity:.03, backgroundImage:'repeating-linear-gradient(0deg,transparent,transparent 24px,rgba(201,169,106,1) 24px,rgba(201,169,106,1) 25px)', pointerEvents:'none' }}/>
 
                                     {/* Method badge */}
                                     <div style={{ display:'inline-flex', alignItems:'center', gap:8, padding:'6px 16px', borderRadius:99, background:`${selectedInfo.color}20`, border:`1px solid ${selectedInfo.color}40`, marginBottom:16 }}>
@@ -252,7 +252,7 @@ export default function PaymentCreate({ units = [], settings = {}, preUnit = nul
                                         fontSize:32, fontWeight:900, color:G,
                                         letterSpacing:'.1em', fontFamily:'monospace',
                                         direction:'ltr', textAlign:'center',
-                                        textShadow:`0 0 20px rgba(201,161,74,.4)`,
+                                        textShadow:`0 0 20px rgba(201,169,106,.4)`,
                                     }}>
                                         {selectedInfo.number || '—'}
                                     </div>
@@ -264,8 +264,8 @@ export default function PaymentCreate({ units = [], settings = {}, preUnit = nul
                                     <button type="button" onClick={copyNumber} className="pay-copy"
                                         style={{
                                             marginTop:16, padding:'9px 24px', borderRadius:10,
-                                            background: copied ? 'rgba(52,211,153,.18)' : `rgba(201,161,74,.12)`,
-                                            border:`1px solid ${copied ? 'rgba(52,211,153,.4)' : `rgba(201,161,74,.3)`}`,
+                                            background: copied ? 'rgba(52,211,153,.18)' : `rgba(201,169,106,.12)`,
+                                            border:`1px solid ${copied ? 'rgba(52,211,153,.4)' : `rgba(201,169,106,.3)`}`,
                                             color: copied ? '#34d399' : G,
                                             fontSize:12, fontWeight:700, cursor:'pointer',
                                             fontFamily:"'Cairo',sans-serif", transition:'all .2s',
@@ -313,10 +313,10 @@ export default function PaymentCreate({ units = [], settings = {}, preUnit = nul
                             <label className="pay-upload" style={{
                                 display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center',
                                 gap:12, padding: preview ? '16px' : '36px 20px',
-                                border:`2px dashed ${errors.screenshot ? '#f87171' : preview ? G : dark ? 'rgba(201,161,74,.22)' : '#d4c9b0'}`,
+                                border:`2px dashed ${errors.screenshot ? '#f87171' : preview ? G : dark ? 'rgba(201,169,106,.22)' : '#d4c9b0'}`,
                                 borderRadius:14, cursor:'pointer',
                                 background: preview
-                                    ? dark ? 'rgba(201,161,74,.06)' : 'rgba(255,248,240,.8)'
+                                    ? dark ? 'rgba(201,169,106,.06)' : 'rgba(255,248,240,.8)'
                                     : dark ? 'rgba(255,255,255,.025)' : 'rgba(244,237,225,.6)',
                                 transition:'all .2s',
                             }}>
@@ -324,7 +324,7 @@ export default function PaymentCreate({ units = [], settings = {}, preUnit = nul
                                     <img src={preview} alt="preview" style={{ maxHeight:240, maxWidth:'100%', borderRadius:10, objectFit:'contain', boxShadow:'0 4px 24px rgba(0,0,0,.18)' }} />
                                 ) : (
                                     <>
-                                        <div style={{ width:64, height:64, borderRadius:'50%', background: dark ? 'rgba(201,161,74,.1)' : 'rgba(201,161,74,.08)', display:'flex', alignItems:'center', justifyContent:'center', fontSize:30 }}>📸</div>
+                                        <div style={{ width:64, height:64, borderRadius:'50%', background: dark ? 'rgba(201,169,106,.1)' : 'rgba(201,169,106,.08)', display:'flex', alignItems:'center', justifyContent:'center', fontSize:30 }}>📸</div>
                                         <div style={{ textAlign:'center' }}>
                                             <div style={{ fontSize:14, fontWeight:700, color:txt, marginBottom:4 }}>اضغط لرفع صورة الإيصال</div>
                                             <div style={{ fontSize:11, color:txtDim }}>JPG / PNG / WEBP — حد أقصى 5MB</div>
@@ -392,15 +392,15 @@ function StepCard({ step, title, dark, cardBg, cardBdr, txt, children }) {
             border:`1px solid ${cardBdr}`,
             boxShadow: dark
                 ? '0 4px 32px rgba(0,0,0,.35)'
-                : '0 2px 20px rgba(20,33,61,.07)',
+                : '0 2px 20px rgba(14,58,46,.07)',
         }}>
-            <div style={{ display:'flex', alignItems:'center', gap:12, marginBottom:18, paddingBottom:14, borderBottom:`1px solid ${dark ? 'rgba(201,161,74,.1)' : 'rgba(201,161,74,.15)'}` }}>
+            <div style={{ display:'flex', alignItems:'center', gap:12, marginBottom:18, paddingBottom:14, borderBottom:`1px solid ${dark ? 'rgba(201,169,106,.1)' : 'rgba(201,169,106,.15)'}` }}>
                 <div style={{
                     width:32, height:32, borderRadius:'50%', flexShrink:0,
                     background:`linear-gradient(135deg,${G},${O})`,
                     display:'flex', alignItems:'center', justifyContent:'center',
                     fontSize:13, fontWeight:900, color:'#fff',
-                    boxShadow:`0 2px 10px rgba(201,161,74,.35)`,
+                    boxShadow:`0 2px 10px rgba(201,169,106,.35)`,
                 }}>{step}</div>
                 <h3 style={{ fontSize:14, fontWeight:800, color:txt, margin:0 }}>{title}</h3>
             </div>

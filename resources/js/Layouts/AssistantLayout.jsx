@@ -3,13 +3,13 @@ import { Link, usePage, useForm } from '@inertiajs/react';
 
 /* ─── Brand Tokens ───────────────────────────────── */
 const C = {
-    navy:   '#14213D',
-    navyD:  '#0D1829',
-    navyL:  '#1e2e50',
-    orange: '#208ef4',
-    orangeD:'#0037af',
-    gold:   '#DCC9A3',
-    goldD:  '#c9b38e',
+    navy:   '#0E3A2E',
+    navyD:  '#081F19',
+    navyL:  '#1F5A45',
+    orange: '#C9A96A',
+    orangeD:'#8B5E3C',
+    gold:   '#E8DCC1',
+    goldD:  '#C9A96A',
 };
 
 /* ─── SVG Icons ──────────────────────────────────── */
@@ -98,14 +98,14 @@ function NavItem({ item, collapsed, dark }) {
                 overflow: 'hidden',
                 transition: 'all .2s ease',
                 color: isActive
-                    ? (dark ? '#fff' : C.orange)
-                    : (hovered ? (dark ? '#fff' : C.navy) : (dark ? 'rgba(220,201,163,.7)' : '#475569')),
+                    ? (dark ? '#fff' : C.navy)
+                    : (hovered ? (dark ? '#fff' : C.navy) : (dark ? 'rgba(232,220,193,.7)' : '#475569')),
                 background: isActive
                     ? (dark
-                        ? 'linear-gradient(270deg,rgba(244,124,32,.22) 0%,rgba(244,124,32,.08) 60%,transparent 100%)'
-                        : 'rgba(244,124,32,.09)')
+                        ? 'linear-gradient(270deg,rgba(31,90,69,.30) 0%,rgba(201,169,106,.10) 60%,transparent 100%)'
+                        : 'linear-gradient(270deg,rgba(31,90,69,.16) 0%,rgba(201,169,106,.05) 60%,transparent 100%)')
                     : hovered
-                        ? (dark ? 'rgba(255,255,255,.05)' : 'rgba(244,124,32,.06)')
+                        ? (dark ? 'rgba(255,255,255,.05)' : 'rgba(31,90,69,.06)')
                         : 'transparent',
             }}
             onMouseEnter={() => setHovered(true)}
@@ -115,12 +115,12 @@ function NavItem({ item, collapsed, dark }) {
                 <span style={{
                     position: 'absolute', right: 0, top: '15%', height: '70%',
                     width: 3, borderRadius: '2px 0 0 2px',
-                    background: C.orange,
-                    boxShadow: `0 0 10px ${C.orange}cc`,
+                    background: C.navyL,
+                    boxShadow: '0 0 10px rgba(31,90,69,.65)',
                 }} />
             )}
             <span style={{
-                color: isActive ? C.orange : (hovered ? C.orange : (dark ? 'rgba(220,201,163,.5)' : '#94a3b8')),
+                color: isActive ? C.navyL : (hovered ? C.navyL : (dark ? 'rgba(232,220,193,.5)' : '#94a3b8')),
                 transition: 'color .2s',
             }}>
                 <Icon name={item.icon} size={17} />
@@ -168,10 +168,10 @@ export default function AssistantLayout({ children, assistant, title }) {
     }, [mobileOpen]);
 
     // ألوان تفاعلية بناءً على الوضع الليلي المختار
-    const bgBody = darkMode ? '#0e1726' : '#f0f3fa';
-    const bgHeader = darkMode ? '#101c2c' : '#ffffff';
-    const textMain = darkMode ? '#f8f9fa' : '#14213D';
-    const borderTop = darkMode ? 'rgba(255,255,255,0.05)' : '#e8edf5';
+    const bgBody = darkMode ? '#141210' : '#F5EFDF';
+    const bgHeader = darkMode ? '#1C1916' : 'rgba(245,239,223,.94)';
+    const textMain = darkMode ? '#E8DCC1' : '#0E3A2E';
+    const borderTop = darkMode ? 'rgba(201,169,106,.16)' : 'rgba(201,169,106,.28)';
 
     return (
         <>
@@ -181,7 +181,7 @@ export default function AssistantLayout({ children, assistant, title }) {
                 body { font-family: 'Cairo', sans-serif; background: ${bgBody}; color: ${textMain}; transition: all 0.3s ease; }
                 ::-webkit-scrollbar { width: 5px; }
                 ::-webkit-scrollbar-track { background: rgba(0,0,0,.15); }
-                ::-webkit-scrollbar-thumb { background: rgba(244,124,32,.4); border-radius: 4px; }
+                ::-webkit-scrollbar-thumb { background: rgba(31,90,69,.6); border-radius: 4px; }
                 .sb-link { text-decoration: none !important; }
                 .assistant-shell {
                     position: relative;
@@ -194,11 +194,11 @@ export default function AssistantLayout({ children, assistant, title }) {
                     inset: 0;
                     z-index: 0;
                     pointer-events: none;
-                    opacity: ${darkMode ? '.22' : '.16'};
+                    opacity: ${darkMode ? '.24' : '.18'};
                     background-image:
-                        radial-gradient(circle at 18% 16%, rgba(47,188,212,.16), transparent 24%),
-                        radial-gradient(circle at 82% 76%, rgba(13,148,136,.13), transparent 28%),
-                        linear-gradient(135deg, transparent 0 48%, rgba(47,188,212,.07) 49%, transparent 51% 100%);
+                        linear-gradient(30deg, transparent 0 49%, rgba(201,169,106,.10) 50%, transparent 51% 100%),
+                        linear-gradient(150deg, transparent 0 49%, rgba(31,90,69,.08) 50%, transparent 51% 100%),
+                        repeating-linear-gradient(90deg, transparent 0 56px, rgba(201,169,106,.07) 57px, transparent 58px);
                 }
                 .assistant-ornaments {
                     position: fixed;
@@ -210,8 +210,8 @@ export default function AssistantLayout({ children, assistant, title }) {
                 .assistant-ornament {
                     position: absolute;
                     opacity: ${darkMode ? '.24' : '.14'};
-                    color: ${darkMode ? '#2DD4BF' : '#0D9488'};
-                    filter: drop-shadow(0 0 14px rgba(45,212,191,.22));
+                    color: ${darkMode ? '#D8B978' : '#1F5A45'};
+                    filter: drop-shadow(0 0 14px rgba(201,169,106,.22));
                 }
                 .assistant-ornament.diamond {
                     width: 18px;
@@ -232,6 +232,13 @@ export default function AssistantLayout({ children, assistant, title }) {
                     background: currentColor;
                     clip-path: polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%);
                 }
+                .assistant-ornament.pyramid {
+                    width: 128px;
+                    height: 82px;
+                    border: 2px solid currentColor;
+                    clip-path: polygon(50% 0, 100% 100%, 0 100%);
+                    border-radius: 0;
+                }
                 .sidebar-desktop::before {
                     content: '';
                     position: absolute;
@@ -239,9 +246,8 @@ export default function AssistantLayout({ children, assistant, title }) {
                     pointer-events: none;
                     opacity: ${darkMode ? '.11' : '.07'};
                     background-image:
-                        repeating-linear-gradient(135deg, transparent 0 22px, rgba(45,212,191,.65) 23px, transparent 24px),
-                        radial-gradient(circle at 28% 18%, rgba(220,201,163,.45), transparent 22%),
-                        radial-gradient(circle at 70% 86%, rgba(47,188,212,.5), transparent 24%);
+                        repeating-linear-gradient(135deg, transparent 0 22px, rgba(201,169,106,.42) 23px, transparent 24px),
+                        repeating-linear-gradient(45deg, transparent 0 26px, rgba(31,90,69,.32) 27px, transparent 28px);
                     z-index: 0;
                 }
                 .sidebar-desktop > * {
@@ -279,6 +285,10 @@ export default function AssistantLayout({ children, assistant, title }) {
                     to   { opacity: 1; transform: translateY(0); }
                 }
                 .page-anim { animation: fadeInUp .4s ease both; }
+                .assistant-shell .brand-cta {
+                    background: linear-gradient(135deg, #0E3A2E 0%, #1F5A45 58%, #8B5E3C 100%) !important;
+                    box-shadow: 0 10px 24px rgba(14,58,46,.22), 0 6px 18px rgba(139,94,60,.18) !important;
+                }
             `}</style>
 
             <div dir="rtl" className="assistant-shell" style={{ display: 'flex', minHeight: '100vh', position: 'relative' }}>
@@ -287,7 +297,7 @@ export default function AssistantLayout({ children, assistant, title }) {
                     <span className="assistant-ornament diamond" style={{ top: '28%', left: '34%' }} />
                     <span className="assistant-ornament star" style={{ top: '18%', right: '31%' }} />
                     <span className="assistant-ornament diamond" style={{ bottom: '18%', left: '20%' }} />
-                    <span className="assistant-ornament ring" style={{ bottom: '-42px', right: '22%' }} />
+                    <span className="assistant-ornament pyramid" style={{ bottom: '-14px', right: '16%' }} />
                     <span className="assistant-ornament star" style={{ bottom: '32%', right: '9%' }} />
                 </div>
 
@@ -303,11 +313,11 @@ export default function AssistantLayout({ children, assistant, title }) {
                         top: 0,
                         zIndex: 100,
                         background: darkMode
-                            ? 'linear-gradient(175deg,#060B16 0%,#0D1829 40%,#101D35 70%,#0A1422 100%)'
-                            : '#ffffff',
+                            ? 'linear-gradient(175deg,#0A0908 0%,#171310 35%,#1C1916 65%,#12100D 100%)'
+                            : 'linear-gradient(175deg,#ffffff 0%,#F9F4E7 40%,#F3ECD9 70%,#F5EFDF 100%)',
                         boxShadow: darkMode
                             ? '-4px 0 50px rgba(0,0,0,.35),inset 0 0 0 1px rgba(220,201,163,.08)'
-                            : '-1px 0 0 #e2e8f0, -4px 0 24px rgba(20,33,61,.06)',
+                            : '-1px 0 0 rgba(14,58,46,.1), -4px 0 24px rgba(14,58,46,.08)',
                         display: 'flex',
                         flexDirection: 'column',
                         transition: 'width .3s cubic-bezier(.4,0,.2,1), background .3s ease, box-shadow .3s ease',
@@ -326,17 +336,18 @@ export default function AssistantLayout({ children, assistant, title }) {
                         {!collapsed && (
                             <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
                                 <div style={{
-                                    width: 38, height: 38, borderRadius: 10,
-                                    background: `linear-gradient(135deg, ${C.orange}, ${C.orangeD})`,
-                                    boxShadow: `0 0 0 3px rgba(244,124,32,.2), 0 4px 12px rgba(244,124,32,.3)`,
+                                    width: 68, height: 40, borderRadius: 8,
+                                    background: 'transparent',
+                                    boxShadow: '0 0 0 3px rgba(201,169,106,.24), 0 4px 12px rgba(14,58,46,.26)',
                                     display: 'flex', alignItems: 'center', justifyContent: 'center',
                                     flexShrink: 0,
                                     overflow: 'hidden',
                                 }}>
-                                    <img src="/images/منصور لوجو.png" alt="Logo" style={{ width: '220%', height: '100%', objectFit: 'contain', objectPosition: 'left center' }} />
+                                    <img src="/images/ahmed-elshaarawy-logo-transparent.png" alt="أحمد الشعراوي" style={{ width: '100%', height: '100%', objectFit: 'contain', display: 'block', filter: darkMode ? 'none' : 'invert(1)' }} />
                                 </div>
                                 <div>
-                                    <div style={{ color: darkMode ? C.gold : C.navy, fontSize: 13, fontWeight: 700, lineHeight: 1.2 }}>السكرتارية</div>
+                                    <div style={{ color: darkMode ? C.gold : C.navy, fontSize: 13, fontWeight: 800, lineHeight: 1.2 }}>أحمد الشعراوي</div>
+                                    <div style={{ color: darkMode ? 'rgba(232,220,193,.55)' : '#6B6255', fontSize: 10, marginTop: 2 }}>السكرتارية</div>
                                 </div>
                             </div>
                         )}
@@ -456,13 +467,13 @@ export default function AssistantLayout({ children, assistant, title }) {
                 {/* ── Mobile Header ── */}
                 <header className="mobile-header" style={{
                     position: 'fixed', top: 0, left: 0, right: 0, zIndex: 420,
-                    background: darkMode ? '#101c2c' : C.navy,
+                    background: darkMode ? '#1C1916' : C.navy,
                     boxShadow: '0 4px 20px rgba(0,0,0,.3)',
                     display: 'flex', alignItems: 'center', justifyContent: 'space-between',
                     padding: '14px 20px',
                     transition: 'background 0.3s ease'
                 }}>
-                    <span style={{ color: C.gold, fontSize: 16, fontWeight: 700 }}>السكرتارية</span>
+                    <span style={{ color: C.gold, fontSize: 16, fontWeight: 800 }}>أحمد الشعراوي</span>
                     <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
                         <button 
                             type="button"
@@ -513,7 +524,7 @@ export default function AssistantLayout({ children, assistant, title }) {
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'space-between',
-                        boxShadow: '0 2px 12px rgba(20,33,61,.06)',
+                        boxShadow: '0 2px 12px rgba(14,58,46,.08)',
                         transition: 'all 0.3s ease'
                     }} className="assistant-topbar">
                         <h1 style={{ fontSize: 18, fontWeight: 800, color: textMain, margin: 0 }}>
@@ -527,7 +538,7 @@ export default function AssistantLayout({ children, assistant, title }) {
                                     border: 'none',
                                     width: 36, height: 36, borderRadius: '50%',
                                     display: 'flex', alignItems: 'center', justifyContent: 'center',
-                                    fontSize: 16, cursor: 'pointer', color: darkMode ? '#F47C20' : '#475569', transition: '0.2s',
+                                    fontSize: 16, cursor: 'pointer', color: darkMode ? C.goldD : '#475569', transition: '0.2s',
                                     boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
                                     background: darkMode ? 'rgba(255,255,255,0.1)' : '#f1f5f9'
                                 }}
@@ -570,8 +581,8 @@ function LogoRing() {
             boxShadow: '0 2px 8px rgba(244,124,32,0.25)'
         }}>
             <img 
-                src="/images/منصور لوجو.png" 
-                alt="Teacher Logo" 
+                src="/images/ahmed-elshaarawy-logo-transparent.png"
+                alt="أحمد الشعراوي"
                 style={{ width: '220%', height: '100%', objectFit: 'contain', objectPosition: 'left center' }}
             />
         </div>

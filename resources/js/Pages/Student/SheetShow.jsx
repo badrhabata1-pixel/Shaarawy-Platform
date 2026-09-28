@@ -1,10 +1,10 @@
-﻿import { Head, Link, useForm } from '@inertiajs/react';
+import { Head, Link, useForm } from '@inertiajs/react';
 import StudentLayout from '@/Layouts/StudentLayout';
 import { useState } from 'react';
 import { teacherReactionImage } from '@/Utils/teacherReaction';
 
-const O = '#0D9488';
-const N = '#14213D';
+const O = '#1F5A45';
+const N = '#0E3A2E';
 
 export default function SheetShow({ sheet, existing_answer }) {
     const answered = !!existing_answer;
@@ -37,7 +37,7 @@ export default function SheetShow({ sheet, existing_answer }) {
 
             {/* Header */}
             <div className="fu" style={{
-                background: `linear-gradient(135deg,${N} 0%,#1e3a6e 100%)`,
+                background: `linear-gradient(135deg,${N} 0%,#1F5A45 100%)`,
                 borderRadius: 20, padding: '1.75rem 2rem', marginBottom: '1.5rem',
                 display: 'flex', alignItems: 'center', justifyContent: 'space-between',
                 flexWrap: 'wrap', gap: 12,
@@ -66,7 +66,7 @@ export default function SheetShow({ sheet, existing_answer }) {
                     )}
                     {sheet.has_pdf && (
                         <a href={sheet.pdf_url} target="_blank" rel="noreferrer" style={{
-                            background: `linear-gradient(135deg,${O},#e8641a)`,
+                            background: `linear-gradient(135deg,${O},#8B5E3C)`,
                             color: '#fff', borderRadius: 10, padding: '8px 18px',
                             fontSize: 12, fontWeight: 700, textDecoration: 'none',
                         }}>
@@ -93,16 +93,16 @@ export default function SheetShow({ sheet, existing_answer }) {
             {sheet.questions.length === 0 && (
                 <div className="fu" style={{
                     textAlign: 'center', padding: '4rem 2rem',
-                    background: '#fff', borderRadius: 20,
-                    color: '#94A3B8', fontSize: 15,
-                    boxShadow: '0 2px 20px rgba(20,33,61,.06)',
+                    background: 'rgba(255,252,245,.30)', borderRadius: 20,
+                    color: '#A89A78', fontSize: 15,
+                    boxShadow: '0 2px 20px rgba(14,58,46,.06)',
                 }}>
                     <div style={{ fontSize: 40, marginBottom: 12 }}>📋</div>
                     هذا الشيت لا يحتوي على أسئلة بعد.
                     {sheet.has_pdf && (
                         <div style={{ marginTop: 12 }}>
                             <a href={sheet.pdf_url} target="_blank" rel="noreferrer" style={{
-                                background: `linear-gradient(135deg,${O},#e8641a)`,
+                                background: `linear-gradient(135deg,${O},#8B5E3C)`,
                                 color: '#fff', borderRadius: 10, padding: '10px 24px',
                                 fontSize: 14, fontWeight: 700, textDecoration: 'none', display: 'inline-block',
                             }}>
@@ -141,7 +141,7 @@ export default function SheetShow({ sheet, existing_answer }) {
                                 disabled={processing}
                                 className="submit-btn"
                                 style={{
-                                    background: `linear-gradient(135deg,${O},#d96a12)`,
+                                    background: `linear-gradient(135deg,${O},#8B5E3C)`,
                                     color: '#fff', border: 'none', borderRadius: 14,
                                     padding: '14px 48px', fontSize: 16, fontWeight: 800,
                                     cursor: processing ? 'not-allowed' : 'pointer',
@@ -152,7 +152,7 @@ export default function SheetShow({ sheet, existing_answer }) {
                             >
                                 {processing ? '⏳ جاري الإرسال...' : '✅ تسليم الإجابات'}
                             </button>
-                            <p style={{ color: '#94A3B8', fontSize: 12, marginTop: 10 }}>
+                            <p style={{ color: '#A89A78', fontSize: 12, marginTop: 10 }}>
                                 بعد التسليم لن تتمكن من التعديل
                             </p>
                         </div>
@@ -201,7 +201,7 @@ function ResultBanner({ answer, totalEarned, totalMarks }) {
                     <div style={{ fontSize: 28, fontWeight: 900, color: isPending ? '#d97706' : (pct >= 50 ? '#059669' : '#dc2626') }}>
                         {totalEarned} / {totalMarks}
                     </div>
-                    <div style={{ fontSize: 12, color: '#64748b' }}>الدرجة</div>
+                    <div style={{ fontSize: 12, color: '#6B6255' }}>الدرجة</div>
                 </div>
             )}
         </div>
@@ -214,10 +214,10 @@ function QuestionCard({ question, index, answered, studentAnswer, marksAwarded, 
 
     return (
         <div className="fu" style={{
-            background: '#fff', borderRadius: 18,
-            border: '1px solid #E2E8F0',
+            background: 'rgba(255,252,245,.30)', borderRadius: 18,
+            border: '1px solid #E3D9C4',
             borderRight: `4px solid ${O}`,
-            boxShadow: '0 2px 16px rgba(20,33,61,.05)',
+            boxShadow: '0 2px 16px rgba(14,58,46,.05)',
             overflow: 'hidden',
             animationDelay: `${index * 0.06}s`,
         }}>
@@ -226,7 +226,7 @@ function QuestionCard({ question, index, answered, studentAnswer, marksAwarded, 
                 display: 'flex', alignItems: 'center', gap: 12,
                 padding: '12px 20px',
                 background: `${O}08`,
-                borderBottom: '1px solid #F1F5F9',
+                borderBottom: '1px solid #F7F3E9',
             }}>
                 <span style={{
                     width: 30, height: 30, borderRadius: '50%',
@@ -234,7 +234,7 @@ function QuestionCard({ question, index, answered, studentAnswer, marksAwarded, 
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
                     fontSize: 13, fontWeight: 900, flexShrink: 0,
                 }}>{index + 1}</span>
-                <span style={{ fontSize: 13, fontWeight: 700, color: '#64748b', flex: 1 }}>
+                <span style={{ fontSize: 13, fontWeight: 700, color: '#6B6255', flex: 1 }}>
                     {isMcq ? '🔵 اختياري' : '✏️ مقالي'}
                     {' · '}
                     <span style={{ color: O }}>({question.marks} {question.marks === 1 ? 'درجة' : 'درجات'})</span>
@@ -285,8 +285,8 @@ function QuestionCard({ question, index, answered, studentAnswer, marksAwarded, 
                             const isCorrect  = answered && question.correct_answer === choice;
                             const isWrong    = answered && isSelected && !isCorrect;
 
-                            let borderColor = '#E2E8F0';
-                            let bg = '#F8FAFC';
+                            let borderColor = '#E3D9C4';
+                            let bg = '#F7F3E9';
                             let textColor = '#334155';
 
                             if (answered) {
@@ -313,12 +313,12 @@ function QuestionCard({ question, index, answered, studentAnswer, marksAwarded, 
                                 >
                                     <span style={{
                                         width: 20, height: 20, borderRadius: '50%', flexShrink: 0,
-                                        border: `2px solid ${isSelected || isCorrect ? borderColor : '#CBD5E1'}`,
+                                        border: `2px solid ${isSelected || isCorrect ? borderColor : '#CFC2A6'}`,
                                         background: isSelected || isCorrect ? borderColor : 'transparent',
                                         display: 'flex', alignItems: 'center', justifyContent: 'center',
                                     }}>
                                         {(isSelected || isCorrect) && (
-                                            <span style={{ width: 8, height: 8, borderRadius: '50%', background: '#fff', display: 'block' }} />
+                                            <span style={{ width: 8, height: 8, borderRadius: '50%', background: 'rgba(255,252,245,.30)', display: 'block' }} />
                                         )}
                                     </span>
                                     {choice}
@@ -335,10 +335,10 @@ function QuestionCard({ question, index, answered, studentAnswer, marksAwarded, 
                     <div>
                         {answered ? (
                             <div style={{
-                                background: '#F8FAFC', borderRadius: 12,
-                                border: '1.5px solid #E2E8F0',
+                                background: '#F7F3E9', borderRadius: 12,
+                                border: '1.5px solid #E3D9C4',
                                 padding: '12px 16px', fontSize: 14,
-                                color: studentAnswer ? N : '#94A3B8',
+                                color: studentAnswer ? N : '#A89A78',
                                 lineHeight: 1.7, minHeight: 60,
                                 whiteSpace: 'pre-wrap',
                             }}>
@@ -352,7 +352,7 @@ function QuestionCard({ question, index, answered, studentAnswer, marksAwarded, 
                                 rows={4}
                                 style={{
                                     width: '100%', padding: '12px 16px', borderRadius: 12,
-                                    border: '1.5px solid #E2E8F0', background: '#F8FAFC',
+                                    border: '1.5px solid #E3D9C4', background: '#F7F3E9',
                                     fontSize: 14, color: N, lineHeight: 1.7,
                                     resize: 'vertical', outline: 'none',
                                     fontFamily: 'Cairo, sans-serif', boxSizing: 'border-box',
@@ -392,5 +392,3 @@ function MetaBadge({ icon, label }) {
         </div>
     );
 }
-
-
