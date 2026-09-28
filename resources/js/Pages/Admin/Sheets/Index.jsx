@@ -41,19 +41,19 @@ export default function Index({ sheets, lessons }) {
                         : <Badge label="مدفوع" color="orange" />,
                 },
                 {
-                    key: 'pdf_file',
+                    key: 'file_path',
                     label: 'ملف PDF',
                     center: true,
-                    render: row => row.pdf_file
+                    render: row => row.file_path
                         ? (
                             <a
-                                href={`/storage/${row.pdf_file}`}
+                                href={`/storage/${row.file_path}`}
                                 target="_blank"
                                 rel="noreferrer"
                                 className="inline-flex items-center gap-1 px-3 py-1 rounded-lg text-xs font-bold"
-                                style={{ background: '#2fbcd418', color: '#2fbcd4' }}
+                                style={{ background: '#05966918', color: '#059669' }}
                             >
-                                📄 عرض
+                                ✅ تم الرفع
                             </a>
                         )
                         : <span className="text-gray-300 text-xs">لا يوجد</span>,
