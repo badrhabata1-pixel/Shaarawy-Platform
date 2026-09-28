@@ -51,18 +51,18 @@
 }
 
 /* ════════════════════════════════════════════════════
-   ADMIN BRAND IDENTITY — التعليم الجاد (المدرس)
+   ADMIN BRAND IDENTITY — عظمة تاريخية (لوحة تحكم المدرس)
    ثابتة عبر الوضع الفاتح والداكن.
-   Royal Blue (primary) / Teal (secondary) / Lime (accent)
+   الأخضر التاريخي الداكن (primary) / الذهب الأثري (secondary) / البني التراثي (accent)
 ════════════════════════════════════════════════════ */
 :root {
-    --a-primary:         #1b3a60;
-    --a-primary-lt:       #204080;
-    --a-primary-dk:       #12283f;
-    --a-secondary:        #2fbcd4;
-    --a-secondary-dk:     #009688;
-    --a-accent:           #8dc63f;
-    --a-accent-lt:        #a4db32;
+    --a-primary:         #0E3A2E;
+    --a-primary-lt:       #1F5A45;
+    --a-primary-dk:       #081F19;
+    --a-secondary:        #C9A96A;
+    --a-secondary-dk:     #8B5E3C;
+    --a-accent:           #D8B978;
+    --a-accent-lt:        #E8DCC1;
 }
 
 /* ════════════════════════════════════════════════════
@@ -73,68 +73,68 @@
 ════════════════════════════════════════════════════ */
 :root,
 [data-theme="light"] {
-    --a-bg:              #f4f6f9;
+    --a-bg:              #F5EFDF;
     --a-card:            #ffffff;
-    --a-card-2:          #f4f6f9;
+    --a-card-2:          #F5EFDF;
     --a-card-3:          rgba(255,255,255,0.7);
-    --a-text:            #1b3a60;
-    --a-text-2:          #374151;
-    --a-text-3:          #6b7280;
-    --a-text-4:          #9ca3af;
-    --a-border:          rgba(47,188,212,0.22);
-    --a-border-2:        rgba(47,188,212,0.12);
-    --a-topbar:          rgba(244,246,249,0.92);
-    --a-topbar-b:        rgba(47,188,212,0.2);
-    --a-input:           #f4f6f9;
-    --a-input-b:         rgba(47,188,212,0.4);
-    --a-thead:           #1b3a60;
-    --a-thead-text:      #e6f7fa;
-    --a-row-hover:       rgba(47,188,212,0.06);
+    --a-text:            #0E3A2E;
+    --a-text-2:          #4a4238;
+    --a-text-3:          #6b6255;
+    --a-text-4:          #a89f8d;
+    --a-border:          rgba(201,169,106,0.3);
+    --a-border-2:        rgba(201,169,106,0.15);
+    --a-topbar:          rgba(245,239,223,0.92);
+    --a-topbar-b:        rgba(201,169,106,0.25);
+    --a-input:           #F5EFDF;
+    --a-input-b:         rgba(201,169,106,0.45);
+    --a-thead:           #0E3A2E;
+    --a-thead-text:      #F3ECDA;
+    --a-row-hover:       rgba(201,169,106,0.08);
     --a-footer:          rgba(255,255,255,0.5);
-    --a-shadow:          rgba(27,58,96,0.06);
-    --a-shadow-lg:       rgba(27,58,96,0.12);
-    --a-cancel-bg:       #f9fafb;
-    --a-cancel-text:     #6b7280;
-    --a-cancel-border:   #e5e7eb;
-    --a-badge-navy-bg:   rgba(27,58,96,0.07);
-    --a-badge-navy-text: #1b3a60;
-    --a-chart-grid:      rgba(47,188,212,0.25);
-    --a-chart-label:     rgba(156,163,175,0.85);
-    --a-donut-track:     rgba(47,188,212,0.15);
+    --a-shadow:          rgba(14,58,46,0.08);
+    --a-shadow-lg:       rgba(14,58,46,0.14);
+    --a-cancel-bg:       #F7F3E9;
+    --a-cancel-text:     #6b6255;
+    --a-cancel-border:   #E3D9C4;
+    --a-badge-navy-bg:   rgba(14,58,46,0.08);
+    --a-badge-navy-text: #0E3A2E;
+    --a-chart-grid:      rgba(201,169,106,0.28);
+    --a-chart-label:     rgba(139,124,102,0.85);
+    --a-donut-track:     rgba(201,169,106,0.16);
     --a-search-bg:       rgba(255,255,255,0.7);
     --a-empty-opacity:   0.2;
 }
 
 [data-theme="dark"] {
-    --a-bg:              #080d18;
-    --a-card:            #0f1625;
-    --a-card-2:          #141c2e;
-    --a-card-3:          rgba(8,13,24,0.9);
-    --a-text:            #e2e8f0;
-    --a-text-2:          #cbd5e1;
-    --a-text-3:          #94a3b8;
-    --a-text-4:          #64748b;
-    --a-border:          rgba(255,255,255,0.08);
-    --a-border-2:        rgba(255,255,255,0.04);
-    --a-topbar:          rgba(8,13,24,0.97);
-    --a-topbar-b:        rgba(255,255,255,0.07);
-    --a-input:           #141c2e;
-    --a-input-b:         rgba(255,255,255,0.12);
-    --a-thead:           #06090f;
-    --a-thead-text:      #2fbcd4;
-    --a-row-hover:       rgba(47,188,212,0.08);
-    --a-footer:          rgba(8,13,24,0.8);
-    --a-shadow:          rgba(0,0,0,0.25);
-    --a-shadow-lg:       rgba(0,0,0,0.4);
-    --a-cancel-bg:       #141c2e;
-    --a-cancel-text:     #94a3b8;
-    --a-cancel-border:   rgba(255,255,255,0.08);
-    --a-badge-navy-bg:   rgba(139,170,207,0.12);
-    --a-badge-navy-text: #8baacf;
-    --a-chart-grid:      rgba(255,255,255,0.06);
-    --a-chart-label:     rgba(100,116,139,0.8);
-    --a-donut-track:     rgba(255,255,255,0.07);
-    --a-search-bg:       rgba(20,28,46,0.9);
+    --a-bg:              #141210;
+    --a-card:            #1C1916;
+    --a-card-2:          #221E19;
+    --a-card-3:          rgba(20,18,16,0.9);
+    --a-text:            #E8DCC1;
+    --a-text-2:          #D8CBA8;
+    --a-text-3:          #A89A78;
+    --a-text-4:          #7A6F58;
+    --a-border:          rgba(201,169,106,0.18);
+    --a-border-2:        rgba(201,169,106,0.09);
+    --a-topbar:          rgba(20,18,16,0.97);
+    --a-topbar-b:        rgba(201,169,106,0.14);
+    --a-input:           #221E19;
+    --a-input-b:         rgba(201,169,106,0.22);
+    --a-thead:           #0E3A2E;
+    --a-thead-text:      #C9A96A;
+    --a-row-hover:       rgba(201,169,106,0.1);
+    --a-footer:          rgba(20,18,16,0.8);
+    --a-shadow:          rgba(0,0,0,0.35);
+    --a-shadow-lg:       rgba(0,0,0,0.5);
+    --a-cancel-bg:       #221E19;
+    --a-cancel-text:     #A89A78;
+    --a-cancel-border:   rgba(201,169,106,0.16);
+    --a-badge-navy-bg:   rgba(14,58,46,0.35);
+    --a-badge-navy-text: #D8B978;
+    --a-chart-grid:      rgba(201,169,106,0.12);
+    --a-chart-label:     rgba(168,154,120,0.8);
+    --a-donut-track:     rgba(201,169,106,0.12);
+    --a-search-bg:       rgba(28,25,22,0.9);
     --a-empty-opacity:   0.08;
 }
 

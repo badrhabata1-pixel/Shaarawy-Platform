@@ -12,18 +12,18 @@ export default function Index({ receipts = [] }) {
             <div className="max-w-6xl mx-auto space-y-6 text-right" dir="rtl" style={{ fontFamily: 'Cairo, sans-serif' }}>
                 <div className="flex justify-between items-center pb-4 border-b dark:border-gray-800 flex-wrap gap-4">
                     <div>
-                        <h2 className="text-xl font-black text-[#1b3a60] dark:text-[#f8f9fa]">طلبات الدفع المقبولة</h2>
+                        <h2 className="text-xl font-black text-[#0E3A2E] dark:text-[#f8f9fa]">طلبات الدفع المقبولة</h2>
                         <p className="text-xs text-gray-500 mt-1">
                             هنا يظهر أرشيف طلبات الدفع التي تم قبولها فقط. المراجعة والقبول والرفض تتم من صفحة طلبات الدفع.
                         </p>
                     </div>
-                    <span className="bg-[#2fbcd4]/10 text-[#2fbcd4] px-4 py-1.5 rounded-full text-xs font-bold border border-[#2fbcd4]/30">
+                    <span className="bg-[#1F5A45]/10 text-[#1F5A45] px-4 py-1.5 rounded-full text-xs font-bold border border-[#1F5A45]/30">
                         {receipts.length} طلب دفع مقبول
                     </span>
                 </div>
 
                 {receipts.length === 0 ? (
-                    <div className="bg-white dark:bg-[#152238] rounded-2xl p-16 text-center border border-gray-100 dark:border-gray-800 shadow-md">
+                    <div className="bg-white dark:bg-[#1C1916] rounded-2xl p-16 text-center border border-gray-100 dark:border-gray-800 shadow-md">
                         <span className="text-5xl block mb-4">🧾</span>
                         <h3 className="text-lg font-bold text-gray-500">لا توجد طلبات دفع مقبولة حتى الآن</h3>
                     </div>
@@ -56,7 +56,7 @@ export default function Index({ receipts = [] }) {
 
 function ReceiptCard({ receipt, onImageClick }) {
     return (
-        <div className="bg-white dark:bg-[#152238] p-5 rounded-2xl shadow-md border border-gray-100 dark:border-gray-800 space-y-4 flex flex-col transition-all duration-300 hover:shadow-lg">
+        <div className="bg-white dark:bg-[#1C1916] p-5 rounded-2xl shadow-md border border-gray-100 dark:border-gray-800 space-y-4 flex flex-col transition-all duration-300 hover:shadow-lg">
             <div
                 className="aspect-[4/3] rounded-xl overflow-hidden bg-gray-50 border relative group cursor-pointer"
                 onClick={() => onImageClick(receipt.image_url)}
@@ -98,8 +98,8 @@ function InfoRow({ label, value, strong = false, ltr = false, accent = false, mu
             <span className="text-gray-400 font-bold shrink-0">{label}</span>
             <span
                 className={[
-                    strong ? 'font-black text-[#1b3a60] dark:text-[#f8f9fa]' : 'font-bold text-gray-500 dark:text-gray-300',
-                    accent ? 'text-[#2fbcd4]' : '',
+                    strong ? 'font-black text-[#0E3A2E] dark:text-[#f8f9fa]' : 'font-bold text-gray-500 dark:text-gray-300',
+                    accent ? 'text-[#1F5A45]' : '',
                     muted ? 'text-gray-400' : '',
                 ].join(' ')}
                 style={{ direction: ltr ? 'ltr' : 'rtl' }}

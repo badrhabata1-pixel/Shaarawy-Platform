@@ -19,8 +19,8 @@ export function AdminField({ label, name, type = 'text', value, onChange, error,
     };
 
     const focusStyle = (e) => {
-        e.target.style.borderColor = error ? '#ef4444' : '#2fbcd4';
-        e.target.style.boxShadow = `0 0 0 3px ${error ? '#ef444418' : '#2fbcd418'}`;
+        e.target.style.borderColor = error ? '#ef4444' : '#1F5A45';
+        e.target.style.boxShadow = `0 0 0 3px ${error ? '#ef444418' : '#1F5A4518'}`;
     };
     const blurStyle = (e) => {
         e.target.style.borderColor = error ? '#ef4444' : 'var(--a-input-b)';
@@ -72,11 +72,11 @@ export function AdminField({ label, name, type = 'text', value, onChange, error,
                         <div className="relative">
                             <input type="checkbox" className="sr-only" checked={!!value} onChange={e => onChange(e.target.checked)} />
                             <div className="w-12 h-6 rounded-full transition-colors"
-                                 style={{ background: value ? '#2fbcd4' : 'var(--a-border)' }} />
+                                 style={{ background: value ? '#1F5A45' : 'var(--a-border)' }} />
                             <div className="absolute top-0.5 right-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform"
                                  style={{ transform: value ? 'translateX(-24px)' : 'translateX(0)' }} />
                         </div>
-                        <span className="text-sm font-semibold" style={{ color: value ? '#2fbcd4' : 'var(--a-text-4)' }}>
+                        <span className="text-sm font-semibold" style={{ color: value ? '#1F5A45' : 'var(--a-text-4)' }}>
                             {value ? 'نعم' : 'لا'}
                         </span>
                     </label>
@@ -183,8 +183,8 @@ export default function AdminForm({ title, layoutTitle, description, cancelLink,
                         <button type="submit" disabled={processing}
                                 className="flex-1 py-3 rounded-2xl text-white font-bold text-sm"
                                 style={{
-                                    background: processing ? 'rgba(47,188,212,0.5)' : 'linear-gradient(135deg, #2fbcd4, #009688)',
-                                    boxShadow: processing ? 'none' : '0 4px 14px rgba(47,188,212,0.35)',
+                                    background: processing ? 'rgba(31,90,69,0.5)' : 'linear-gradient(135deg, #1F5A45, #8B5E3C)',
+                                    boxShadow: processing ? 'none' : '0 4px 14px rgba(31,90,69,0.35)',
                                 }}>
                             {processing ? 'جاري الحفظ...' : (submitLabel || 'حفظ')}
                         </button>

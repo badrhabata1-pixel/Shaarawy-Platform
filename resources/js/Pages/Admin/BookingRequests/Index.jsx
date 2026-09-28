@@ -51,7 +51,7 @@ function DetailSection({ icon, title, children, dark }) {
         <div className="mb-5">
             <div className="flex items-center gap-2 mb-1.5">
                 <span style={{ fontSize: 15 }}>{icon}</span>
-                <span style={{ color: dark ? '#94a3b8' : '#1b3a60', fontSize: '0.8rem', fontWeight: 800, letterSpacing: '.02em' }}>{title}</span>
+                <span style={{ color: dark ? '#94a3b8' : '#0E3A2E', fontSize: '0.8rem', fontWeight: 800, letterSpacing: '.02em' }}>{title}</span>
             </div>
             <div className="rounded-xl px-4" style={{ background: dark ? 'var(--a-card-2)' : '#f8fafc' }}>
                 {children}
@@ -81,7 +81,7 @@ function BookingDetailModal({ booking, dark, onClose }) {
                     <div className="flex items-center gap-3">
                         <div
                             className="w-11 h-11 rounded-full flex items-center justify-center text-lg font-bold flex-shrink-0"
-                            style={{ background: dark ? 'rgba(226,232,240,0.15)' : '#1b3a60', color: '#94a3b8' }}
+                            style={{ background: dark ? 'rgba(226,232,240,0.15)' : '#0E3A2E', color: '#94a3b8' }}
                         >
                             {b.name?.charAt(0) || '؟'}
                         </div>
@@ -211,9 +211,9 @@ export default function Index({ bookings }) {
                                 onClick={() => setActiveFilter(f.key)}
                                 className="px-4 py-2 rounded-xl text-sm font-bold transition"
                                 style={{
-                                    background: active ? '#2fbcd4' : (dark ? 'var(--a-card-2)' : '#f1f5f9'),
-                                    color: active ? '#04222b' : 'var(--a-text-3)',
-                                    border: `1px solid ${active ? '#2fbcd4' : 'var(--a-border)'}`,
+                                    background: active ? '#1F5A45' : (dark ? 'var(--a-card-2)' : '#f1f5f9'),
+                                    color: active ? '#1A1A1A' : 'var(--a-text-3)',
+                                    border: `1px solid ${active ? '#1F5A45' : 'var(--a-border)'}`,
                                     cursor: 'pointer',
                                 }}
                             >
@@ -247,7 +247,7 @@ export default function Index({ bookings }) {
                                 className="rounded-2xl px-5 py-4 flex items-center justify-between gap-4 flex-wrap"
                                 style={{
                                     background: 'var(--a-card)',
-                                    boxShadow: dark ? '0 2px 12px rgba(0,0,0,0.3)' : '0 2px 12px rgba(27,58,96,0.07)',
+                                    boxShadow: dark ? '0 2px 12px rgba(0,0,0,0.3)' : '0 2px 12px rgba(14,58,46,0.07)',
                                     border: '1px solid var(--a-border)',
                                 }}
                             >
@@ -255,7 +255,7 @@ export default function Index({ bookings }) {
                                 <div className="flex items-center gap-4 min-w-0">
                                     <div
                                         className="w-11 h-11 rounded-full flex items-center justify-center text-lg font-bold flex-shrink-0"
-                                        style={{ background: dark ? 'rgba(226,232,240,0.15)' : '#1b3a60', color: '#94a3b8' }}
+                                        style={{ background: dark ? 'rgba(226,232,240,0.15)' : '#0E3A2E', color: '#94a3b8' }}
                                     >
                                         {b.name?.charAt(0) || '؟'}
                                     </div>
@@ -287,7 +287,7 @@ export default function Index({ bookings }) {
                                     <button
                                         onClick={() => setSelected(b)}
                                         className="px-4 py-2 rounded-xl text-sm font-bold transition hover:opacity-80 flex items-center gap-1.5"
-                                        style={{ background: dark ? 'rgba(47,188,212,0.14)' : 'rgba(47,188,212,0.1)', color: '#2fbcd4', border: 'none', cursor: 'pointer' }}
+                                        style={{ background: dark ? 'rgba(31,90,69,0.14)' : 'rgba(31,90,69,0.1)', color: '#1F5A45', border: 'none', cursor: 'pointer' }}
                                     >
                                         👁 عرض التفاصيل
                                     </button>

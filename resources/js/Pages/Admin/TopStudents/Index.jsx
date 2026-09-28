@@ -42,7 +42,7 @@ export default function Index({ topStudents, students }) {
                             {/* Student Select */}
                             <div>
                                 <label className="block text-sm font-bold mb-1" style={{ color: 'var(--a-text)' }}>
-                                    الطالب <span style={{ color: '#2fbcd4' }}>*</span>
+                                    الطالب <span style={{ color: '#1F5A45' }}>*</span>
                                 </label>
                                 <select
                                     value={data.student_id}
@@ -68,7 +68,7 @@ export default function Index({ topStudents, students }) {
                             {/* Rank */}
                             <div>
                                 <label className="block text-sm font-bold mb-1" style={{ color: 'var(--a-text)' }}>
-                                    الترتيب <span style={{ color: '#2fbcd4' }}>*</span>
+                                    الترتيب <span style={{ color: '#1F5A45' }}>*</span>
                                 </label>
                                 <input
                                     type="number"
@@ -113,7 +113,7 @@ export default function Index({ topStudents, students }) {
                             type="submit"
                             disabled={processing}
                             className="px-6 py-2 rounded-xl text-sm font-bold transition"
-                            style={{ background: '#2fbcd4', color: '#fff', opacity: processing ? 0.7 : 1 }}
+                            style={{ background: '#1F5A45', color: '#fff', opacity: processing ? 0.7 : 1 }}
                         >
                             {processing ? 'جاري الإضافة...' : '+ إضافة'}
                         </button>
@@ -158,7 +158,7 @@ export default function Index({ topStudents, students }) {
                                         <td className="px-6 py-4">
                                             <span
                                                 className="w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold inline-flex"
-                                                style={{ background: '#2fbcd418', color: '#2fbcd4' }}
+                                                style={{ background: '#1F5A4518', color: '#1F5A45' }}
                                             >
                                                 {ts.rank}
                                             </span>
@@ -167,7 +167,7 @@ export default function Index({ topStudents, students }) {
                                             <div className="flex items-center gap-3">
                                                 <div
                                                     className="w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold"
-                                                    style={{ background: '#1b3a60', color: '#94a3b8' }}
+                                                    style={{ background: '#0E3A2E', color: '#94a3b8' }}
                                                 >
                                                     {ts.student?.name?.charAt(0) || '؟'}
                                                 </div>

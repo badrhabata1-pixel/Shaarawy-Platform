@@ -16,7 +16,7 @@ export default function Index({ exams }) {
                 {
                     key: 'title',
                     label: 'عنوان الامتحان',
-                    render: row => <span className="font-bold" style={{ color: '#1b3a60' }}>{row.title}</span>,
+                    render: row => <span className="font-bold" style={{ color: '#0E3A2E' }}>{row.title}</span>,
                 },
                 {
                     key: 'lesson',
@@ -31,7 +31,7 @@ export default function Index({ exams }) {
                     center: true,
                     render: row => row.duration
                         ? (
-                            <span className="text-sm font-bold" style={{ color: '#1b3a60' }}>
+                            <span className="text-sm font-bold" style={{ color: '#0E3A2E' }}>
                                 {row.duration} دقيقة
                             </span>
                         )

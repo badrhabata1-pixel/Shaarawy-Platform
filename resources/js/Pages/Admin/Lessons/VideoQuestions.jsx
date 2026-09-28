@@ -2,8 +2,8 @@ import AdminLayout from '@/Layouts/AdminLayout';
 import { Head, Link, useForm, router } from '@inertiajs/react';
 import { useState } from 'react';
 
-const O = '#2fbcd4';
-const G = '#2fbcd4';
+const O = '#1F5A45';
+const G = '#1F5A45';
 const OPTION_LABELS = { a: 'أ', b: 'ب', c: 'ج', d: 'د' };
 const OPTION_KEYS   = ['a', 'b', 'c', 'd'];
 
@@ -133,7 +133,7 @@ function QuestionCard({ question, index, total, durationMin }) {
                         onClick={() => setEditing(v => !v)}
                         style={{
                             padding: '5px 14px', borderRadius: 8,
-                            background: editing ? `rgba(47,188,212,.12)` : 'var(--a-card)',
+                            background: editing ? `rgba(31,90,69,.12)` : 'var(--a-card)',
                             border: `1px solid ${editing ? O : 'var(--a-border)'}`,
                             color: editing ? O : 'var(--a-text-3)',
                             fontSize: 12, fontWeight: 700, cursor: 'pointer', fontFamily: 'Cairo',
@@ -297,7 +297,7 @@ function AddQuestionCard({ lesson, videoIndex, newIndex, newTotal }) {
                     <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 16 }}>
                         <div style={{
                             width: 34, height: 34, borderRadius: 10, flexShrink: 0,
-                            background: `rgba(47,188,212,.12)`, border: `1.5px solid ${O}`,
+                            background: `rgba(31,90,69,.12)`, border: `1.5px solid ${O}`,
                             color: O, fontSize: 15, fontWeight: 900,
                             display: 'flex', alignItems: 'center', justifyContent: 'center',
                         }}>
@@ -442,7 +442,7 @@ export default function VideoQuestionsManage({ lesson, videos, questions_by_vide
                                     background: isActive ? O : 'var(--a-card)',
                                     color: isActive ? '#fff' : 'var(--a-text-3)',
                                     border: `1.5px solid ${isActive ? O : 'var(--a-border)'}`,
-                                    boxShadow: isActive ? `0 4px 14px rgba(47,188,212,.3)` : 'none',
+                                    boxShadow: isActive ? `0 4px 14px rgba(31,90,69,.3)` : 'none',
                                 }}
                             >
                                 <span style={{ fontSize: 15 }}>🎬</span>
@@ -512,8 +512,8 @@ export default function VideoQuestionsManage({ lesson, videos, questions_by_vide
                                 {videoQuestions.map((_, i) => (
                                     <span key={i} style={{
                                         padding: '3px 10px', borderRadius: 20, fontSize: 11, fontWeight: 700,
-                                        background: `rgba(47,188,212,.12)`,
-                                        border: `1px solid rgba(47,188,212,.25)`,
+                                        background: `rgba(31,90,69,.12)`,
+                                        border: `1px solid rgba(31,90,69,.25)`,
                                         color: O,
                                     }}>
                                         س{i + 1} → د{triggerMin(i, n, dur)}

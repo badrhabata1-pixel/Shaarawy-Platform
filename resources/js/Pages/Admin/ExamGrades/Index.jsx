@@ -38,7 +38,7 @@ export default function Index({ grades }) {
                 display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(160px,1fr))',
                 gap: 14, marginBottom: 24,
             }}>
-                <StatCard icon="📋" label="إجمالي النتائج" value={total}   color="#1b3a60" />
+                <StatCard icon="📋" label="إجمالي النتائج" value={total}   color="#0E3A2E" />
                 <StatCard icon="✅" label="ناجحون"          value={passed}  color="#059669" />
                 <StatCard icon="❌" label="راسبون"           value={failed}  color="#dc2626" />
                 <StatCard icon="⏳" label="قيد المراجعة"    value={pending} color="#d97706" />

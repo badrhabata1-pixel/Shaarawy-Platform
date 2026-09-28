@@ -23,7 +23,7 @@ export default function Index({ groups, academicYears }) {
                 {
                     key: 'name',
                     label: 'اسم المجموعة',
-                    render: row => <span className="font-bold" style={{ color: '#1b3a60' }}>{row.name}</span>,
+                    render: row => <span className="font-bold" style={{ color: '#0E3A2E' }}>{row.name}</span>,
                 },
                 {
                     key: 'academic_year',
@@ -47,7 +47,7 @@ export default function Index({ groups, academicYears }) {
                     key: 'hour',
                     label: 'الوقت',
                     render: row => row.hour
-                        ? <span className="text-sm font-bold" style={{ color: '#2fbcd4' }}>{row.hour}</span>
+                        ? <span className="text-sm font-bold" style={{ color: '#1F5A45' }}>{row.hour}</span>
                         : '—',
                 },
                 {

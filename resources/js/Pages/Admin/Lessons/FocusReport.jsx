@@ -1,7 +1,7 @@
 import AdminLayout from '@/Layouts/AdminLayout';
 import { Head, Link } from '@inertiajs/react';
 
-const O = '#2fbcd4';
+const O = '#1F5A45';
 
 const STATUS = {
     correct:     { label: '✅ صح',      bg: 'rgba(16,185,129,.15)',  color: '#10B981' },

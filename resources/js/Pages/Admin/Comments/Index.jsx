@@ -121,7 +121,7 @@ export default function Index({ comments = [] }) {
                         <h1 style={{ fontSize: 22, fontWeight: 800, margin: 0, color: 'var(--a-text)' }}>🎓 دعم المادة الفني</h1>
                         <p style={{ fontSize: 13, color: 'var(--a-text-4)', marginTop: 4 }}>
                             {comments.length} سؤال إجمالي
-                            {unansweredCount > 0 && <span style={{ color: '#2fbcd4', fontWeight: 700 }}> — {unansweredCount} في انتظار الرد</span>}
+                            {unansweredCount > 0 && <span style={{ color: '#1F5A45', fontWeight: 700 }}> — {unansweredCount} في انتظار الرد</span>}
                         </p>
                     </div>
                 </div>
@@ -155,8 +155,8 @@ export default function Index({ comments = [] }) {
                         style={{
                             padding: '8px 18px', borderRadius: 10, cursor: 'pointer',
                             fontFamily: "'Cairo',sans-serif", fontSize: 13, fontWeight: 700,
-                            border: '1.5px solid', borderColor: unansweredOnly ? '#2fbcd4' : 'var(--a-border)',
-                            background: unansweredOnly ? '#2fbcd4' : 'var(--a-card)',
+                            border: '1.5px solid', borderColor: unansweredOnly ? '#1F5A45' : 'var(--a-border)',
+                            background: unansweredOnly ? '#1F5A45' : 'var(--a-card)',
                             color: unansweredOnly ? '#fff' : 'var(--a-text-3)',
                             transition: 'all .2s',
                         }}
@@ -182,14 +182,14 @@ export default function Index({ comments = [] }) {
                             return (
                                 <div key={c.id} style={{
                                     background: 'var(--a-card)', borderRadius: 16,
-                                    border: `1.5px solid ${c.is_replied ? 'var(--a-border)' : 'rgba(47,188,212,.4)'}`,
+                                    border: `1.5px solid ${c.is_replied ? 'var(--a-border)' : 'rgba(31,90,69,.4)'}`,
                                     padding: '16px 18px', boxShadow: '0 2px 10px var(--a-shadow)',
                                 }}>
                                     {/* Top row */}
                                     <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 12, flexWrap: 'wrap' }}>
                                         <div style={{
                                             width: 34, height: 34, borderRadius: '50%', flexShrink: 0,
-                                            background: c.student?.image ? 'transparent' : 'linear-gradient(135deg,#2fbcd4,#009688)',
+                                            background: c.student?.image ? 'transparent' : 'linear-gradient(135deg,#1F5A45,#8B5E3C)',
                                             display: 'flex', alignItems: 'center', justifyContent: 'center',
                                             color: '#fff', fontSize: 12, fontWeight: 800, overflow: 'hidden',
                                         }}>
@@ -208,7 +208,7 @@ export default function Index({ comments = [] }) {
                                         {c.is_replied ? (
                                             <span style={{ fontSize: 11, fontWeight: 800, color: '#059669', background: dark ? 'rgba(5,150,105,.15)' : '#D1FAE5', borderRadius: 999, padding: '4px 12px', whiteSpace: 'nowrap' }}>✓ تم الرد</span>
                                         ) : (
-                                            <span style={{ fontSize: 11, fontWeight: 800, color: '#2fbcd4', background: dark ? 'rgba(47,188,212,.15)' : '#FEF3E2', borderRadius: 999, padding: '4px 12px', whiteSpace: 'nowrap' }}>🔴 في الانتظار</span>
+                                            <span style={{ fontSize: 11, fontWeight: 800, color: '#1F5A45', background: dark ? 'rgba(31,90,69,.15)' : '#FEF3E2', borderRadius: 999, padding: '4px 12px', whiteSpace: 'nowrap' }}>🔴 في الانتظار</span>
                                         )}
                                         <button
                                             onClick={() => destroy(c.id)}
@@ -236,15 +236,15 @@ export default function Index({ comments = [] }) {
                                     {/* Existing reply (read-only display) */}
                                     {c.is_replied && !isOpen && (
                                         <div style={{
-                                            background: dark ? 'rgba(47,188,212,.08)' : 'rgba(47,188,212,.06)',
-                                            border: '1px solid rgba(47,188,212,.3)', borderRadius: 12,
+                                            background: dark ? 'rgba(31,90,69,.08)' : 'rgba(31,90,69,.06)',
+                                            border: '1px solid rgba(31,90,69,.3)', borderRadius: 12,
                                             padding: '10px 14px', marginBottom: 10,
                                         }}>
-                                            <div style={{ fontSize: 11.5, fontWeight: 800, color: '#2fbcd4', marginBottom: c.reply_body || c.reply_image_url || c.reply_voice_url ? 6 : 0 }}>👨‍🏫 ردك</div>
+                                            <div style={{ fontSize: 11.5, fontWeight: 800, color: '#1F5A45', marginBottom: c.reply_body || c.reply_image_url || c.reply_voice_url ? 6 : 0 }}>👨‍🏫 ردك</div>
                                             {c.reply_body && <p style={{ fontSize: 13, color: 'var(--a-text-2)', lineHeight: 1.6, margin: '0 0 6px', whiteSpace: 'pre-wrap' }}>{c.reply_body}</p>}
                                             {c.reply_image_url && (
                                                 <a href={c.reply_image_url} target="_blank" rel="noopener noreferrer">
-                                                    <img src={c.reply_image_url} alt="صورة الرد" style={{ maxWidth: 180, maxHeight: 130, borderRadius: 10, border: '1px solid rgba(47,188,212,.3)', display: 'block', marginBottom: 6 }} />
+                                                    <img src={c.reply_image_url} alt="صورة الرد" style={{ maxWidth: 180, maxHeight: 130, borderRadius: 10, border: '1px solid rgba(31,90,69,.3)', display: 'block', marginBottom: 6 }} />
                                                 </a>
                                             )}
                                             {c.reply_voice_url && <audio controls src={c.reply_voice_url} style={{ height: 32, maxWidth: 240 }} />}
@@ -289,7 +289,7 @@ export default function Index({ comments = [] }) {
                                                 }}>
                                                     🖼️ إرفاق صورة
                                                 </label>
-                                                <AudioRecorder key={recorderKeyRef.current} onChange={setReplyVoice} dark={dark} accent="#2fbcd4" disabled={submittingId === c.id} />
+                                                <AudioRecorder key={recorderKeyRef.current} onChange={setReplyVoice} dark={dark} accent="#1F5A45" disabled={submittingId === c.id} />
                                                 <div style={{ marginRight: 'auto', display: 'flex', gap: 8 }}>
                                                     <button
                                                         onClick={closeReply}
@@ -307,11 +307,11 @@ export default function Index({ comments = [] }) {
                                                         disabled={submittingId === c.id}
                                                         style={{
                                                             padding: '9px 22px', borderRadius: 999,
-                                                            background: submittingId === c.id ? 'rgba(47,188,212,.5)' : 'linear-gradient(135deg,#2fbcd4,#009688)',
+                                                            background: submittingId === c.id ? 'rgba(31,90,69,.5)' : 'linear-gradient(135deg,#1F5A45,#8B5E3C)',
                                                             color: '#fff', border: 'none', fontSize: 13, fontWeight: 800,
                                                             cursor: submittingId === c.id ? 'default' : 'pointer',
                                                             fontFamily: "'Cairo',sans-serif",
-                                                            boxShadow: submittingId === c.id ? 'none' : '0 4px 14px rgba(47,188,212,.35)',
+                                                            boxShadow: submittingId === c.id ? 'none' : '0 4px 14px rgba(31,90,69,.35)',
                                                         }}
                                                     >
                                                         {submittingId === c.id ? 'جاري الإرسال…' : (c.is_replied ? 'تحديث الرد ↑' : 'إرسال الرد ↑')}
@@ -324,8 +324,8 @@ export default function Index({ comments = [] }) {
                                             onClick={() => openReply(c)}
                                             style={{
                                                 padding: '8px 20px', borderRadius: 999, cursor: 'pointer',
-                                                background: 'transparent', border: '1.5px solid #2fbcd4',
-                                                color: '#2fbcd4', fontSize: 12.5, fontWeight: 800,
+                                                background: 'transparent', border: '1.5px solid #1F5A45',
+                                                color: '#1F5A45', fontSize: 12.5, fontWeight: 800,
                                                 fontFamily: "'Cairo',sans-serif",
                                             }}
                                         >

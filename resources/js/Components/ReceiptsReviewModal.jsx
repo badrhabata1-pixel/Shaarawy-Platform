@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { router } from '@inertiajs/react';
 
-const O = '#2fbcd4';
-const N = '#1b3a60';
-const G = '#2fbcd4';
+const O = '#1F5A45';
+const N = '#0E3A2E';
+const G = '#1F5A45';
 
 const STATUS_UI = {
     pending: { label: 'قيد المراجعة', c: O, bg: `${O}18` },
@@ -119,7 +119,7 @@ export default function ReceiptsReviewModal({ open, onClose, receipts = [], rout
                     padding: '1.25rem 1.5rem',
                     borderBottom: '1px solid var(--a-border, var(--db-rowbdr, #E2E8F0))',
                 }}>
-                    <h2 style={{ margin: 0, fontSize: 16, fontWeight: 900, color: 'var(--a-text, var(--db-text, #1b3a60))' }}>
+                    <h2 style={{ margin: 0, fontSize: 16, fontWeight: 900, color: 'var(--a-text, var(--db-text, #0E3A2E))' }}>
                         إيصالات الدفع
                     </h2>
                     <button
@@ -157,7 +157,7 @@ export default function ReceiptsReviewModal({ open, onClose, receipts = [], rout
                             }}>
                                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 10, marginBottom: 10 }}>
                                     <div style={{ minWidth: 0 }}>
-                                        <div style={{ fontSize: 13.5, fontWeight: 800, color: 'var(--a-text, var(--db-text, #1b3a60))' }}>
+                                        <div style={{ fontSize: 13.5, fontWeight: 800, color: 'var(--a-text, var(--db-text, #0E3A2E))' }}>
                                             {r.student?.name || r.student_name || 'طالب غير معروف'}
                                         </div>
                                         <div style={{ fontSize: 12, color: 'var(--a-text-4, var(--db-muted, #64748B))', marginTop: 2 }}>

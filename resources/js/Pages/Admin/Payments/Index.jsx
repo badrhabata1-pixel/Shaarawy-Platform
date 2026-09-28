@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Head, router, usePage } from '@inertiajs/react';
 import AdminLayout from '@/Layouts/AdminLayout';
-const BRAND_GRAD = 'linear-gradient(135deg,#0D9488 0%,#d9620a 100%)';
+const BRAND_GRAD = 'linear-gradient(135deg,#0E3A2E 0%,#C9A96A 100%)';
 
 /* ── detect dark/light from AdminLayout's data-theme attr ── */
 function useAdminDark() {
@@ -78,9 +78,9 @@ export default function PaymentsIndex({ requests = [], statusFilter = 'all' }) {
                     </div>
                     <a href={route('admin.payment-settings')} style={{
                         padding: '9px 20px', borderRadius: 10,
-                        border: '1.5px solid #2fbcd4',
-                        color: '#2fbcd4', fontSize: 13, fontWeight: 700, textDecoration: 'none',
-                        background: dark ? 'rgba(47,188,212,.08)' : 'transparent',
+                        border: '1.5px solid #1F5A45',
+                        color: '#1F5A45', fontSize: 13, fontWeight: 700, textDecoration: 'none',
+                        background: dark ? 'rgba(31,90,69,.08)' : 'transparent',
                     }}>
                         ⚙️ إعدادات أرقام الدفع
                     </a>
@@ -112,7 +112,7 @@ export default function PaymentsIndex({ requests = [], statusFilter = 'all' }) {
                                 padding: '7px 18px', borderRadius: 10, cursor: 'pointer',
                                 fontFamily: "'Cairo',sans-serif", fontSize: 13, fontWeight: 700,
                                 border: '1.5px solid',
-                                borderColor: isActive ? '#0D9488' : 'var(--a-border)',
+                                borderColor: isActive ? '#0E3A2E' : 'var(--a-border)',
                                 background:  isActive ? BRAND_GRAD : 'var(--a-card)',
                                 color:       isActive ? '#fff'    : 'var(--a-text-3)',
                                 transition: 'all .2s',
@@ -167,7 +167,7 @@ export default function PaymentsIndex({ requests = [], statusFilter = 'all' }) {
                                                 <td style={{ padding: '12px 14px', color: 'var(--a-text-2)', maxWidth: 120 }}>{req.unit?.title ?? '—'}</td>
                                                 <td style={{ padding: '12px 14px', color: 'var(--a-text)', whiteSpace: 'nowrap' }}>{mth.icon} {mth.label}</td>
                                                 <td style={{ padding: '12px 14px', color: 'var(--a-text-3)' }}>{req.account_name}</td>
-                                                <td style={{ padding: '12px 14px', fontWeight: 700, color: '#2fbcd4', whiteSpace: 'nowrap' }}>{req.amount ? `${req.amount} ج` : '—'}</td>
+                                                <td style={{ padding: '12px 14px', fontWeight: 700, color: '#1F5A45', whiteSpace: 'nowrap' }}>{req.amount ? `${req.amount} ج` : '—'}</td>
                                                 <td style={{ padding: '12px 14px' }}>
                                                     {req.screenshot ? (
                                                         <a href={req.screenshot.startsWith('uploads/') ? `/${req.screenshot}` : `/storage/${req.screenshot}`} target="_blank" rel="noreferrer">
@@ -250,7 +250,7 @@ export default function PaymentsIndex({ requests = [], statusFilter = 'all' }) {
                                 fontFamily: "'Cairo',sans-serif", resize: 'vertical', outline: 'none',
                                 background: 'var(--a-input)', color: 'var(--a-text)',
                             }}
-                            onFocus={e => e.target.style.borderColor = '#2fbcd4'}
+                            onFocus={e => e.target.style.borderColor = '#1F5A45'}
                             onBlur={e  => e.target.style.borderColor = 'var(--a-input-b)'}
                         />
                         <div style={{ display: 'flex', gap: 10, marginTop: 18, justifyContent: 'flex-end' }}>

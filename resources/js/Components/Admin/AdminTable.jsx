@@ -15,7 +15,7 @@ export const imgUrl = (path) => {
 
 export const Badge = ({ label, color = 'orange' }) => {
     const schemes = {
-        orange: { bg: '#2fbcd418', color: '#2fbcd4' },
+        orange: { bg: '#1F5A4518', color: '#1F5A45' },
         navy:   { bg: 'var(--a-badge-navy-bg)', color: 'var(--a-badge-navy-text)' },
         green:  { bg: '#10b98118', color: '#059669' },
         red:    { bg: '#ef444418', color: '#ef4444' },
@@ -35,9 +35,9 @@ export const Badge = ({ label, color = 'orange' }) => {
 export const AvatarCell = ({ name, image, sub }) => (
     <div className="flex items-center gap-3">
         {image
-            ? <img src={imgUrl(image)} alt={name} className="w-9 h-9 rounded-xl object-cover border-2 flex-shrink-0" style={{ borderColor: '#2fbcd4' }} />
+            ? <img src={imgUrl(image)} alt={name} className="w-9 h-9 rounded-xl object-cover border-2 flex-shrink-0" style={{ borderColor: '#1F5A45' }} />
             : <div className="w-9 h-9 rounded-xl flex items-center justify-center text-white font-black text-sm flex-shrink-0"
-                   style={{ background: 'linear-gradient(135deg,#2fbcd4,#009688)' }}>
+                   style={{ background: 'linear-gradient(135deg,#1F5A45,#8B5E3C)' }}>
                   {name?.charAt(0)}
               </div>
         }
@@ -147,7 +147,7 @@ export default function AdminTable({
                     {createLink && (
                         <Link href={createLink}
                               className="flex items-center gap-2 px-5 py-2.5 rounded-2xl text-white font-bold text-sm"
-                              style={{ background: 'linear-gradient(135deg, #2fbcd4, #009688)', boxShadow: '0 4px 14px rgba(47,188,212,0.35)' }}>
+                              style={{ background: 'linear-gradient(135deg, #1F5A45, #8B5E3C)', boxShadow: '0 4px 14px rgba(31,90,69,0.35)' }}>
                             <span className="text-lg">+</span>
                             {createLabel}
                         </Link>
@@ -226,7 +226,7 @@ export default function AdminTable({
                                             {createLink && (
                                                 <Link href={createLink}
                                                       className="mt-3 inline-block px-5 py-2 rounded-xl text-sm font-bold text-white"
-                                                      style={{ background: '#2fbcd4' }}>
+                                                      style={{ background: '#1F5A45' }}>
                                                     + {createLabel}
                                                 </Link>
                                             )}
@@ -290,7 +290,7 @@ export default function AdminTable({
                         {search && (
                             <button onClick={() => setSearch('')}
                                     className="text-xs font-bold px-3 py-1 rounded-lg"
-                                    style={{ color: '#2fbcd4', background: '#2fbcd410' }}>
+                                    style={{ color: '#1F5A45', background: '#1F5A4510' }}>
                                 مسح البحث ×
                             </button>
                         )}

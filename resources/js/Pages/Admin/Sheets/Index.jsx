@@ -23,7 +23,7 @@ export default function Index({ sheets, lessons }) {
                 {
                     key: 'title',
                     label: 'عنوان الشيت',
-                    render: row => <span className="font-bold" style={{ color: '#1b3a60' }}>{row.title}</span>,
+                    render: row => <span className="font-bold" style={{ color: '#0E3A2E' }}>{row.title}</span>,
                 },
                 {
                     key: 'lesson',

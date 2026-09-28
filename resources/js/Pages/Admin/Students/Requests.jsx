@@ -79,7 +79,7 @@ export default function Requests({ students }) {
                                     background: 'var(--a-card)',
                                     boxShadow: dark
                                         ? '0 2px 12px rgba(0,0,0,0.3)'
-                                        : '0 2px 12px rgba(27,58,96,0.07)',
+                                        : '0 2px 12px rgba(14,58,46,0.07)',
                                     border: '1px solid var(--a-border)',
                                 }}
                             >
@@ -88,7 +88,7 @@ export default function Requests({ students }) {
                                     <div
                                         className="w-12 h-12 rounded-full flex items-center justify-center text-xl font-bold flex-shrink-0"
                                         style={{
-                                            background: dark ? 'rgba(226,232,240,0.15)' : '#1b3a60',
+                                            background: dark ? 'rgba(226,232,240,0.15)' : '#0E3A2E',
                                             color: '#94a3b8',
                                         }}
                                     >
@@ -116,8 +116,8 @@ export default function Requests({ students }) {
                                                     style={{
                                                         background: dark
                                                             ? 'rgba(226,232,240,0.12)'
-                                                            : 'rgba(27,58,96,0.08)',
-                                                        color: dark ? '#94a3b8' : '#1b3a60',
+                                                            : 'rgba(14,58,46,0.08)',
+                                                        color: dark ? '#94a3b8' : '#0E3A2E',
                                                     }}
                                                 >
                                                     {s.academic_year.name}
@@ -128,9 +128,9 @@ export default function Requests({ students }) {
                                                     className="text-xs px-2 py-0.5 rounded-full font-bold"
                                                     style={{
                                                         background: dark
-                                                            ? 'rgba(47,188,212,0.15)'
-                                                            : 'rgba(47,188,212,0.1)',
-                                                        color: '#2fbcd4',
+                                                            ? 'rgba(31,90,69,0.15)'
+                                                            : 'rgba(31,90,69,0.1)',
+                                                        color: '#1F5A45',
                                                     }}
                                                 >
                                                     {s.student_type === 'online' ? 'أونلاين' : 'سنتر'}

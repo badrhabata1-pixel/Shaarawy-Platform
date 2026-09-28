@@ -107,20 +107,20 @@ export default function PaymentSettings({ settings = {} }) {
 
                     {/* Preview */}
                     <div style={{
-                        background: 'linear-gradient(135deg,#060B16,#0D1829)',
+                        background: 'linear-gradient(135deg,#141210,#1C1916)',
                         borderRadius: 14, padding: '20px', marginBottom: 24,
-                        border: '1px solid rgba(47,188,212,.2)',
+                        border: '1px solid rgba(31,90,69,.2)',
                     }}>
-                        <p style={{ fontSize: 12, color: '#2fbcd4', marginBottom: 14, fontWeight: 700 }}>معاينة — اللي سيظهر للطالب:</p>
+                        <p style={{ fontSize: 12, color: '#1F5A45', marginBottom: 14, fontWeight: 700 }}>معاينة — اللي سيظهر للطالب:</p>
                         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
                             {[
                                 { label: 'فودافون كاش', icon: '📱', num: data.vodafone_number, name: data.vodafone_name },
                                 { label: 'إنستا باي',   icon: '⚡', num: data.instapay_number, name: data.instapay_name },
                             ].map(p => (
-                                <div key={p.label} style={{ background: 'rgba(255,255,255,.06)', borderRadius: 10, padding: '14px', textAlign: 'center', border: '1px solid rgba(47,188,212,.2)' }}>
+                                <div key={p.label} style={{ background: 'rgba(255,255,255,.06)', borderRadius: 10, padding: '14px', textAlign: 'center', border: '1px solid rgba(31,90,69,.2)' }}>
                                     <div style={{ fontSize: 22, marginBottom: 6 }}>{p.icon}</div>
                                     <div style={{ fontSize: 12, color: '#94a3b8', marginBottom: 4 }}>{p.label}</div>
-                                    <div style={{ fontSize: 18, fontWeight: 900, color: '#2fbcd4', letterSpacing: '.06em', direction: 'ltr', fontFamily: 'monospace' }}>{p.num || '—'}</div>
+                                    <div style={{ fontSize: 18, fontWeight: 900, color: '#1F5A45', letterSpacing: '.06em', direction: 'ltr', fontFamily: 'monospace' }}>{p.num || '—'}</div>
                                     <div style={{ fontSize: 11, color: '#94a3b8', marginTop: 4 }}>{p.name || '—'}</div>
                                 </div>
                             ))}
@@ -129,12 +129,12 @@ export default function PaymentSettings({ settings = {} }) {
 
                     <button type="submit" disabled={processing} style={{
                         width: '100%', padding: '13px', borderRadius: 12,
-                        background: processing ? 'var(--a-border)' : 'linear-gradient(135deg,#2fbcd4,#009688)',
+                        background: processing ? 'var(--a-border)' : 'linear-gradient(135deg,#1F5A45,#8B5E3C)',
                         color: processing ? 'var(--a-text-3)' : '#fff',
                         border: 'none', fontSize: 15, fontWeight: 800,
                         cursor: processing ? 'not-allowed' : 'pointer',
                         fontFamily: "'Cairo',sans-serif",
-                        boxShadow: processing ? 'none' : '0 6px 24px rgba(47,188,212,.35)',
+                        boxShadow: processing ? 'none' : '0 6px 24px rgba(31,90,69,.35)',
                         transition: 'all .2s',
                     }}>
                         {processing ? 'جارٍ الحفظ...' : '💾 حفظ الأرقام'}

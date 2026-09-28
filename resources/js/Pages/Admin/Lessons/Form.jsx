@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import AdminForm, { AdminField } from '@/Components/Admin/AdminForm';
 import { useForm } from '@inertiajs/react';
 
-const O = '#2fbcd4';
-const G = '#2fbcd4';
+const O = '#1F5A45';
+const G = '#1F5A45';
 
 export default function Form({ item, units, exams = [] }) {
     // التنسيق الجديد للفيديوهات والملفات ليدعم الأسماء والأوصاف
@@ -248,9 +248,9 @@ export default function Form({ item, units, exams = [] }) {
 /* ── GateExamSection ────────────────────────────────── */
 function GateExamSection({ hasGateExam, onToggle, filteredExams, value, onChange, error, noUnit }) {
     return (
-        <div style={{ border: `1px solid ${hasGateExam ? 'rgba(47,188,212,.4)' : 'rgba(47,188,212,.2)'}`, borderRadius: 12, overflow: 'hidden', marginBottom: 18, transition: 'border-color .2s' }}>
+        <div style={{ border: `1px solid ${hasGateExam ? 'rgba(31,90,69,.4)' : 'rgba(31,90,69,.2)'}`, borderRadius: 12, overflow: 'hidden', marginBottom: 18, transition: 'border-color .2s' }}>
             {/* Header row */}
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '12px 16px', background: hasGateExam ? 'rgba(47,188,212,.08)' : 'rgba(47,188,212,.04)', transition: 'background .2s' }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '12px 16px', background: hasGateExam ? 'rgba(31,90,69,.08)' : 'rgba(31,90,69,.04)', transition: 'background .2s' }}>
                 <div>
                     <div style={{ fontSize: 13, fontWeight: 700, display: 'flex', alignItems: 'center', gap: 7 }}>
                         <span>🔐</span>
@@ -284,7 +284,7 @@ function GateExamSection({ hasGateExam, onToggle, filteredExams, value, onChange
                     <select
                         value={value || ''}
                         onChange={e => onChange(e.target.value)}
-                        style={{ width: '100%', border: `1.5px solid ${error ? '#f87171' : 'rgba(47,188,212,.25)'}`, borderRadius: 8, padding: '9px 12px', fontSize: 13, background: 'rgba(255,255,255,.05)', color: 'white', fontFamily: 'inherit', outline: 'none', cursor: 'pointer' }}
+                        style={{ width: '100%', border: `1.5px solid ${error ? '#f87171' : 'rgba(31,90,69,.25)'}`, borderRadius: 8, padding: '9px 12px', fontSize: 13, background: 'rgba(255,255,255,.05)', color: 'white', fontFamily: 'inherit', outline: 'none', cursor: 'pointer' }}
                     >
                         <option value="">— اختر الامتحان —</option>
                         {filteredExams.map(e => (
@@ -302,7 +302,7 @@ function GateExamSection({ hasGateExam, onToggle, filteredExams, value, onChange
 
                     {/* Info note */}
                     {value && (
-                        <div style={{ background: 'rgba(47,188,212,.08)', border: '1px solid rgba(47,188,212,.25)', borderRadius: 8, padding: '8px 12px', fontSize: 11, color: 'rgba(47,188,212,.9)', display: 'flex', alignItems: 'flex-start', gap: 7, lineHeight: 1.6 }}>
+                        <div style={{ background: 'rgba(31,90,69,.08)', border: '1px solid rgba(31,90,69,.25)', borderRadius: 8, padding: '8px 12px', fontSize: 11, color: 'rgba(31,90,69,.9)', display: 'flex', alignItems: 'flex-start', gap: 7, lineHeight: 1.6 }}>
                             <span style={{ flexShrink: 0 }}>ℹ️</span>
                             <span>الطلاب اللي مش عدوا الامتحان ده هيشوفوا الدرس اللي بعده مقفل — ولازم يحاولوا تاني لحد ما يعدوا الـ 50%.</span>
                         </div>
@@ -316,8 +316,8 @@ function GateExamSection({ hasGateExam, onToggle, filteredExams, value, onChange
 /* ── DynamicSection wrapper ─────────────────────────── */
 function DynamicSection({ label, icon, onAdd, addLabel, children }) {
     return (
-        <div style={{ border: '1px solid rgba(47,188,212,.2)', borderRadius: 12, overflow: 'hidden', marginBottom: 18 }}>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '10px 16px', background: 'rgba(47,188,212,.06)', borderBottom: '1px solid rgba(47,188,212,.15)' }}>
+        <div style={{ border: '1px solid rgba(31,90,69,.2)', borderRadius: 12, overflow: 'hidden', marginBottom: 18 }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '10px 16px', background: 'rgba(31,90,69,.06)', borderBottom: '1px solid rgba(31,90,69,.15)' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 13, fontWeight: 700 }}>
                     <span>{icon}</span>
                     <span>{label}</span>
@@ -325,9 +325,9 @@ function DynamicSection({ label, icon, onAdd, addLabel, children }) {
                 <button
                     type="button"
                     onClick={onAdd}
-                    style={{ display: 'flex', alignItems: 'center', gap: 5, padding: '5px 14px', borderRadius: 8, background: `rgba(47,188,212,.12)`, border: `1px solid rgba(47,188,212,.3)`, color: O, fontSize: 12, fontWeight: 700, cursor: 'pointer', transition: 'all .15s', fontFamily: 'inherit' }}
-                    onMouseEnter={e => { e.currentTarget.style.background = `rgba(47,188,212,.22)`; }}
-                    onMouseLeave={e => { e.currentTarget.style.background = `rgba(47,188,212,.12)`; }}
+                    style={{ display: 'flex', alignItems: 'center', gap: 5, padding: '5px 14px', borderRadius: 8, background: `rgba(31,90,69,.12)`, border: `1px solid rgba(31,90,69,.3)`, color: O, fontSize: 12, fontWeight: 700, cursor: 'pointer', transition: 'all .15s', fontFamily: 'inherit' }}
+                    onMouseEnter={e => { e.currentTarget.style.background = `rgba(31,90,69,.22)`; }}
+                    onMouseLeave={e => { e.currentTarget.style.background = `rgba(31,90,69,.12)`; }}
                 >
                     {addLabel}
                 </button>
@@ -352,7 +352,7 @@ function VideoRow({ label, labelValue, onLabelChange, mode, onModeChange, urlVal
                     value={labelValue}
                     onChange={onLabelChange}
                     placeholder="اكتب عنواناً يوضح محتوى الفيديو للطلاب"
-                    style={{ width: '100%', boxSizing: 'border-box', border: '1.5px solid rgba(47,188,212,.2)', borderRadius: 8, padding: '9px 12px', fontSize: 13, outline: 'none', background: 'rgba(255,255,255,.03)', color: 'white' }}
+                    style={{ width: '100%', boxSizing: 'border-box', border: '1.5px solid rgba(31,90,69,.2)', borderRadius: 8, padding: '9px 12px', fontSize: 13, outline: 'none', background: 'rgba(255,255,255,.03)', color: 'white' }}
                 />
             </div>
             {/* رابط / رفع ملف الفيديو */}
@@ -363,12 +363,12 @@ function VideoRow({ label, labelValue, onLabelChange, mode, onModeChange, urlVal
                         <button
                             type="button"
                             onClick={() => onModeChange('link')}
-                            style={{ padding: '4px 10px', borderRadius: 6, border: 'none', cursor: 'pointer', fontSize: 11, fontWeight: 700, fontFamily: 'inherit', background: mode !== 'file' ? O : 'transparent', color: mode !== 'file' ? '#04222b' : 'rgba(226,232,240,.6)', transition: 'all .15s' }}
+                            style={{ padding: '4px 10px', borderRadius: 6, border: 'none', cursor: 'pointer', fontSize: 11, fontWeight: 700, fontFamily: 'inherit', background: mode !== 'file' ? O : 'transparent', color: mode !== 'file' ? '#1A1A1A' : 'rgba(226,232,240,.6)', transition: 'all .15s' }}
                         >رابط يوتيوب/فيميو</button>
                         <button
                             type="button"
                             onClick={() => onModeChange('file')}
-                            style={{ padding: '4px 10px', borderRadius: 6, border: 'none', cursor: 'pointer', fontSize: 11, fontWeight: 700, fontFamily: 'inherit', background: mode === 'file' ? O : 'transparent', color: mode === 'file' ? '#04222b' : 'rgba(226,232,240,.6)', transition: 'all .15s' }}
+                            style={{ padding: '4px 10px', borderRadius: 6, border: 'none', cursor: 'pointer', fontSize: 11, fontWeight: 700, fontFamily: 'inherit', background: mode === 'file' ? O : 'transparent', color: mode === 'file' ? '#1A1A1A' : 'rgba(226,232,240,.6)', transition: 'all .15s' }}
                         >رفع ملف فيديو</button>
                     </div>
                 </div>
@@ -385,7 +385,7 @@ function VideoRow({ label, labelValue, onLabelChange, mode, onModeChange, urlVal
                             type="file"
                             accept="video/*"
                             onChange={onFileChange}
-                            style={{ width: '100%', boxSizing: 'border-box', border: `1.5px dashed ${error ? '#f87171' : 'rgba(47,188,212,.2)'}`, borderRadius: 8, padding: '8px 10px', fontSize: 12, cursor: 'pointer', background: 'rgba(255,255,255,.02)', color: 'white' }}
+                            style={{ width: '100%', boxSizing: 'border-box', border: `1.5px dashed ${error ? '#f87171' : 'rgba(31,90,69,.2)'}`, borderRadius: 8, padding: '8px 10px', fontSize: 12, cursor: 'pointer', background: 'rgba(255,255,255,.02)', color: 'white' }}
                         />
                     </>
                 ) : (
@@ -395,7 +395,7 @@ function VideoRow({ label, labelValue, onLabelChange, mode, onModeChange, urlVal
                         onChange={onUrlChange}
                         placeholder="https://..."
                         dir="ltr"
-                        style={{ width: '100%', boxSizing: 'border-box', border: `1.5px solid ${error ? '#f87171' : 'rgba(47,188,212,.2)'}`, borderRadius: 8, padding: '9px 12px', fontSize: 13, outline: 'none', background: 'rgba(255,255,255,.03)', color: 'inherit', fontFamily: 'monospace', transition: 'border-color .2s' }}
+                        style={{ width: '100%', boxSizing: 'border-box', border: `1.5px solid ${error ? '#f87171' : 'rgba(31,90,69,.2)'}`, borderRadius: 8, padding: '9px 12px', fontSize: 13, outline: 'none', background: 'rgba(255,255,255,.03)', color: 'inherit', fontFamily: 'monospace', transition: 'border-color .2s' }}
                     />
                 )}
                 {error && <p style={{ color: '#f87171', fontSize: 11, marginTop: 4 }}>{error}</p>}
@@ -424,7 +424,7 @@ function PdfRow({ label, labelValue, onLabelChange, onChange, error, existing, o
                     value={labelValue}
                     onChange={onLabelChange}
                     placeholder="اكتب اسم الملف الذي يظهر للطلاب"
-                    style={{ width: '100%', boxSizing: 'border-box', border: '1.5px solid rgba(47,188,212,.2)', borderRadius: 8, padding: '9px 12px', fontSize: 13, outline: 'none', background: 'rgba(255,255,255,.03)', color: 'white' }}
+                    style={{ width: '100%', boxSizing: 'border-box', border: '1.5px solid rgba(31,90,69,.2)', borderRadius: 8, padding: '9px 12px', fontSize: 13, outline: 'none', background: 'rgba(255,255,255,.03)', color: 'white' }}
                 />
             </div>
             {/* رفع الملف */}
@@ -440,7 +440,7 @@ function PdfRow({ label, labelValue, onLabelChange, onChange, error, existing, o
                     type="file"
                     accept=".pdf"
                     onChange={onChange}
-                    style={{ width: '100%', boxSizing: 'border-box', border: `1.5px dashed ${error ? '#f87171' : 'rgba(47,188,212,.2)'}`, borderRadius: 8, padding: '8px 10px', fontSize: 12, cursor: 'pointer', background: 'rgba(255,255,255,.02)', color: 'white' }}
+                    style={{ width: '100%', boxSizing: 'border-box', border: `1.5px dashed ${error ? '#f87171' : 'rgba(31,90,69,.2)'}`, borderRadius: 8, padding: '8px 10px', fontSize: 12, cursor: 'pointer', background: 'rgba(255,255,255,.02)', color: 'white' }}
                 />
                 {error && <p style={{ color: '#f87171', fontSize: 11, marginTop: 4 }}>{error}</p>}
             </div>

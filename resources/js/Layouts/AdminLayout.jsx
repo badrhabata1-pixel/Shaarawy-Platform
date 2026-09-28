@@ -133,7 +133,7 @@ const ALL_NAV_ITEMS = NAV.flatMap(group =>
 /* ─── SIDEBAR COLORS — dark / light ─── */
 function sbColors(dark) {
     return dark ? {
-        bg:        'linear-gradient(175deg,#060B16 0%,#0D1829 40%,#101D35 70%,#0A1422 100%)',
+        bg:        'linear-gradient(175deg,#0A0908 0%,#171310 35%,#1C1916 65%,#12100D 100%)',
         shadow:    '-4px 0 50px rgba(0,0,0,.35),inset 0 0 0 1px rgba(226,232,240,.08)',
         border:    'rgba(226,232,240,.12)',
         text:      'rgba(226,232,240,.65)',
@@ -143,11 +143,11 @@ function sbColors(dark) {
         sectionT:  'rgba(226,232,240,.32)',
         hoverBg:   'rgba(255,255,255,.05)',
         hoverTxt:  '#fff',
-        activeBg:  'linear-gradient(270deg,rgba(47,188,212,.22) 0%,rgba(47,188,212,.08) 60%,transparent 100%)',
+        activeBg:  'linear-gradient(270deg,rgba(31,90,69,.22) 0%,rgba(31,90,69,.08) 60%,transparent 100%)',
         activeTxt: '#fff',
-        barShadow: '0 0 10px rgba(47,188,212,.8),0 0 20px rgba(47,188,212,.4)',
-        iconDim:   'rgba(47,188,212,.4)',
-        subBorder: 'rgba(47,188,212,.2)',
+        barShadow: '0 0 10px rgba(31,90,69,.8),0 0 20px rgba(31,90,69,.4)',
+        iconDim:   'rgba(31,90,69,.4)',
+        subBorder: 'rgba(31,90,69,.2)',
         subTxt:    'rgba(226,232,240,.5)',
         subHover:  '#fff',
         subHoverBg:'rgba(255,255,255,.04)',
@@ -160,29 +160,29 @@ function sbColors(dark) {
         logoutHov: '#ef4444',
         logoutHovBg:'rgba(239,68,68,.1)',
     } : {
-        bg:        'linear-gradient(175deg,#ffffff 0%,#f4f6fb 40%,#eef1f8 70%,#f0f3fa 100%)',
-        shadow:    '-4px 0 30px rgba(27,58,96,.1),inset 0 0 0 1px rgba(27,58,96,.07)',
-        border:    'rgba(27,58,96,.1)',
+        bg:        'linear-gradient(175deg,#ffffff 0%,#F9F4E7 40%,#F3ECD9 70%,#F5EFDF 100%)',
+        shadow:    '-4px 0 30px rgba(14,58,46,.1),inset 0 0 0 1px rgba(14,58,46,.07)',
+        border:    'rgba(14,58,46,.1)',
         text:      '#475569',
-        textHi:    '#1b3a60',
+        textHi:    '#0E3A2E',
         textMuted: '#94a3b8',
-        sectionL:  'rgba(27,58,96,.1)',
+        sectionL:  'rgba(14,58,46,.1)',
         sectionT:  '#94a3b8',
-        hoverBg:   'rgba(47,188,212,.07)',
-        hoverTxt:  '#1b3a60',
-        activeBg:  'linear-gradient(270deg,rgba(47,188,212,.18) 0%,rgba(47,188,212,.06) 60%,transparent 100%)',
-        activeTxt: '#1b3a60',
-        barShadow: '0 0 8px rgba(47,188,212,.5)',
-        iconDim:   'rgba(47,188,212,.4)',
-        subBorder: 'rgba(47,188,212,.2)',
+        hoverBg:   'rgba(31,90,69,.07)',
+        hoverTxt:  '#0E3A2E',
+        activeBg:  'linear-gradient(270deg,rgba(31,90,69,.18) 0%,rgba(31,90,69,.06) 60%,transparent 100%)',
+        activeTxt: '#0E3A2E',
+        barShadow: '0 0 8px rgba(31,90,69,.5)',
+        iconDim:   'rgba(31,90,69,.4)',
+        subBorder: 'rgba(31,90,69,.2)',
         subTxt:    '#64748b',
-        subHover:  '#1b3a60',
-        subHoverBg:'rgba(27,58,96,.04)',
-        logoBg:    'rgba(27,58,96,.04)',
-        footBg:    'rgba(27,58,96,.03)',
-        footBrd:   'rgba(27,58,96,.08)',
-        footCard:  'rgba(27,58,96,.04)',
-        footBrdC:  'rgba(27,58,96,.08)',
+        subHover:  '#0E3A2E',
+        subHoverBg:'rgba(14,58,46,.04)',
+        logoBg:    'rgba(14,58,46,.04)',
+        footBg:    'rgba(14,58,46,.03)',
+        footBrd:   'rgba(14,58,46,.08)',
+        footCard:  'rgba(14,58,46,.04)',
+        footBrdC:  'rgba(14,58,46,.08)',
         logoBtnC:  '#94a3b8',
         logoutHov: '#ef4444',
         logoutHovBg:'rgba(239,68,68,.08)',
@@ -210,7 +210,7 @@ function NavItem({ item, collapsed, colors, onNavClick }) {
         textAlign: 'right', border: 'none', outline: 'none',
         position: 'relative', overflow: 'hidden',
         transition: 'all .2s ease',
-        background: isActive ? colors.activeBg : isChildActive ? 'rgba(47,188,212,.07)' : 'transparent',
+        background: isActive ? colors.activeBg : isChildActive ? 'rgba(31,90,69,.07)' : 'transparent',
         color: isActive ? colors.activeTxt : isChildActive ? colors.textHi : colors.text,
         title: collapsed ? item.label : undefined,
     };
@@ -220,13 +220,13 @@ function NavItem({ item, collapsed, colors, onNavClick }) {
             {(isActive || isChildActive) && !collapsed && (
                 <span style={{
                     position: 'absolute', right: 0, top: '20%', bottom: '20%',
-                    width: 3, borderRadius: 4, background: '#2fbcd4',
+                    width: 3, borderRadius: 4, background: '#1F5A45',
                     boxShadow: colors.barShadow,
                 }} />
             )}
             {item.icon && (
                 <span title={collapsed ? item.label : undefined} style={{
-                    color: isActive || isChildActive ? '#2fbcd4' : colors.iconDim,
+                    color: isActive || isChildActive ? '#1F5A45' : colors.iconDim,
                     display: 'flex', transition: 'color .2s',
                 }}>
                     <Icon name={item.icon} size={collapsed ? 18 : 16} />
@@ -250,7 +250,7 @@ function NavItem({ item, collapsed, colors, onNavClick }) {
     );
 
     const onE = (e) => { if (!isActive) { e.currentTarget.style.background = colors.hoverBg; e.currentTarget.style.color = colors.hoverTxt; } };
-    const onL = (e) => { if (!isActive) { e.currentTarget.style.background = isChildActive ? 'rgba(47,188,212,.07)' : 'transparent'; e.currentTarget.style.color = isChildActive ? colors.textHi : colors.text; } };
+    const onL = (e) => { if (!isActive) { e.currentTarget.style.background = isChildActive ? 'rgba(31,90,69,.07)' : 'transparent'; e.currentTarget.style.color = isChildActive ? colors.textHi : colors.text; } };
 
     return (
         <div>
@@ -281,11 +281,11 @@ function NavItem({ item, collapsed, colors, onNavClick }) {
                                 padding: '7px 10px', borderRadius: 8,
                                 fontSize: 12.5, fontFamily: 'Cairo, sans-serif',
                                 fontWeight: ca ? 700 : 400,
-                                color: ca ? '#2fbcd4' : colors.subTxt,
-                                background: ca ? 'rgba(47,188,212,.1)' : 'transparent',
+                                color: ca ? '#1F5A45' : colors.subTxt,
+                                background: ca ? 'rgba(31,90,69,.1)' : 'transparent',
                                 textDecoration: 'none', transition: 'all .15s ease',
                             };
-                            const dot = <span style={{ width: 5, height: 5, borderRadius: '50%', flexShrink: 0, background: ca ? '#2fbcd4' : 'currentColor', opacity: ca ? 1 : .4 }} />;
+                            const dot = <span style={{ width: 5, height: 5, borderRadius: '50%', flexShrink: 0, background: ca ? '#1F5A45' : 'currentColor', opacity: ca ? 1 : .4 }} />;
                             const ce = (e) => { if (!ca) { e.currentTarget.style.color = colors.subHover; e.currentTarget.style.background = colors.subHoverBg; } };
                             const cl = (e) => { if (!ca) { e.currentTarget.style.color = colors.subTxt; e.currentTarget.style.background = 'transparent'; } };
                             return child.inertia
@@ -438,8 +438,8 @@ export default function AdminLayout({ children, title = 'لوحة التحكم' 
         }}>
             <style>{`
                 @keyframes bellPulse {
-                    0%,100% { box-shadow: 0 0 0 2px var(--a-topbar), 0 0 0 4px rgba(47,188,212,.0); }
-                    50%     { box-shadow: 0 0 0 2px var(--a-topbar), 0 0 0 6px rgba(47,188,212,.35); }
+                    0%,100% { box-shadow: 0 0 0 2px var(--a-topbar), 0 0 0 4px rgba(31,90,69,.0); }
+                    50%     { box-shadow: 0 0 0 2px var(--a-topbar), 0 0 0 6px rgba(31,90,69,.35); }
                 }
                 @keyframes dropIn {
                     from { opacity:0; transform:translateY(-8px) scale(.97); }
@@ -487,7 +487,7 @@ export default function AdminLayout({ children, title = 'لوحة التحكم' 
                 overflow: 'hidden',
             }}>
 
-                <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 1, background: 'linear-gradient(90deg,transparent,rgba(47,188,212,.4),rgba(226,232,240,.2),transparent)' }} />
+                <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 1, background: 'linear-gradient(90deg,transparent,rgba(31,90,69,.4),rgba(226,232,240,.2),transparent)' }} />
 
                 {/* Logo */}
                 <div style={{
@@ -502,8 +502,8 @@ export default function AdminLayout({ children, title = 'لوحة التحكم' 
                 }}>
                     <div role="img" aria-label="شعار منصة منصور" style={{
                         width: 44, height: 44, borderRadius: 12, flexShrink: 0,
-                        background: 'linear-gradient(135deg, #1b3a60, #2fbcd4)',
-                        boxShadow: '0 0 0 2px rgba(47,188,212,.35),0 0 20px rgba(47,188,212,.3)',
+                        background: 'linear-gradient(135deg, #0E3A2E, #1F5A45)',
+                        boxShadow: '0 0 0 2px rgba(31,90,69,.35),0 0 20px rgba(31,90,69,.3)',
                         position: 'relative', overflow: 'hidden',
                         display: 'flex', alignItems: 'center', justifyContent: 'center',
                     }}>
@@ -516,8 +516,8 @@ export default function AdminLayout({ children, title = 'لوحة التحكم' 
                     {!collapsed && (
                         <div style={{ flex: 1, minWidth: 0, overflow: 'hidden' }}>
                             <p style={{ color: C.textHi, fontWeight: 900, fontSize: 14, lineHeight: 1.2, fontFamily: 'Cairo,sans-serif', whiteSpace: 'nowrap' }}>منصة منصور</p>
-                            <p style={{ color: '#2fbcd4', fontSize: 9.5, fontWeight: 600, letterSpacing: '.15em', opacity: .85, marginTop: 2, whiteSpace: 'nowrap' }}>MANSOUR PLATFORM</p>
-                            <p style={{ color: C.textMuted, fontSize: 9.5, fontWeight: 600, marginTop: 2, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>أستاذ اللغة العربية للثانوية العامة</p>
+                            <p style={{ color: '#1F5A45', fontSize: 9.5, fontWeight: 600, letterSpacing: '.15em', opacity: .85, marginTop: 2, whiteSpace: 'nowrap' }}>MANSOUR PLATFORM</p>
+                            <p style={{ color: C.textMuted, fontSize: 9.5, fontWeight: 600, marginTop: 2, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>أستاذ التاريخ للثانوية العامة والبكالوريا</p>
                         </div>
                     )}
 
@@ -543,7 +543,7 @@ export default function AdminLayout({ children, title = 'لوحة التحكم' 
                         fontSize: 12, fontFamily: 'Cairo,sans-serif',
                         transition: 'all .2s ease',
                     }}
-                    onMouseEnter={e => { e.currentTarget.style.background = 'rgba(47,188,212,.08)'; e.currentTarget.style.color = '#2fbcd4'; }}
+                    onMouseEnter={e => { e.currentTarget.style.background = 'rgba(31,90,69,.08)'; e.currentTarget.style.color = '#1F5A45'; }}
                     onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = C.textMuted; }}
                 >
                     <Icon name={collapsed ? 'arrowLeft' : 'arrowRight'} size={14} />
@@ -574,7 +574,7 @@ export default function AdminLayout({ children, title = 'لوحة التحكم' 
                 <div style={{ padding: collapsed ? '10px 8px 14px' : '10px 10px 14px', borderTop: `1px solid ${C.footBrd}`, background: C.footBg, transition: 'all .3s ease' }}>
                     {collapsed ? (
                         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}>
-                            <div style={{ width: 36, height: 36, borderRadius: 10, background: 'linear-gradient(135deg,#2fbcd4,#009688)', boxShadow: '0 0 0 2px rgba(47,188,212,.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontWeight: 900, fontSize: 14 }} title={adminName}>
+                            <div style={{ width: 36, height: 36, borderRadius: 10, background: 'linear-gradient(135deg,#1F5A45,#8B5E3C)', boxShadow: '0 0 0 2px rgba(31,90,69,.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontWeight: 900, fontSize: 14 }} title={adminName}>
                                 {initials}
                             </div>
                             <button onClick={handleLogout} title="تسجيل الخروج" style={{ background: 'none', border: 'none', cursor: 'pointer', color: C.logoBtnC, padding: 6, borderRadius: 8, display: 'flex' }}
@@ -585,10 +585,10 @@ export default function AdminLayout({ children, title = 'لوحة التحكم' 
                         </div>
                     ) : (
                         <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '10px 12px', borderRadius: 14, background: C.footCard, border: `1px solid ${C.footBrdC}` }}>
-                            <div style={{ width: 36, height: 36, borderRadius: 10, flexShrink: 0, background: 'linear-gradient(135deg,#2fbcd4,#009688)', boxShadow: '0 0 0 2px rgba(47,188,212,.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontWeight: 900, fontSize: 14 }}>{initials}</div>
+                            <div style={{ width: 36, height: 36, borderRadius: 10, flexShrink: 0, background: 'linear-gradient(135deg,#1F5A45,#8B5E3C)', boxShadow: '0 0 0 2px rgba(31,90,69,.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontWeight: 900, fontSize: 14 }}>{initials}</div>
                             <div style={{ flex: 1, minWidth: 0 }}>
                                 <p style={{ color: C.textHi, fontSize: 12, fontWeight: 700, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{adminName}</p>
-                                <p style={{ fontSize: 10, display: 'flex', alignItems: 'center', gap: 4, color: 'rgba(47,188,212,.8)', marginTop: 1 }}>
+                                <p style={{ fontSize: 10, display: 'flex', alignItems: 'center', gap: 4, color: 'rgba(31,90,69,.8)', marginTop: 1 }}>
                                     <span style={{ width: 5, height: 5, borderRadius: '50%', background: '#22c55e', display: 'inline-block', boxShadow: '0 0 6px #22c55e' }} />
                                     مسؤول المنصة
                                 </p>
@@ -602,7 +602,7 @@ export default function AdminLayout({ children, title = 'لوحة التحكم' 
                     )}
                 </div>
 
-                <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: 1, background: 'linear-gradient(90deg,transparent,rgba(47,188,212,.3),transparent)' }} />
+                <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: 1, background: 'linear-gradient(90deg,transparent,rgba(31,90,69,.3),transparent)' }} />
             </aside>
 
             {/* ═══ MAIN CONTENT ═══ */}
@@ -626,7 +626,7 @@ export default function AdminLayout({ children, title = 'لوحة التحكم' 
 
                         <div style={{ flex: 1 }}>
                             <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 1 }}>
-                                <div style={{ width: 3, height: 16, borderRadius: 2, background: 'linear-gradient(180deg,#2fbcd4,#009688)' }} />
+                                <div style={{ width: 3, height: 16, borderRadius: 2, background: 'linear-gradient(180deg,#1F5A45,#8B5E3C)' }} />
                                 <h2 className="admin-topbar-title" style={{ color: 'var(--a-text)', fontWeight: 900, fontSize: 17, fontFamily: 'Cairo,sans-serif', lineHeight: 1 }}>{title}</h2>
                             </div>
                             <p className="admin-topbar-date" style={{ color: 'var(--a-text-4)', fontSize: 11, fontWeight: 500, fontFamily: 'Cairo,sans-serif' }}>
@@ -643,7 +643,7 @@ export default function AdminLayout({ children, title = 'لوحة التحكم' 
                                 placeholder="بحث سريع..."
                                 value={searchQuery}
                                 onChange={e => { setSearchQuery(e.target.value); setSearchOpen(true); }}
-                                onFocus={e => { e.target.style.borderColor = '#2fbcd4'; e.target.style.boxShadow = '0 0 0 3px rgba(47,188,212,.12)'; setSearchOpen(true); }}
+                                onFocus={e => { e.target.style.borderColor = '#1F5A45'; e.target.style.boxShadow = '0 0 0 3px rgba(31,90,69,.12)'; setSearchOpen(true); }}
                                 onBlur={e =>  { e.target.style.borderColor = 'var(--a-border)'; e.target.style.boxShadow = 'none'; }}
                                 onKeyDown={e => {
                                     if (e.key === 'Escape') { setSearchOpen(false); setSearchQuery(''); }
@@ -667,10 +667,10 @@ export default function AdminLayout({ children, title = 'لوحة التحكم' 
                                 <div style={{
                                     position: 'absolute', top: 'calc(100% + 8px)', right: 0,
                                     minWidth: 260, maxHeight: 360, overflowY: 'auto',
-                                    background: dark ? '#0D1829' : '#ffffff',
-                                    border: `1.5px solid ${dark ? 'rgba(226,232,240,.14)' : 'rgba(27,58,96,.1)'}`,
+                                    background: dark ? '#1C1916' : '#ffffff',
+                                    border: `1.5px solid ${dark ? 'rgba(226,232,240,.14)' : 'rgba(14,58,46,.1)'}`,
                                     borderRadius: 14,
-                                    boxShadow: dark ? '0 12px 40px rgba(0,0,0,.5)' : '0 12px 40px rgba(27,58,96,.14)',
+                                    boxShadow: dark ? '0 12px 40px rgba(0,0,0,.5)' : '0 12px 40px rgba(14,58,46,.14)',
                                     zIndex: 9999,
                                     overflow: 'hidden',
                                 }}>
@@ -686,15 +686,15 @@ export default function AdminLayout({ children, title = 'لوحة التحكم' 
                                                     : 'none',
                                                 transition: 'background .12s',
                                             }}
-                                            onMouseEnter={e => e.currentTarget.style.background = dark ? 'rgba(47,188,212,.1)' : 'rgba(47,188,212,.07)'}
+                                            onMouseEnter={e => e.currentTarget.style.background = dark ? 'rgba(31,90,69,.1)' : 'rgba(31,90,69,.07)'}
                                             onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
                                         >
-                                            <span style={{ color: '#2fbcd4', display: 'flex', flexShrink: 0 }}>
+                                            <span style={{ color: '#1F5A45', display: 'flex', flexShrink: 0 }}>
                                                 <Icon name={item.icon} size={15} />
                                             </span>
                                             <div style={{ flex: 1, minWidth: 0 }}>
-                                                <p style={{ fontSize: 13, fontWeight: 600, fontFamily: 'Cairo,sans-serif', color: dark ? 'rgba(226,232,240,.92)' : '#1b3a60', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{item.label}</p>
-                                                <p style={{ fontSize: 10.5, fontFamily: 'Cairo,sans-serif', color: item.parent ? '#2fbcd4' : (dark ? 'rgba(226,232,240,.38)' : '#94a3b8'), opacity: item.parent ? .75 : 1, marginTop: 1 }}>
+                                                <p style={{ fontSize: 13, fontWeight: 600, fontFamily: 'Cairo,sans-serif', color: dark ? 'rgba(226,232,240,.92)' : '#0E3A2E', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{item.label}</p>
+                                                <p style={{ fontSize: 10.5, fontFamily: 'Cairo,sans-serif', color: item.parent ? '#1F5A45' : (dark ? 'rgba(226,232,240,.38)' : '#94a3b8'), opacity: item.parent ? .75 : 1, marginTop: 1 }}>
                                                     {item.parent ? `${item.section} ← ${item.parent}` : item.section}
                                                 </p>
                                             </div>
@@ -716,13 +716,13 @@ export default function AdminLayout({ children, title = 'لوحة التحكم' 
                             style={{
                                 width: 38, height: 38, borderRadius: 12, flexShrink: 0,
                                 border: '1.5px solid var(--a-border)',
-                                background: dark ? 'rgba(47,188,212,.12)' : 'var(--a-card)',
+                                background: dark ? 'rgba(31,90,69,.12)' : 'var(--a-card)',
                                 display: 'flex', alignItems: 'center', justifyContent: 'center',
-                                cursor: 'pointer', color: dark ? '#2fbcd4' : 'var(--a-text-3)',
+                                cursor: 'pointer', color: dark ? '#1F5A45' : 'var(--a-text-3)',
                                 transition: 'all .2s ease',
                             }}
-                            onMouseEnter={e => { e.currentTarget.style.borderColor = '#2fbcd4'; e.currentTarget.style.color = '#2fbcd4'; e.currentTarget.style.background = 'rgba(47,188,212,.12)'; }}
-                            onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--a-border)'; e.currentTarget.style.color = dark ? '#2fbcd4' : 'var(--a-text-3)'; e.currentTarget.style.background = dark ? 'rgba(47,188,212,.12)' : 'var(--a-card)'; }}>
+                            onMouseEnter={e => { e.currentTarget.style.borderColor = '#1F5A45'; e.currentTarget.style.color = '#1F5A45'; e.currentTarget.style.background = 'rgba(31,90,69,.12)'; }}
+                            onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--a-border)'; e.currentTarget.style.color = dark ? '#1F5A45' : 'var(--a-text-3)'; e.currentTarget.style.background = dark ? 'rgba(31,90,69,.12)' : 'var(--a-card)'; }}>
                             <Icon name={dark ? 'sun' : 'moon'} size={16} />
                         </button>
 
@@ -733,14 +733,14 @@ export default function AdminLayout({ children, title = 'لوحة التحكم' 
                                 title="الإشعارات"
                                 style={{
                                     width: 38, height: 38, borderRadius: 12, flexShrink: 0,
-                                    border: `1.5px solid ${bellOpen ? '#2fbcd4' : 'var(--a-border)'}`,
-                                    background: bellOpen ? 'rgba(47,188,212,.12)' : 'var(--a-card)',
+                                    border: `1.5px solid ${bellOpen ? '#1F5A45' : 'var(--a-border)'}`,
+                                    background: bellOpen ? 'rgba(31,90,69,.12)' : 'var(--a-card)',
                                     display: 'flex', alignItems: 'center', justifyContent: 'center',
-                                    cursor: 'pointer', color: bellOpen ? '#2fbcd4' : 'var(--a-text)',
+                                    cursor: 'pointer', color: bellOpen ? '#1F5A45' : 'var(--a-text)',
                                     transition: 'all .2s ease',
                                 }}
-                                onMouseEnter={e => { e.currentTarget.style.background = '#2fbcd4'; e.currentTarget.style.color = '#fff'; e.currentTarget.style.borderColor = '#2fbcd4'; e.currentTarget.style.boxShadow = '0 4px 14px rgba(47,188,212,.35)'; }}
-                                onMouseLeave={e => { e.currentTarget.style.background = bellOpen ? 'rgba(47,188,212,.12)' : 'var(--a-card)'; e.currentTarget.style.color = bellOpen ? '#2fbcd4' : 'var(--a-text)'; e.currentTarget.style.borderColor = bellOpen ? '#2fbcd4' : 'var(--a-border)'; e.currentTarget.style.boxShadow = 'none'; }}
+                                onMouseEnter={e => { e.currentTarget.style.background = '#1F5A45'; e.currentTarget.style.color = '#fff'; e.currentTarget.style.borderColor = '#1F5A45'; e.currentTarget.style.boxShadow = '0 4px 14px rgba(31,90,69,.35)'; }}
+                                onMouseLeave={e => { e.currentTarget.style.background = bellOpen ? 'rgba(31,90,69,.12)' : 'var(--a-card)'; e.currentTarget.style.color = bellOpen ? '#1F5A45' : 'var(--a-text)'; e.currentTarget.style.borderColor = bellOpen ? '#1F5A45' : 'var(--a-border)'; e.currentTarget.style.boxShadow = 'none'; }}
                             >
                                 <Icon name="bell" size={16} />
                             </button>
@@ -750,7 +750,7 @@ export default function AdminLayout({ children, title = 'لوحة التحكم' 
                                 <span style={{
                                     position: 'absolute', top: -5, left: -5,
                                     minWidth: 18, height: 18, borderRadius: 999,
-                                    background: '#2fbcd4', color: '#fff',
+                                    background: '#1F5A45', color: '#fff',
                                     fontSize: 9, fontWeight: 800,
                                     display: 'flex', alignItems: 'center', justifyContent: 'center',
                                     padding: '0 4px',
@@ -773,8 +773,8 @@ export default function AdminLayout({ children, title = 'لوحة التحكم' 
                                     border: '1px solid var(--a-border)',
                                     borderRadius: 16,
                                     boxShadow: dark
-                                        ? '0 20px 60px rgba(0,0,0,.6), 0 0 0 1px rgba(47,188,212,.15)'
-                                        : '0 20px 60px rgba(27,58,96,.18), 0 0 0 1px rgba(47,188,212,.12)',
+                                        ? '0 20px 60px rgba(0,0,0,.6), 0 0 0 1px rgba(31,90,69,.15)'
+                                        : '0 20px 60px rgba(14,58,46,.18), 0 0 0 1px rgba(31,90,69,.12)',
                                     overflow: 'hidden',
                                     fontFamily: 'Cairo,sans-serif',
                                     animation: 'dropIn .2s cubic-bezier(.22,1,.36,1)',
@@ -794,8 +794,8 @@ export default function AdminLayout({ children, title = 'لوحة التحكم' 
                                         {notifs.total > 0 ? (
                                             <span style={{
                                                 padding: '2px 10px', borderRadius: 999,
-                                                background: 'rgba(47,188,212,.14)',
-                                                color: '#2fbcd4', fontSize: 11, fontWeight: 800,
+                                                background: 'rgba(31,90,69,.14)',
+                                                color: '#1F5A45', fontSize: 11, fontWeight: 800,
                                             }}>
                                                 {notifs.total} جديد
                                             </span>
@@ -827,12 +827,12 @@ export default function AdminLayout({ children, title = 'لوحة التحكم' 
                                                         transition: 'background .15s',
                                                         cursor: 'pointer',
                                                     }}
-                                                        onMouseEnter={e => e.currentTarget.style.background = dark ? 'rgba(255,255,255,.04)' : 'rgba(27,58,96,.04)'}
+                                                        onMouseEnter={e => e.currentTarget.style.background = dark ? 'rgba(255,255,255,.04)' : 'rgba(14,58,46,.04)'}
                                                         onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
                                                     >
                                                         <div style={{
                                                             width: 40, height: 40, borderRadius: 12, flexShrink: 0,
-                                                            background: 'rgba(47,188,212,.12)',
+                                                            background: 'rgba(31,90,69,.12)',
                                                             display: 'flex', alignItems: 'center', justifyContent: 'center',
                                                             fontSize: 18,
                                                         }}>🎓</div>
@@ -846,7 +846,7 @@ export default function AdminLayout({ children, title = 'لوحة التحكم' 
                                                         </div>
                                                         <span style={{
                                                             minWidth: 24, height: 24, borderRadius: 999,
-                                                            background: '#2fbcd4', color: '#fff',
+                                                            background: '#1F5A45', color: '#fff',
                                                             fontSize: 11, fontWeight: 900,
                                                             display: 'flex', alignItems: 'center', justifyContent: 'center',
                                                             padding: '0 6px', flexShrink: 0,
@@ -870,7 +870,7 @@ export default function AdminLayout({ children, title = 'لوحة التحكم' 
                                                         transition: 'background .15s',
                                                         cursor: 'pointer',
                                                     }}
-                                                        onMouseEnter={e => e.currentTarget.style.background = dark ? 'rgba(255,255,255,.04)' : 'rgba(27,58,96,.04)'}
+                                                        onMouseEnter={e => e.currentTarget.style.background = dark ? 'rgba(255,255,255,.04)' : 'rgba(14,58,46,.04)'}
                                                         onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
                                                     >
                                                         <div style={{
@@ -922,7 +922,7 @@ export default function AdminLayout({ children, title = 'لوحة التحكم' 
                             )}
                         </div>
 
-                        <div style={{ width: 38, height: 38, borderRadius: 12, flexShrink: 0, background: 'linear-gradient(135deg,#2fbcd4,#009688)', boxShadow: '0 0 0 2px rgba(47,188,212,.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontWeight: 900, fontSize: 14, cursor: 'pointer', fontFamily: 'Cairo,sans-serif' }}>
+                        <div style={{ width: 38, height: 38, borderRadius: 12, flexShrink: 0, background: 'linear-gradient(135deg,#1F5A45,#8B5E3C)', boxShadow: '0 0 0 2px rgba(31,90,69,.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontWeight: 900, fontSize: 14, cursor: 'pointer', fontFamily: 'Cairo,sans-serif' }}>
                             {initials}
                         </div>
                     </div>
@@ -936,7 +936,7 @@ export default function AdminLayout({ children, title = 'لوحة التحكم' 
                     <p style={{ color: 'var(--a-text-4)', fontSize: 11, fontFamily: 'Cairo,sans-serif' }}>
                         © {new Date().getFullYear()} منصة منصور — جميع الحقوق محفوظة
                     </p>
-                    <p style={{ color: '#2fbcd4', fontSize: 11, fontWeight: 700, fontFamily: 'Cairo,sans-serif' }}>
+                    <p style={{ color: '#1F5A45', fontSize: 11, fontWeight: 700, fontFamily: 'Cairo,sans-serif' }}>
                         Powered by KABOx / Mindly
                     </p>
                 </footer>

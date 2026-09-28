@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import AdminForm, { AdminField } from '@/Components/Admin/AdminForm';
 import { useForm } from '@inertiajs/react';
 
-const O = '#2fbcd4';
+const O = '#1F5A45';
 const N = 'var(--a-text)';
 const RED = '#ef4444';
 
@@ -246,7 +246,7 @@ export default function Form({ item, lessons, academicYears }) {
                         </span>
                     </div>
                     <button type="button" onClick={addQuestion} style={{
-                        background: `linear-gradient(135deg,${O},#009688)`,
+                        background: `linear-gradient(135deg,${O},#8B5E3C)`,
                         color: '#fff', border: 'none', borderRadius: 10,
                         padding: '8px 18px', fontSize: 13, fontWeight: 700, cursor: 'pointer',
                     }}>

@@ -2,8 +2,8 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { Head, useForm, router } from '@inertiajs/react';
 import AdminLayout from '@/Layouts/AdminLayout';
 
-const O   = '#2fbcd4';
-const N   = '#1b3a60';
+const O   = '#1F5A45';
+const N   = '#0E3A2E';
 const R   = '#f87171';
 const GRN = '#34d399';
 
@@ -102,12 +102,12 @@ export default function Index({ promoCodes = [], academicYears = [] }) {
     };
 
     /* ── tokens that can't be CSS vars ── */
-    const cardBdr  = dark ? 'rgba(47,188,212,.18)'   : 'rgba(47,188,212,.3)';
+    const cardBdr  = dark ? 'rgba(31,90,69,.18)'   : 'rgba(31,90,69,.3)';
     const rowHov   = dark ? 'rgba(255,255,255,.03)'  : '#f7f4ee';
     const thBg     = dark ? 'rgba(255,255,255,.04)'  : 'var(--a-card-2)';
     const chipBd   = dark ? 'rgba(255,255,255,.12)'  : 'rgba(226,232,240,.5)';
 
-    const activeChip  = { bg: 'rgba(47,188,212,.14)', bd: O, color: O };
+    const activeChip  = { bg: 'rgba(31,90,69,.14)', bd: O, color: O };
     const normalChip  = { bg: 'transparent', bd: chipBd, color: 'var(--a-text-3)' };
 
     const chipStyle = (active) => ({
@@ -149,7 +149,7 @@ export default function Index({ promoCodes = [], academicYears = [] }) {
                 {/* ── Stats ── */}
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 14, marginBottom: 22 }}>
                     {[
-                        { label: 'إجمالي الأكواد',  value: total,          icon: '🎫', color: 'var(--a-text)',  iconBg: dark ? 'rgba(47,188,212,.12)' : 'rgba(27,58,96,.06)'  },
+                        { label: 'إجمالي الأكواد',  value: total,          icon: '🎫', color: 'var(--a-text)',  iconBg: dark ? 'rgba(31,90,69,.12)' : 'rgba(14,58,46,.06)'  },
                         { label: 'أكواد متاحة',     value: availableCount, icon: '✓',  color: GRN,              iconBg: 'rgba(52,211,153,.1)'                                  },
                         { label: 'أكواد مستخدمة',   value: usedCount,      icon: '✕',  color: R,                iconBg: 'rgba(248,113,113,.1)'                                 },
                     ].map(s => (
@@ -158,7 +158,7 @@ export default function Index({ promoCodes = [], academicYears = [] }) {
                             border: `1px solid ${cardBdr}`,
                             padding: '16px 20px',
                             display: 'flex', alignItems: 'center', gap: 14,
-                            boxShadow: dark ? '0 2px 16px rgba(0,0,0,.3)' : '0 2px 12px rgba(27,58,96,.06)',
+                            boxShadow: dark ? '0 2px 16px rgba(0,0,0,.3)' : '0 2px 12px rgba(14,58,46,.06)',
                             animation: 'fadeUp .35s both',
                         }}>
                             <div style={{
@@ -183,7 +183,7 @@ export default function Index({ promoCodes = [], academicYears = [] }) {
                     border: `1px solid ${cardBdr}`,
                     borderTop: `4px solid ${O}`,
                     padding: '24px 28px', marginBottom: 22,
-                    boxShadow: dark ? '0 4px 32px rgba(0,0,0,.4)' : '0 4px 24px rgba(27,58,96,.07)',
+                    boxShadow: dark ? '0 4px 32px rgba(0,0,0,.4)' : '0 4px 24px rgba(14,58,46,.07)',
                     animation: 'fadeUp .4s .05s both',
                 }}>
                     <h3 style={{ fontSize: 15, fontWeight: 800, color: 'var(--a-text)', margin: '0 0 18px', paddingBottom: 14, borderBottom: `1px solid var(--a-border)` }}>
@@ -233,7 +233,7 @@ export default function Index({ promoCodes = [], academicYears = [] }) {
                                 padding: '12px 24px', fontSize: 13, fontWeight: 800,
                                 cursor: processing ? 'not-allowed' : 'pointer',
                                 fontFamily: "'Cairo',sans-serif", whiteSpace: 'nowrap',
-                                boxShadow: processing ? 'none' : '0 4px 16px rgba(27,58,96,.35)',
+                                boxShadow: processing ? 'none' : '0 4px 16px rgba(14,58,46,.35)',
                                 transition: 'all .2s', height: 44,
                             }}>
                                 {processing ? 'جارٍ التوليد...' : '⚡ توليد الأكواد'}
@@ -247,7 +247,7 @@ export default function Index({ promoCodes = [], academicYears = [] }) {
                     background: 'var(--a-card)', borderRadius: 18,
                     border: `1px solid ${cardBdr}`,
                     overflow: 'hidden',
-                    boxShadow: dark ? '0 4px 32px rgba(0,0,0,.4)' : '0 4px 24px rgba(27,58,96,.07)',
+                    boxShadow: dark ? '0 4px 32px rgba(0,0,0,.4)' : '0 4px 24px rgba(14,58,46,.07)',
                     animation: 'fadeUp .45s .1s both',
                 }}>
                     {/* Card header */}
@@ -311,7 +311,7 @@ export default function Index({ promoCodes = [], academicYears = [] }) {
                                 style={{
                                     padding: '6px 12px', borderRadius: 999,
                                     border: `1.5px solid ${filterYear ? O : chipBd}`,
-                                    background: filterYear ? 'rgba(47,188,212,.1)' : 'transparent',
+                                    background: filterYear ? 'rgba(31,90,69,.1)' : 'transparent',
                                     color: filterYear ? O : 'var(--a-text-3)',
                                     fontSize: 12, fontWeight: 700, cursor: 'pointer',
                                     fontFamily: "'Cairo',sans-serif", outline: 'none',
@@ -330,7 +330,7 @@ export default function Index({ promoCodes = [], academicYears = [] }) {
                                 style={{
                                     padding: '6px 14px', borderRadius: 999,
                                     border: `1.5px solid ${search ? O : chipBd}`,
-                                    background: search ? 'rgba(47,188,212,.08)' : 'transparent',
+                                    background: search ? 'rgba(31,90,69,.08)' : 'transparent',
                                     fontSize: 12, outline: 'none',
                                     fontFamily: "'Cairo',sans-serif", direction: 'ltr',
                                     minWidth: 160, transition: 'border-color .15s',
@@ -378,7 +378,7 @@ export default function Index({ promoCodes = [], academicYears = [] }) {
                                                 <span style={{
                                                     fontWeight: 900, fontSize: 14, letterSpacing: '.14em',
                                                     color: 'var(--a-text)', direction: 'ltr', fontFamily: 'monospace',
-                                                    background: dark ? 'rgba(255,255,255,.06)' : 'rgba(27,58,96,.05)',
+                                                    background: dark ? 'rgba(255,255,255,.06)' : 'rgba(14,58,46,.05)',
                                                     borderRadius: 7, padding: '3px 9px',
                                                 }}>
                                                     {promo.code}

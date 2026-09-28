@@ -2,9 +2,9 @@ import { useState } from 'react';
 import { router } from '@inertiajs/react';
 
 /* ── Brand Palette (matches Dashboard.jsx) ─────────────── */
-const O = '#2fbcd4';
-const N = '#1b3a60';
-const G = '#2fbcd4';
+const O = '#1F5A45';
+const N = '#0E3A2E';
+const G = '#1F5A45';
 
 /**
  * أرقام الدفع (فودافون كاش / انستاباي) اللي بتظهر للطلاب.
@@ -45,12 +45,12 @@ export default function PaymentNumbersEditor({ numbers = {} }) {
             background: 'var(--a-card, var(--db-card, #fff))',
             borderRadius: 20,
             padding: '1.5rem 1.75rem',
-            border: `1px solid var(--a-border, var(--db-border, rgba(47,188,212,.35)))`,
-            boxShadow: '0 2px 20px var(--a-shadow, var(--db-shadow, rgba(27,58,96,.07)))',
+            border: `1px solid var(--a-border, var(--db-border, rgba(31,90,69,.35)))`,
+            boxShadow: '0 2px 20px var(--a-shadow, var(--db-shadow, rgba(14,58,46,.07)))',
             textAlign: 'right',
         }}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem' }}>
-                <h2 style={{ margin: 0, fontSize: 16, fontWeight: 800, color: 'var(--a-text, var(--db-text, #1b3a60))' }}>
+                <h2 style={{ margin: 0, fontSize: 16, fontWeight: 800, color: 'var(--a-text, var(--db-text, #0E3A2E))' }}>
                     ⚙️ أرقام استقبال الدفع
                 </h2>
                 <span style={{
@@ -67,7 +67,7 @@ export default function PaymentNumbersEditor({ numbers = {} }) {
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: 12, marginBottom: '1.1rem' }}>
                 <label style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-                    <span style={{ fontSize: 12.5, fontWeight: 700, color: 'var(--a-text, var(--db-text, #1b3a60))' }}>
+                    <span style={{ fontSize: 12.5, fontWeight: 700, color: 'var(--a-text, var(--db-text, #0E3A2E))' }}>
                         📱 رقم فودافون كاش
                     </span>
                     <input
@@ -78,14 +78,14 @@ export default function PaymentNumbersEditor({ numbers = {} }) {
                         style={{
                             border: '1px solid var(--a-border, var(--db-rowbdr, #E2E8F0))',
                             borderRadius: 10, padding: '10px 14px', fontSize: 13,
-                            background: 'var(--a-card-2, var(--db-row, #F8FAFC))', color: 'var(--a-text, var(--db-text, #1b3a60))',
+                            background: 'var(--a-card-2, var(--db-row, #F8FAFC))', color: 'var(--a-text, var(--db-text, #0E3A2E))',
                             fontFamily: 'Cairo, sans-serif',
                         }}
                     />
                 </label>
 
                 <label style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-                    <span style={{ fontSize: 12.5, fontWeight: 700, color: 'var(--a-text, var(--db-text, #1b3a60))' }}>
+                    <span style={{ fontSize: 12.5, fontWeight: 700, color: 'var(--a-text, var(--db-text, #0E3A2E))' }}>
                         💳 حساب انستاباي
                     </span>
                     <input
@@ -96,7 +96,7 @@ export default function PaymentNumbersEditor({ numbers = {} }) {
                         style={{
                             border: '1px solid var(--a-border, var(--db-rowbdr, #E2E8F0))',
                             borderRadius: 10, padding: '10px 14px', fontSize: 13,
-                            background: 'var(--a-card-2, var(--db-row, #F8FAFC))', color: 'var(--a-text, var(--db-text, #1b3a60))',
+                            background: 'var(--a-card-2, var(--db-row, #F8FAFC))', color: 'var(--a-text, var(--db-text, #0E3A2E))',
                             fontFamily: 'Cairo, sans-serif',
                         }}
                     />

@@ -19,12 +19,12 @@ export default function Index({ classes }) {
                     render: row =>
                         row.image
                             ? <img src={`/storage/${row.image}`} className="w-12 h-12 rounded-xl object-cover" alt={row.name} />
-                            : <div className="w-12 h-12 rounded-xl flex items-center justify-center text-2xl" style={{ background: '#2fbcd418' }}>📚</div>,
+                            : <div className="w-12 h-12 rounded-xl flex items-center justify-center text-2xl" style={{ background: '#1F5A4518' }}>📚</div>,
                 },
                 {
                     key: 'name',
                     label: 'اسم الصف',
-                    render: row => <span className="font-bold" style={{ color: '#1b3a60' }}>{row.name}</span>,
+                    render: row => <span className="font-bold" style={{ color: '#0E3A2E' }}>{row.name}</span>,
                 },
                 {
                     key: 'price',

@@ -153,7 +153,7 @@ export default function Form({ item, groups }) {
                     id="is_paid"
                     checked={data.is_paid}
                     onChange={e => setData('is_paid', e.target.checked)}
-                    style={{ width: 18, height: 18, cursor: 'pointer', accentColor: '#2fbcd4' }}
+                    style={{ width: 18, height: 18, cursor: 'pointer', accentColor: '#1F5A45' }}
                 />
                 <label htmlFor="is_paid" style={{ fontSize: 14, fontFamily: 'Cairo,sans-serif', cursor: 'pointer', color: 'var(--a-text)' }}>
                     تم الدفع

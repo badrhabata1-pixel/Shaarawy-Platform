@@ -1,7 +1,7 @@
 import AdminLayout from '@/Layouts/AdminLayout';
 import { Head, Link } from '@inertiajs/react';
 
-const O = '#2fbcd4';
+const O = '#1F5A45';
 
 /* Badge styles that read well in both light and dark */
 const BADGE = {
@@ -58,8 +58,8 @@ export default function VideoQuestionsIndex({ lessons, auth }) {
 
                 {/* ── Info box ── */}
                 <div style={{
-                    background: 'rgba(47,188,212,.08)',
-                    border: '1px solid rgba(47,188,212,.2)',
+                    background: 'rgba(31,90,69,.08)',
+                    border: '1px solid rgba(31,90,69,.2)',
                     borderRadius: 14,
                     padding: '1rem 1.2rem',
                     display: 'flex', gap: 12, alignItems: 'flex-start',
