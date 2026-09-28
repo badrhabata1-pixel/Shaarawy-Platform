@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Head, useForm, router } from '@inertiajs/react';
 import AssistantLayout from '@/Layouts/AssistantLayout';
 
-const O = '#208ef4'; // برتقالي
-const N = '#14213D'; // كحلي
+const O = '#1F5A45'; // برتقالي
+const N = '#0E3A2E'; // كحلي
 
 export default function WatchTracker({ assistant, never_watched_students = [], partially_watched_students = [], filters = {} }) {
     const [search, setSearch] = useState(filters.search || '');
@@ -30,11 +30,11 @@ export default function WatchTracker({ assistant, never_watched_students = [], p
         });
     };
 
-    const bgCard = darkMode ? '#152238' : '#ffffff';
-    const borderCard = darkMode ? '1px solid rgba(220,201,163,0.15)' : '1px solid #e8edf5';
-    const borderCell = darkMode ? '1px solid rgba(255,255,255,0.05)' : '1px solid #f1f5f9';
-    const textMain = darkMode ? '#f8f9fa' : '#14213D';
-    const textMuted = darkMode ? '#94a3b8' : '#64748b';
+    const bgCard = darkMode ? '#1C1916' : '#ffffff';
+    const borderCard = darkMode ? '1px solid rgba(220,201,163,0.15)' : '1px solid #E3D9C4';
+    const borderCell = darkMode ? '1px solid rgba(255,255,255,0.05)' : '1px solid #F7F3E9';
+    const textMain = darkMode ? '#E8DCC1' : '#0E3A2E';
+    const textMuted = darkMode ? '#A89A78' : '#6B6255';
     const bgRowHover = darkMode ? 'rgba(255,255,255,0.02)' : '#fafbff';
 
     const theme = { darkMode, bgCard, borderCard, borderCell, textMain, textMuted, bgRowHover };
@@ -44,18 +44,18 @@ export default function WatchTracker({ assistant, never_watched_students = [], p
             <Head title="تتبع المشاهدات — بوابة السكرتارية" />
 
             <div className="max-w-6xl mx-auto space-y-6 text-right" dir="rtl" style={{ fontFamily: 'Cairo, sans-serif' }}>
-                
+
                 {/* مربع البحث التفاعلي الفخم */}
-                <div className="bg-white dark:bg-[#152238] p-6 rounded-2xl shadow-md border border-gray-100 dark:border-gray-800 transition-colors duration-300">
+                <div className="bg-white dark:bg-[#1C1916] p-6 rounded-2xl shadow-md border border-gray-100 dark:border-gray-800 transition-colors duration-300">
                     <form onSubmit={handleSearchSubmit} className="flex flex-col md:flex-row items-center gap-4">
                         <div className="flex-1 space-y-2 w-full">
-                            <label className="block text-sm font-black text-[#14213D] dark:text-[#f8f9fa]">البحث باسم الطالب أو الهاتف المقصر:</label>
-                            <input 
+                            <label className="block text-sm font-black text-[#0E3A2E] dark:text-[#E8DCC1]">البحث باسم الطالب أو الهاتف المقصر:</label>
+                            <input
                                 type="text"
                                 value={search}
                                 onChange={e => setSearch(e.target.value)}
                                 placeholder="ابحث باسم الطالب، أو الهاتف لمتابعته هاتفياً..."
-                                className="w-full border border-gray-200 dark:border-gray-800 bg-white dark:bg-[#0e1726] text-[#14213D] dark:text-white rounded-lg p-3 text-sm focus:border-[#F47C20] focus:ring-0 outline-none transition"
+                                className="w-full border border-gray-200 dark:border-gray-800 bg-white dark:bg-[#141210] text-[#0E3A2E] dark:text-white rounded-lg p-3 text-sm focus:border-[#C9A96A] focus:ring-0 outline-none transition"
                             />
                         </div>
                         <button type="submit" className="brand-cta w-full md:w-auto px-8 py-3 text-sm self-end">
@@ -86,11 +86,11 @@ export default function WatchTracker({ assistant, never_watched_students = [], p
                             <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 14 }}>
                                 <thead>
                                     <tr style={{ background: darkMode ? '#101c2c' : '#f8fafc' }}>
-                                        <th style={{ padding: '12px 16px', color: '#64748b', fontWeight: 700, fontSize: 12, textAlign: 'center', width: 52 }}>الصورة</th>
-                                        <th style={{ padding: '12px 8px', color: '#64748b', fontWeight: 700, fontSize: 12, textAlign: 'right' }}>اسم الطالب</th>
-                                        <th style={{ padding: '12px 8px', color: '#64748b', fontWeight: 700, fontSize: 12 }}>المجموعة</th>
-                                        <th style={{ padding: '12px 8px', color: '#64748b', fontWeight: 700, fontSize: 12 }}>حالة المشاهدة</th>
-                                        <th style={{ padding: '12px 16px', color: '#64748b', fontWeight: 700, fontSize: 12 }}>متابعة سريعة (واتساب)</th>
+                                        <th style={{ padding: '12px 16px', color: '#6B6255', fontWeight: 700, fontSize: 12, textAlign: 'center', width: 52 }}>الصورة</th>
+                                        <th style={{ padding: '12px 8px', color: '#6B6255', fontWeight: 700, fontSize: 12, textAlign: 'right' }}>اسم الطالب</th>
+                                        <th style={{ padding: '12px 8px', color: '#6B6255', fontWeight: 700, fontSize: 12 }}>المجموعة</th>
+                                        <th style={{ padding: '12px 8px', color: '#6B6255', fontWeight: 700, fontSize: 12 }}>حالة المشاهدة</th>
+                                        <th style={{ padding: '12px 16px', color: '#6B6255', fontWeight: 700, fontSize: 12 }}>متابعة سريعة (واتساب)</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -125,11 +125,11 @@ export default function WatchTracker({ assistant, never_watched_students = [], p
                             <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 14 }}>
                                 <thead>
                                     <tr style={{ background: darkMode ? '#101c2c' : '#f8fafc' }}>
-                                        <th style={{ padding: '12px 16px', color: '#64748b', fontWeight: 700, fontSize: 12, textAlign: 'center', width: 52 }}>الصورة</th>
-                                        <th style={{ padding: '12px 8px', color: '#64748b', fontWeight: 700, fontSize: 12, textAlign: 'right' }}>اسم الطالب</th>
-                                        <th style={{ padding: '12px 8px', color: '#64748b', fontWeight: 700, fontSize: 12 }}>المجموعة</th>
-                                        <th style={{ padding: '12px 16px', color: '#64748b', fontWeight: 700, fontSize: 12 }}>نسبة المشاهدة</th>
-                                        <th style={{ padding: '12px 16px', color: '#64748b', fontWeight: 700, fontSize: 12 }}>متابعة سريعة (واتساب)</th>
+                                        <th style={{ padding: '12px 16px', color: '#6B6255', fontWeight: 700, fontSize: 12, textAlign: 'center', width: 52 }}>الصورة</th>
+                                        <th style={{ padding: '12px 8px', color: '#6B6255', fontWeight: 700, fontSize: 12, textAlign: 'right' }}>اسم الطالب</th>
+                                        <th style={{ padding: '12px 8px', color: '#6B6255', fontWeight: 700, fontSize: 12 }}>المجموعة</th>
+                                        <th style={{ padding: '12px 16px', color: '#6B6255', fontWeight: 700, fontSize: 12 }}>نسبة المشاهدة</th>
+                                        <th style={{ padding: '12px 16px', color: '#6B6255', fontWeight: 700, fontSize: 12 }}>متابعة سريعة (واتساب)</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -173,7 +173,7 @@ function UnwatchedRow({ student, index, theme }) {
                 </div>
             </td>
             <td style={{ padding: '12px 8px', color: theme.textMain, fontSize: 12 }}>
-                <span className="bg-[#14213D]/10 dark:bg-white/10 text-[#14213D] dark:text-white px-3 py-1 rounded-full text-[10px]">{student.group_name}</span>
+                <span className="bg-[#0E3A2E]/10 dark:bg-white/10 text-[#0E3A2E] dark:text-white px-3 py-1 rounded-full text-[10px]">{student.group_name}</span>
             </td>
             <td style={{ padding: '12px 16px', minWidth: 140 }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
@@ -206,4 +206,3 @@ function GoogleFonts() {
         <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
     );
 }
-

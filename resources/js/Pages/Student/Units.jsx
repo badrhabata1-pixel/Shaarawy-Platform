@@ -1,12 +1,12 @@
-﻿import { Head } from '@inertiajs/react';
+import { Head } from '@inertiajs/react';
 import { useMemo, useState } from 'react';
 import StudentLayout from '@/Layouts/StudentLayout';
 
-const O  = '#0D9488';
-const N  = '#14213D';
-const G  = '#2DD4BF';
-const B  = '#DCC9A3';
-const DK = '#050a16';
+const O  = '#1F5A45';
+const N  = '#0E3A2E';
+const G  = '#C9A96A';
+const B  = '#E8DCC1';
+const DK = '#141210';
 
 const ROMAN = [
     ['M', 1000], ['CM', 900], ['D', 500], ['CD', 400], ['C', 100], ['XC', 90],
@@ -38,7 +38,7 @@ export default function Units({ student, units }) {
 
     return (
         <StudentLayout title="📖 رحلة التعلّم">
-            <Head title="الوحدات — منصة منصور" />
+            <Head title="الوحدات — منصة أحمد الشعراوي" />
 
             <style>{`
                 @keyframes twinkle       { 0%,100%{opacity:.15; transform:scale(1)} 50%{opacity:1; transform:scale(1.35)} }
@@ -52,7 +52,7 @@ export default function Units({ student, units }) {
 
                 .portal-node { transition: transform .4s cubic-bezier(.22,1,.36,1); }
                 .portal-node:hover { transform: translateY(-10px); }
-                .portal-node:hover .portal-frame { border-color: rgba(201,161,74,.6) !important; box-shadow: 0 20px 55px rgba(0,0,0,.55), 0 0 40px rgba(244,124,32,.22) !important; }
+                .portal-node:hover .portal-frame { border-color: rgba(201,169,106,.6) !important; box-shadow: 0 20px 55px rgba(0,0,0,.55), 0 0 40px rgba(139,94,60,.22) !important; }
                 .portal-node:hover .portal-ring  { animation-duration: 5s !important; opacity: 1 !important; }
                 .portal-node:hover .portal-img   { transform: scale(1.12) !important; filter: saturate(1.15) !important; }
                 .portal-node:hover .sigil-btn::after { transform: translateX(180%) !important; }
@@ -67,10 +67,10 @@ export default function Units({ student, units }) {
             {/* ── Hero: Star Atlas / Time Gate ─────────────────────── */}
             <div style={{
                 position: 'relative', overflow: 'hidden', textAlign: 'center',
-                background: `radial-gradient(ellipse 70% 100% at 50% -10%, rgba(201,161,74,.18) 0%, transparent 55%), linear-gradient(175deg, ${DK} 0%, #0a1730 50%, #060c1c 100%)`,
+                background: `radial-gradient(ellipse 70% 100% at 50% -10%, rgba(201,169,106,.18) 0%, transparent 55%), linear-gradient(175deg, ${DK} 0%, #1C1916 50%, #141210 100%)`,
                 borderRadius: 28, padding: '3.4rem 2rem 2.8rem', marginBottom: '3.4rem',
-                border: '1px solid rgba(201,161,74,.2)',
-                boxShadow: `0 14px 60px rgba(0,0,0,.5), inset 0 1px 0 rgba(201,161,74,.14)`,
+                border: '1px solid rgba(201,169,106,.2)',
+                boxShadow: `0 14px 60px rgba(0,0,0,.5), inset 0 1px 0 rgba(201,169,106,.14)`,
             }}>
                 {/* Starfield */}
                 <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none' }}>
@@ -112,10 +112,10 @@ export default function Units({ student, units }) {
                         {/* أيقونة badge مضيئة بدل الإيموجي (كانت بتظهر كمربع فاضي) */}
                         <span style={{
                             position: 'relative', width: 46, height: 46, borderRadius: 14,
-                            background: `linear-gradient(135deg, rgba(45,212,191,.18), rgba(13,148,136,.08))`,
+                            background: `linear-gradient(135deg, rgba(201,169,106,.18), rgba(31,90,69,.08))`,
                             border: `1.5px solid ${G}66`,
                             display: 'flex', alignItems: 'center', justifyContent: 'center',
-                            boxShadow: `0 0 18px rgba(45,212,191,.25), inset 0 1px 0 rgba(255,255,255,.08)`,
+                            boxShadow: `0 0 18px rgba(201,169,106,.25), inset 0 1px 0 rgba(255,255,255,.08)`,
                             flexShrink: 0,
                         }}>
                             <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
@@ -141,7 +141,7 @@ export default function Units({ student, units }) {
                     <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
                         <OrbitStat icon="📚" label="بوابة متاحة" value={units.length} />
                         <OrbitStat icon="🔓" label="مفتوحة" value={unlockedCount} accent={O} />
-                        <OrbitStat icon="⏳" label="جارٍ العبور" value={inProgress} accent="#818cf8" />
+                        <OrbitStat icon="⏳" label="جارٍ العبور" value={inProgress} accent="#C9A96A" />
                         <OrbitStat icon="🏆" label="مكتملة" value={finished} accent="#10b981" />
                     </div>
                 </div>
@@ -210,8 +210,8 @@ function PortalNode({ unit, index, roman, mode }) {
                 className="portal-frame"
                 style={{
                     position: 'relative', borderRadius: 22, overflow: 'visible',
-                    background: 'rgba(10,18,36,.72)', backdropFilter: 'blur(20px) saturate(1.6)',
-                    border: '1px solid rgba(201,161,74,.22)',
+                    background: 'rgba(28,25,22,.78)', backdropFilter: 'blur(20px) saturate(1.6)',
+                    border: '1px solid rgba(201,169,106,.22)',
                     boxShadow: '0 12px 36px rgba(0,0,0,.4)',
                     transition: 'border-color .35s, box-shadow .35s',
                     paddingTop: size / 2 + 26,
@@ -238,7 +238,7 @@ function PortalNode({ unit, index, roman, mode }) {
                     {/* Image disc */}
                     <div style={{
                         position: 'absolute', inset: 12, borderRadius: '50%', overflow: 'hidden',
-                        background: `radial-gradient(circle at 35% 30%, #1c2f57, #060c1c)`,
+                        background: `radial-gradient(circle at 35% 30%, #1F5A45, #141210)`,
                     }}>
                         {unit.image && !imgError ? (
                             <img
@@ -256,11 +256,11 @@ function PortalNode({ unit, index, roman, mode }) {
                             <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 40, opacity: .5 }}>📖</div>
                         )}
                         {!unit.is_unlocked && (
-                            <div style={{ position: 'absolute', inset: 0, background: 'rgba(4,9,20,.4)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                            <div style={{ position: 'absolute', inset: 0, background: 'rgba(20,18,16,.46)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                                 <div style={{
-                                    width: 40, height: 40, borderRadius: '50%', background: 'rgba(7,13,26,.8)',
+                                    width: 40, height: 40, borderRadius: '50%', background: 'rgba(28,25,22,.82)',
                                     border: `1.5px solid ${O}`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 16,
-                                    boxShadow: `0 0 20px rgba(244,124,32,.35)`,
+                                    boxShadow: `0 0 20px rgba(139,94,60,.35)`,
                                 }}>🔒</div>
                             </div>
                         )}
@@ -269,7 +269,7 @@ function PortalNode({ unit, index, roman, mode }) {
                     {/* Roman numeral rune tag */}
                     <div style={{
                         position: 'absolute', bottom: -6, left: '50%', transform: 'translateX(-50%)',
-                        background: `linear-gradient(135deg,#2a3f6b,${N})`, border: `1.5px solid ${G}`,
+                        background: `linear-gradient(135deg,#1F5A45,${N})`, border: `1.5px solid ${G}`,
                         borderRadius: 8, padding: '2px 10px', fontFamily: "'Cinzel', serif", fontWeight: 700,
                         fontSize: 12.5, color: G, boxShadow: '0 4px 12px rgba(0,0,0,.5)', whiteSpace: 'nowrap',
                     }}>
@@ -279,7 +279,7 @@ function PortalNode({ unit, index, roman, mode }) {
                     {unit.term && (
                         <div style={{
                             position: 'absolute', top: 2, right: -6,
-                            background: 'rgba(7,13,26,.85)', color: B,
+                            background: 'rgba(28,25,22,.86)', color: B,
                             borderRadius: 20, padding: '3px 10px', fontSize: 9.5, fontWeight: 700,
                             border: `1px solid ${G}4d`, whiteSpace: 'nowrap',
                         }}>{unit.term}</div>
@@ -344,10 +344,10 @@ function UnitCTA({ unit, mode }) {
                 style={{
                     position: 'relative', overflow: 'hidden',
                     display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
-                    width: '100%', background: `linear-gradient(135deg, ${O} 0%, #d9620a 100%)`,
+                    width: '100%', background: `linear-gradient(135deg, ${O} 0%, #8B5E3C 100%)`,
                     color: '#fff', borderRadius: 999, padding: '11px', boxSizing: 'border-box',
                     fontSize: 13, fontWeight: 800, textDecoration: 'none',
-                    boxShadow: `0 8px 22px rgba(244,124,32,.3)`, transition: 'opacity .2s, transform .2s',
+                    boxShadow: `0 8px 22px rgba(139,94,60,.3)`, transition: 'opacity .2s, transform .2s',
                 }}
                 onMouseEnter={e => { e.currentTarget.style.opacity = '.92'; e.currentTarget.style.transform = 'translateY(-2px)'; }}
                 onMouseLeave={e => { e.currentTarget.style.opacity = '1'; e.currentTarget.style.transform = 'none'; }}
@@ -416,8 +416,8 @@ function UnitCTA({ unit, mode }) {
 function EmptyState() {
     return (
         <div style={{
-            background: 'rgba(10,20,38,.6)', borderRadius: 24, padding: '4rem 2rem', textAlign: 'center',
-            border: '1px solid rgba(201,161,74,.2)', position: 'relative', overflow: 'hidden',
+            background: 'rgba(28,25,22,.72)', borderRadius: 24, padding: '4rem 2rem', textAlign: 'center',
+            border: '1px solid rgba(201,169,106,.2)', position: 'relative', overflow: 'hidden',
         }}>
             <div style={{ fontSize: 56, marginBottom: 16 }}>🌑</div>
             <h3 style={{ color: '#F5F0E8', fontSize: 18, fontWeight: 900, margin: '0 0 10px', fontFamily: "'Cinzel', serif" }}>

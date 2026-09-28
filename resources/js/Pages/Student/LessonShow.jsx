@@ -7,9 +7,9 @@ import VideoQuizOverlay from '@/Components/VideoQuizOverlay';
 import AudioRecorder from '@/Components/AudioRecorder';
 import { teacherReactionImage } from '@/Utils/teacherReaction';
 
-const O = '#0D9488';
-const N = '#14213D';
-const G = '#2DD4BF';
+const O = '#1F5A45';
+const N = '#0E3A2E';
+const G = '#C9A96A';
 
 /* ── Detect dark mode from the <html class="dark"> toggle in StudentLayout ── */
 function useDarkMode() {
@@ -39,25 +39,25 @@ export default function LessonShow({
     const dark = useDarkMode();
 
     /* ── Theme tokens (تعديل الألوان لهوية منصور) ── */
-    const cardBg         = dark ? '#0a1424' : '#fff'; // كحلي داكن متناسق مع الخلفية
-    const cardBorder     = dark ? '1px solid rgba(201, 161, 74, 0.15)' : '1px solid #f0ede8'; // حواف بلمسة ذهبية خفيفة في الليل
-    const cardShadow     = dark ? '0 8px 32px rgba(0,0,0,0.45)' : '0 4px 24px rgba(20,33,61,.1)';
+    const cardBg         = dark ? '#1C1916' : 'rgba(255,252,245,.30)'; // كحلي داكن متناسق مع الخلفية
+    const cardBorder     = dark ? '1px solid rgba(201, 161, 74, 0.15)' : '1px solid #E3D9C4'; // حواف بلمسة ذهبية خفيفة في الليل
+    const cardShadow     = dark ? '0 8px 32px rgba(0,0,0,0.45)' : '0 4px 24px rgba(14,58,46,.1)';
     const textMain       = dark ? '#F5F0E8' : N; // استخدام الأوف وايت الدافئ للنصوص الرئيسية في الليل
-    const textSub        = dark ? '#DCC9A3' : '#64748b'; // استخدام البيج الحجري للنصوص الفرعية
-    const textMuted      = dark ? 'rgba(220, 201, 163, 0.6)' : '#94a3b8';
-    const divider        = dark ? 'rgba(201, 161, 74, 0.1)' : '#f0ede8';
-    const iconBg         = dark ? 'rgba(201, 161, 74, 0.08)' : '#f0ede8';
-    const iconColor      = dark ? '#C9A14A' : '#94a3b8'; // الأيقونات بالذهبي في الليل
-    const optionBg       = dark ? 'rgba(255,255,255,0.02)' : '#fff';
+    const textSub        = dark ? '#E8DCC1' : '#6B6255'; // استخدام البيج الحجري للنصوص الفرعية
+    const textMuted      = dark ? 'rgba(220, 201, 163, 0.6)' : '#A89A78';
+    const divider        = dark ? 'rgba(201, 161, 74, 0.1)' : '#E3D9C4';
+    const iconBg         = dark ? 'rgba(201, 161, 74, 0.08)' : '#E3D9C4';
+    const iconColor      = dark ? '#C9A96A' : '#A89A78'; // الأيقونات بالذهبي في الليل
+    const optionBg       = dark ? 'rgba(255,255,255,0.02)' : 'rgba(255,252,245,.30)';
     const optionBorder   = dark ? 'rgba(201, 161, 74, 0.15)' : '#e5e7eb';
-    const optionColor    = dark ? '#DCC9A3' : '#4b5563';
+    const optionColor    = dark ? '#E8DCC1' : '#4b5563';
     const cancelBg       = dark ? 'rgba(255,255,255,0.04)' : '#fff';
     const cancelBorder   = dark ? 'rgba(255,255,255,0.08)' : '#e5e7eb';
-    const cancelColor    = dark ? '#DCC9A3' : '#64748b';
-    const resultBoxBg    = dark ? 'rgba(201, 161, 74, 0.05)' : '#f8f9fa';
-    const resultBoxBorder= dark ? 'rgba(201, 161, 74, 0.2)' : '#f0ede8';
+    const cancelColor    = dark ? '#E8DCC1' : '#6B6255';
+    const resultBoxBg    = dark ? 'rgba(201, 161, 74, 0.05)' : '#E8DCC1';
+    const resultBoxBorder= dark ? 'rgba(201, 161, 74, 0.2)' : '#E3D9C4';
     const sidebarItemDiv = dark ? 'rgba(201, 161, 74, 0.08)' : '#f8f5f0';
-    const sidebarIconBg  = dark ? 'rgba(201, 161, 74, 0.12)' : '#f0ede8';
+    const sidebarIconBg  = dark ? 'rgba(201, 161, 74, 0.12)' : '#E3D9C4';
 
     /* ── Videos list ── */
     const allVideos = videos.length > 0
@@ -614,8 +614,8 @@ export default function LessonShow({
                             <div style={{
                                 padding: '10px 20px',
                                 background: dark
-                                    ? `linear-gradient(90deg, rgba(244,124,32,.12), transparent)`
-                                    : `linear-gradient(90deg, rgba(244,124,32,.08), transparent)`,
+                                    ? `linear-gradient(90deg, rgba(139,94,60,.12), transparent)`
+                                    : `linear-gradient(90deg, rgba(139,94,60,.08), transparent)`,
                                 borderBottom: `1px solid ${divider}`,
                                 display: 'flex', alignItems: 'center', gap: 8,
                                 transition: 'background .3s',
@@ -629,7 +629,7 @@ export default function LessonShow({
                                         marginRight: 'auto',
                                         fontSize: 11, fontWeight: 700,
                                         color: O,
-                                        background: 'rgba(244,124,32,.1)',
+                                        background: 'rgba(139,94,60,.1)',
                                         padding: '2px 8px', borderRadius: 20,
                                     }}>
                                         {(focus_questions_by_video[activeVideoIdx] ?? []).length} أسئلة تركيز
@@ -653,7 +653,7 @@ export default function LessonShow({
                                 </div>
                                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, flexShrink: 0 }}>
                                     <span style={{
-                                        background: dark ? 'rgba(20,33,61,.6)' : N,
+                                        background: dark ? 'rgba(14,58,46,.6)' : N,
                                         color: '#fff',
                                         borderRadius: 20, padding: '4px 12px',
                                         fontSize: 11, fontWeight: 700,
@@ -673,7 +673,7 @@ export default function LessonShow({
                     {/* ── Video list sidebar ── */}
                     {hasMultipleVideos && (
                         <div style={{
-                            background: dark ? '#0e1726' : '#fff',
+                            background: dark ? '#141210' : '#fff',
                             borderRadius: 20,
                             overflow: 'hidden',
                             boxShadow: cardShadow,
@@ -684,7 +684,7 @@ export default function LessonShow({
                             <div style={{
                                 padding: '14px 16px',
                                 borderBottom: `1px solid ${divider}`,
-                                background: `linear-gradient(135deg, ${N}, #1a2d52)`,
+                                background: `linear-gradient(135deg, ${N}, #1F5A45)`,
                             }}>
                                 <div style={{ color: '#fff', fontSize: 14, fontWeight: 900, marginBottom: 2 }}>
                                     🎬 فيديوهات المحاضرة
@@ -708,7 +708,7 @@ export default function LessonShow({
                                                 width: '100%', textAlign: 'right',
                                                 padding: '12px 16px',
                                                 background: isActive
-                                                    ? (dark ? 'rgba(244,124,32,.1)' : 'rgba(244,124,32,.07)')
+                                                    ? (dark ? 'rgba(139,94,60,.1)' : 'rgba(139,94,60,.07)')
                                                     : 'transparent',
                                                 borderRight: isActive ? `3px solid ${O}` : '3px solid transparent',
                                                 border: 'none',
@@ -717,7 +717,7 @@ export default function LessonShow({
                                                 transition: 'all .15s',
                                                 display: 'flex', alignItems: 'center', gap: 10,
                                             }}
-                                            onMouseEnter={e => { if (!isActive) e.currentTarget.style.background = dark ? 'rgba(255,255,255,.04)' : 'rgba(244,124,32,.03)'; }}
+                                            onMouseEnter={e => { if (!isActive) e.currentTarget.style.background = dark ? 'rgba(255,255,255,.04)' : 'rgba(139,94,60,.03)'; }}
                                             onMouseLeave={e => { if (!isActive) e.currentTarget.style.background = 'transparent'; }}
                                         >
                                             <div style={{
@@ -743,7 +743,7 @@ export default function LessonShow({
                                                         🎯 {qCount} أسئلة تركيز
                                                     </div>
                                                 ) : (
-                                                    <div style={{ fontSize: 11, color: dark ? 'rgba(148,163,184,.4)' : '#cbd5e1', fontWeight: 500 }}>
+                                                    <div style={{ fontSize: 11, color: dark ? 'rgba(148,163,184,.4)' : '#CFC2A6', fontWeight: 500 }}>
                                                         لا أسئلة تركيز
                                                     </div>
                                                 )}
@@ -785,7 +785,7 @@ export default function LessonShow({
                                 <div key={c.id}>
                                     {/* سؤال الطالب */}
                                     <div style={{
-                                        background: dark ? 'rgba(244,124,32,.08)' : 'rgba(244,124,32,.05)',
+                                        background: dark ? 'rgba(139,94,60,.08)' : 'rgba(139,94,60,.05)',
                                         border: `1px solid ${O}30`,
                                         borderRadius: '16px 16px 4px 16px',
                                         padding: '12px 16px',
@@ -811,7 +811,7 @@ export default function LessonShow({
                                     {/* رد الأستاذ */}
                                     {c.replied_at ? (
                                         <div style={{
-                                            background: dark ? 'rgba(201,161,74,.08)' : 'rgba(201,161,74,.06)',
+                                            background: dark ? 'rgba(201,169,106,.08)' : 'rgba(201,169,106,.06)',
                                             border: `1px solid ${G}35`,
                                             borderRadius: '16px 16px 16px 4px',
                                             padding: '12px 16px',
@@ -889,7 +889,7 @@ export default function LessonShow({
                                     display: 'flex', alignItems: 'center', gap: 8, cursor: 'pointer',
                                     background: 'transparent', border: `1.5px solid ${dark ? 'rgba(255,255,255,.15)' : '#e5e7eb'}`,
                                     borderRadius: 999, padding: '8px 16px',
-                                    color: dark ? '#cbd5e1' : '#475569', fontSize: 12.5, fontWeight: 700,
+                                    color: dark ? '#CFC2A6' : '#475569', fontSize: 12.5, fontWeight: 700,
                                 }}
                             >
                                 🖼️ إرفاق صورة
@@ -904,10 +904,10 @@ export default function LessonShow({
                                 style={{
                                     marginRight: 'auto',
                                     display: 'flex', alignItems: 'center', gap: 8,
-                                    background: qSubmitting ? 'rgba(244,124,32,.5)' : `linear-gradient(135deg, ${O}, #d96a12)`,
+                                    background: qSubmitting ? 'rgba(139,94,60,.5)' : `linear-gradient(135deg, ${O}, #8B5E3C)`,
                                     color: '#fff', border: 'none', borderRadius: 999, padding: '9px 22px',
                                     fontSize: 13, fontWeight: 800, cursor: qSubmitting ? 'default' : 'pointer',
-                                    boxShadow: qSubmitting ? 'none' : `0 4px 14px rgba(244,124,32,.35)`,
+                                    boxShadow: qSubmitting ? 'none' : `0 4px 14px rgba(139,94,60,.35)`,
                                     fontFamily: 'Cairo, sans-serif',
                                 }}
                             >
@@ -949,28 +949,28 @@ export default function LessonShow({
                                     style={{
                                         display: 'flex', alignItems: 'center', gap: 10,
                                         padding: '12px 18px', borderRadius: 14,
-                                        border: `1.5px solid ${dark ? 'rgba(201,161,74,.25)' : 'rgba(201,161,74,.3)'}`,
-                                        background: dark ? 'rgba(201,161,74,.06)' : 'rgba(201,161,74,.05)',
+                                        border: `1.5px solid ${dark ? 'rgba(201,169,106,.25)' : 'rgba(201,169,106,.3)'}`,
+                                        background: dark ? 'rgba(201,169,106,.06)' : 'rgba(201,169,106,.05)',
                                         textDecoration: 'none',
                                         transition: 'all .18s',
                                         flex: '1 1 200px', minWidth: 180, maxWidth: 280,
                                     }}
                                     onMouseEnter={e => {
-                                        e.currentTarget.style.background = dark ? 'rgba(201,161,74,.14)' : 'rgba(201,161,74,.12)';
+                                        e.currentTarget.style.background = dark ? 'rgba(201,169,106,.14)' : 'rgba(201,169,106,.12)';
                                         e.currentTarget.style.borderColor = G;
                                         e.currentTarget.style.transform = 'translateY(-2px)';
-                                        e.currentTarget.style.boxShadow = '0 6px 18px rgba(201,161,74,.2)';
+                                        e.currentTarget.style.boxShadow = '0 6px 18px rgba(201,169,106,.2)';
                                     }}
                                     onMouseLeave={e => {
-                                        e.currentTarget.style.background = dark ? 'rgba(201,161,74,.06)' : 'rgba(201,161,74,.05)';
-                                        e.currentTarget.style.borderColor = dark ? 'rgba(201,161,74,.25)' : 'rgba(201,161,74,.3)';
+                                        e.currentTarget.style.background = dark ? 'rgba(201,169,106,.06)' : 'rgba(201,169,106,.05)';
+                                        e.currentTarget.style.borderColor = dark ? 'rgba(201,169,106,.25)' : 'rgba(201,169,106,.3)';
                                         e.currentTarget.style.transform = 'translateY(0)';
                                         e.currentTarget.style.boxShadow = 'none';
                                     }}
                                 >
                                     <div style={{
                                         width: 40, height: 40, borderRadius: 10, flexShrink: 0,
-                                        background: dark ? 'rgba(201,161,74,.15)' : 'rgba(201,161,74,.15)',
+                                        background: dark ? 'rgba(201,169,106,.15)' : 'rgba(201,169,106,.15)',
                                         display: 'flex', alignItems: 'center', justifyContent: 'center',
                                         fontSize: 20,
                                     }}>
@@ -1032,11 +1032,11 @@ export default function LessonShow({
                                 onClick={() => { setAnswers({}); setQuizStarted(true); }}
                                 style={{
                                     padding: '11px 32px', borderRadius: 14,
-                                    background: `linear-gradient(135deg, ${O}, #d96a12)`,
+                                    background: `linear-gradient(135deg, ${O}, #8B5E3C)`,
                                     color: '#fff', border: 'none',
                                     fontSize: 14, fontWeight: 800, cursor: 'pointer',
                                     fontFamily: 'Cairo',
-                                    boxShadow: `0 4px 14px rgba(244,124,32,.4)`,
+                                    boxShadow: `0 4px 14px rgba(139,94,60,.4)`,
                                     transition: 'opacity .2s',
                                 }}
                                 onMouseEnter={e => e.currentTarget.style.opacity = '.88'}
@@ -1080,7 +1080,7 @@ export default function LessonShow({
                                                         borderRadius: 12,
                                                         border: `1.5px solid ${isSelected ? O : optionBorder}`,
                                                         background: isSelected
-                                                            ? (dark ? 'rgba(244,124,32,.12)' : 'rgba(244,124,32,.06)')
+                                                            ? (dark ? 'rgba(139,94,60,.12)' : 'rgba(139,94,60,.06)')
                                                             : optionBg,
                                                         cursor: 'pointer', fontFamily: 'Cairo',
                                                         fontSize: 13, fontWeight: isSelected ? 700 : 500,
@@ -1092,7 +1092,7 @@ export default function LessonShow({
                                                     <span style={{
                                                         width: 28, height: 28, borderRadius: '50%', flexShrink: 0,
                                                         background: isSelected ? O : (dark ? 'rgba(255,255,255,.1)' : '#f0f0f0'),
-                                                        color: isSelected ? '#fff' : (dark ? '#94a3b8' : '#888'),
+                                                        color: isSelected ? '#fff' : (dark ? '#A89A78' : '#888'),
                                                         fontSize: 12, fontWeight: 900,
                                                         display: 'flex', alignItems: 'center', justifyContent: 'center',
                                                     }}>
@@ -1126,7 +1126,7 @@ export default function LessonShow({
                                     style={{
                                         padding: '9px 24px', borderRadius: 12, border: 'none',
                                         background: (Object.keys(answers).length < quiz_questions.length || submitting)
-                                            ? (dark ? 'rgba(255,255,255,.15)' : '#cbd5e1')
+                                            ? (dark ? 'rgba(255,255,255,.15)' : '#CFC2A6')
                                             : O,
                                         color: '#fff', fontSize: 13, fontWeight: 800,
                                         cursor: (Object.keys(answers).length < quiz_questions.length || submitting) ? 'not-allowed' : 'pointer',
@@ -1178,7 +1178,7 @@ export default function LessonShow({
                                         style={{
                                             padding: '10px 22px', borderRadius: 12,
                                             border: `2px solid ${O}`, color: O,
-                                            background: dark ? 'rgba(244,124,32,.08)' : '#fff',
+                                            background: dark ? 'rgba(139,94,60,.08)' : '#fff',
                                             fontSize: 13, fontWeight: 800, cursor: 'pointer', fontFamily: 'Cairo',
                                             transition: 'background .2s',
                                         }}
@@ -1204,5 +1204,3 @@ export default function LessonShow({
         </StudentLayout>
     );
 }
-
-

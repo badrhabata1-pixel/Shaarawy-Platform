@@ -21,7 +21,7 @@ const METHOD = {
     vodafone: { label: 'فودافون كاش', icon: '📱' },
     instapay: { label: 'إنستا باي',   icon: '⚡' },
 };
-const BRAND_GRAD = 'linear-gradient(135deg,#0D9488 0%,#d9620a 100%)';
+const BRAND_GRAD = 'linear-gradient(135deg,#1F5A45 0%,#8B5E3C 100%)';
 
 function screenshotUrl(path) {
     if (!path) return null;
@@ -66,11 +66,11 @@ export default function AssistantPaymentsIndex({ assistant, requests = [] }) {
         );
     };
 
-    const card   = dark ? '#152238' : '#fff';
+    const card   = dark ? '#1C1916' : '#fff';
     const cardBd = dark ? 'rgba(255,255,255,.07)' : '#eee';
-    const txtMain= dark ? '#f0f4f8' : '#111';
+    const txtMain= dark ? '#E8DCC1' : '#111';
     const txtSub = dark ? 'rgba(220,201,163,.45)' : '#666';
-    const inputBg= dark ? '#0d1826' : '#fff';
+    const inputBg= dark ? '#1C1916' : '#fff';
     const inputBd= dark ? 'rgba(255,255,255,.12)' : '#ddd';
 
     return (
@@ -80,7 +80,7 @@ export default function AssistantPaymentsIndex({ assistant, requests = [] }) {
             <div style={{ fontFamily: "'Cairo',sans-serif", direction: 'rtl' }}>
 
                 <div style={{ marginBottom: 24 }}>
-                    <h1 style={{ fontSize: 22, fontWeight: 800, margin: 0, color: dark ? '#DCC9A3' : '#14213D' }}>💳 طلبات الدفع</h1>
+                    <h1 style={{ fontSize: 22, fontWeight: 800, margin: 0, color: dark ? '#E8DCC1' : '#0E3A2E' }}>💳 طلبات الدفع</h1>
                     <p style={{ fontSize: 13, color: txtSub, marginTop: 4 }}>
                         {counts.pending > 0 ? `${counts.pending} طلب قيد المراجعة` : 'لا توجد طلبات معلقة'} — إجمالي {counts.all} طلب
                     </p>
@@ -110,7 +110,7 @@ export default function AssistantPaymentsIndex({ assistant, requests = [] }) {
                                 padding: '7px 18px', borderRadius: 8, cursor: 'pointer',
                                 fontFamily: "'Cairo',sans-serif", fontSize: 13, fontWeight: 700,
                                 border: '1.5px solid',
-                                borderColor: isActive ? '#0D9488' : cardBd,
+                                borderColor: isActive ? '#1F5A45' : cardBd,
                                 background:  isActive ? BRAND_GRAD : card,
                                 color:       isActive ? '#fff'    : txtSub,
                                 transition: 'all .2s',
@@ -227,7 +227,7 @@ export default function AssistantPaymentsIndex({ assistant, requests = [] }) {
                                 fontFamily: "'Cairo',sans-serif", resize: 'vertical', outline: 'none',
                                 background: inputBg, color: txtMain,
                             }}
-                            onFocus={e => e.target.style.borderColor = '#F47C20'}
+                            onFocus={e => e.target.style.borderColor = '#C9A96A'}
                             onBlur={e  => e.target.style.borderColor = inputBd}
                         />
                         <div style={{ display: 'flex', gap: 10, marginTop: 18, justifyContent: 'flex-end' }}>

@@ -1,10 +1,10 @@
-﻿import React, { useState } from 'react';
+import React, { useState } from 'react';
 import { Head, useForm } from '@inertiajs/react';
 import AssistantLayout from '@/Layouts/AssistantLayout';
 
-const O = '#208ef4'; // برتقالي
-const N = '#14213D'; // كحلي
-const B = '#DCC9A3'; // ذهبي
+const O = '#1F5A45'; // برتقالي
+const N = '#0E3A2E'; // كحلي
+const B = '#E8DCC1'; // ذهبي
 
 export default function PromoCodes({ assistant, promo_codes = [], lessons = [] }) {
     const [amount, setAmount] = useState(10);
@@ -37,33 +37,33 @@ export default function PromoCodes({ assistant, promo_codes = [], lessons = [] }
             <Head title="أكواد الشحن — بوابة السكرتارية" />
 
             <div className="max-w-5xl mx-auto space-y-6 text-right" dir="rtl" style={{ fontFamily: 'Cairo, sans-serif' }}>
-                
+
                 {/* 1. لوحة توليد أكواد جديدة (Generate Panel) */}
-                <div className="bg-white p-6 md:p-8 rounded-2xl shadow-xl border-t-8 border-[#F47C20] relative overflow-hidden">
+                <div className="bg-white p-6 md:p-8 rounded-2xl shadow-xl border-t-8 border-[#C9A96A] relative overflow-hidden">
                     <div className="absolute -bottom-6 -left-6 text-8xl opacity-5 pointer-events-none">🎫</div>
-                    
-                    <h3 className="text-lg font-black text-[#14213D] mb-6 border-b pb-3">توليد أكواد شحن جديدة لطلاب السناتر</h3>
-                    
+
+                    <h3 className="text-lg font-black text-[#0E3A2E] mb-6 border-b pb-3">توليد أكواد شحن جديدة لطلاب السناتر</h3>
+
                     <form onSubmit={handleSubmit} className="grid md:grid-cols-3 gap-6 items-end">
                         <div className="space-y-2">
-                            <label className="block text-sm font-black text-[#14213D]">عدد الأكواد المطلوبة:</label>
-                            <input 
-                                type="number" 
-                                min="1" 
+                            <label className="block text-sm font-black text-[#0E3A2E]">عدد الأكواد المطلوبة:</label>
+                            <input
+                                type="number"
+                                min="1"
                                 max="100"
                                 value={data.amount}
                                 onChange={e => setData('amount', e.target.value)}
-                                className="w-full border border-gray-200 rounded-lg p-3 text-sm focus:border-[#F47C20] focus:ring-0 text-center font-bold"
+                                className="w-full border border-gray-200 rounded-lg p-3 text-sm focus:border-[#C9A96A] focus:ring-0 text-center font-bold"
                             />
                             {errors.amount && <p className="text-red-500 text-xs mt-1">⚠️ {errors.amount}</p>}
                         </div>
 
                         <div className="space-y-2">
-                            <label className="block text-sm font-black text-[#14213D]">المحاضرة المراد ربط الكود بها:</label>
-                            <select 
+                            <label className="block text-sm font-black text-[#0E3A2E]">المحاضرة المراد ربط الكود بها:</label>
+                            <select
                                 value={data.lesson_id}
                                 onChange={e => setData('lesson_id', e.target.value)}
-                                className="w-full border border-gray-200 rounded-lg p-3 text-sm focus:border-[#F47C20] focus:ring-0"
+                                className="w-full border border-gray-200 rounded-lg p-3 text-sm focus:border-[#C9A96A] focus:ring-0"
                             >
                                 <option value="">-- كود عام (يشحن أي كورس) --</option>
                                 {lessons.map(lesson => (
@@ -73,7 +73,7 @@ export default function PromoCodes({ assistant, promo_codes = [], lessons = [] }
                             {errors.lesson_id && <p className="text-red-500 text-xs mt-1">⚠️ {errors.lesson_id}</p>}
                         </div>
 
-                        <button 
+                        <button
                             type="submit"
                             disabled={processing}
                             className="brand-cta py-4 text-sm disabled:opacity-50"
@@ -87,7 +87,7 @@ export default function PromoCodes({ assistant, promo_codes = [], lessons = [] }
                 <div className="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100">
                     <div className="p-6 border-b border-gray-100 flex justify-between items-center bg-gray-50 flex-wrap gap-4">
                         <div>
-                            <h3 className="text-base font-black text-[#14213D]">أكواد الشحن النشطة بالمنصة</h3>
+                            <h3 className="text-base font-black text-[#0E3A2E]">أكواد الشحن النشطة بالمنصة</h3>
                             <p className="text-xs text-gray-500 mt-1">يمكن للطلاب استخدام هذه الأكواد لتفعيل محاضراتهم المغلقة يدوياً</p>
                         </div>
                         <div style={{
@@ -102,7 +102,7 @@ export default function PromoCodes({ assistant, promo_codes = [], lessons = [] }
                     <div className="overflow-x-auto">
                         <table className="w-full text-center border-collapse text-xs">
                             <thead>
-                                <tr className="bg-gray-100 text-[#14213D] font-black border-b border-gray-100">
+                                <tr className="bg-gray-100 text-[#0E3A2E] font-black border-b border-gray-100">
                                     <th className="p-4">#</th>
                                     <th className="p-4">كود التفعيل (Promo Code)</th>
                                     <th className="p-4">المحاضرة المرتبطة</th>
@@ -122,10 +122,10 @@ export default function PromoCodes({ assistant, promo_codes = [], lessons = [] }
                                     promo_codes.map((promo, idx) => (
                                         <tr key={promo.id} className="hover:bg-gray-50/50 transition">
                                             <td className="p-4 text-gray-400">{idx + 1}</td>
-                                            <td className="p-4 font-black text-sm tracking-wider text-[#14213D]" style={{ direction: 'ltr' }}>
+                                            <td className="p-4 font-black text-sm tracking-wider text-[#0E3A2E]" style={{ direction: 'ltr' }}>
                                                 {promo.code}
                                             </td>
-                                            <td className="p-4 text-[#14213D] font-bold">
+                                            <td className="p-4 text-[#0E3A2E] font-bold">
                                                 {promo.lesson_title || '🏷️ كود عام لمشاهدة أي مقرر'}
                                             </td>
                                             <td className="p-4">
@@ -136,7 +136,7 @@ export default function PromoCodes({ assistant, promo_codes = [], lessons = [] }
                                                 )}
                                             </td>
                                             <td className="p-4">
-                                                <button 
+                                                <button
                                                     onClick={() => handleDelete(promo.id)}
                                                     className="w-8 h-8 rounded-full bg-red-50 text-red-500 hover:bg-red-100 transition flex items-center justify-center mx-auto"
                                                     title="حذف الكود نهائياً"
@@ -165,4 +165,3 @@ function GoogleFonts() {
         />
     );
 }
-

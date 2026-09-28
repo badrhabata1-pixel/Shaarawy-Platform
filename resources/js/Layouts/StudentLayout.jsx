@@ -1,17 +1,17 @@
 import { Link, usePage, router } from '@inertiajs/react';
 import { useState, useEffect, useRef } from 'react';
 
-const O = '#0D9488';   // كان برتقالي (F47C20) → بقى تركواز غامق (زي لوحة الأدمن)
-const N = '#14213D';
-const B = '#DCC9A3';
-const G = '#2DD4BF';   // تركواز فاتح — بديل اللون الدهبي (C9A14A) في كل الملف
+const O = '#1F5A45';   // كان برتقالي (F47C20) → بقى تركواز غامق (زي لوحة الأدمن)
+const N = '#0E3A2E';
+const B = '#E8DCC1';
+const G = '#C9A96A';   // تركواز فاتح — بديل اللون الدهبي (C9A14A) في كل الملف
 
 /* ── أسماء صور الخلفية — حطهم في public/images/ ─────────
    bg-pattern-light.jpg  → تظهر في الوضع النهاري (الفاتح)
    bg-pattern-dark.jpg   → تظهر في الوضع الليلي (الغامق)
 ─────────────────────────────────────────────────────── */
-const BG_IMAGE_LIGHT = '/images/bg-pattern-light.jpg';
-const BG_IMAGE_DARK  = '/images/bg-pattern-dark.jpg';
+const BG_IMAGE_LIGHT = '/images/student-history-light.png';
+const BG_IMAGE_DARK  = '/images/student-history-dark.png';
 
 /* ── History emoji floating layer ─────────────────────── */
 const BG_EMOJIS = [
@@ -50,7 +50,7 @@ export default function StudentLayout({ children, title, student: studentProp })
     const notifRef = useRef(null);
 
     const student = studentProp || props.student || props.auth?.user || props.auth?.student || {
-        full_name: 'طالب منصور',
+        full_name: 'طالب أحمد الشعراوي',
         initials:  'ص',
         avatar:    null,
     };
@@ -93,16 +93,16 @@ export default function StudentLayout({ children, title, student: studentProp })
         return () => document.removeEventListener('mousedown', handleClickOutside);
     }, []);
 
-    const bgCard = darkMode ? '#152238' : '#ffffff';
-    const textMain = darkMode ? '#f8f9fa' : '#14213D';
+    const bgCard = darkMode ? '#1C1916' : '#ffffff';
+    const textMain = darkMode ? '#E8DCC1' : '#0E3A2E';
 
     return (
-        <div style={{ minHeight: '100vh', background: 'transparent', color: textMain, fontFamily: "'Cairo', sans-serif", direction: 'rtl', transition: 'all 0.3s ease' }}>
+        <div className="student-shell" style={{ minHeight: '100vh', background: 'transparent', color: textMain, fontFamily: "'Cairo', sans-serif", direction: 'rtl', transition: 'all 0.3s ease' }}>
             <style>{`
                 body,html{
                     background:${darkMode
-                        ? `linear-gradient(rgba(8,17,31,0.82),rgba(8,17,31,0.82)), url('${BG_IMAGE_DARK}')`
-                        : `linear-gradient(rgba(255,255,255,0.55),rgba(255,255,255,0.55)), url('${BG_IMAGE_LIGHT}')`
+                        ? `linear-gradient(rgba(20,18,16,0.60),rgba(20,18,16,0.60)), url('${BG_IMAGE_DARK}')`
+                        : `linear-gradient(rgba(245,239,223,0.08),rgba(245,239,223,0.08)), url('${BG_IMAGE_LIGHT}')`
                     }!important;
                     background-size: cover !important;
                     background-position: center !important;
@@ -117,6 +117,16 @@ export default function StudentLayout({ children, title, student: studentProp })
                 }
                 .nav-desktop    { display:flex; }
                 .nav-mobile-btn { display:none; }
+                .student-shell .brand-cta {
+                    background: linear-gradient(135deg, #0E3A2E 0%, #1F5A45 58%, #8B5E3C 100%) !important;
+                    box-shadow: 0 10px 24px rgba(14,58,46,.22), 0 6px 18px rgba(139,94,60,.18) !important;
+                }
+                .student-shell .student-paper-surface {
+                    background: rgba(255,252,245,.52) !important;
+                    border-color: rgba(201,169,106,.38) !important;
+                    backdrop-filter: blur(5px);
+                    -webkit-backdrop-filter: blur(5px);
+                }
                 @media(max-width:1023px){
                     .nav-bar        { height:68px!important; padding:0 0.75rem!important; }
                     .nav-logo-img   { height:52px!important; }
@@ -136,7 +146,7 @@ export default function StudentLayout({ children, title, student: studentProp })
                 pointerEvents: 'none',
             }}>
             <nav className="nav-bar" style={{
-                background:      darkMode ? 'rgba(8,14,26,0.80)' : 'rgba(10,20,44,0.78)',
+                background:      darkMode ? 'rgba(20,18,16,0.80)' : 'rgba(14,58,46,0.84)',
                 backdropFilter:  'blur(28px) saturate(2)',
                 WebkitBackdropFilter: 'blur(28px) saturate(2)',
                 color:           '#fff',
@@ -146,9 +156,9 @@ export default function StudentLayout({ children, title, student: studentProp })
                 alignItems:      'center',
                 justifyContent:  'space-between',
                 borderRadius:    18,
-                border:          '1px solid rgba(45,212,191,.2)',
-                borderTop:       '2px solid rgba(45,212,191,.5)',
-                boxShadow:       '0 8px 40px rgba(0,0,0,.55), 0 2px 8px rgba(0,0,0,.3), inset 0 1px 0 rgba(45,212,191,.12)',
+                border:          '1px solid rgba(201,169,106,.2)',
+                borderTop:       '2px solid rgba(201,169,106,.5)',
+                boxShadow:       '0 8px 40px rgba(0,0,0,.55), 0 2px 8px rgba(0,0,0,.3), inset 0 1px 0 rgba(201,169,106,.12)',
                 transition:      'background .3s ease, box-shadow .3s ease',
                 pointerEvents:   'auto',
                 position:        'relative',
@@ -176,8 +186,8 @@ export default function StudentLayout({ children, title, student: studentProp })
                                     fontSize:       13,
                                     padding:        '7px 18px',
                                     borderRadius:   10,
-                                    background:     isActive(item.match) ? 'rgba(45,212,191,.1)' : 'transparent',
-                                    border:         isActive(item.match) ? '1px solid rgba(45,212,191,.28)' : '1px solid transparent',
+                                    background:     isActive(item.match) ? 'rgba(201,169,106,.1)' : 'transparent',
+                                    border:         isActive(item.match) ? '1px solid rgba(201,169,106,.28)' : '1px solid transparent',
                                     transition:     'all .2s',
                                     display:        'flex',
                                     alignItems:     'center',
@@ -203,7 +213,7 @@ export default function StudentLayout({ children, title, student: studentProp })
                             fontSize: 15, cursor: 'pointer', color: 'rgba(255,255,255,.75)',
                             transition: 'all .2s', flexShrink: 0,
                         }}
-                        onMouseEnter={e => { e.currentTarget.style.background='rgba(45,212,191,.12)'; e.currentTarget.style.borderColor='rgba(45,212,191,.3)'; }}
+                        onMouseEnter={e => { e.currentTarget.style.background='rgba(201,169,106,.12)'; e.currentTarget.style.borderColor='rgba(201,169,106,.3)'; }}
                         onMouseLeave={e => { e.currentTarget.style.background='rgba(255,255,255,0.06)'; e.currentTarget.style.borderColor='rgba(255,255,255,.1)'; }}
                         title="تغيير المظهر"
                     >
@@ -222,7 +232,7 @@ export default function StudentLayout({ children, title, student: studentProp })
                                 fontSize: 15, cursor: 'pointer', color: 'rgba(255,255,255,.75)',
                                 transition: 'all .2s', position: 'relative', flexShrink: 0,
                             }}
-                            onMouseEnter={e => { e.currentTarget.style.background='rgba(45,212,191,.12)'; e.currentTarget.style.borderColor='rgba(45,212,191,.3)'; }}
+                            onMouseEnter={e => { e.currentTarget.style.background='rgba(201,169,106,.12)'; e.currentTarget.style.borderColor='rgba(201,169,106,.3)'; }}
                             onMouseLeave={e => { e.currentTarget.style.background='rgba(255,255,255,0.06)'; e.currentTarget.style.borderColor='rgba(255,255,255,.1)'; }}
                         >
                             <span>🔔</span>
@@ -233,7 +243,7 @@ export default function StudentLayout({ children, title, student: studentProp })
                         {notifMenuOpen && (
                             <div style={{
                                 position:'absolute', top:48, left:0,
-                                background:bgCard, border:'1px solid rgba(45,212,191,0.3)', borderRadius:12,
+                                background:bgCard, border:'1px solid rgba(201,169,106,0.3)', borderRadius:12,
                                 boxShadow:'0 8px 30px rgba(0,0,0,0.25)', width:280,
                                 zIndex:100, display:'flex', flexDirection:'column', overflow:'hidden',
                             }}>
@@ -263,15 +273,15 @@ export default function StudentLayout({ children, title, student: studentProp })
                                 borderRadius:40, border:'1px solid rgba(255,255,255,.12)',
                                 cursor:'pointer', transition:'all .2s',
                             }}
-                            onMouseEnter={e => { e.currentTarget.style.background='rgba(45,212,191,.1)'; e.currentTarget.style.borderColor='rgba(45,212,191,.25)'; }}
+                            onMouseEnter={e => { e.currentTarget.style.background='rgba(201,169,106,.1)'; e.currentTarget.style.borderColor='rgba(201,169,106,.25)'; }}
                             onMouseLeave={e => { e.currentTarget.style.background='rgba(255,255,255,.07)'; e.currentTarget.style.borderColor='rgba(255,255,255,.12)'; }}
                         >
                             <div style={{
                                 width:32, height:32, borderRadius:'50%',
-                                background:`linear-gradient(135deg,${O},#0b6b62)`,
+                                background:`linear-gradient(135deg,${O},#8B5E3C)`,
                                 display:'flex', alignItems:'center', justifyContent:'center',
                                 fontSize:12, fontWeight:900, color:'#fff', flexShrink:0,
-                                boxShadow:'0 2px 8px rgba(13,148,136,.35)',
+                                boxShadow:'0 2px 8px rgba(31,90,69,.35)',
                             }}>
                                 {student.initials || 'ص'}
                             </div>
@@ -283,7 +293,7 @@ export default function StudentLayout({ children, title, student: studentProp })
                         {profileMenuOpen && (
                             <div style={{
                                 position:'absolute', top:54, left:0,
-                                background:bgCard, border:'1px solid rgba(45,212,191,0.2)', borderRadius:10,
+                                background:bgCard, border:'1px solid rgba(201,169,106,0.2)', borderRadius:10,
                                 boxShadow:'0 8px 24px rgba(0,0,0,.12)', width:200, zIndex:100, overflow:'hidden',
                             }}>
                                 <div style={{ padding:'14px 16px', borderBottom:'1px solid rgba(0,0,0,0.05)', background:darkMode?'#1a2636':'#fafafa', textAlign:'right' }}>
@@ -325,7 +335,7 @@ export default function StudentLayout({ children, title, student: studentProp })
                         className="nav-mobile-btn"
                         onClick={() => setMenuOpen(!menuOpen)}
                         style={{
-                            background: menuOpen ? 'rgba(45,212,191,.15)' : 'rgba(255,255,255,.06)',
+                            background: menuOpen ? 'rgba(201,169,106,.15)' : 'rgba(255,255,255,.06)',
                             border:     '1.5px solid rgba(255,255,255,.18)',
                             color:      '#fff', fontSize:20, cursor:'pointer',
                             width:40, height:40, borderRadius:10,
@@ -346,10 +356,10 @@ export default function StudentLayout({ children, title, student: studentProp })
                     top:           88,
                     left:          14,
                     right:         14,
-                    background:    'rgba(8,16,34,0.97)',
+                    background:    'rgba(20,18,16,0.97)',
                     backdropFilter:'blur(24px)',
                     WebkitBackdropFilter:'blur(24px)',
-                    border:        '1px solid rgba(45,212,191,.22)',
+                    border:        '1px solid rgba(201,169,106,.22)',
                     borderRadius:  16,
                     padding:       '8px 12px 14px',
                     display:       'flex',
@@ -359,8 +369,8 @@ export default function StudentLayout({ children, title, student: studentProp })
                     boxShadow:     '0 20px 50px rgba(0,0,0,.55)',
                 }}>
                     {/* Student info header */}
-                    <div style={{ padding:'10px 6px 10px', borderBottom:'1px solid rgba(45,212,191,.12)', marginBottom:4, display:'flex', alignItems:'center', gap:10 }}>
-                        <div style={{ width:36, height:36, borderRadius:'50%', background:`linear-gradient(135deg,${O},#0b6b62)`, display:'flex', alignItems:'center', justifyContent:'center', fontSize:14, fontWeight:900, color:'#fff', flexShrink:0 }}>
+                    <div style={{ padding:'10px 6px 10px', borderBottom:'1px solid rgba(201,169,106,.12)', marginBottom:4, display:'flex', alignItems:'center', gap:10 }}>
+                        <div style={{ width:36, height:36, borderRadius:'50%', background:`linear-gradient(135deg,${O},#8B5E3C)`, display:'flex', alignItems:'center', justifyContent:'center', fontSize:14, fontWeight:900, color:'#fff', flexShrink:0 }}>
                             {student.initials || 'ص'}
                         </div>
                         <div>
@@ -378,7 +388,7 @@ export default function StudentLayout({ children, title, student: studentProp })
                             display:        'flex', alignItems:'center', gap:12,
                             borderBottom:   '1px solid rgba(255,255,255,.05)',
                             fontSize:       14,
-                            background:     isActive(item.match) ? 'rgba(13,148,136,.09)' : 'transparent',
+                            background:     isActive(item.match) ? 'rgba(31,90,69,.09)' : 'transparent',
                             borderRadius:   8,
                         }}>
                             <span style={{ fontSize:20, width:26, textAlign:'center' }}>{item.icon}</span>
@@ -489,8 +499,8 @@ function WhatsAppBtn() {
 
 function LogoRing({ dark = true }) {
     const logoFilter = dark
-        ? 'drop-shadow(0 0 12px rgba(45,212,191,.45))'
-        : 'brightness(0) saturate(100%) invert(16%) sepia(26%) saturate(1532%) hue-rotate(175deg) brightness(92%) contrast(94%) drop-shadow(0 2px 8px rgba(20,33,61,.18))';
+        ? 'drop-shadow(0 0 12px rgba(201,169,106,.45))'
+        : 'invert(1) drop-shadow(0 2px 8px rgba(14,58,46,.18))';
 
     return (
         <div
@@ -505,8 +515,8 @@ function LogoRing({ dark = true }) {
             }}
         >
             <img
-                src="/images/منصور لوجو.png"
-                alt="منصور"
+                src="/images/ahmed-elshaarawy-logo-transparent.png"
+                alt="أحمد الشعراوي"
                 style={{
                     height: '100%',
                     width: 'auto',

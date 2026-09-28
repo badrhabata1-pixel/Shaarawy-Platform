@@ -3,18 +3,18 @@ import { Head, Link, router } from '@inertiajs/react';
 import StudentLayout from '@/Layouts/StudentLayout';
 
 /* ── Brand Palette ─────────────────────────────────────── */
-const O = '#0D9488';   
-const N = '#14213D';
-const B = '#DCC9A3';
+const O = '#1F5A45';
+const N = '#0E3A2E';
+const B = '#E8DCC1';
 const W = '#F7F3EB';
-const G = '#2DD4BF';   // كان دهبي (C9A14A) → بقى تركواز فاتح (زي حلقة الـ 75% في لوحة الأدمن)
+const G = '#C9A96A';   // كان دهبي (C9A14A) → بقى تركواز فاتح (زي حلقة الـ 75% في لوحة الأدمن)
 
 /* ── Stat-card dark gradients (brand) ──────────────────── */
 const CARD_BGS = [
-    `linear-gradient(145deg,#0A1220 0%,${N} 100%)`,
-    `linear-gradient(145deg,#075E54 0%,#0D9488 100%)`,
-    `linear-gradient(145deg,#0F766E 0%,#14B8A6 100%)`,
-    `linear-gradient(145deg,#083344 0%,#0E7490 100%)`,
+    `linear-gradient(145deg,#141210 0%,${N} 100%)`,
+    `linear-gradient(145deg,#0E3A2E 0%,#1F5A45 100%)`,
+    `linear-gradient(145deg,#1F5A45 0%,#6FA98A 100%)`,
+    `linear-gradient(145deg,#1C1916 0%,#8B5E3C 100%)`,
 ];
 
 /* ── Fixed particles ─────────────────────────────────────── */
@@ -258,7 +258,7 @@ export default function Dashboard({
                     left: sidebarOpen ? 'var(--qn-width, 320px)' : 0,
                     transform: 'translateY(-50%)',
                     zIndex: 1001,
-                    background: `linear-gradient(135deg, ${O}, #0b6b62)`,
+                    background: `linear-gradient(135deg, ${O}, #8B5E3C)`,
                     border: 'none',
                     borderRadius: '0 10px 10px 0',
                     width: 36,
@@ -269,7 +269,7 @@ export default function Dashboard({
                     alignItems: 'center',
                     justifyContent: 'center',
                     gap: 4,
-                    boxShadow: '4px 0 20px rgba(13,148,136,0.4)',
+                    boxShadow: '4px 0 20px rgba(31,90,69,0.4)',
                     transition: 'left 0.35s cubic-bezier(.4,0,.2,1)',
                     padding: 0,
                 }}
@@ -319,9 +319,9 @@ export default function Dashboard({
                     width: 'var(--qn-width, 320px)',
                     height: '100vh',
                     zIndex: 1000,
-                    background: 'linear-gradient(180deg, #060D1E 0%, #0E1B30 40%, #14213D 100%)',
-                    borderRight: `1px solid rgba(45,212,191,0.25)`,
-                    boxShadow: '8px 0 40px rgba(0,0,0,0.5), inset -1px 0 0 rgba(45,212,191,0.1)',
+                    background: 'linear-gradient(180deg, #141210 0%, #1C1916 42%, #0E3A2E 100%)',
+                    borderRight: `1px solid rgba(201,169,106,0.25)`,
+                    boxShadow: '8px 0 40px rgba(0,0,0,0.5), inset -1px 0 0 rgba(201,169,106,0.1)',
                     transition: 'left 0.35s cubic-bezier(.4,0,.2,1)',
                     overflowY: 'auto',
                     display: 'flex',
@@ -331,8 +331,8 @@ export default function Dashboard({
                 {/* Sidebar header */}
                 <div style={{
                     padding: '24px 20px 16px',
-                    borderBottom: 'rgba(45,212,191,0.15) solid 1px',
-                    background: 'linear-gradient(135deg, rgba(45,212,191,0.08), transparent)',
+                    borderBottom: 'rgba(201,169,106,0.15) solid 1px',
+                    background: 'linear-gradient(135deg, rgba(201,169,106,0.08), transparent)',
                     flexShrink: 0,
                     marginTop: 80,
                 }}>
@@ -361,12 +361,12 @@ export default function Dashboard({
                                 gap: 14,
                                 padding: '14px 20px',
                                 textDecoration: 'none',
-                                borderBottom: '1px solid rgba(45,212,191,0.07)',
+                                borderBottom: '1px solid rgba(201,169,106,0.07)',
                                 transition: 'all 0.2s ease',
                                 animation: `sidebarSlideIn 0.35s ${i * 60}ms both`,
                                 position: 'relative',
                             }}
-                            onMouseEnter={e => { e.currentTarget.style.background = 'rgba(13,148,136,0.1)'; e.currentTarget.style.paddingLeft = '26px'; }}
+                            onMouseEnter={e => { e.currentTarget.style.background = 'rgba(31,90,69,0.1)'; e.currentTarget.style.paddingLeft = '26px'; }}
                             onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.paddingLeft = '20px'; }}
                         >
                             <div style={{
@@ -388,11 +388,11 @@ export default function Dashboard({
                 {/* Sidebar footer */}
                 <div style={{
                     padding: '16px 20px',
-                    borderTop: '1px solid rgba(45,212,191,0.12)',
+                    borderTop: '1px solid rgba(201,169,106,0.12)',
                     background: 'rgba(0,0,0,0.2)',
                     flexShrink: 0,
                 }}>
-                    <div style={{ color: 'rgba(45,212,191,0.4)', fontSize: 10, textAlign: 'center', fontFamily: "'Cairo',sans-serif", letterSpacing: '.1em' }}>
+                    <div style={{ color: 'rgba(201,169,106,0.4)', fontSize: 10, textAlign: 'center', fontFamily: "'Cairo',sans-serif", letterSpacing: '.1em' }}>
                         🪶 منصة التعليمية
                     </div>
                 </div>
@@ -466,24 +466,24 @@ export default function Dashboard({
 
                 /* ── Light/Dark theme tokens ── */
                 :root {
-                    --db-card:   #ffffff;
-                    --db-border: rgba(45,212,191,.35);
-                    --db-row:    #F8FAFC;
-                    --db-rowbdr: #E2E8F0;
-                    --db-text:   #14213D;
-                    --db-muted:  #64748B;
-                    --db-shadow: rgba(20,33,61,.07);
-                    --db-sub:    rgba(20,33,61,.45);
+                    --db-card:   rgba(255,252,245,.30);
+                    --db-border: rgba(201,169,106,.35);
+                    --db-row:    rgba(247,243,233,.28);
+                    --db-rowbdr: #E3D9C4;
+                    --db-text:   #0E3A2E;
+                    --db-muted:  #6B6255;
+                    --db-shadow: rgba(14,58,46,.07);
+                    --db-sub:    rgba(14,58,46,.45);
                 }
                 .dark {
-                    --db-card:   #0d1c30;
-                    --db-border: rgba(45,212,191,.18);
+                    --db-card:   #1C1916;
+                    --db-border: rgba(201,169,106,.18);
                     --db-row:    rgba(255,255,255,.05);
                     --db-rowbdr: rgba(255,255,255,.08);
                     --db-text:   #e8dfc8;
-                    --db-muted:  #8a96aa;
+                    --db-muted:  #A89A78;
                     --db-shadow: rgba(0,0,0,.35);
-                    --db-sub:    rgba(45,212,191,.5);
+                    --db-sub:    rgba(201,169,106,.5);
                 }
             `}</style>
 
@@ -492,14 +492,14 @@ export default function Dashboard({
             ════════════════════════════════════════ */}
             <div style={{
                 position: 'relative',
-                background: 'rgba(8, 23, 44, 0.7)',
-                backdropFilter: 'blur(12px)',
-                WebkitBackdropFilter: 'blur(12px)',
-                border: '2px dashed rgba(45, 212, 191, 0.3)',
+                background: 'linear-gradient(135deg, rgba(20,18,16,.52) 0%, rgba(14,58,46,.48) 58%, rgba(28,25,22,.54) 100%)',
+                backdropFilter: 'blur(5px)',
+                WebkitBackdropFilter: 'blur(5px)',
+                border: '2px dashed rgba(201,169,106,.36)',
                 borderRadius: '24px',
                 padding: '24px',
                 marginBottom: '1.75rem',
-                backgroundImage: 'radial-gradient(circle at 2px 2px, rgba(45, 212, 191, 0.15) 1.5px, transparent 0)',
+                backgroundImage: 'radial-gradient(circle at 2px 2px, rgba(201,169,106,.18) 1.5px, transparent 0)',
                 backgroundSize: '40px 40px',
                 display: 'flex',
                 alignItems: 'center',
@@ -521,7 +521,7 @@ export default function Dashboard({
                     <div key={i} style={{
                         position:'absolute', bottom:0, left:p.l,
                         width:p.s, height:p.s, borderRadius:'50%',
-                        background:`radial-gradient(circle,#8CF0DC,${G})`,
+                        background:`radial-gradient(circle,#E8DCC1,${G})`,
                         '--op':p.o,
                         animation:`floatDust ${p.dr} ${p.d} ease-in-out infinite`,
                         pointerEvents:'none',
@@ -537,7 +537,7 @@ export default function Dashboard({
                         <Ring pct={stats.completion_pct} size={88} stroke={3} color={G}/>
                         <div style={{
                             position:'absolute', inset:8, borderRadius:'50%',
-                            background:`linear-gradient(135deg,${O},#0b6b62)`,
+                            background:`linear-gradient(135deg,${O},#8B5E3C)`,
                             display:'flex', alignItems:'center', justifyContent:'center',
                             fontSize:22, fontWeight:900, color:'#fff',
                             boxShadow:`0 0 22px ${O}55`,
@@ -691,7 +691,7 @@ function TwinkleParticles({ hov }) {
                         width: p.s,
                         height: p.s,
                         borderRadius: '50%',
-                        background: '#fff',
+                        background: 'rgba(255,252,245,.30)',
                         opacity: 0,
                         boxShadow: `0 0 ${p.s * 3}px ${p.s}px rgba(255,255,255,${hov ? 0.8 : 0.5})`,
                         animation: `dust ${p.t}s ease-in-out ${p.d}ms infinite, twinkle ${(p.t / 2.4).toFixed(2)}s ease-in-out ${p.d}ms infinite`,
@@ -800,6 +800,8 @@ function CardSection({ title, linkHref, children, style={} }) {
             padding: '1.75rem 2rem',
             boxShadow: '0 2px 20px var(--db-shadow)',
             border: '1px solid var(--db-border)',
+            backdropFilter: 'blur(5px)',
+            WebkitBackdropFilter: 'blur(5px)',
             ...style,
         }}>
             <div style={{
@@ -834,7 +836,7 @@ function TimelineLessons({ lessons }) {
                 const done   = lesson.is_completed;
                 const open   = !done && lesson.is_unlocked;
                 const locked = !lesson.is_unlocked;
-                const clr    = done ? '#059669' : open ? O : '#CBD5E1';
+                const clr    = done ? '#059669' : open ? O : '#CFC2A6';
                 const isLast = i === lessons.length - 1;
 
                 return (
@@ -854,7 +856,7 @@ function TimelineLessons({ lessons }) {
                             {!isLast && (
                                 <div style={{
                                     width:2, flex:1, minHeight:12, marginTop:2,
-                                    background: drawn ? `linear-gradient(to bottom,${clr},#E2E8F0)` : 'transparent',
+                                    background: drawn ? `linear-gradient(to bottom,${clr},#E3D9C4)` : 'transparent',
                                     transition:'background .8s ease',
                                 }}/>
                             )}
@@ -865,7 +867,7 @@ function TimelineLessons({ lessons }) {
                                 {locked ? `🔒 ${lesson.title}` : lesson.title}
                             </div>
                             <div style={{ display:'flex', alignItems:'center', gap:8 }}>
-                                <div style={{ flex:1, maxWidth:200, height:5, background:'#F1F5F9', borderRadius:99, overflow:'hidden' }}>
+                                <div style={{ flex:1, maxWidth:200, height:5, background:'#F7F3E9', borderRadius:99, overflow:'hidden' }}>
                                     <div style={{
                                         height:'100%',
                                         width: done ? '100%' : open ? '50%' : '0%',
@@ -891,9 +893,9 @@ function ExamRow({ exam }) {
     const cfg = ({
         active:   { label:'🟢 جارٍ الآن', bg:`${O}18`, c:O      },
         upcoming: { label:'🕐 قادم',       bg:`${N}12`, c:N      },
-        open:     { label:'✅ مفتوح',      bg:`${G}18`, c:'#0f766e' },
+        open:     { label:'✅ مفتوح',      bg:`${G}18`, c:'#1F5A45' },
         ended:    { label:'⛔ انتهى',      bg:'#FEE2E2', c:'#DC2626' },
-    })[exam.status] ?? { label:exam.status, bg:'#F1F5F9', c:'#64748B' };
+    })[exam.status] ?? { label:exam.status, bg:'#F7F3E9', c:'#6B6255' };
 
     return (
         <Link href={route('student.exams.show', exam.id)} style={{ textDecoration:'none', display:'block', marginBottom:8 }}>
@@ -929,7 +931,7 @@ function ExamRow({ exam }) {
 function SheetRow({ sheet }) {
     const a = sheet.answer
         ? (sheet.answer.status === 'graded'
-            ? { label:`مصحح ✅${sheet.answer.score!=null?` · ${sheet.answer.score}`:''}`, bg:`${G}18`, c:'#0f766e' }
+            ? { label:`مصحح ✅${sheet.answer.score!=null?` · ${sheet.answer.score}`:''}`, bg:`${G}18`, c:'#1F5A45' }
             : { label:'قيد المراجعة ⏳', bg:`${O}15`, c:O })
         : { label:'جديد 📄', bg:`${N}10`, c:N };
 
@@ -964,7 +966,7 @@ function QuickCard({ icon, title, desc, href, accent, mark, delay }) {
                 onMouseEnter={()=>setHov(true)}
                 onMouseLeave={()=>setHov(false)}
                 style={{
-                    background:`linear-gradient(150deg,#070F1C 0%,${N} 100%)`,
+                    background:`linear-gradient(150deg,#141210 0%,${N} 100%)`,
                     padding:'4.5rem 1.75rem 1.75rem',
                     border:`1px solid ${accent}28`,
                     borderRadius:'110px 110px 18px 18px / 70px 70px 18px 18px',
@@ -1079,7 +1081,7 @@ function QuickCard({ icon, title, desc, href, accent, mark, delay }) {
 function LockedQuickCard({ icon, title, desc, mark, delay }) {
     return (
         <div style={{
-            background:`linear-gradient(150deg,#070F1C 0%,${N} 100%)`,
+            background:`linear-gradient(150deg,#141210 0%,${N} 100%)`,
             padding:'4.5rem 1.75rem 1.75rem',
             border:`1px solid rgba(255,255,255,.06)`,
             borderRadius:'110px 110px 18px 18px / 70px 70px 18px 18px',
@@ -1121,7 +1123,7 @@ function LockedQuickCard({ icon, title, desc, mark, delay }) {
                 position:'absolute', top:14, left:14,
                 background:'rgba(148,163,184,.18)', border:'1px solid rgba(148,163,184,.25)',
                 borderRadius:999, padding:'3px 10px',
-                fontSize:11, fontWeight:800, color:'#94a3b8',
+                fontSize:11, fontWeight:800, color:'#A89A78',
                 display:'flex', alignItems:'center', gap:5,
             }}>
                 🔒 غير متاح
@@ -1153,14 +1155,14 @@ function LockedQuickCard({ icon, title, desc, mark, delay }) {
 
             {/* Description */}
             <div style={{
-                color:`rgba(45,212,191,.35)`, fontSize:12.5,
+                color:`rgba(201,169,106,.35)`, fontSize:12.5,
                 lineHeight:1.8, textAlign:'center', paddingBottom:28,
             }}>{desc}</div>
 
             {/* Offline note */}
             <div style={{
                 position:'absolute', bottom:18, left:'50%', transform:'translateX(-50%)',
-                fontSize:11, fontWeight:800, color:'#64748b', whiteSpace:'nowrap',
+                fontSize:11, fontWeight:800, color:'#6B6255', whiteSpace:'nowrap',
             }}>
                 متاح للطلاب الأونلاين فقط
             </div>
@@ -1204,6 +1206,8 @@ function PaymentCard({ subscription = {}, payment = null, style = {} }) {
             padding: '1.75rem 2rem',
             boxShadow: '0 2px 20px var(--db-shadow)',
             border: '1px solid var(--db-border)',
+            backdropFilter: 'blur(5px)',
+            WebkitBackdropFilter: 'blur(5px)',
             textAlign: 'right',
             ...style,
         }}>
@@ -1259,7 +1263,7 @@ function PaymentCard({ subscription = {}, payment = null, style = {} }) {
                             fontSize: 12.5, fontWeight: 700,
                             fontFamily: "'Cairo',sans-serif", cursor: 'pointer',
                             border: `1.5px solid ${selectedMethod === m.key ? O : 'var(--db-rowbdr)'}`,
-                            background: selectedMethod === m.key ? 'linear-gradient(135deg,rgba(13,148,136,.18),rgba(217,98,10,.16))' : 'var(--db-row)',
+                            background: selectedMethod === m.key ? 'linear-gradient(135deg,rgba(31,90,69,.18),rgba(217,98,10,.16))' : 'var(--db-row)',
                             color: selectedMethod === m.key ? O : 'var(--db-text)',
                             transition: 'all .2s ease',
                         }}
@@ -1315,7 +1319,7 @@ function PaymentCard({ subscription = {}, payment = null, style = {} }) {
                     type="submit"
                     style={{
                         width: '100%',
-                        background: 'linear-gradient(135deg,#0D9488 0%,#d9620a 100%)',
+                        background: 'linear-gradient(135deg,#1F5A45 0%,#8B5E3C 100%)',
                         color: '#fff',
                         padding: '12px 24px',
                         borderRadius: 10,

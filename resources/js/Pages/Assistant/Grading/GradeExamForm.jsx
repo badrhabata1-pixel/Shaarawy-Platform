@@ -1,9 +1,9 @@
-﻿import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Head, useForm, Link, router } from '@inertiajs/react';
 import AssistantLayout from '@/Layouts/AssistantLayout';
 
-const O = '#208ef4';
-const N = '#14213D';
+const O = '#1F5A45';
+const N = '#0E3A2E';
 
 export default function GradeExamForm({ assistant, examResult, responses = [] }) {
     const [darkMode, setDarkMode] = useState(false);
@@ -66,9 +66,9 @@ export default function GradeExamForm({ assistant, examResult, responses = [] })
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        
+
         const gradesArray = Object.values(localGrades);
-        
+
         router.post(route('assistant.exams.grade.save', examResult.id), {
             grades: gradesArray,
             manual_total_score: parseInt(manualScore),
@@ -82,17 +82,17 @@ export default function GradeExamForm({ assistant, examResult, responses = [] })
             <Head title="رصد درجات الامتحان الدوري — بوابة السكرتارية" />
 
             <div className="max-w-4xl mx-auto space-y-6 text-right" dir="rtl" style={{ fontFamily: 'Cairo, sans-serif' }}>
-                
+
                 {/* ترويسة تفاصيل ورقة الطالب */}
                 <div className="bg-white p-6 rounded-2xl shadow-md border border-gray-100 flex justify-between items-center flex-wrap gap-4">
                     <div>
                         <span className="text-xs text-gray-400 font-bold block mb-1">تفاصيل ورقة إجابة الطالب المقيد</span>
-                        <h2 className="text-xl font-black text-[#14213D]">{examResult.student_name}</h2>
+                        <h2 className="text-xl font-black text-[#0E3A2E]">{examResult.student_name}</h2>
                         <span className="text-xs font-bold text-gray-500 mt-1 block">الامتحان: {examResult.exam_title}</span>
                     </div>
                     <div className="text-left">
                         <span className="text-xs text-gray-400 font-bold block mb-1">درجة الطالب الحالية:</span>
-                        <span className="text-2xl font-black text-[#F47C20]">{examResult.current_score} / {examResult.total_marks}</span>
+                        <span className="text-2xl font-black text-[#C9A96A]">{examResult.current_score} / {examResult.total_marks}</span>
                     </div>
                 </div>
 
@@ -104,8 +104,8 @@ export default function GradeExamForm({ assistant, examResult, responses = [] })
                         return (
                             <div key={q.id} className="bg-white p-6 rounded-2xl shadow-md border border-gray-100 space-y-4">
                                 <div className="flex justify-between items-center border-b pb-3 flex-wrap gap-3">
-                                    <h3 className="font-black text-sm text-[#14213D] flex items-center gap-2">
-                                        <span className="w-6 h-6 rounded-full bg-[#14213D] text-[#DCC9A3] text-xs font-bold flex items-center justify-center">{idx + 1}</span>
+                                    <h3 className="font-black text-sm text-[#0E3A2E] flex items-center gap-2">
+                                        <span className="w-6 h-6 rounded-full bg-[#0E3A2E] text-[#E8DCC1] text-xs font-bold flex items-center justify-center">{idx + 1}</span>
                                         {q.question_text}
                                     </h3>
                                     <span className="text-xs font-black text-red-600">درجة السؤال: {q.max_marks}</span>
@@ -130,14 +130,14 @@ export default function GradeExamForm({ assistant, examResult, responses = [] })
                                 <div className="flex flex-col md:flex-row items-center gap-4 bg-gray-50/60 p-4 rounded-xl border border-gray-100">
                                     <span className="text-xs font-bold text-gray-500">تعديل التقييم:</span>
                                     <div className="flex space-x-2 rtl:space-x-reverse">
-                                        <button 
+                                        <button
                                             type="button"
                                             onClick={() => handleStatusChange(q.id, true)}
                                             className={`px-4 py-2 rounded-lg font-bold text-xs transition ${isCorrect ? 'bg-green-600 text-white' : 'border border-green-500 text-green-600'}`}
                                         >
                                             إجابة صحيحة (✓)
                                         </button>
-                                        <button 
+                                        <button
                                             type="button"
                                             onClick={() => handleStatusChange(q.id, false)}
                                             className={`px-4 py-2 rounded-lg font-bold text-xs transition ${!isCorrect ? 'bg-red-600 text-white' : 'border border-red-500 text-red-500'}`}
@@ -147,12 +147,12 @@ export default function GradeExamForm({ assistant, examResult, responses = [] })
                                     </div>
 
                                     {/* حقل التعليق بلون خط أسود داكن وواضح جداً في النهار وأبيض في المظهر الليلي */}
-                                    <input 
-                                        type="text" 
+                                    <input
+                                        type="text"
                                         placeholder="إضافة تعليق مخصص على هذا السؤال..."
                                         value={gradeItem.teacher_note}
                                         onChange={e => handleNoteChange(q.id, e.target.value)}
-                                        className="flex-1 border border-gray-200 bg-white dark:bg-[#0e1726] text-gray-900 dark:text-white rounded-lg p-2 text-xs focus:border-[#F47C20] focus:ring-0 outline-none transition font-bold"
+                                        className="flex-1 border border-gray-200 bg-white dark:bg-[#141210] text-gray-900 dark:text-white rounded-lg p-2 text-xs focus:border-[#C9A96A] focus:ring-0 outline-none transition font-bold"
                                     />
                                 </div>
                             </div>
@@ -162,18 +162,18 @@ export default function GradeExamForm({ assistant, examResult, responses = [] })
                     {/* لوحة التحكم وإعادة رصد الدرجة الكلية يدوياً كلياً مع توحيد لون الخط الأسود */}
                     <div className="bg-white p-6 rounded-2xl shadow-xl border-t-8 border-green-500 flex flex-col md:flex-row justify-between items-center gap-6">
                         <div className="space-y-1">
-                            <h3 className="font-black text-sm text-[#14213D]">الالدرجة الكلية النهائية المرصودة يدوياً:</h3>
+                            <h3 className="font-black text-sm text-[#0E3A2E]">الالدرجة الكلية النهائية المرصودة يدوياً:</h3>
                             <p className="text-xs text-gray-400">يمكنك تعديل هذه الخانة وكتابة الدرجة التي تراها مناسبة مباشرة بيدك.</p>
                         </div>
                         <div className="flex items-center gap-3">
                             <span className="text-xs font-bold text-gray-400">درجة الطالب:</span>
-                            <input 
-                                type="number" 
+                            <input
+                                type="number"
                                 min="0"
                                 max={examResult.total_marks}
                                 value={manualScore}
                                 onChange={e => setManualScore(e.target.value)}
-                                className="w-24 text-center border-2 border-green-500 bg-white dark:bg-[#0e1726] text-gray-900 dark:text-white rounded-xl p-3 text-lg font-black focus:ring-0 focus:border-green-600 transition"
+                                className="w-24 text-center border-2 border-green-500 bg-white dark:bg-[#141210] text-gray-900 dark:text-white rounded-xl p-3 text-lg font-black focus:ring-0 focus:border-green-600 transition"
                             />
                             <span className="text-lg font-black text-gray-400">من {examResult.total_marks}</span>
                         </div>
@@ -181,7 +181,7 @@ export default function GradeExamForm({ assistant, examResult, responses = [] })
 
                     {/* زر الحفظ النهائي */}
                     <div className="pt-2">
-                        <button 
+                        <button
                             type="submit"
                             disabled={processing}
                             className="brand-cta w-full py-4 text-sm"
@@ -200,4 +200,3 @@ function GoogleFonts() {
         <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
     );
 }
-

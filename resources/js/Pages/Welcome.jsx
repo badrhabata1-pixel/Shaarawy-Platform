@@ -1005,19 +1005,25 @@ function ThemeToggle({ dark, setDark }) {
 
 /* ── Logo ────────────────────────────────────────────────────── */
 function NavLogo({ dark = true }) {
+    const logoFilter = dark
+        ? 'drop-shadow(0 0 10px rgba(201,169,106,.35))'
+        : 'invert(1) drop-shadow(0 2px 8px rgba(14,58,46,.18))';
+
     return (
         <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexShrink: 0 }}>
-            <div className="nav-logo-box" style={{
-                height: 52, width: 52, borderRadius: 15, flexShrink: 0,
-                background: 'linear-gradient(150deg, #0E3A2E, #1F5A45)',
-                boxShadow: '0 0 0 3px rgba(201,169,106,.18), 0 6px 18px rgba(14,58,46,.35)',
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-            }}>
-                <span style={{ fontFamily: "'Reem Kufi', sans-serif", fontSize: 24, color: '#C9A96A' }}>ش</span>
-            </div>
-            <div style={{ display: 'flex', flexDirection: 'column', lineHeight: 1.15 }}>
-                <span style={{ fontFamily: "'Cairo',sans-serif", fontWeight: 900, fontSize: 14, color: dark ? '#F3ECDA' : '#0E3A2E' }}>منصة الشعراوي</span>
-                <span style={{ fontFamily: "'Cairo',sans-serif", fontWeight: 600, fontSize: 9.5, letterSpacing: '.1em', color: '#C9A96A' }}>ELSHARAWY PLATFORM</span>
+            <div className="nav-logo-box" style={{ height: 52, width: 62, overflow: 'hidden', flexShrink: 0 }}>
+                <img
+                    src="/images/ahmed-elshaarawy-logo-transparent.png"
+                    alt="أحمد الشعراوي"
+                    style={{
+                        height: '100%',
+                        width: 'auto',
+                        objectFit: 'contain',
+                        objectPosition: 'center',
+                        filter: logoFilter,
+                        display: 'block',
+                    }}
+                />
             </div>
         </div>
     );
@@ -2036,16 +2042,14 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
                                 position:'relative',
                             }}>
                                 <img
-                                    src="/images/منصور لوجو.png"
-                                    alt="منصور"
+                                    src="/images/ahmed-elshaarawy-logo-transparent.png"
+                                    alt="أحمد الشعراوي"
                                     style={{
-                                        height:'150%',
-                                        width:'auto',
+                                        height:'100%',
+                                        width:'100%',
                                         objectFit:'contain',
-                                        objectPosition:'left center',
-                                        filter:'drop-shadow(0 10px 28px rgba(0,0,0,.35))',
+                                        filter: darkMode ? 'drop-shadow(0 10px 28px rgba(0,0,0,.35))' : 'invert(1) drop-shadow(0 10px 28px rgba(0,0,0,.2))',
                                         display:'block',
-                                        transform:'translateY(-16%)',
                                     }}
                                 />
                             </div>

@@ -29,20 +29,20 @@ export default function AssistantLogin({ status }) {
 
     const inputStyle = (hasError) => ({
         width: '100%', padding: '12px 16px', borderRadius: 12,
-        border: `1.5px solid ${hasError ? '#ef4444' : '#E2E8F0'}`,
-        background: '#F8FAFC', fontSize: 14, color: '#1b3a60',
+        border: `1.5px solid ${hasError ? '#ef4444' : '#E3D9C4'}`,
+        background: '#F8FAFC', fontSize: 14, color: '#0E3A2E',
         fontFamily: 'Cairo, sans-serif', outline: 'none',
         transition: 'border-color .2s, box-shadow .2s',
         boxSizing: 'border-box',
     });
 
     const onFocus = (e) => {
-        e.target.style.borderColor = '#2fbcd4';
+        e.target.style.borderColor = '#1F5A45';
         e.target.style.boxShadow = '0 0 0 3px rgba(47,188,212,.12)';
         e.target.style.background = '#fff';
     };
     const onBlur = (e) => {
-        e.target.style.borderColor = '#E2E8F0';
+        e.target.style.borderColor = '#E3D9C4';
         e.target.style.boxShadow = 'none';
         e.target.style.background = '#F8FAFC';
     };
@@ -55,15 +55,15 @@ export default function AssistantLogin({ status }) {
                 @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Rakkas&display=swap');
                 * { box-sizing: border-box; }
                 body { margin: 0; font-family: 'Cairo', sans-serif; }
-                ::placeholder { color: #94a3b8; font-family: 'Cairo', sans-serif; }
+                ::placeholder { color: #A89A78; font-family: 'Cairo', sans-serif; }
                 .sb-btn:hover { opacity: .92; transform: translateY(-1px); box-shadow: 0 8px 24px rgba(47,188,212,.4) !important; }
                 .sb-btn:active { transform: translateY(0); }
-                .pass-toggle:hover { color: #2fbcd4 !important; }
+                .pass-toggle:hover { color: #1F5A45 !important; }
             `}</style>
 
             <div dir="rtl" style={{
                 minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center',
-                background: 'linear-gradient(135deg, #060B16 0%, #0D1829 45%, #1b3a60 75%, #0A1422 100%)',
+                background: 'linear-gradient(135deg, #060B16 0%, #0D1829 45%, #0E3A2E 75%, #0A1422 100%)',
                 padding: '24px', position: 'relative', overflow: 'hidden',
             }}>
                 {/* Orbs */}
@@ -74,7 +74,7 @@ export default function AssistantLogin({ status }) {
                 <svg style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', opacity: .05, pointerEvents: 'none' }}>
                     <defs>
                         <pattern id="assistLoginStarPat" width="52" height="52" patternUnits="userSpaceOnUse">
-                            <g stroke="#2fbcd4" fill="none" strokeWidth="1">
+                            <g stroke="#1F5A45" fill="none" strokeWidth="1">
                                 <rect x="6" y="6" width="40" height="40"/>
                                 <rect x="6" y="6" width="40" height="40" transform="rotate(45 26 26)"/>
                             </g>
@@ -97,14 +97,14 @@ export default function AssistantLogin({ status }) {
                     boxShadow: '0 24px 80px rgba(0,0,0,.45), 0 0 0 1px rgba(255,255,255,.08)',
                     overflow: 'hidden', position: 'relative', zIndex: 1,
                 }}>
-                    <div style={{ height: 4, background: 'linear-gradient(90deg, #2fbcd4, #009688, #2fbcd4)' }} />
+                    <div style={{ height: 4, background: 'linear-gradient(90deg, #1F5A45, #8B5E3C, #1F5A45)' }} />
 
                     <div style={{ padding: '36px 36px 32px' }}>
                         {/* Logo */}
                         <div style={{ textAlign: 'center', marginBottom: 32 }}>
                             <div style={{
                                 width: 60, height: 60, borderRadius: 18, margin: '0 auto 14px',
-                                background: 'linear-gradient(135deg, #2fbcd4, #009688)',
+                                background: 'linear-gradient(135deg, #1F5A45, #8B5E3C)',
                                 boxShadow: '0 0 0 4px rgba(47,188,212,.15), 0 8px 24px rgba(47,188,212,.35)',
                                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                             }}>
@@ -116,10 +116,10 @@ export default function AssistantLogin({ status }) {
                                     <path d="M2 12h20"/>
                                 </svg>
                             </div>
-                            <h1 style={{ color: '#1b3a60', fontSize: 22, fontWeight: 900, margin: '0 0 4px', fontFamily: 'Cairo,sans-serif' }}>
+                            <h1 style={{ color: '#0E3A2E', fontSize: 22, fontWeight: 900, margin: '0 0 4px', fontFamily: 'Cairo,sans-serif' }}>
                                 بوابة السكرتارية
                             </h1>
-                            <p style={{ color: '#94a3b8', fontSize: 13, margin: 0, fontFamily: 'Cairo,sans-serif' }}>
+                            <p style={{ color: '#A89A78', fontSize: 13, margin: 0, fontFamily: 'Cairo,sans-serif' }}>
                                 تسجيل دخول مساعدي ومصححي اللغة العربية
                             </p>
                         </div>
@@ -139,7 +139,7 @@ export default function AssistantLogin({ status }) {
                                     البريد الإلكتروني
                                 </label>
                                 <div style={{ position: 'relative' }}>
-                                    <span style={{ position: 'absolute', right: 13, top: '50%', transform: 'translateY(-50%)', color: '#94a3b8', pointerEvents: 'none', display: 'flex' }}>
+                                    <span style={{ position: 'absolute', right: 13, top: '50%', transform: 'translateY(-50%)', color: '#A89A78', pointerEvents: 'none', display: 'flex' }}>
                                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" width={16} height={16}>
                                             <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
                                             <polyline points="22,6 12,13 2,6"/>
@@ -168,7 +168,7 @@ export default function AssistantLogin({ status }) {
                                     كلمة المرور
                                 </label>
                                 <div style={{ position: 'relative' }}>
-                                    <span style={{ position: 'absolute', right: 13, top: '50%', transform: 'translateY(-50%)', color: '#94a3b8', pointerEvents: 'none', display: 'flex' }}>
+                                    <span style={{ position: 'absolute', right: 13, top: '50%', transform: 'translateY(-50%)', color: '#A89A78', pointerEvents: 'none', display: 'flex' }}>
                                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" width={16} height={16}>
                                             <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
                                             <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
@@ -188,7 +188,7 @@ export default function AssistantLogin({ status }) {
                                         type="button"
                                         onClick={() => setShowPass(v => !v)}
                                         className="pass-toggle"
-                                        style={{ position: 'absolute', left: 12, top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', cursor: 'pointer', color: '#94a3b8', display: 'flex', padding: 0, transition: 'color .15s' }}
+                                        style={{ position: 'absolute', left: 12, top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', cursor: 'pointer', color: '#A89A78', display: 'flex', padding: 0, transition: 'color .15s' }}
                                     >
                                         {showPass ? (
                                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" width={16} height={16}>
@@ -204,7 +204,7 @@ export default function AssistantLogin({ status }) {
                                     </button>
                                 </div>
                                 {errors.password && (
-                                    <p style={{ color: '#447aef', fontSize: 12, marginTop: 5, fontFamily: 'Cairo,sans-serif' }}>{errors.password}</p>
+                                    <p style={{ color: '#8B5E3C', fontSize: 12, marginTop: 5, fontFamily: 'Cairo,sans-serif' }}>{errors.password}</p>
                                 )}
                             </div>
 
@@ -215,9 +215,9 @@ export default function AssistantLogin({ status }) {
                                         type="checkbox"
                                         checked={data.remember}
                                         onChange={e => setData('remember', e.target.checked)}
-                                        style={{ width: 16, height: 16, accentColor: '#2fbcd4', cursor: 'pointer' }}
+                                        style={{ width: 16, height: 16, accentColor: '#1F5A45', cursor: 'pointer' }}
                                     />
-                                    <span style={{ color: '#64748b', fontSize: 12, fontFamily: 'Cairo,sans-serif' }}>تذكرني</span>
+                                    <span style={{ color: '#6B6255', fontSize: 12, fontFamily: 'Cairo,sans-serif' }}>تذكرني</span>
                                 </label>
                             </div>
 
@@ -228,7 +228,7 @@ export default function AssistantLogin({ status }) {
                                 className="sb-btn"
                                 style={{
                                     width: '100%', padding: '13px',
-                                    background: processing ? '#94a3b8' : 'linear-gradient(135deg, #2fbcd4, #009688)',
+                                    background: processing ? '#A89A78' : 'linear-gradient(135deg, #1F5A45, #8B5E3C)',
                                     color: '#fff', border: 'none', borderRadius: 12,
                                     fontSize: 15, fontWeight: 800, fontFamily: 'Cairo,sans-serif',
                                     cursor: processing ? 'not-allowed' : 'pointer',
@@ -240,7 +240,7 @@ export default function AssistantLogin({ status }) {
                             </button>
                         </form>
 
-                        <p style={{ textAlign: 'center', marginTop: 22, color: '#94a3b8', fontSize: 11, fontFamily: 'Cairo,sans-serif' }}>
+                        <p style={{ textAlign: 'center', marginTop: 22, color: '#A89A78', fontSize: 11, fontFamily: 'Cairo,sans-serif' }}>
                             منصة منصور © {new Date().getFullYear()} — جميع الحقوق محفوظة
                         </p>
                     </div>
@@ -249,7 +249,3 @@ export default function AssistantLogin({ status }) {
         </>
     );
 }
- 
-
-
- 

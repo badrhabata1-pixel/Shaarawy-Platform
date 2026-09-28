@@ -2,11 +2,11 @@ import { useState, useEffect } from 'react';
 import { Head, useForm, usePage } from '@inertiajs/react';
 import StudentLayout from '@/Layouts/StudentLayout';
 
-const O = '#0D9488';
-const BRAND_GRAD = 'linear-gradient(135deg,#0D9488 0%,#d9620a 100%)';
-const N = '#14213D';
-const G = '#C9A14A';
-const B = '#DCC9A3';
+const O = '#1F5A45';
+const BRAND_GRAD = 'linear-gradient(135deg,#1F5A45 0%,#8B5E3C 100%)';
+const N = '#0E3A2E';
+const G = '#C9A96A';
+const B = '#E8DCC1';
 
 export default function PaymentActivate() {
     const { flash } = usePage().props;
@@ -30,18 +30,18 @@ export default function PaymentActivate() {
         post(route('student.payment.activate'), { onSuccess: () => reset() });
     };
 
-    const bg      = dark ? '#090f1d'             : '#f4ede0';
-    const cardBg  = dark ? 'rgba(14,24,46,.85)'  : 'rgba(255,252,245,.95)';
-    const cardBdr = dark ? 'rgba(201,161,74,.14)': 'rgba(201,161,74,.22)';
+    const bg      = dark ? '#141210'             : '#f4ede0';
+    const cardBg  = dark ? 'rgba(28,25,22,.85)'  : 'rgba(255,252,245,.32)';
+    const cardBdr = dark ? 'rgba(201,169,106,.14)': 'rgba(201,169,106,.22)';
     const txt     = dark ? '#f0e8d5'             : N;
-    const txtDim  = dark ? 'rgba(220,201,163,.55)': 'rgba(20,33,61,.5)';
-    const inputBg = dark ? 'rgba(255,255,255,.05)': '#fff';
+    const txtDim  = dark ? 'rgba(220,201,163,.55)': 'rgba(14,58,46,.5)';
+    const inputBg = dark ? 'rgba(255,255,255,.05)': 'rgba(255,252,245,.42)';
     const inputBdr= dark ? 'rgba(220,201,163,.18)': '#d4c9b0';
     const inputClr= dark ? B                     : N;
 
     return (
         <StudentLayout>
-            <Head title="تفعيل الاشتراك — منصة منصور" />
+            <Head title="تفعيل الاشتراك — منصة أحمد الشعراوي" />
 
             <style>{`
                 @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
@@ -69,14 +69,14 @@ export default function PaymentActivate() {
                     <div className="pa" style={{
                         position:'relative', overflow:'hidden',
                         background: dark
-                            ? 'linear-gradient(135deg,#0a1628 0%,#0f2040 55%,#07111f 100%)'
-                            : 'linear-gradient(135deg,#14213D 0%,#1a2d52 55%,#0f1e3a 100%)',
+                            ? 'linear-gradient(135deg,#081F19 0%,#1F5A45 55%,#081F19 100%)'
+                            : 'linear-gradient(135deg,#0E3A2E 0%,#1F5A45 55%,#081F19 100%)',
                         borderRadius:22, padding:'2rem 2.25rem', marginBottom:28,
                         boxShadow: dark
-                            ? '0 8px 48px rgba(0,0,0,.6), inset 0 0 0 1px rgba(201,161,74,.15)'
-                            : '0 8px 40px rgba(20,33,61,.3), inset 0 0 0 1px rgba(201,161,74,.2)',
+                            ? '0 8px 48px rgba(0,0,0,.6), inset 0 0 0 1px rgba(201,169,106,.15)'
+                            : '0 8px 40px rgba(14,58,46,.3), inset 0 0 0 1px rgba(201,169,106,.2)',
                     }}>
-                        <div style={{ position:'absolute', inset:0, opacity:.035, backgroundImage:'repeating-linear-gradient(0deg,transparent,transparent 26px,rgba(201,161,74,1) 26px,rgba(201,161,74,1) 27px)', pointerEvents:'none' }}/>
+                        <div style={{ position:'absolute', inset:0, opacity:.035, backgroundImage:'repeating-linear-gradient(0deg,transparent,transparent 26px,rgba(201,169,106,1) 26px,rgba(201,169,106,1) 27px)', pointerEvents:'none' }}/>
                         <div style={{ position:'absolute', top:14, left:22, fontSize:52, opacity:.07, userSelect:'none', fontFamily:'serif' }}>𓊹</div>
                         <div style={{ position:'absolute', bottom:10, right:24, fontSize:40, opacity:.05, userSelect:'none', fontFamily:'serif' }}>𓂀</div>
 
@@ -105,7 +105,7 @@ export default function PaymentActivate() {
                     <form onSubmit={submit} className="pa" style={{
                         background: cardBg, backdropFilter:'blur(12px)', WebkitBackdropFilter:'blur(12px)',
                         borderRadius:18, padding:'26px 24px', border:`1px solid ${cardBdr}`,
-                        boxShadow: dark ? '0 4px 32px rgba(0,0,0,.35)' : '0 2px 20px rgba(20,33,61,.07)',
+                        boxShadow: dark ? '0 4px 32px rgba(0,0,0,.35)' : '0 2px 20px rgba(14,58,46,.07)',
                     }}>
                         <label style={{ display:'block', fontSize:13, fontWeight:700, color:txt, marginBottom:9 }}>
                             اكتب كود التفعيل هنا <span style={{ color:O }}>*</span>
