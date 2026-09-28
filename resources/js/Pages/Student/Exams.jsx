@@ -147,8 +147,10 @@ function ExamCard({ exam, delay, dark }) {
     const s  = STATUS_META[exam.status] || STATUS_META.open;
     const rs = exam.result_status;
 
-    const cardBg  = dark ? '#1C1916' : 'rgba(255,252,245,.30)';
-    const cardBd  = dark ? 'rgba(255,255,255,.07)' : '#E3D9C4';
+    const cardBg  = dark
+        ? 'linear-gradient(135deg,rgba(28,25,22,.44),rgba(14,58,46,.30))'
+        : 'rgba(255,252,245,.30)';
+    const cardBd  = dark ? 'rgba(201,169,106,.26)' : '#E3D9C4';
     const txtMain = dark ? '#E8DCC1' : N;
     const txtSub  = dark ? 'rgba(220,201,163,.5)' : '#6B6255';
     const metaBg  = dark ? 'rgba(255,255,255,.05)' : '#F7F3E9';
@@ -172,6 +174,8 @@ function ExamCard({ exam, delay, dark }) {
             overflow: 'hidden',
             boxShadow: dark ? '0 4px 20px rgba(0,0,0,.3)' : '0 2px 20px rgba(14,58,46,.07)',
             border: `1px solid ${cardBd}`,
+            backdropFilter: 'blur(12px) saturate(1.15)',
+            WebkitBackdropFilter: 'blur(12px) saturate(1.15)',
             display: 'flex', flexDirection: 'column',
         }}>
             <div style={{ height: 4, background: s.gradient }} />
@@ -321,8 +325,10 @@ function ExamCard({ exam, delay, dark }) {
 }
 
 function EmptyState({ dark }) {
-    const cardBg = dark ? '#1C1916' : 'rgba(255,252,245,.30)';
-    const cardBd = dark ? 'rgba(255,255,255,.07)' : '#E3D9C4';
+    const cardBg = dark
+        ? 'linear-gradient(135deg,rgba(28,25,22,.44),rgba(14,58,46,.30))'
+        : 'rgba(255,252,245,.30)';
+    const cardBd = dark ? 'rgba(201,169,106,.26)' : '#E3D9C4';
     const txtSub = dark ? 'rgba(220,201,163,.45)' : '#A89A78';
 
     return (
@@ -331,6 +337,8 @@ function EmptyState({ dark }) {
             padding: '4rem 2rem', textAlign: 'center',
             boxShadow: dark ? '0 4px 20px rgba(0,0,0,.3)' : '0 2px 20px rgba(14,58,46,.06)',
             border: `1px solid ${cardBd}`,
+            backdropFilter: 'blur(12px) saturate(1.15)',
+            WebkitBackdropFilter: 'blur(12px) saturate(1.15)',
             position: 'relative', overflow: 'hidden',
         }}>
             <div style={{ position: 'absolute', top: 20, right: 30, fontSize: 60, opacity: .05 }}>📜</div>

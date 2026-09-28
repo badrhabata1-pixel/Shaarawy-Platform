@@ -101,13 +101,13 @@ export default function StudentLayout({ children, title, student: studentProp })
             <style>{`
                 body,html{
                     background:${darkMode
-                        ? `linear-gradient(rgba(20,18,16,0.60),rgba(20,18,16,0.60)), url('${BG_IMAGE_DARK}')`
-                        : `linear-gradient(rgba(245,239,223,0.08),rgba(245,239,223,0.08)), url('${BG_IMAGE_LIGHT}')`
+                        ? `linear-gradient(rgba(20,18,16,0.34),rgba(20,18,16,0.34)), url('${BG_IMAGE_DARK}')`
+                        : `linear-gradient(rgba(245,239,223,0.12),rgba(245,239,223,0.12)), url('${BG_IMAGE_LIGHT}')`
                     }!important;
-                    background-size: cover !important;
-                    background-position: center !important;
-                    background-repeat: no-repeat !important;
-                    background-attachment: fixed !important;
+                    background-size:cover!important;
+                    background-position:center!important;
+                    background-repeat:no-repeat!important;
+                    background-attachment:fixed!important;
                     margin:0;
                 }
                 @keyframes bgFloat{

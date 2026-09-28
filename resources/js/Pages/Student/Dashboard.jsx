@@ -9,14 +9,6 @@ const B = '#E8DCC1';
 const W = '#F7F3EB';
 const G = '#C9A96A';   // كان دهبي (C9A14A) → بقى تركواز فاتح (زي حلقة الـ 75% في لوحة الأدمن)
 
-/* ── Stat-card dark gradients (brand) ──────────────────── */
-const CARD_BGS = [
-    `linear-gradient(145deg,#141210 0%,${N} 100%)`,
-    `linear-gradient(145deg,#0E3A2E 0%,#1F5A45 100%)`,
-    `linear-gradient(145deg,#1F5A45 0%,#6FA98A 100%)`,
-    `linear-gradient(145deg,#1C1916 0%,#8B5E3C 100%)`,
-];
-
 /* ── Fixed particles ─────────────────────────────────────── */
 const PARTICLES = [
     { l:'4%',  d:'0s',   dr:'9s',  s:2.5, o:.45 },
@@ -474,9 +466,11 @@ export default function Dashboard({
                     --db-muted:  #6B6255;
                     --db-shadow: rgba(14,58,46,.07);
                     --db-sub:    rgba(14,58,46,.45);
+                    --db-stat-value: #314E35;
+                    --db-stat-label: #405A3C;
                 }
                 .dark {
-                    --db-card:   #1C1916;
+                    --db-card:   rgba(28,25,22,.44);
                     --db-border: rgba(201,169,106,.18);
                     --db-row:    rgba(255,255,255,.05);
                     --db-rowbdr: rgba(255,255,255,.08);
@@ -484,6 +478,8 @@ export default function Dashboard({
                     --db-muted:  #A89A78;
                     --db-shadow: rgba(0,0,0,.35);
                     --db-sub:    rgba(201,169,106,.5);
+                    --db-stat-value: #F2CF83;
+                    --db-stat-label: #DDBB73;
                 }
             `}</style>
 
@@ -702,34 +698,51 @@ function TwinkleParticles({ hov }) {
     );
 }
 
-function AnimStatCard({ icon, label, value, color, delay, idx = 0 }) {
+function AnimStatCard({ icon, label, value, color, delay }) {
     const [hov, setHov] = useState(false);
+    const [opened, setOpened] = useState(false);
     const count = useCount(value, delay);
-    const bg    = CARD_BGS[idx % 4];
+    const expanded = hov || opened;
+    const setDesktopHover = value => {
+        if (typeof window !== 'undefined' && window.matchMedia('(hover: hover)').matches) {
+            setHov(value);
+        }
+    };
 
     return (
-        /* Outer wrapper — feather hangs from top-left, partly inside card */
         <div
-            onMouseEnter={()=>setHov(true)}
-            onMouseLeave={()=>setHov(false)}
+            onMouseEnter={()=>setDesktopHover(true)}
+            onMouseLeave={()=>setDesktopHover(false)}
+            onFocus={()=>setDesktopHover(true)}
+            onBlur={()=>setDesktopHover(false)}
+            onClick={()=>setOpened(value => !value)}
+            role="button"
+            tabIndex={0}
+            onKeyDown={event => {
+                if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault();
+                    setOpened(value => !value);
+                }
+            }}
+            aria-expanded={expanded}
             style={{
                 position:'relative',
                 animation:`db-up .6s ${delay}ms both`,
-                paddingTop: 12,   /* small — most of icon is inside card */
+                paddingTop: 12,
                 paddingLeft: 4,
-                cursor:'default',
+                cursor:'pointer',
+                outline:'none',
             }}
         >
-            {/* ── Icon — top-left, most of it inside card, overhanging slightly ── */}
             <div style={{
                 position:'absolute',
                 top: -14, left: -10,
                 zIndex: 4, pointerEvents:'none',
-                opacity: hov ? 1 : 0.92,
-                filter: hov
+                opacity: expanded ? 1 : 0.92,
+                filter: expanded
                     ? `drop-shadow(0 0 14px ${color}) drop-shadow(0 10px 24px rgba(0,0,0,.6))`
                     : `drop-shadow(0 6px 14px rgba(0,0,0,.55))`,
-                transform: hov
+                transform: expanded
                     ? 'rotate(-4deg) scale(1.07) translate(-2px,-5px)'
                     : 'rotate(-6deg) scale(1)',
                 transition:'opacity .4s ease, filter .45s ease, transform .42s cubic-bezier(.22,1,.36,1)',
@@ -737,40 +750,49 @@ function AnimStatCard({ icon, label, value, color, delay, idx = 0 }) {
                 {icon}
             </div>
 
-            {/* ── Card body ── */}
             <div style={{
-                background: bg,
-                borderRadius: 18,
-                padding: '1.25rem 1.3rem 1.15rem',
-                border: `1px solid ${G}${hov ? '48' : '1C'}`,
-                boxShadow: hov
-                    ? `0 18px 46px rgba(0,0,0,.55), 0 0 0 1px ${color}32, inset 0 1px 0 ${G}1A`
-                    : `0 4px 20px rgba(0,0,0,.38), inset 0 1px 0 ${G}0E`,
-                transform: hov ? 'translateY(-5px)' : 'none',
-                transition:'box-shadow .35s, transform .35s, border-color .35s',
+                background: expanded
+                    ? 'linear-gradient(135deg,rgba(255,247,229,.26),rgba(201,169,106,.16) 54%,rgba(139,94,60,.22))'
+                    : 'linear-gradient(135deg,rgba(255,247,229,.16),rgba(201,169,106,.10))',
+                borderRadius: expanded ? 18 : '44px 44px 18px 18px / 18px 18px 12px 12px',
+                height: expanded ? 160 : 82,
+                padding: expanded ? '1.25rem 1.3rem 1.15rem' : '0 1.3rem',
+                border: `1px solid ${G}${expanded ? '70' : '48'}`,
+                backdropFilter:'blur(4px)',
+                WebkitBackdropFilter:'blur(4px)',
+                boxShadow: expanded
+                    ? `0 18px 46px rgba(0,0,0,.36), 0 0 0 1px ${color}32, inset 0 1px 0 rgba(255,255,255,.20)`
+                    : `0 6px 20px rgba(0,0,0,.28), inset 0 1px 0 rgba(255,255,255,.16)`,
+                transform: expanded ? 'translateY(-5px)' : 'none',
+                transition:'height .45s cubic-bezier(.22,1,.36,1), padding .45s cubic-bezier(.22,1,.36,1), box-shadow .35s, transform .35s, border-color .35s, border-radius .35s',
                 position:'relative', overflow:'hidden',
             }}>
-                {/* floating white twinkling particles */}
-                <TwinkleParticles hov={hov}/>
-                {/* shimmer */}
+                <TwinkleParticles hov={expanded}/>
                 <div style={{
                     position:'absolute', top:0, left:0, right:0, height:1,
                     background:`linear-gradient(90deg,transparent,${G}80,transparent)`,
                     animation:'shimmer 3.5s linear infinite',
                 }}/>
-                {/* hover glow */}
                 <div style={{
                     position:'absolute', inset:0, pointerEvents:'none',
-                    background: hov
+                    background: expanded
                         ? `radial-gradient(ellipse 80% 65% at 55% 60%, ${color}16 0%, transparent 70%)`
                         : 'none',
                     transition:'background .4s ease',
                 }}/>
 
-                {/* Content — pushed right & down to clear icon overlap */}
-                <div style={{ paddingTop:38, paddingLeft:8, position:'relative' }}>
+                {/* Scroll rollers */}
+                <div style={{ position:'absolute', top:6, left:12, right:12, height:10, borderRadius:10, background:'linear-gradient(180deg,rgba(255,244,214,.72),rgba(139,94,60,.40))', border:'1px solid rgba(201,169,106,.65)', boxShadow:'0 2px 5px rgba(0,0,0,.25)' }} />
+                <div style={{ position:'absolute', bottom:6, left:12, right:12, height:10, borderRadius:10, background:'linear-gradient(0deg,rgba(255,244,214,.68),rgba(139,94,60,.36))', border:'1px solid rgba(201,169,106,.58)', boxShadow:'0 -2px 5px rgba(0,0,0,.20)' }} />
+                {!expanded && <span style={{
+                    position:'absolute', right:20, top:'50%', transform:'translateY(-50%)',
+                    color:'var(--db-stat-label)', fontSize:13, fontWeight:900,
+                    letterSpacing:'.04em', textShadow:'0 1px 8px rgba(255,252,245,.28)',
+                }}>مرر أو اضغط لفتح المخطوطة</span>}
+
+                <div style={{ paddingTop:38, paddingLeft:8, position:'relative', opacity: expanded ? 1 : 0, transform: expanded ? 'translateY(0)' : 'translateY(12px)', transition:'opacity .24s .17s ease, transform .3s .17s ease' }}>
                     <div style={{
-                        color:'#fff',
+                        color:'var(--db-stat-value)',
                         fontSize:'clamp(1.65rem,2.8vw,2.1rem)',
                         fontWeight:900, lineHeight:1, marginBottom:6,
                         fontVariantNumeric:'tabular-nums',
@@ -779,7 +801,7 @@ function AnimStatCard({ icon, label, value, color, delay, idx = 0 }) {
                         {count}
                     </div>
                     <div style={{
-                        color: hov ? `${G}E0` : `${G}88`,
+                        color:'var(--db-stat-label)',
                         fontSize:11, fontWeight:600,
                         letterSpacing:'.01em',
                         transition:'color .35s ease',
@@ -966,13 +988,16 @@ function QuickCard({ icon, title, desc, href, accent, mark, delay }) {
                 onMouseEnter={()=>setHov(true)}
                 onMouseLeave={()=>setHov(false)}
                 style={{
-                    background:`linear-gradient(150deg,#141210 0%,${N} 100%)`,
+                    background:`linear-gradient(145deg,rgba(20,18,16,.70) 0%,${N}C2 100%)`,
                     padding:'4.5rem 1.75rem 1.75rem',
-                    border:`1px solid ${accent}28`,
-                    borderRadius:'110px 110px 18px 18px / 70px 70px 18px 18px',
+                    border:`1px solid ${accent}48`,
+                    borderRadius:18,
+                    clipPath:'polygon(8% 0,92% 0,100% 9%,100% 91%,92% 100%,8% 100%,0 91%,0 9%)',
                     boxShadow: hov
-                        ? `0 22px 55px rgba(0,0,0,.55), 0 0 0 1px ${accent}38, inset 0 1px 0 ${accent}18`
-                        : `0 6px 24px rgba(0,0,0,.38), inset 0 1px 0 ${accent}0C`,
+                        ? `0 22px 55px rgba(0,0,0,.55), 0 0 0 1px ${accent}58, inset 0 1px 0 ${accent}30`
+                        : `0 6px 24px rgba(0,0,0,.38), inset 0 1px 0 ${accent}18`,
+                    backdropFilter:'blur(10px) saturate(1.15)',
+                    WebkitBackdropFilter:'blur(10px) saturate(1.15)',
                     transition:'transform .32s cubic-bezier(.22,1,.36,1), box-shadow .32s ease, border-color .32s ease',
                     transform: hov ? 'translateY(-9px)' : 'none',
                     animation:`db-up .6s ${delay}ms both`,
@@ -989,23 +1014,22 @@ function QuickCard({ icon, title, desc, href, accent, mark, delay }) {
                     filter:'grayscale(1) sepia(.4)',
                 }}>{mark}</div>
 
-                {/* خط القوس — يبرز حافة المحراب من الداخل */}
+                {/* إطار لوح أثري محفور */}
                 <div style={{
-                    position:'absolute', top:8, left:'12%', right:'12%', height:60,
-                    borderRadius:'100px 100px 0 0 / 60px 60px 0 0',
-                    border:`1.5px solid ${accent}${hov ? '55' : '2A'}`,
-                    borderBottom:'none',
+                    position:'absolute', top:11, left:14, right:14, bottom:11,
+                    border:`1px solid ${accent}${hov ? '55' : '28'}`,
+                    clipPath:'polygon(7% 0,93% 0,100% 8%,100% 92%,93% 100%,7% 100%,0 92%,0 8%)',
                     transition:'border-color .3s ease',
                     pointerEvents:'none',
                 }}/>
 
-                {/* نجمة ثمانية صغيرة أعلى القوس كزخرفة */}
+                {/* ختم مستوحى من الألواح القديمة */}
                 <div style={{
-                    position:'absolute', top:14, left:'50%', transform:'translateX(-50%) rotate(22.5deg)',
-                    width:10, height:10,
-                    background: hov ? accent : `${accent}90`,
-                    clipPath:'polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%)',
-                    transition:'background .3s ease',
+                    position:'absolute', top:13, left:'50%', transform:'translateX(-50%)',
+                    width:30, height:11, borderRadius:'50%',
+                    border:`1px solid ${accent}${hov ? 'A0' : '65'}`,
+                    boxShadow: hov ? `0 0 14px ${accent}55` : 'none',
+                    transition:'border-color .3s ease, box-shadow .3s ease',
                     pointerEvents:'none',
                 }}/>
 
@@ -1015,7 +1039,7 @@ function QuickCard({ icon, title, desc, href, accent, mark, delay }) {
                     background:`linear-gradient(90deg,transparent,${accent}70,transparent)`,
                 }}/>
 
-                {/* Icon box — دائري، متمركز جوه القوس + حلقة دوارة عند الـ hover */}
+                {/* Icon box — ختم دائري في رأس اللوح */}
                 <div style={{
                     position:'absolute', top:26, left:'50%', transform:'translateX(-50%)',
                     width:44, height:44, borderRadius:'50%',
@@ -1081,11 +1105,14 @@ function QuickCard({ icon, title, desc, href, accent, mark, delay }) {
 function LockedQuickCard({ icon, title, desc, mark, delay }) {
     return (
         <div style={{
-            background:`linear-gradient(150deg,#141210 0%,${N} 100%)`,
+            background:`linear-gradient(145deg,rgba(20,18,16,.62) 0%,${N}A8 100%)`,
             padding:'4.5rem 1.75rem 1.75rem',
-            border:`1px solid rgba(255,255,255,.06)`,
-            borderRadius:'110px 110px 18px 18px / 70px 70px 18px 18px',
+            border:`1px solid rgba(201,169,106,.20)`,
+            borderRadius:18,
+            clipPath:'polygon(8% 0,92% 0,100% 9%,100% 91%,92% 100%,8% 100%,0 91%,0 9%)',
             boxShadow:`0 6px 24px rgba(0,0,0,.38)`,
+            backdropFilter:'blur(10px) saturate(1.1)',
+            WebkitBackdropFilter:'blur(10px) saturate(1.1)',
             animation:`db-up .6s ${delay}ms both`,
             position:'relative', overflow:'hidden',
             cursor:'not-allowed',
@@ -1100,21 +1127,19 @@ function LockedQuickCard({ icon, title, desc, mark, delay }) {
                 filter:'grayscale(1) sepia(.4)',
             }}>{mark}</div>
 
-            {/* خط القوس */}
+            {/* إطار اللوح الأثري */}
             <div style={{
-                position:'absolute', top:8, left:'12%', right:'12%', height:60,
-                borderRadius:'100px 100px 0 0 / 60px 60px 0 0',
-                border:'1.5px solid rgba(148,163,184,.25)',
-                borderBottom:'none',
+                position:'absolute', top:11, left:14, right:14, bottom:11,
+                border:'1px solid rgba(148,163,184,.20)',
+                clipPath:'polygon(7% 0,93% 0,100% 8%,100% 92%,93% 100%,7% 100%,0 92%,0 8%)',
                 pointerEvents:'none',
             }}/>
 
-            {/* نجمة ثمانية صغيرة أعلى القوس */}
+            {/* ختم اللوح */}
             <div style={{
-                position:'absolute', top:14, left:'50%', transform:'translateX(-50%) rotate(22.5deg)',
-                width:10, height:10,
-                background:'rgba(148,163,184,.4)',
-                clipPath:'polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%)',
+                position:'absolute', top:13, left:'50%', transform:'translateX(-50%)',
+                width:30, height:11, borderRadius:'50%',
+                border:'1px solid rgba(148,163,184,.38)',
                 pointerEvents:'none',
             }}/>
 
