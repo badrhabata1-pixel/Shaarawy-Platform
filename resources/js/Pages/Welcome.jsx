@@ -125,7 +125,7 @@ const PARTICLES = [
 function PageStyles() {
     return (
         <style>{`
-            @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Cairo:wght@400;600;700;800;900&family=Ruwudu:wght@400;700&family=Aref+Ruqaa:wght@400;700&display=swap');
+            @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Cairo:wght@400;600;700;800;900&family=Ruwudu:wght@400;700&family=Aref+Ruqaa:wght@400;700&family=Amiri:wght@400;700&display=swap');
             *, *::before, *::after { box-sizing: border-box; }
             h1, h2, h3 { font-family: 'Ruwudu', serif !important; letter-spacing: .04em; }
             .hero-welcome-img { font-family: 'Aref Ruqaa', serif !important; letter-spacing: .01em; }
@@ -134,6 +134,8 @@ function PageStyles() {
             ::-webkit-scrollbar-thumb { background:rgba(201,169,106,.35); border-radius:3px; }
 
             @keyframes pingRing  { 0%{transform:scale(1);opacity:.7} 100%{transform:scale(2.4);opacity:0} }
+            @keyframes chariotSpin { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+            @keyframes chariotDust { 0%,100%{opacity:.35;transform:scaleX(1)} 50%{opacity:.7;transform:scaleX(1.15)} }
             @keyframes float     { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
             @keyframes shimmer   { 0%,100%{opacity:.5} 50%{opacity:.9} }
             @keyframes orbPulse1 { 0%,100%{transform:translate(0,0) scale(1)} 50%{transform:translate(50px,-35px) scale(1.1)} }
@@ -247,19 +249,6 @@ function PageStyles() {
             .about-grid { display:grid; grid-template-columns:1fr 1fr; gap:32px; align-items:start; }
             .foot-grid  { display:grid; grid-template-columns:1.6fr 1fr 1fr 1fr; gap:40px; }
             .nav-links  { display:flex; }
-            .hero-right { flex:0 0 60%; max-width:60%; }
-            .teacher-fixed-ring {
-                max-width: min(72vw, 620px);
-                max-height: min(72vw, 620px);
-            }
-            .teacher-hero-wrap,
-            .teacher-hero-img,
-            .teacher-hero-img img {
-                background: transparent !important;
-                border: 0 !important;
-                box-shadow: none !important;
-                outline: 0 !important;
-            }
 
             /* روابط الناف بار — خط سفلي متحرك عند المرور */
             .nav-link-item { position:relative; }
@@ -278,6 +267,14 @@ function PageStyles() {
                 box-shadow:0 4px 16px rgba(201,169,106,.18);
             }
             .nav-login-btn:active { transform:translateY(0) scale(.97); }
+
+            /* كروت الإحصائيات تحت أزرار الهيرو — هوفر بسيط */
+            .hero-highlights-item:hover {
+                transform:translateY(-4px);
+                border-color:rgba(201,169,106,.6);
+                background:rgba(10,9,8,.6);
+                box-shadow:0 14px 30px rgba(0,0,0,.4), 0 0 0 1px rgba(201,169,106,.15);
+            }
 
             /* زر حساب جديد / لوحة التحكم — بريق متحرك عند المرور */
             .nav-cta-btn { position:relative; overflow:hidden; }
@@ -299,8 +296,8 @@ function PageStyles() {
             /* ══ TABLET ══ */
             @media(max-width:900px){
                 .hero-section { flex-direction:column-reverse !important; padding-top:0 !important; padding-left:clamp(16px,5vw,40px) !important; padding-right:clamp(16px,5vw,40px) !important; padding-bottom:48px !important; gap:0 !important; min-height:auto !important; }
-                .hero-right   { flex:0 0 100% !important; max-width:100% !important; }
-                .teacher-hero-wrap { flex:0 0 100% !important; max-width:100% !important; min-height:56vw !important; max-height:72vw !important; overflow:hidden !important; }
+                .hero-photo-full { display:flex !important; flex-direction:column !important; }
+                .hero-right   { position:static !important; width:100% !important; inset:auto !important; padding:22px clamp(16px,5vw,32px) 28px !important; }
                 .about-full-grid  { grid-template-columns:1fr !important; min-height:auto !important; max-height:none !important; }
                 .about-photo-side { height:60vw !important; min-height:260px !important; }
                 .about-text-side  { padding:clamp(32px,6vw,56px) clamp(24px,5vw,48px) !important; }
@@ -313,23 +310,20 @@ function PageStyles() {
                 .about-grid     { grid-template-columns:1fr; }
                 .foot-grid      { grid-template-columns:1fr 1fr; }
                 .nav-links      { display:none; }
-                .hero-right     { flex:0 0 100%; max-width:100%; }
                 .site-nav          { padding:0 clamp(10px,3vw,20px) !important; width:90% !important; }
                 .nav-right-group   { gap:8px !important; }
                 .nav-logo-box      { height:58px !important; width:50px !important; }
                 .theme-toggle-btn  { transform:scale(.8); transform-origin:center; }
                 .hero-section   { flex-direction:column-reverse !important; padding-top:0 !important; padding-left:20px !important; padding-right:20px !important; padding-bottom:40px !important; gap:0 !important; min-height:auto !important; }
-                .teacher-hero-wrap { flex:0 0 100% !important; max-width:100% !important; min-height:55vw !important; max-height:70vw !important; height:65vw !important; overflow:hidden !important; }
-                .teacher-hero-wrap .th-deco:nth-child(n+4) { display:none !important; }
-                .teacher-hero-img  { max-width:72vw !important; }
-                .teacher-fixed-ring { width:74vw !important; height:74vw !important; top:50% !important; left:50% !important; }
+                .hero-photo-full { border-radius:16px !important; }
+                .hero-welcome-img  { max-width:100% !important; margin-bottom:20px !important; }
+                .hero-highlights-ribbon { flex-direction:column !important; gap:18px !important; }
                 .about-full-grid   { grid-template-columns:1fr !important; min-height:auto !important; max-height:none !important; }
                 .about-photo-side  { height:62vw !important; min-height:220px !important; }
                 .about-text-side   { padding:clamp(28px,6vw,48px) clamp(20px,5vw,40px) !important; }
                 .ts-rank-num       { display:none !important; }
                 .hero-stats        { gap:20px !important; flex-wrap:wrap; }
                 .port-grid > div   { max-width:100%; margin:0 auto; width:100%; }
-                .hero-welcome-img  { max-width:100% !important; margin-bottom:20px !important; }
                 .branches-necklace { gap:16px !important; }
                 .about-text-side .about-stats-grid { grid-template-columns:repeat(2,1fr) !important; max-width:280px !important; }
                 .about-feats-grid  { grid-template-columns:1fr !important; }
@@ -350,7 +344,6 @@ function PageStyles() {
                 /* شبكة أمان: لو المساحة لسه ضيقة، اترك العناصر تلف لسطر تاني بدل ما تتلزق */
                 .site-nav { flex-wrap:wrap !important; height:auto !important; min-height:64px !important; row-gap:8px !important; padding-top:8px !important; padding-bottom:8px !important; width:94% !important; }
                 .hero-right p  { font-size:14px !important; }
-                .teacher-hero-wrap { height:70vw !important; max-height:70vw !important; }
                 .hero-stats > div { flex:1 0 auto; min-width:80px; }
             }
 
@@ -631,34 +624,6 @@ function SocialCard({ href, label, handle, glow, borderHover, icon, dark = true 
 /* ═══════════════════════════════════════════════════════════════
    HISTORY FLOATING ICONS — decorative background elements
 ═══════════════════════════════════════════════════════════════ */
-const HIST_ICONS = [
-    { x:'4%',  y:'8%',  rot:-14, sz:50, d:'4.2s', dl:'0s',   type:'book'    },
-    { x:'89%', y:'42%', rot:12,  sz:42, d:'3.9s', dl:'0.4s', type:'inkwell' },
-    { x:'10%', y:'72%', rot:7,   sz:40, d:'4.4s', dl:'0.9s', type:'star'    },
-    { x:'44%', y:'3%',  rot:0,   sz:36, d:'3.4s', dl:'1.9s', type:'quill'   },
-    { x:'82%', y:'6%',  rot:10,  sz:40, d:'3.7s', dl:'0.6s', type:'scroll'  },
-    { x:'6%',  y:'88%', rot:5,   sz:34, d:'4.3s', dl:'1.2s', type:'book'    },
-];
-
-/* رموز أثرية عائمة — نجوم ومعينات هندسية بطراز زخرفة المخطوطات القديمة */
-const ARABIC_GLYPHS = [
-    { ch:'✦', x:'2%',  y:'20%', rot:-8,  sz:38, d:'4.6s', dl:'.2s' },
-    { ch:'◆', x:'90%', y:'16%', rot:9,   sz:32, d:'4.1s', dl:'.7s' },
-    { ch:'❖', x:'0%',  y:'66%', rot:6,   sz:34, d:'5.0s', dl:'1.1s' },
-    { ch:'✺', x:'92%', y:'62%', rot:-10, sz:30, d:'3.8s', dl:'.4s' },
-    { ch:'✧', x:'46%', y:'0%',  rot:0,   sz:28, d:'4.4s', dl:'1.5s' },
-];
-
-/* نقاط الحروف العائمة — زخرفة مستوحاة من نقطة الحروف العربية */
-const DOT_ACCENTS = [
-    { x:'16%', y:'32%', sz:6,  amber:false },
-    { x:'80%', y:'28%', sz:5,  amber:true  },
-    { x:'12%', y:'80%', sz:5,  amber:false },
-    { x:'84%', y:'78%', sz:7,  amber:true  },
-    { x:'50%', y:'6%',  sz:4,  amber:false },
-    { x:'96%', y:'46%', sz:5,  amber:true  },
-];
-
 function HistIcon({ type, sz, color }) {
     const p = { stroke:color, fill:'none', strokeWidth:1.6, strokeLinecap:'round', strokeLinejoin:'round' };
     if (type === 'book') return (
@@ -859,97 +824,6 @@ function CourseCard({ unit, dark, auth }) {
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   TEACHER HERO — cinematic photo presentation
-═══════════════════════════════════════════════════════════════ */
-const ORBIT_PARTICLES = [
-    { sym:'✦', x:'10%', y:'28%', d:'3.2s', dl:'0s',   sz:11, amber:false },
-    { sym:'◆', x:'84%', y:'26%', d:'4.1s', dl:'0.8s', sz:13, amber:true  },
-    { sym:'✧', x:'6%',  y:'60%', d:'3.6s', dl:'1.2s', sz:10, amber:false },
-    { sym:'❖', x:'88%', y:'57%', d:'2.9s', dl:'0.4s', sz:12, amber:true  },
-    { sym:'✺', x:'74%', y:'16%', d:'4.5s', dl:'1.8s', sz:14, amber:false },
-    { sym:'✦', x:'18%', y:'14%', d:'3.8s', dl:'0.6s', sz:11, amber:true  },
-];
-
-function TeacherHero({ dark }) {
-    const wrapRef = useRef();
-
-    /* GSAP entrance */
-    useEffect(() => {
-        if (!wrapRef.current) return;
-        const img   = wrapRef.current.querySelector('.th-img');
-        const decos = wrapRef.current.querySelectorAll('.th-deco');
-        gsap.fromTo(img,  { y:70, opacity:0, scale:.96 }, { y:0, opacity:1, scale:1, duration:1.4, ease:'power3.out', delay:.5 });
-        gsap.fromTo(decos, { opacity:0, scale:.82 },      { opacity:1, scale:1, duration:1.1, ease:'back.out(1.4)', delay:.85, stagger:.08 });
-    }, []);
-
-    return (
-        <div ref={wrapRef} className="teacher-hero-wrap" style={{
-            flex:'0 0 56%', maxWidth:880, position:'relative',
-            display:'flex', alignItems:'center', justifyContent:'center',
-            minHeight:'60vh', flexShrink:0,
-        }}>
-            {/* لمسات زخرفية خفيفة في أركان اللوحة — بدل الحلقة المدارية والرموز المبعثرة */}
-            <div className="th-deco" style={{
-                position:'absolute', top:'-4%', right:'2%', width:38, height:38, borderRadius:11,
-                border:`1.5px solid ${dark ? 'rgba(201,169,106,.5)' : 'rgba(14,58,46,.3)'}`,
-                transform:'rotate(45deg)', pointerEvents:'none',
-            }}/>
-            <div className="th-deco" style={{
-                position:'absolute', bottom:'-4%', left:'2%', width:26, height:26, borderRadius:8,
-                background: dark ? 'rgba(139,94,60,.18)' : 'rgba(139,94,60,.14)',
-                border:`1.5px solid ${dark ? 'rgba(139,94,60,.55)' : 'rgba(139,94,60,.4)'}`,
-                transform:'rotate(45deg)', pointerEvents:'none',
-            }}/>
-
-            {/* اللوحة الرئيسية — صورة بانورامية بإطار ذهبي احترافي */}
-            <div className="th-img" style={{
-                position:'relative', zIndex:5, width:'100%',
-                display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center',
-            }}>
-                <div className="teacher-hero-img" style={{
-                    width:'100%', position:'relative', borderRadius:22, overflow:'hidden',
-                    border:`1.5px solid ${dark ? 'rgba(201,169,106,.4)' : 'rgba(201,169,106,.5)'}`,
-                    boxShadow: dark
-                        ? '0 30px 70px rgba(0,0,0,.55), 0 0 0 1px rgba(201,169,106,.12), inset 0 1px 0 rgba(255,255,255,.06)'
-                        : '0 24px 56px rgba(14,58,46,.22), 0 0 0 1px rgba(201,169,106,.18)',
-                }}>
-                    {/* صورة الأستاذ أحمد الشعراوي */}
-                    <img
-                        src={encodeURI('/images/ChatGPT Image Sep 28, 2026, 02_22_20 PM.png')}
-                        alt="الأستاذ أحمد الشعراوي — منصة التاريخ للثانوية العامة والبكالوريا"
-                        style={{ display:'block', width:'100%', height:'auto', position:'relative', zIndex:2 }}
-                    />
-
-                    {/* إطار داخلي رفيع — لمسة تذهيب المخطوطات */}
-                    <div style={{ position:'absolute', inset:8, borderRadius:15, border:'1px solid rgba(201,169,106,.35)', pointerEvents:'none', zIndex:3 }}/>
-
-                    {/* زخارف أركان ذهبية */}
-                    {['tl','tr','bl','br'].map(pos => (
-                        <div key={pos} style={{
-                            position:'absolute', width:26, height:26, zIndex:3, color:'#C9A96A', opacity:.85,
-                            top: pos[0]==='t' ? 10 : 'auto', bottom: pos[0]==='b' ? 10 : 'auto',
-                            right: pos[1]==='r' ? 10 : 'auto', left: pos[1]==='l' ? 10 : 'auto',
-                            transform:`scale(${pos[1]==='r'?-1:1},${pos[0]==='b'?-1:1})`,
-                        }}>
-                            <svg viewBox="0 0 30 30" width="26" height="26">
-                                <path d="M3,19 L3,3 L19,3" stroke="currentColor" strokeWidth="1.6" fill="none" strokeLinecap="round"/>
-                                <rect x="0" y="0" width="7" height="7" transform="rotate(45 3.2 3.2)" fill="currentColor"/>
-                            </svg>
-                        </div>
-                    ))}
-
-                    {/* Ground glow */}
-                    <div style={{
-                        position:'absolute', bottom:0, left:'10%', right:'10%', height:55, zIndex:1,
-                        background:`radial-gradient(ellipse at center, rgba(201,169,106,.${dark?'22':'10'}) 0%, transparent 72%)`,
-                        filter:'blur(10px)', pointerEvents:'none',
-                    }}/>
-                </div>
-            </div>
-        </div>
-    );
-}
-
 /* ── Preloader ───────────────────────────────────────────────── */
 function Preloader({ visible }) {
     return (
@@ -962,16 +836,85 @@ function Preloader({ visible }) {
             visibility: visible ? 'visible' : 'hidden',
             pointerEvents: visible ? 'auto' : 'none',
         }}>
-            {[0,1,2].map(i=>(
-                <div key={i} style={{
-                    position:'absolute', width:100, height:100, borderRadius:'50%',
-                    border:`1.5px solid ${C.gold}`,
-                    animation:`pingRing 2s ease-out ${i*.5}s infinite`,
-                }}/>
-            ))}
-            <span style={{ fontFamily:'Ruwudu,serif', fontSize:'clamp(22px,4vw,36px)', color:C.gold, letterSpacing:'.1em' }}>
-                الشعراوي
-            </span>
+            <div style={{ display:'flex', flexDirection:'column', alignItems:'center', gap:18 }}>
+                {/* عجلة حربية فرعونية دوّارة — عجلة العربة الحربية */}
+                <div style={{ position:'relative', width:126, height:126 }}>
+                    {/* توهج خلف العجلة */}
+                    <div style={{ position:'absolute', inset:-14, borderRadius:'50%', background:`radial-gradient(circle, rgba(201,169,106,.22), transparent 70%)`, filter:'blur(2px)' }}/>
+
+                    <svg width="126" height="126" viewBox="0 0 126 126" style={{ position:'relative', zIndex:1, animation:'chariotSpin 1.6s cubic-bezier(.5,.1,.5,.9) infinite', filter:'drop-shadow(0 6px 10px rgba(0,0,0,.45))' }}>
+                        <defs>
+                            <radialGradient id="rimGrad" cx="38%" cy="32%" r="75%">
+                                <stop offset="0%" stopColor="#F3DFA8"/>
+                                <stop offset="45%" stopColor={C.gold}/>
+                                <stop offset="100%" stopColor="#7A5A2E"/>
+                            </radialGradient>
+                            <radialGradient id="hubGrad" cx="38%" cy="32%" r="75%">
+                                <stop offset="0%" stopColor="#F3DFA8"/>
+                                <stop offset="55%" stopColor={C.gold}/>
+                                <stop offset="100%" stopColor="#6B4E28"/>
+                            </radialGradient>
+                            <linearGradient id="spokeGrad" x1="0" y1="0" x2="1" y2="1">
+                                <stop offset="0%" stopColor="#E8C784"/>
+                                <stop offset="100%" stopColor="#8B5E3C"/>
+                            </linearGradient>
+                        </defs>
+
+                        {/* الإطار الخارجي — جلد مبروم على خشب */}
+                        <circle cx="63" cy="63" r="54" fill="none" stroke="#3A2E1E" strokeWidth="10"/>
+                        <circle cx="63" cy="63" r="54" fill="none" stroke="url(#rimGrad)" strokeWidth="7"/>
+                        <circle cx="63" cy="63" r="54" fill="none" stroke="#3A2E1E" strokeWidth="1" opacity=".5"/>
+                        {/* لفات الجلد حول الإطار */}
+                        {Array.from({length:28}).map((_,i)=>{
+                            const a = (i/28)*Math.PI*2;
+                            const x1 = 63+Math.cos(a)*58.5, y1 = 63+Math.sin(a)*58.5;
+                            const x2 = 63+Math.cos(a)*49.5, y2 = 63+Math.sin(a)*49.5;
+                            return <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} stroke="#2A2015" strokeWidth="1.6" opacity=".55"/>;
+                        })}
+                        <circle cx="63" cy="63" r="45" fill="none" stroke={C.gold} strokeWidth="1.2" opacity=".4"/>
+
+                        {/* القضبان — 6 دعامات خشبية مدببة على طراز عربات الحرب الفرعونية */}
+                        {Array.from({length:6}).map((_,i)=>{
+                            const a = (i/6)*Math.PI*2;
+                            const w = 5.5;
+                            const bx = Math.cos(a+Math.PI/2)*w, by = Math.sin(a+Math.PI/2)*w;
+                            const hx = 63+Math.cos(a)*15, hy = 63+Math.sin(a)*15;
+                            const tx = 63+Math.cos(a)*47, ty = 63+Math.sin(a)*47;
+                            const tw = 1.6;
+                            const tbx = Math.cos(a+Math.PI/2)*tw, tby = Math.sin(a+Math.PI/2)*tw;
+                            return (
+                                <polygon key={i}
+                                    points={`${hx+bx},${hy+by} ${hx-bx},${hy-by} ${tx-tbx},${ty-tby} ${tx+tbx},${ty+tby}`}
+                                    fill="url(#spokeGrad)" stroke="#3A2E1E" strokeWidth="0.6"
+                                />
+                            );
+                        })}
+                        {/* حلقة ربط القضبان بالمحور */}
+                        <circle cx="63" cy="63" r="17" fill="none" stroke="#3A2E1E" strokeWidth="3"/>
+                        <circle cx="63" cy="63" r="17" fill="none" stroke={C.gold} strokeWidth="1.2" opacity=".7"/>
+
+                        {/* المحور المركزي — قرص شمسي مزخرف */}
+                        <circle cx="63" cy="63" r="13" fill="url(#hubGrad)" stroke="#3A2E1E" strokeWidth="2.4"/>
+                        {Array.from({length:8}).map((_,i)=>{
+                            const a = (i/8)*Math.PI*2;
+                            const x1 = 63+Math.cos(a)*5.5, y1 = 63+Math.sin(a)*5.5;
+                            const x2 = 63+Math.cos(a)*10.5, y2 = 63+Math.sin(a)*10.5;
+                            return <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} stroke="#3A2E1E" strokeWidth="1" opacity=".55"/>;
+                        })}
+                        <circle cx="63" cy="63" r="4" fill="#3A2E1E"/>
+                        <circle cx="61.5" cy="61.5" r="1.4" fill="#F3DFA8" opacity=".85"/>
+                    </svg>
+                </div>
+
+                {/* ظل الأرض وأثر الغبار */}
+                <div style={{ display:'flex', gap:6, alignItems:'center', marginTop:-6 }}>
+                    <div style={{ width:70, height:6, borderRadius:'50%', background:'radial-gradient(ellipse, rgba(0,0,0,.45), transparent 75%)', animation:'chariotDust 1.6s ease-in-out infinite' }}/>
+                </div>
+
+                <span style={{ fontFamily:'Ruwudu,serif', fontSize:'clamp(20px,3.6vw,32px)', color:C.gold, letterSpacing:'.1em' }}>
+                    الشعراوي
+                </span>
+            </div>
         </div>
     );
 }
@@ -1093,7 +1036,7 @@ function MorphingNavMenu({ items, T }) {
                     onClick={() => setActive(v => v === i ? null : i)}
                     style={{
                         color: T.navLink, background: 'none', border: 'none', cursor: 'pointer',
-                        fontFamily: "'Cairo',sans-serif",
+                        fontFamily: "'Amiri','Cairo',serif",
                         fontSize: 13, fontWeight: 600, padding: '8px 14px', borderRadius: 8,
                         display: 'flex', alignItems: 'center', gap: 5,
                         transition: 'color .2s ease',
@@ -1234,7 +1177,7 @@ function LanguageBranches({ dark }) {
                                 </div>
                             </div>
                             <span style={{
-                                fontFamily:"'Cairo',sans-serif", fontSize:12.5, fontWeight: isActive?800:600,
+                                fontFamily:"'Amiri','Cairo',serif", fontSize:12.5, fontWeight: isActive?800:600,
                                 color: isActive ? '#C9A96A' : (dark ? 'rgba(232,220,193,.55)' : 'rgba(14,58,46,.6)'),
                                 transition:'color .4s ease', whiteSpace:'nowrap',
                             }}>{b.title}</span>
@@ -1410,7 +1353,7 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
             <div
                 ref={pageRef}
                 dir="rtl"
-                style={{ minHeight:'100vh', background:pageBg, fontFamily:'Cairo,sans-serif', position:'relative', color:T.text, transition:'background 1s ease, color 1s ease', paddingBottom:112 }}
+                style={{ minHeight:'100vh', background:pageBg, fontFamily:'Amiri,"Cairo",serif', position:'relative', color:T.text, transition:'background 1s ease, color 1s ease', paddingBottom:112 }}
             >
 
             {/* ══════════════════════════════════════════════════════
@@ -1460,7 +1403,7 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
                 <div className="nav-links" style={{ gap:4, position:'absolute', left:'50%', transform:'translateX(-50%)', alignItems:'center' }}>
                     <a href="#" className="nav-link-item" style={{
                         color:T.navLink, textDecoration:'none',
-                        fontFamily:"'Cairo',sans-serif",
+                        fontFamily:"'Amiri','Cairo',serif",
                         fontSize:13, fontWeight:600, padding:'8px 14px', borderRadius:8,
                         transition:'color .2s ease',
                     }}
@@ -1473,7 +1416,7 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
                             label: 'المقررات',
                             content: (
                                 <div style={{ width: 440 }}>
-                                    <p style={{ fontFamily:"'Cairo',sans-serif", fontSize:11, fontWeight:700, letterSpacing:'.12em', color:'#C9A96A', margin:'2px 6px 12px' }}>فروع التاريخ</p>
+                                    <p style={{ fontFamily:"'Amiri','Cairo',serif", fontSize:11, fontWeight:700, letterSpacing:'.12em', color:'#C9A96A', margin:'2px 6px 12px' }}>فروع التاريخ</p>
                                     <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:4 }}>
                                         {[
                                             { ...BRANCHES[0], tag:'الأهرامات والفراعنة' },
@@ -1498,8 +1441,8 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
                                                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C9A96A" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">{b.icon}</svg>
                                                 </div>
                                                 <div style={{ minWidth:0 }}>
-                                                    <p style={{ fontFamily:"'Cairo',sans-serif", fontSize:13, fontWeight:800, margin:0 }}>{b.title}</p>
-                                                    <p style={{ fontFamily:"'Cairo',sans-serif", fontSize:10.5, fontWeight:500, color:'rgba(232,220,193,.6)', margin:'2px 0 0', whiteSpace:'nowrap', overflow:'hidden', textOverflow:'ellipsis' }}>{b.tag}</p>
+                                                    <p style={{ fontFamily:"'Amiri','Cairo',serif", fontSize:13, fontWeight:800, margin:0 }}>{b.title}</p>
+                                                    <p style={{ fontFamily:"'Amiri','Cairo',serif", fontSize:10.5, fontWeight:500, color:'rgba(232,220,193,.6)', margin:'2px 0 0', whiteSpace:'nowrap', overflow:'hidden', textOverflow:'ellipsis' }}>{b.tag}</p>
                                                 </div>
                                             </a>
                                         ))}
@@ -1521,14 +1464,14 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
                                             <span style={{ fontFamily:"'Reem Kufi',sans-serif", fontSize:20, color:'#C9A96A' }}>ش</span>
                                         </div>
                                         <div>
-                                            <p style={{ fontFamily:"'Cairo',sans-serif", fontSize:13, fontWeight:800, color:'#E8DCC1', margin:0 }}>أ. أحمد الشعراوي</p>
-                                            <p style={{ fontFamily:"'Cairo',sans-serif", fontSize:11, fontWeight:600, color:'#C9A96A', margin:'2px 0 0' }}>أستاذ التاريخ — الثانوية العامة</p>
+                                            <p style={{ fontFamily:"'Amiri','Cairo',serif", fontSize:13, fontWeight:800, color:'#E8DCC1', margin:0 }}>أ. أحمد الشعراوي</p>
+                                            <p style={{ fontFamily:"'Amiri','Cairo',serif", fontSize:11, fontWeight:600, color:'#C9A96A', margin:'2px 0 0' }}>أستاذ التاريخ — الثانوية العامة</p>
                                         </div>
                                     </div>
-                                    <p style={{ fontFamily:"'Cairo',sans-serif", fontSize:12, lineHeight:1.9, color:'rgba(232,220,193,.75)', margin:'0 0 12px' }}>
+                                    <p style={{ fontFamily:"'Amiri','Cairo',serif", fontSize:12, lineHeight:1.9, color:'rgba(232,220,193,.75)', margin:'0 0 12px' }}>
                                         منصة متكاملة بتفهّمك التاريخ بأسلوب مبسّط، فيديوهات وخرائط توضيحية، ومتابعة حقيقية لتقدمك.
                                     </p>
-                                    <a href="#about" style={{ display:'inline-flex', alignItems:'center', gap:5, fontFamily:"'Cairo',sans-serif", fontSize:12, fontWeight:800, color:'#C9A96A', textDecoration:'none' }}>
+                                    <a href="#about" style={{ display:'inline-flex', alignItems:'center', gap:5, fontFamily:"'Amiri','Cairo',serif", fontSize:12, fontWeight:800, color:'#C9A96A', textDecoration:'none' }}>
                                         اعرف أكتر عن المنصة ←
                                     </a>
                                 </div>
@@ -1584,64 +1527,104 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
             ══════════════════════════════════════════════════════ */}
             <section className="hero-section" style={{
                 minHeight:'92vh', display:'flex', alignItems:'center',
-                paddingTop:`clamp(20px,4vh,56px)`,
-                paddingBottom:`clamp(48px,9vh,110px)`,
-                paddingRight:`clamp(24px,5vw,72px)`,
-                paddingLeft:`clamp(160px,13vw,240px)`,
-                position:'relative', zIndex:10, gap:40,
+                padding:`clamp(16px,3vh,44px) clamp(16px,4vw,56px)`,
+                position:'relative', zIndex:10,
             }}>
-                <div className="hero-right" data-reveal style={{ display:'flex', flexDirection:'column', justifyContent:'center', minHeight:'80vh' }}>
-                    {/* ── Brand welcome wordmark — سطر ترحيب + لوجو جنب بعض + خواطر ── */}
-                    <h1 className="hero-welcome-img" style={{
-                        fontFamily:"'Aref Ruqaa',serif", fontWeight:700,
-                        fontSize:'clamp(30px,4.2vw,44px)', lineHeight:1.2,
-                        margin:'0 0 8px', color: T.text,
-                    }}>
-                        أهلاً بيك في
-                    </h1>
+                <div className="hero-photo-full" data-reveal style={{
+                    position:'relative', width:'100%', borderRadius:22, overflow:'hidden',
+                    boxShadow: darkMode ? '0 30px 70px rgba(0,0,0,.55)' : '0 24px 56px rgba(14,58,46,.22)',
+                }}>
+                    {/* صورة الأستاذ أحمد الشعراوي */}
+                    <img
+                        src={encodeURI('/images/هيرووومموموم.png')}
+                        alt="الأستاذ أحمد الشعراوي — منصة التاريخ للثانوية العامة والبكالوريا"
+                        style={{ display:'block', width:'100%', height:'auto' }}
+                    />
 
-                    <div style={{ marginBottom:36, display:'flex', alignItems:'flex-start', gap:14 }}>
-                        <svg width="22" height="22" viewBox="0 0 18 18" style={{ flexShrink:0, opacity:.75, marginTop:14 }}>
-                            <rect x="4" y="4" width="10" height="10" rx="3" fill="#C9A96A" transform="rotate(45 9 9)"/>
-                        </svg>
-                        <div style={{ width:'fit-content' }}>
-                            <span style={{
-                                fontFamily:"'Aref Ruqaa',serif", fontWeight:700,
-                                fontSize:'clamp(56px,8vw,92px)', color: T.text, letterSpacing:'.01em', lineHeight:1.1,
-                                textShadow: darkMode ? '0 0 34px rgba(201,169,106,.45)' : 'none',
-                                whiteSpace:'nowrap',
-                            }}>
-                                رحلة{' '}
-                                <span style={{
-                                    background:'linear-gradient(135deg,#C9A96A,#8B5E3C)',
-                                    WebkitBackgroundClip:'text', WebkitTextFillColor:'transparent', backgroundClip:'text',
-                                }}>الشعراوي</span>
-                            </span>
-                            <svg width="100%" viewBox="0 0 230 34" style={{ display:'block', marginTop:10, aspectRatio:'230/34', animation:'waveGlowPulse 1.8s ease-in-out infinite' }}>
-                                <path d="M15,17 Q35,2 55,17 T95,17 T135,17 T175,17 T215,17" stroke="#C9A96A" strokeWidth="4.5" fill="none" strokeLinecap="round"/>
-                                <rect x="5"   y="7" width="20" height="20" rx="6" fill="#C9A96A" transform="rotate(45 15 17)"/>
-                                <rect x="205" y="7" width="20" height="20" rx="6" fill="#C9A96A" transform="rotate(45 215 17)"/>
+                    {/* تعتيم خفيف على الجزء الفاضي من الصورة عشان الكلام يبان واضح فوقها */}
+                    <div style={{
+                        position:'absolute', inset:0, pointerEvents:'none',
+                        background:'linear-gradient(90deg, transparent 38%, rgba(10,9,8,.22) 55%, rgba(10,9,8,.48) 100%)',
+                    }}/>
+
+                    {/* ── الكلام جوّه الصورة — في الجزء الفاضي على اليمين ── */}
+                    <div className="hero-right" style={{
+                        position:'absolute', inset:'0 0 0 auto', right:0, width:'58%',
+                        display:'flex', flexDirection:'column', justifyContent:'center',
+                        paddingRight:'clamp(24px,4.5vw,64px)', paddingLeft:'clamp(28px,5vw,64px)',
+                    }}>
+                        {/* ── Brand welcome wordmark — سطر ترحيب + لوجو جنب بعض + خواطر ── */}
+                        <h1 className="hero-welcome-img" style={{
+                            fontFamily:"'Aref Ruqaa',serif", fontWeight:700,
+                            fontSize:'clamp(30px,4.2vw,46px)', lineHeight:1.2,
+                            margin:'0 0 8px', color:'#F5EFDF',
+                        }}>
+                            أهلاً بيك في
+                        </h1>
+
+                        <div style={{ marginBottom:28, display:'flex', alignItems:'flex-start', gap:14 }}>
+                            <svg width="20" height="20" viewBox="0 0 18 18" style={{ flexShrink:0, opacity:.75, marginTop:16 }}>
+                                <rect x="4" y="4" width="10" height="10" rx="3" fill="#C9A96A" transform="rotate(45 9 9)"/>
                             </svg>
+                            <div style={{ width:'fit-content' }}>
+                                <span style={{
+                                    fontFamily:"'Aref Ruqaa',serif", fontWeight:700,
+                                    fontSize:'clamp(46px,6.6vw,80px)', color:'#F5EFDF', letterSpacing:'.01em', lineHeight:1.1,
+                                    textShadow:'0 0 34px rgba(201,169,106,.45)',
+                                    whiteSpace:'nowrap',
+                                }}>
+                                    رحلة{' '}
+                                    <span style={{
+                                        background:'linear-gradient(135deg,#C9A96A,#E8DCC1)',
+                                        WebkitBackgroundClip:'text', WebkitTextFillColor:'transparent', backgroundClip:'text',
+                                    }}>الشعراوي</span>
+                                </span>
+                                <svg width="100%" viewBox="0 0 230 34" style={{ display:'block', marginTop:10, maxWidth:230, aspectRatio:'230/34', animation:'waveGlowPulse 1.8s ease-in-out infinite' }}>
+                                    <path d="M15,17 Q35,2 55,17 T95,17 T135,17 T175,17 T215,17" stroke="#C9A96A" strokeWidth="4.5" fill="none" strokeLinecap="round"/>
+                                    <rect x="5"   y="7" width="20" height="20" rx="6" fill="#C9A96A" transform="rotate(45 15 17)"/>
+                                    <rect x="205" y="7" width="20" height="20" rx="6" fill="#C9A96A" transform="rotate(45 215 17)"/>
+                                </svg>
+                            </div>
+                        </div>
+
+                        <p style={{ fontSize:'clamp(15px,1.7vw,19px)', color:'rgba(245,239,223,.85)', maxWidth:500, lineHeight:1.9, margin:'0 0 32px' }}>
+                            <span style={{ fontFamily:'Ruwudu,serif', fontSize:'1.3em', color:'#E8C784', letterSpacing:'.04em' }}>أهلاً بيك</span> في بيتك التاني — مع الأستاذ أحمد الشعراوي هتذاكر التاريخ بطريقة عمرك ما جربتها.
+                            شرح واضح، فيديوهات تفاعلية، ومتابعة مستمرة لحد ما تلم المنهج.
+                        </p>
+
+                        <div style={{ display:'flex', gap:14, flexWrap:'wrap' }}>
+                            <Link
+                                href={auth?.user ? '/student/dashboard' : '/register'}
+                                style={{ padding:'15px 36px', borderRadius:12, background:`linear-gradient(135deg,${C.gold},${C.amber})`, color:C.dark, fontWeight:800, fontSize:16, textDecoration:'none', boxShadow:`0 8px 32px rgba(139,94,60,.35)`, transition:'transform .2s,box-shadow .2s' }}
+                                onMouseEnter={e=>{e.currentTarget.style.transform='translateY(-2px)';e.currentTarget.style.boxShadow=`0 14px 44px rgba(139,94,60,.55)`;}}
+                                onMouseLeave={e=>{e.currentTarget.style.transform='none';e.currentTarget.style.boxShadow=`0 8px 32px rgba(139,94,60,.35)`;}}
+                            >اشترك دلوقتي !</Link>
+                            <a href="#features" style={{ padding:'15px 28px', borderRadius:12, border:'1px solid rgba(245,239,223,.35)', color:'#F5EFDF', fontSize:15, textDecoration:'none' }}>اعرف أكتر ←</a>
+                        </div>
+
+                        {/* ── شريط الإحصائيات — تحت الأزرار في نفس عمود الكلام ── */}
+                        <div className="hero-highlights-ribbon" style={{
+                            display:'flex', gap:12, textAlign:'center', marginTop:95,
+                        }}>
+                            {[
+                                { t:'التاريخ',   s:'من الفراعنة لعصرنا الحديث' },
+                                { t:'المادة',    s:'تاريخ مصر والعالم' },
+                                { t:'3 صفوف',   s:'أولى · ثانية · تالتة ثانوي' },
+                            ].map((item,i) => (
+                                <div key={i} className="hero-highlights-item" style={{
+                                    flex:1, padding:'16px 10px',
+                                    background:'rgba(10,9,8,.42)', backdropFilter:'blur(6px)', WebkitBackdropFilter:'blur(6px)',
+                                    border:'1px solid rgba(201,169,106,.3)', borderRadius:14,
+                                    boxShadow:'0 8px 22px rgba(0,0,0,.3)',
+                                    transition:'transform .25s ease, border-color .25s ease, box-shadow .25s ease, background .25s ease',
+                                }}>
+                                    <div style={{ fontFamily:"'Amiri','Cairo',serif", fontWeight:900, fontSize:'clamp(16px,1.9vw,22px)', color:'#C9A96A', marginBottom:4 }}>{item.t}</div>
+                                    <div style={{ fontSize:11.5, color:'rgba(232,220,193,.85)' }}>{item.s}</div>
+                                </div>
+                            ))}
                         </div>
                     </div>
-
-                    <p style={{ fontSize:'clamp(14px,1.6vw,18px)', color:T.textDim2, maxWidth:520, lineHeight:2, margin:'0 0 36px' }}>
-                        <span style={{ fontFamily:'Ruwudu,serif', fontSize:'1.35em', color:'#8B5E3C', letterSpacing:'.04em' }}>أهلاً بيك</span> في بيتك التاني — مع الأستاذ أحمد الشعراوي هتذاكر التاريخ بطريقة عمرك ما جربتها.
-                        شرح واضح، فيديوهات تفاعلية، ومتابعة مستمرة لحد ما تلم المنهج.
-                    </p>
-
-                    <div style={{ display:'flex', gap:14, flexWrap:'wrap', marginBottom:52 }}>
-                        <Link
-                            href={auth?.user ? '/student/dashboard' : '/register'}
-                            style={{ padding:'14px 36px', borderRadius:12, background:`linear-gradient(135deg,${C.gold},${C.amber})`, color:C.dark, fontWeight:800, fontSize:16, textDecoration:'none', boxShadow:`0 8px 32px rgba(139,94,60,.35)`, transition:'transform .2s,box-shadow .2s' }}
-                            onMouseEnter={e=>{e.currentTarget.style.transform='translateY(-2px)';e.currentTarget.style.boxShadow=`0 14px 44px rgba(139,94,60,.55)`;}}
-                            onMouseLeave={e=>{e.currentTarget.style.transform='none';e.currentTarget.style.boxShadow=`0 8px 32px rgba(139,94,60,.35)`;}}
-                        >اشترك دلوقتي !</Link>
-                        <a href="#features" style={{ padding:'14px 28px', borderRadius:12, border:`1px solid rgba(201,169,106,.35)`, color:T.text, fontSize:15, textDecoration:'none' }}>اعرف أكتر ←</a>
-                    </div>
-
                 </div>
-                <TeacherHero dark={darkMode} />
             </section>
 
             {/* ══════════════════════════════════════════════════════
@@ -1651,7 +1634,7 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
                 <div style={{ textAlign:'center', marginBottom:56, position:'relative' }}>
                     <span aria-hidden="true" style={{
                         position:'absolute', top:-30, left:'50%', transform:'translateX(-50%)',
-                        fontFamily:"'Reem Kufi','Cairo',sans-serif", fontWeight:700, fontSize:'clamp(48px,7vw,84px)', lineHeight:1,
+                        fontFamily:"'Reem Kufi','Amiri','Cairo',serif", fontWeight:700, fontSize:'clamp(48px,7vw,84px)', lineHeight:1,
                         color: darkMode ? C.gold : C.navy, opacity: darkMode ? 0.14 : 0.1, whiteSpace:'nowrap', pointerEvents:'none',
                         userSelect:'none', zIndex:0, letterSpacing:'.05em',
                     }}>التاريخ</span>
@@ -1748,7 +1731,7 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
                 </div>
                 <div style={{ display:'flex', gap:10, flexWrap:'wrap', marginBottom:32 }} data-reveal>
                     {filters.map(f=>(
-                        <button key={f} onClick={()=>setActiveFilter(f)} style={{ padding:'9px 20px', borderRadius:999, cursor:'pointer', fontFamily:'Cairo,sans-serif', fontSize:13, fontWeight:600, transition:'all .2s', border:`1.5px solid ${activeFilter===f ? C.amber : 'rgba(201,169,106,.28)'}`, background:activeFilter===f ? `linear-gradient(135deg,rgba(139,94,60,.18),rgba(201,169,106,.1))` : 'rgba(28,25,22,.5)', color:activeFilter===f ? C.amber : 'rgba(245,240,232,.65)' }}>{f}</button>
+                        <button key={f} onClick={()=>setActiveFilter(f)} style={{ padding:'9px 20px', borderRadius:999, cursor:'pointer', fontFamily:'Amiri,"Cairo",serif', fontSize:13, fontWeight:600, transition:'all .2s', border:`1.5px solid ${activeFilter===f ? C.amber : 'rgba(201,169,106,.28)'}`, background:activeFilter===f ? `linear-gradient(135deg,rgba(139,94,60,.18),rgba(201,169,106,.1))` : 'rgba(28,25,22,.5)', color:activeFilter===f ? C.amber : 'rgba(245,240,232,.65)' }}>{f}</button>
                     ))}
                 </div>
 
@@ -1835,7 +1818,7 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
                         const active = activeTopMonth === key;
                         return (
                             <button key={String(key)} onClick={() => setActiveTopMonth(key)}
-                                style={{ padding:'9px 24px', borderRadius:999, cursor:'pointer', fontFamily:'Cairo,sans-serif', fontSize:13, fontWeight:700, transition:'all .2s',
+                                style={{ padding:'9px 24px', borderRadius:999, cursor:'pointer', fontFamily:'Amiri,"Cairo",serif', fontSize:13, fontWeight:700, transition:'all .2s',
                                     border:`1px solid ${active ? C.amber : darkMode ? 'rgba(201,169,106,.22)' : 'rgba(201,169,106,.38)'}`,
                                     background: active ? `linear-gradient(135deg,${C.amber}30,${C.gold}18)` : darkMode ? 'rgba(201,169,106,.04)' : 'rgba(201,169,106,.06)',
                                     color: active ? C.amber : darkMode ? 'rgba(245,240,232,.5)' : 'rgba(14,58,46,.5)',
@@ -1912,7 +1895,7 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
                                             <rect x="12" y="12" width="36" height="36" transform="rotate(45 30 30)"/>
                                         </g>
                                         <circle cx="30" cy="30" r="18" fill={hov?`${medal}22`:`${medal}0d`} stroke={medal} strokeWidth="1.4"/>
-                                        <text x="30" y="37" textAnchor="middle" fontSize={isTop3?17:14} fontWeight="900" fill={medal} fontFamily="Cairo,sans-serif" opacity={hov?1:.9}>
+                                        <text x="30" y="37" textAnchor="middle" fontSize={isTop3?17:14} fontWeight="900" fill={medal} fontFamily="Amiri,Cairo,serif" opacity={hov?1:.9}>
                                             {arNum[s.rank] ?? s.rank}
                                         </text>
                                     </svg>
@@ -1930,7 +1913,7 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
 
                                     {/* الرقم المتوهج بالخلفية */}
                                     <div className="ts-rank-num" style={{
-                                        fontSize: isTop3?100:76, fontWeight:900, fontFamily:'Cairo,sans-serif',
+                                        fontSize: isTop3?100:76, fontWeight:900, fontFamily:'Amiri,"Cairo",serif',
                                         lineHeight:1, userSelect:'none', pointerEvents:'none',
                                         color:medal, opacity: hov?.5:.055,
                                         textShadow: hov ? `0 0 30px ${medal}cc, 0 0 70px ${medal}66` : 'none',
