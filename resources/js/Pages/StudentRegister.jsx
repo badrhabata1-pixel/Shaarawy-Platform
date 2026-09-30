@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { useForm, Head, Link } from '@inertiajs/react';
 
-const TEAL  = '#2fbcd4';
-const TEAL2 = '#009688';
-const NAVY  = '#1b3a60';
-const INK   = '#0A1422';
+const TEAL  = '#C9A96A';
+const TEAL2 = '#8B5E3C';
+const NAVY  = '#0E3A2E';
+const INK   = '#141210';
 
-const REGISTER_IMG = encodeURI('/images/انشاء او تسجيل.png');
+const REGISTER_IMG = encodeURI('/images/انشاء حساب.png');
 
 export default function StudentRegister({ grades = [] }) {
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -32,40 +32,40 @@ export default function StudentRegister({ grades = [] }) {
     return (
         <div dir="rtl" style={{
             minHeight:  '100vh',
-            background: `linear-gradient(135deg, #060B16 0%, #0D1829 45%, ${NAVY} 75%, ${INK} 100%)`,
+            background: `linear-gradient(135deg, #0A0908 0%, #171310 45%, ${NAVY} 75%, ${INK} 100%)`,
             fontFamily: "'Cairo', sans-serif",
             position:   'relative',
             overflow:   'hidden',
             display:    'flex',
             flexDirection: 'column',
         }}>
-            <Head title="تسجيل طالب جديد — منصة منصور" />
+            <Head title="تسجيل طالب جديد — منصة الشعراوي" />
             <GoogleFonts />
             <BrandStyles />
             <StarPattern />
             <Particles />
 
-            <div style={{ position: 'absolute', top: -80, right: -80, width: 360, height: 360, borderRadius: '50%', background: 'radial-gradient(circle, rgba(47,188,212,.18) 0%, transparent 70%)', pointerEvents: 'none' }} />
-            <div style={{ position: 'absolute', bottom: -100, left: -100, width: 400, height: 400, borderRadius: '50%', background: `radial-gradient(circle, rgba(27,58,96,.8) 0%, transparent 70%)`, pointerEvents: 'none' }} />
+            <div style={{ position: 'absolute', top: -80, right: -80, width: 360, height: 360, borderRadius: '50%', background: 'radial-gradient(circle, rgba(201,169,106,.18) 0%, transparent 70%)', pointerEvents: 'none' }} />
+            <div style={{ position: 'absolute', bottom: -100, left: -100, width: 400, height: 400, borderRadius: '50%', background: `radial-gradient(circle, rgba(14,58,46,.8) 0%, transparent 70%)`, pointerEvents: 'none' }} />
 
             <span aria-hidden="true" style={{
                 position: 'absolute', bottom: '3%', left: '50%', transform: 'translateX(-50%)',
                 fontFamily: "'Rakkas',serif", fontSize: 'clamp(60px,10vw,110px)', lineHeight: 1,
-                color: 'rgba(47,188,212,.06)', whiteSpace: 'nowrap', pointerEvents: 'none', userSelect: 'none',
-            }}>منصة منصور</span>
+                color: 'rgba(201,169,106,.08)', whiteSpace: 'nowrap', pointerEvents: 'none', userSelect: 'none',
+            }}>رحلة في التاريخ</span>
 
             {/* NAV */}
             <nav style={{
                 position: 'relative', zIndex: 10,
-                background: 'rgba(6,11,22,.82)', backdropFilter: 'blur(24px) saturate(1.8)', WebkitBackdropFilter: 'blur(24px) saturate(1.8)',
+                background: 'rgba(10,9,8,.82)', backdropFilter: 'blur(24px) saturate(1.8)', WebkitBackdropFilter: 'blur(24px) saturate(1.8)',
                 padding: '0 clamp(16px,4vw,2.5rem)', height: 80,
                 display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-                boxShadow: '0 4px 32px rgba(0,0,0,.45), inset 0 -1px 0 rgba(47,188,212,.14)',
+                boxShadow: '0 4px 32px rgba(0,0,0,.45), inset 0 -1px 0 rgba(201,169,106,.14)',
             }}>
-                <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 2, background: `linear-gradient(90deg,transparent 0%,rgba(47,188,212,.6) 30%,rgba(0,150,136,.8) 50%,rgba(47,188,212,.6) 70%,transparent 100%)` }} />
+                <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 2, background: `linear-gradient(90deg,transparent 0%,rgba(201,169,106,.6) 30%,rgba(139,94,60,.8) 50%,rgba(201,169,106,.6) 70%,transparent 100%)` }} />
 
                 <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                    <img src="/images/manasety.png.png" alt="منصتي" style={{ height: 46, width: 'auto', objectFit: 'contain', filter: 'drop-shadow(0 4px 14px rgba(47,188,212,.35))' }} />
+                    <img src="/images/ahmed-elshaarawy-logo-transparent.png" alt="أحمد الشعراوي" style={{ height: 46, width: 'auto', objectFit: 'contain', filter: 'drop-shadow(0 0 10px rgba(201,169,106,.35))' }} />
                 </div>
 
                 <div className="reg-nav-links" style={{ display: 'flex', gap: 10, alignItems: 'center', flexWrap: 'wrap', justifyContent: 'flex-end' }}>
@@ -80,33 +80,40 @@ export default function StudentRegister({ grades = [] }) {
 
             {/* MAIN */}
             <div style={{
-                display: 'flex', flex: 1, alignItems: 'flex-start', justifyContent: 'center',
+                display: 'flex', flex: 1, alignItems: 'center', justifyContent: 'center',
                 padding: 'clamp(16px,4vw,32px)', position: 'relative', zIndex: 2,
             }}>
                 <div className="login-split" style={{
-                    display: 'flex', direction: 'ltr', width: '94%', maxWidth: 1100,
+                    display: 'flex', direction: 'ltr', width: '96%', maxWidth: 1180,
                     borderRadius: 20, overflow: 'hidden', animation: 'riseUp .7s cubic-bezier(.22,1,.36,1)',
                     boxShadow: '0 40px 100px rgba(0,0,0,.5)',
                 }}>
-                    {/* PHOTO PANEL */}
+                    {/* PHOTO PANEL — مثبت على مقاسه الممتاز الحالي */}
                     <div className="login-photo" style={{
-                        flex: '0 0 480px', position: 'relative',
+                        width: 440, minWidth: 420, flexShrink: 0, position: 'relative',
                         background: `linear-gradient(160deg,${NAVY},${INK})`, overflow: 'hidden',
                     }}>
                         <img
-                            className="login-photo-img"
-                            src={REGISTER_IMG}
-                            alt="إنشاء حساب جديد"
-                            style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 18%' }}
-                        />
-                        <div style={{ position: 'absolute', inset: 0, background: `linear-gradient(180deg, transparent 42%, ${NAVY} 94%)` }} />
-                        <div style={{
-                            position: 'absolute', bottom: 0, left: 0, right: 0, zIndex: 2,
-                            display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center',
-                            padding: '1.5rem 1rem 1.25rem', direction: 'rtl',
-                        }}>
+    className="login-photo-img"
+    src={REGISTER_IMG}
+    alt="إنشاء حساب جديد"
+    style={{
+        position: 'absolute',
+        top: 0,
+        bottom: 0,
+        left: 0,
+        width: 'calc(100% + 60px)',     /* 👈 بنكبر الصورة سنة عشان تقفل الفراغ اليمين بالكامل */
+        maxWidth: 'none',
+        height: '100%',
+        objectFit: 'cover',
+        objectPosition: 'left center',
+        transform: 'translateX(-35px)',   /* 👈 دي اللي زقاها للشمال حسب رغبتك */
+    }}
+/>
+                        <div style={{ position: 'absolute', inset: 0, background: `linear-gradient(180deg, transparent 55%, ${NAVY} 96%)`, pointerEvents: 'none' }} />
+                        <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, textAlign: 'center', padding: '0 1rem 1.1rem', direction: 'rtl' }}>
                             <div style={{ color: '#fff', fontWeight: 800, fontSize: 15 }}>ابدأ رحلتك معنا 🚀</div>
-                            <div style={{ color: TEAL, fontSize: 11, marginTop: 3, opacity: .9 }}>منصة منصور التعليمية</div>
+                            <div style={{ color: TEAL, fontSize: 11, marginTop: 3, opacity: .9 }}>منصة الشعراوي التعليمية</div>
                         </div>
                     </div>
 
@@ -114,40 +121,35 @@ export default function StudentRegister({ grades = [] }) {
                     <div className="login-form-panel" style={{ background: '#fff', flex: 1, minWidth: 0, direction: 'rtl', overflowY: 'auto' }}>
 
                         {/* HEADER */}
-                        <div style={{ background: NAVY, padding: '2rem', textAlign: 'center', position: 'relative', overflow: 'hidden' }}>
+                        <div style={{ background: NAVY, padding: '1.1rem 1.5rem', textAlign: 'center', position: 'relative', overflow: 'hidden' }}>
                             <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: 3, background: `linear-gradient(90deg, ${TEAL}, ${TEAL2})` }} />
-                            <h1 style={{ color: '#fff', fontSize: 20, fontWeight: 900, margin: '0 0 4px', fontFamily: 'Cairo,sans-serif' }}>
+                            <h1 style={{ color: '#fff', fontSize: 17, fontWeight: 900, margin: '0 0 2px', fontFamily: 'Cairo,sans-serif' }}>
                                 تسجيل طالب جديد
                             </h1>
-                            <p style={{ color: 'rgba(255,255,255,.6)', fontSize: 12, margin: 0 }}>
-                                ابدأ رحلتك التعليمية مع منصة منصور
+                            <p style={{ color: 'rgba(255,255,255,.6)', fontSize: 11, margin: 0 }}>
+                                ابدأ رحلتك التعليمية مع منصة الشعراوي
                             </p>
-                            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, marginTop: 10 }}>
-                                <div style={{ width: 28, height: 1, background: `linear-gradient(90deg,transparent,${TEAL})` }} />
-                                <svg width="10" height="10" viewBox="0 0 18 18" fill="none"><rect x="4" y="4" width="10" height="10" transform="rotate(45 9 9)" stroke={TEAL} strokeWidth="1.6" /></svg>
-                                <div style={{ width: 28, height: 1, background: `linear-gradient(90deg,${TEAL},transparent)` }} />
-                            </div>
                         </div>
 
                         {/* BODY */}
-                        <form onSubmit={handleSubmit} className="reg-form-body" style={{ padding: '1.75rem 2rem' }}>
+                        <form onSubmit={handleSubmit} className="reg-form-body" style={{ padding: '1.1rem 1.5rem' }}>
 
                             {success && (
-                                <div style={{ background: '#d1fae5', border: '1px solid #6ee7b7', borderRadius: 10, padding: '10px 14px', color: '#065f46', fontSize: 13, marginBottom: 16, textAlign: 'center', fontWeight: 700 }}>
+                                <div style={{ background: '#d1fae5', border: '1px solid #6ee7b7', borderRadius: 10, padding: '8px 12px', color: '#065f46', fontSize: 12, marginBottom: 12, textAlign: 'center', fontWeight: 700 }}>
                                     🎉 تم تسجيل حسابك بنجاح! يمكنك الآن تسجيل الدخول.
                                 </div>
                             )}
 
                             <div style={{
-                                background: NAVY, borderRadius: 10, padding: '.7rem 1rem',
-                                marginBottom: '1.25rem', textAlign: 'center',
-                                color: TEAL, fontSize: 11, fontStyle: 'italic',
-                                borderRight: `3px solid ${TEAL2}`, lineHeight: 1.7,
+                                background: NAVY, borderRadius: 8, padding: '.5rem .875rem',
+                                marginBottom: '.85rem', textAlign: 'center',
+                                color: TEAL, fontSize: 10.5, fontStyle: 'italic',
+                                borderRight: `3px solid ${TEAL2}`, lineHeight: 1.6,
                             }}>
                                 "ابدأ رحلتك نحو التميز والتفوق"
                             </div>
 
-                            <div className="reg-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14 }}>
+                            <div className="reg-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
                                 <Field label="الاسم الأول" required error={errors.first_name}>
                                     <InputField
                                         value={data.first_name}
@@ -180,7 +182,7 @@ export default function StudentRegister({ grades = [] }) {
                                 />
                             </Field>
 
-                            <div className="reg-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14 }}>
+                            <div className="reg-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
                                 <Field label="كلمة المرور (8 أحرف على الأقل)" required error={errors.password}>
                                     <InputField
                                         type="password"
@@ -231,11 +233,11 @@ export default function StudentRegister({ grades = [] }) {
                                 </Field>
                             )}
 
-                            <div style={{ marginBottom: 14 }}>
-                                <label style={{ display: 'block', fontSize: 12, fontWeight: 700, color: NAVY, marginBottom: 7, fontFamily: 'Cairo,sans-serif' }}>
+                            <div style={{ marginBottom: 10 }}>
+                                <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: NAVY, marginBottom: 5, fontFamily: 'Cairo,sans-serif' }}>
                                     طريقة المتابعة <span style={{ color: TEAL2 }}>*</span>
                                 </label>
-                                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
+                                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
                                     <TypeButton active={data.type === 'online'}  onClick={() => setData('type', 'online')}>أونلاين</TypeButton>
                                     <TypeButton active={data.type === 'offline'} onClick={() => setData('type', 'offline')}>أوفلاين</TypeButton>
                                 </div>
@@ -249,17 +251,17 @@ export default function StudentRegister({ grades = [] }) {
                                 style={{
                                     width: '100%',
                                     background: processing ? '#94a3b8' : `linear-gradient(135deg, ${TEAL}, ${TEAL2})`,
-                                    color: '#fff', border: 'none', borderRadius: 10, padding: '13px',
-                                    fontSize: 15, fontWeight: 800, cursor: processing ? 'not-allowed' : 'pointer',
-                                    marginTop: 6, fontFamily: "'Cairo', sans-serif",
-                                    boxShadow: processing ? 'none' : `0 6px 20px rgba(47,188,212,.35)`,
+                                    color: '#fff', border: 'none', borderRadius: 10, padding: '10px',
+                                    fontSize: 14, fontWeight: 800, cursor: processing ? 'not-allowed' : 'pointer',
+                                    marginTop: 4, fontFamily: "'Cairo', sans-serif",
+                                    boxShadow: processing ? 'none' : `0 6px 20px rgba(201,169,106,.35)`,
                                     transition: 'all .2s ease',
                                 }}
                             >
                                 {processing ? 'جارٍ تسجيل البيانات...' : 'تسجيل الطالب'}
                             </button>
 
-                            <div style={{ textAlign: 'center', padding: '.75rem 0 0', fontSize: 11, color: '#94a3b8', borderTop: '1px solid #E2E8F0', marginTop: '1rem' }}>
+                            <div style={{ textAlign: 'center', padding: '.6rem 0 0', fontSize: 11, color: '#94a3b8', borderTop: '1px solid #E2E8F0', marginTop: '.75rem' }}>
                                 عندك حساب بالفعل؟{' '}
                                 <Link href="/student/login" style={{ color: TEAL2, textDecoration: 'none', fontWeight: 700 }}>
                                     سجّل الدخول
@@ -336,8 +338,8 @@ function BrandStyles() {
                 85%  { opacity: .2; }
                 100% { transform: translateY(-400px); opacity: 0; }
             }
-            .nav-pill { display:inline-flex; align-items:center; gap:5px; font-size:12px; font-weight:600; text-decoration:none; padding:6px 14px; border-radius:99px; border:1px solid rgba(47,188,212,.2); background:rgba(47,188,212,.06); white-space:nowrap; transition:all .2s; }
-            .nav-pill:hover { background:rgba(47,188,212,.16); border-color:rgba(47,188,212,.5); color:#2fbcd4 !important; }
+            .nav-pill { display:inline-flex; align-items:center; gap:5px; font-size:12px; font-weight:600; text-decoration:none; padding:6px 14px; border-radius:99px; border:1px solid rgba(201,169,106,.2); background:rgba(201,169,106,.06); white-space:nowrap; transition:all .2s; }
+            .nav-pill:hover { background:rgba(201,169,106,.16); border-color:rgba(201,169,106,.5); color:#C9A96A !important; }
             .nav-pill-ghost { border-color: transparent; background: transparent; }
             .nav-pill-ghost:hover { border-color: rgba(199,233,239,.18); background: transparent; }
             .brand-btn:hover { opacity:.92; transform: translateY(-1px); }
@@ -345,20 +347,16 @@ function BrandStyles() {
 
             @media (max-width: 820px) {
                 .login-split  { flex-direction: column !important; width: 96% !important; max-width: 540px !important; }
-                .login-photo  { flex: 0 0 240px !important; min-height: 240px !important; }
-                .login-photo-img { object-position: center 12% !important; }
+                .login-photo  { max-width: none !important; width: 100% !important; aspect-ratio: 1 !important; min-height: 260px !important; }
             }
             @media (max-width: 600px) {
                 .login-split  { width: 100% !important; max-width: 100% !important; border-radius: 12px !important; }
-                .login-photo  { flex: 0 0 200px !important; min-height: 200px !important; }
                 .login-form-panel { max-height: none !important; }
                 .reg-grid     { grid-template-columns: 1fr !important; }
                 .reg-form-body { padding: 1.25rem 1.1rem !important; }
             }
             @media (max-width: 420px) {
                 .login-split  { border-radius: 0 !important; }
-                .login-photo  { flex: 0 0 160px !important; min-height: 160px !important; }
-                .login-photo-img { object-position: center 8% !important; }
                 .reg-nav-links { gap: 8px !important; }
                 .reg-nav-links a { font-size: 11px !important; }
             }
@@ -368,8 +366,8 @@ function BrandStyles() {
 
 function Field({ label, required, error, children }) {
     return (
-        <div style={{ marginBottom: 14 }}>
-            <label style={{ display: 'block', fontSize: 12, fontWeight: 700, color: NAVY, marginBottom: 5, fontFamily: 'Cairo,sans-serif' }}>
+        <div style={{ marginBottom: 10 }}>
+            <label style={{ display: 'block', fontSize: 11.5, fontWeight: 600, color: NAVY, marginBottom: 4, fontFamily: 'Cairo,sans-serif' }}>
                 {label}{required && <span style={{ color: TEAL2 }}> *</span>}
             </label>
             {children}
@@ -390,15 +388,15 @@ function InputField({ type = 'text', value, onChange, placeholder, hasError, ltr
             onFocus={() => setFocused(true)}
             onBlur={() => setFocused(false)}
             style={{
-                width: '100%', boxSizing: 'border-box',
+                width: '100%', boxSizing: 'border-box', height: 40,
                 border: `1.5px solid ${hasError ? '#ef4444' : focused ? TEAL : '#E2E8F0'}`,
-                borderRadius: 10, padding: '11px 12px', fontSize: 13,
+                borderRadius: 9, padding: '8px 12px', fontSize: 13,
                 background: focused ? '#fff' : '#F8FAFC',
                 color: NAVY, outline: 'none',
                 fontFamily: "'Cairo', sans-serif",
                 direction: ltr ? 'ltr' : 'rtl',
                 textAlign: ltr ? 'left' : 'right',
-                boxShadow: focused ? '0 0 0 3px rgba(47,188,212,.12)' : 'none',
+                boxShadow: focused ? '0 0 0 3px rgba(201,169,106,.12)' : 'none',
                 transition: 'border-color .2s, box-shadow .2s, background .2s',
             }}
         />
@@ -414,14 +412,14 @@ function SelectField({ value, onChange, hasError, children }) {
             onFocus={() => setFocused(true)}
             onBlur={() => setFocused(false)}
             style={{
-                width: '100%', boxSizing: 'border-box',
+                width: '100%', boxSizing: 'border-box', height: 40,
                 border: `1.5px solid ${hasError ? '#ef4444' : focused ? TEAL : '#E2E8F0'}`,
-                borderRadius: 10, padding: '11px 12px', fontSize: 13,
+                borderRadius: 9, padding: '8px 12px', fontSize: 13,
                 background: focused ? '#fff' : '#F8FAFC',
                 color: NAVY, outline: 'none',
                 fontFamily: "'Cairo', sans-serif",
                 textAlign: 'right', cursor: 'pointer',
-                boxShadow: focused ? '0 0 0 3px rgba(47,188,212,.12)' : 'none',
+                boxShadow: focused ? '0 0 0 3px rgba(201,169,106,.12)' : 'none',
                 transition: 'border-color .2s, box-shadow .2s, background .2s',
             }}
         >
@@ -436,8 +434,8 @@ function TypeButton({ active, onClick, children }) {
             type="button"
             onClick={onClick}
             style={{
-                padding: '11px', borderRadius: 10, fontSize: 13, fontWeight: 700,
-                fontFamily: "'Cairo', sans-serif", cursor: 'pointer',
+                padding: '9px', height: 40, borderRadius: 9, fontSize: 13, fontWeight: 700,
+                fontFamily: "'Cairo', sans-serif", cursor: 'pointer', boxSizing: 'border-box',
                 border: `1.5px solid ${active ? TEAL : '#E2E8F0'}`,
                 background: active ? `linear-gradient(135deg, ${TEAL}, ${TEAL2})` : '#fff',
                 color: active ? '#fff' : NAVY,

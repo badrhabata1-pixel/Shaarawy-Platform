@@ -1,12 +1,12 @@
 import { useForm, Head } from '@inertiajs/react';
 import { useState } from 'react';
 
-const TEAL  = '#2fbcd4';
-const TEAL2 = '#009688';
-const NAVY  = '#1b3a60';
-const INK   = '#0A1422';
+const TEAL  = '#C9A96A';
+const TEAL2 = '#8B5E3C';
+const NAVY  = '#0E3A2E';
+const INK   = '#141210';
 
-const LOGIN_IMG = encodeURI('/images/تسجيل او اانشاء.png');
+const LOGIN_IMG = encodeURI('/images/تسجيل الدخول.png');
 
 export default function StudentLogin({ status, errors: pageErrors }) {
     const { data, setData, post, processing, errors } = useForm({
@@ -25,42 +25,42 @@ export default function StudentLogin({ status, errors: pageErrors }) {
     return (
         <div dir="rtl" style={{
             minHeight:  '100vh',
-            background: `linear-gradient(135deg, #060B16 0%, #0D1829 45%, ${NAVY} 75%, ${INK} 100%)`,
+            background: `linear-gradient(135deg, #0A0908 0%, #171310 45%, ${NAVY} 75%, ${INK} 100%)`,
             fontFamily: "'Cairo', sans-serif",
             position:   'relative',
             overflow:   'hidden',
             display:    'flex',
             flexDirection: 'column',
         }}>
-            <Head title="تسجيل دخول الطالب — منصة منصور" />
+            <Head title="تسجيل دخول الطالب — منصة الشعراوي" />
             <GoogleFonts />
             <BrandStyles />
             <StarPattern />
             <Particles />
 
             {/* Decorative orbs */}
-            <div style={{ position: 'absolute', top: -80, right: -80, width: 360, height: 360, borderRadius: '50%', background: 'radial-gradient(circle, rgba(47,188,212,.18) 0%, transparent 70%)', pointerEvents: 'none' }} />
-            <div style={{ position: 'absolute', bottom: -100, left: -100, width: 400, height: 400, borderRadius: '50%', background: `radial-gradient(circle, rgba(27,58,96,.8) 0%, transparent 70%)`, pointerEvents: 'none' }} />
+            <div style={{ position: 'absolute', top: -80, right: -80, width: 360, height: 360, borderRadius: '50%', background: 'radial-gradient(circle, rgba(201,169,106,.18) 0%, transparent 70%)', pointerEvents: 'none' }} />
+            <div style={{ position: 'absolute', bottom: -100, left: -100, width: 400, height: 400, borderRadius: '50%', background: `radial-gradient(circle, rgba(14,58,46,.8) 0%, transparent 70%)`, pointerEvents: 'none' }} />
 
-            {/* توقيع "منصور" المائي */}
+            {/* توقيع مائي — رحلة في التاريخ */}
             <span aria-hidden="true" style={{
                 position: 'absolute', bottom: '3%', left: '50%', transform: 'translateX(-50%)',
                 fontFamily: "'Rakkas',serif", fontSize: 'clamp(60px,10vw,110px)', lineHeight: 1,
-                color: 'rgba(47,188,212,.06)', whiteSpace: 'nowrap', pointerEvents: 'none', userSelect: 'none',
-            }}>منصة منصور</span>
+                color: 'rgba(201,169,106,.08)', whiteSpace: 'nowrap', pointerEvents: 'none', userSelect: 'none',
+            }}>رحلة في التاريخ</span>
 
             {/* NAV */}
             <nav style={{
                 position: 'relative', zIndex: 10,
-                background: 'rgba(6,11,22,.82)', backdropFilter: 'blur(24px) saturate(1.8)', WebkitBackdropFilter: 'blur(24px) saturate(1.8)',
+                background: 'rgba(10,9,8,.82)', backdropFilter: 'blur(24px) saturate(1.8)', WebkitBackdropFilter: 'blur(24px) saturate(1.8)',
                 padding: '0 clamp(16px,4vw,2.5rem)', height: 80,
                 display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-                boxShadow: '0 4px 32px rgba(0,0,0,.45), inset 0 -1px 0 rgba(47,188,212,.14)',
+                boxShadow: '0 4px 32px rgba(0,0,0,.45), inset 0 -1px 0 rgba(201,169,106,.14)',
             }}>
-                <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 2, background: `linear-gradient(90deg,transparent 0%,rgba(47,188,212,.6) 30%,rgba(0,150,136,.8) 50%,rgba(47,188,212,.6) 70%,transparent 100%)` }} />
+                <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 2, background: `linear-gradient(90deg,transparent 0%,rgba(201,169,106,.6) 30%,rgba(139,94,60,.8) 50%,rgba(201,169,106,.6) 70%,transparent 100%)` }} />
 
                 <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                    <img src="/images/manasety.png.png" alt="منصتي" style={{ height: 46, width: 'auto', objectFit: 'contain', filter: 'drop-shadow(0 4px 14px rgba(47,188,212,.35))' }} />
+                    <img src="/images/ahmed-elshaarawy-logo-transparent.png" alt="أحمد الشعراوي" style={{ height: 46, width: 'auto', objectFit: 'contain', filter: 'drop-shadow(0 0 10px rgba(201,169,106,.35))' }} />
                 </div>
 
                 <div className="reg-nav-links" style={{ display: 'flex', gap: 10, alignItems: 'center', flexWrap: 'wrap', justifyContent: 'flex-end' }}>
@@ -79,34 +79,29 @@ export default function StudentLogin({ status, errors: pageErrors }) {
 
             {/* MAIN */}
             <div style={{
-                flex: 1, display: 'flex', alignItems: 'flex-start', justifyContent: 'center',
+                flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center',
                 padding: 'clamp(16px,4vw,32px)', position: 'relative', zIndex: 2,
             }}>
                 <div className="login-split" style={{
-                    display: 'flex', direction: 'ltr', width: '100%', maxWidth: 940,
+                    display: 'flex', direction: 'ltr', width: '96%', maxWidth: 1040,
                     borderRadius: 20, overflow: 'hidden', animation: 'riseUp .7s cubic-bezier(.22,1,.36,1)',
                     boxShadow: '0 40px 100px rgba(0,0,0,.5)',
                 }}>
-                    {/* PHOTO PANEL */}
+                    {/* PHOTO PANEL — تم توسيع المساحة للشمال وضبط موضع الصورة لتظهر المومياء بالكامل */}
                     <div className="login-photo" style={{
-                        flex: '0 0 380px', position: 'relative',
+                        width: '50%', minWidth: 420, flexShrink: 0, position: 'relative',
                         background: `linear-gradient(160deg,${NAVY},${INK})`, overflow: 'hidden',
                     }}>
                         <img
                             className="login-photo-img"
                             src={LOGIN_IMG}
                             alt="تسجيل الدخول"
-                            style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 20%' }}
+                            style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'left center' }}
                         />
-                        <div style={{ position: 'absolute', inset: 0, background: `linear-gradient(180deg, transparent 42%, ${NAVY} 94%)` }} />
-                        <div style={{
-                            position: 'relative', zIndex: 2, height: '100%',
-                            display: 'flex', flexDirection: 'column',
-                            justifyContent: 'flex-end', alignItems: 'center',
-                            textAlign: 'center', padding: '1.5rem 1rem 1.25rem', direction: 'rtl',
-                        }}>
+                        <div style={{ position: 'absolute', inset: 0, background: `linear-gradient(180deg, transparent 55%, ${NAVY} 96%)` }} />
+                        <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, textAlign: 'center', padding: '0 1rem 1.1rem', direction: 'rtl' }}>
                             <div style={{ color: '#fff', fontWeight: 800, fontSize: 15 }}>أهلاً بعودتك 👋</div>
-                            <div style={{ color: TEAL, fontSize: 11, marginTop: 3, opacity: .9 }}>منصة منصور التعليمية</div>
+                            <div style={{ color: TEAL, fontSize: 11, marginTop: 3, opacity: .9 }}>منصة الشعراوي التعليمية</div>
                         </div>
                     </div>
 
@@ -120,7 +115,7 @@ export default function StudentLogin({ status, errors: pageErrors }) {
                                 تسجيل دخول الطالب
                             </h1>
                             <p style={{ color: 'rgba(255,255,255,.6)', fontSize: 12, margin: 0 }}>
-                                منصة منصور التعليمية
+                                منصة الشعراوي التعليمية
                             </p>
                             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, marginTop: 10 }}>
                                 <div style={{ width: 28, height: 1, background: `linear-gradient(90deg,transparent,${TEAL})` }} />
@@ -199,7 +194,7 @@ export default function StudentLogin({ status, errors: pageErrors }) {
                                     color: '#fff', border: 'none', borderRadius: 10, padding: '13px',
                                     fontSize: 15, fontWeight: 800, cursor: processing ? 'not-allowed' : 'pointer',
                                     marginTop: '.5rem', fontFamily: "'Cairo', sans-serif",
-                                    boxShadow: processing ? 'none' : `0 6px 20px rgba(47,188,212,.35)`,
+                                    boxShadow: processing ? 'none' : `0 6px 20px rgba(201,169,106,.35)`,
                                     transition: 'all .2s ease',
                                 }}
                             >
@@ -283,8 +278,8 @@ function BrandStyles() {
                 85%  { opacity: .2; }
                 100% { transform: translateY(-400px); opacity: 0; }
             }
-            .nav-pill { display:inline-flex; align-items:center; gap:5px; font-size:12px; font-weight:600; text-decoration:none; padding:6px 14px; border-radius:99px; border:1px solid rgba(47,188,212,.2); background:rgba(47,188,212,.06); white-space:nowrap; transition:all .2s; }
-            .nav-pill:hover { background:rgba(47,188,212,.16); border-color:rgba(47,188,212,.5); color:#2fbcd4 !important; }
+            .nav-pill { display:inline-flex; align-items:center; gap:5px; font-size:12px; font-weight:600; text-decoration:none; padding:6px 14px; border-radius:99px; border:1px solid rgba(201,169,106,.2); background:rgba(201,169,106,.06); white-space:nowrap; transition:all .2s; }
+            .nav-pill:hover { background:rgba(201,169,106,.16); border-color:rgba(201,169,106,.5); color:#C9A96A !important; }
             .nav-pill-ghost { border-color: transparent; background: transparent; }
             .nav-pill-ghost:hover { border-color: rgba(199,233,239,.18); background: transparent; }
             .brand-btn:hover { opacity:.92; transform: translateY(-1px); }
@@ -292,18 +287,14 @@ function BrandStyles() {
 
             @media (max-width: 820px) {
                 .login-split  { flex-direction: column !important; max-width: 480px !important; }
-                .login-photo  { flex: 0 0 240px !important; min-height: 240px !important; }
-                .login-photo-img { object-position: center 14% !important; }
+                .login-photo  { max-width: none !important; width: 100% !important; aspect-ratio: 1 !important; min-height: 260px !important; }
             }
             @media (max-width: 600px) {
                 .login-split  { width: 100% !important; max-width: 100% !important; border-radius: 12px !important; }
-                .login-photo  { flex: 0 0 210px !important; min-height: 210px !important; }
                 .reg-form-body { padding: 1.25rem 1.1rem !important; }
             }
             @media (max-width: 420px) {
                 .login-split  { border-radius: 0 !important; }
-                .login-photo  { flex: 0 0 170px !important; min-height: 170px !important; }
-                .login-photo-img { object-position: center 10% !important; }
                 .reg-nav-links { gap: 8px !important; }
                 .reg-nav-links a { font-size: 11px !important; }
             }
@@ -343,7 +334,7 @@ function InputField({ type = 'text', value, onChange, placeholder, hasError, ltr
                 fontFamily: "'Cairo', sans-serif",
                 direction: ltr ? 'ltr' : 'rtl',
                 textAlign: 'right',
-                boxShadow: focused ? '0 0 0 3px rgba(47,188,212,.12)' : 'none',
+                boxShadow: focused ? '0 0 0 3px rgba(201,169,106,.12)' : 'none',
                 transition: 'border-color .2s, box-shadow .2s, background .2s',
             }}
         />
