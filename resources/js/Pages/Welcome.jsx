@@ -104,9 +104,9 @@ const BRANCHES = [
 /* FILTERS: built dynamically inside the component from live units */
 
 const PORTALS = [
-    { hero: encodeURI('/images/منصور ( نجيب ).png'),    title:'تنظيم الدروس والكورسات',      text:'المنهج كله مرتب قدامك — عصور ودول وأحداث في مكان واحد ومترتبة زمنيًا. مش هتضيع في الكتاب تاني' },
-    { hero: encodeURI('/images/منصور (طه حسين ).png'),  title:'دروس بالفيديو والخرائط التوضيحية', text:'مش هتحفظ التاريخ، هتفهمه — خرائط وجداول زمنية وشواهد حية بتخليك حاسس بالحدث مش بس عارفه'    },
-    { hero: encodeURI('/images/طربوش احمر.png'),         title:'تطبيقات وتمارين تفاعلية',       text:'ذاكر وجرّب دماغك — أسئلة بعد كل درس عشان المعلومة تتثبّت وتلاقي نفسك جاهز لأي سؤال'  },
+    { hero: '/images/portal-army.webp',                    title:'تنظيم الدروس والكورسات',      text:'المنهج كله مرتب قدامك — عصور ودول وأحداث في مكان واحد ومترتبة زمنيًا. مش هتضيع في الكتاب تاني' },
+    { hero: '/images/portal-napoleon.webp',                title:'دروس بالفيديو والخرائط التوضيحية', text:'مش هتحفظ التاريخ، هتفهمه — خرائط وجداول زمنية وشواهد حية بتخليك حاسس بالحدث مش بس عارفه'    },
+    { hero: '/images/portal-zaghloul.webp',                title:'تطبيقات وتمارين تفاعلية',       text:'ذاكر وجرّب دماغك — أسئلة بعد كل درس عشان المعلومة تتثبّت وتلاقي نفسك جاهز لأي سؤال'  },
 ];
 
 /* ── History particles config — رموز أثرية عائمة بديلة عن الحروف العربية ── */
@@ -125,7 +125,7 @@ const PARTICLES = [
 function PageStyles() {
     return (
         <style>{`
-            @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Cairo:wght@400;600;700;800;900&family=Ruwudu:wght@400;700&family=Aref+Ruqaa:wght@400;700&family=Amiri:wght@400;700&display=swap');
+            @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Cairo:wght@400;600;700;800;900&family=Ruwudu:wght@400;700&family=Aref+Ruqaa:wght@400;700&family=Amiri:wght@400;700&family=Noto+Sans+Egyptian+Hieroglyphs&display=swap');
             *, *::before, *::after { box-sizing: border-box; }
             h1, h2, h3 { font-family: 'Ruwudu', serif !important; letter-spacing: .04em; }
             .hero-welcome-img { font-family: 'Aref Ruqaa', serif !important; letter-spacing: .01em; }
@@ -269,11 +269,25 @@ function PageStyles() {
             .nav-login-btn:active { transform:translateY(0) scale(.97); }
 
             /* كروت الإحصائيات تحت أزرار الهيرو — هوفر بسيط */
-            .hero-highlights-item:hover {
-                transform:translateY(-4px);
-                border-color:rgba(201,169,106,.6);
-                background:rgba(10,9,8,.6);
-                box-shadow:0 14px 30px rgba(0,0,0,.4), 0 0 0 1px rgba(201,169,106,.15);
+            .hero-highlights-item { position:relative; overflow:hidden; }
+            .hero-highlights-item::before {
+                content:''; position:absolute; top:0; left:12%; right:12%; height:1px;
+                background:linear-gradient(90deg,transparent,rgba(232,199,132,.9),transparent);
+            }
+            .hero-highlights-item::after {
+                content:''; position:absolute; top:0; bottom:0; width:60%; left:-80%;
+                background:linear-gradient(105deg,transparent,rgba(255,240,200,.14),transparent);
+                transform:skewX(-18deg); transition:left .8s cubic-bezier(.22,1,.36,1); pointer-events:none;
+            }
+            .hero-highlights-item:hover::after { left:130%; }
+            .hi-side:hover {
+                transform:translateY(-5px);
+                border-color:rgba(232,199,132,.65) !important;
+                box-shadow:0 18px 38px rgba(0,0,0,.45), 0 0 0 1px rgba(201,169,106,.18), inset 0 1px 0 rgba(255,255,255,.08) !important;
+            }
+            .hi-mid:hover {
+                transform:translateY(-14px) scale(1.02) !important;
+                box-shadow:0 26px 54px rgba(139,94,60,.5), 0 0 40px rgba(201,169,106,.3), inset 0 1px 0 rgba(255,255,255,.45) !important;
             }
 
             /* زر حساب جديد / لوحة التحكم — بريق متحرك عند المرور */
@@ -425,6 +439,135 @@ function HistoryBackground({ dark = true }) {
 }
 
 /* ═══════════════════════════════════════════════════════════════
+   NAV SCROLL BORDER — بوردر ذهبي حوالين الناف بار بيكتمل مع الاسكرول ويقل مع الرجوع
+═══════════════════════════════════════════════════════════════ */
+function NavScrollBorder({ radius = 26 }) {
+    const barRef = useRef(null);
+    useEffect(() => {
+        let raf = 0, cur = 0;
+        const target = () => {
+            const max = document.documentElement.scrollHeight - window.innerHeight;
+            return max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0;
+        };
+        const tick = () => {
+            const t = target();
+            cur += (t - cur) * 0.18;                       // حركة ناعمة
+            if (Math.abs(t - cur) < 0.0004) cur = t;
+            if (barRef.current) barRef.current.style.strokeDashoffset = String(1 - cur);
+            raf = cur === t ? 0 : requestAnimationFrame(tick);
+        };
+        const onScroll = () => { if (!raf) raf = requestAnimationFrame(tick); };
+        onScroll();
+        window.addEventListener('scroll', onScroll, { passive:true });
+        window.addEventListener('resize', onScroll);
+        return () => { window.removeEventListener('scroll', onScroll); window.removeEventListener('resize', onScroll); cancelAnimationFrame(raf); };
+    }, []);
+    const rectStyle = { x:1, y:1, width:'calc(100% - 2px)', height:'calc(100% - 2px)' };
+    return (
+        <svg aria-hidden="true" style={{ position:'absolute', inset:-1, width:'calc(100% + 2px)', height:'calc(100% + 2px)', pointerEvents:'none', overflow:'visible', transform:'scaleX(-1)', zIndex:5 }}>
+            <defs>
+                <linearGradient id="navProgGrad" x1="0" y1="0" x2="1" y2="0">
+                    <stop offset="0%" stopColor="#8B5E3C"/><stop offset="50%" stopColor="#E8C784"/><stop offset="100%" stopColor="#F0DDA8"/>
+                </linearGradient>
+            </defs>
+            <rect rx={radius} ry={radius} pathLength="1" fill="none" stroke="rgba(201,169,106,.14)" strokeWidth="1.5" style={rectStyle}/>
+            <rect ref={barRef} rx={radius} ry={radius} pathLength="1" fill="none" stroke="url(#navProgGrad)" strokeWidth="2.5" strokeLinecap="round"
+                strokeDasharray="1" strokeDashoffset="1"
+                style={{ ...rectStyle, filter:'drop-shadow(0 0 5px rgba(232,199,132,.65))' }}/>
+        </svg>
+    );
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   HIEROGLYPH TITLE — عند المرور بالماوس تتحول الحروف تباعًا (تشفير متتالي) إلى هيروغليفية
+═══════════════════════════════════════════════════════════════ */
+const HIERO_POOL = Array.from('𓀀𓁐𓂀𓃭𓄿𓅓𓆣𓇳𓈖𓉐𓊪𓋹𓌳𓍿𓎛𓏏𓐍𓅱𓆓𓇋𓈎𓉔𓊃𓋴𓌂𓍯𓎡𓏤𓁹𓂋𓃀𓄤𓅃𓆑𓇯');
+function HieroglyphTitle({ text }) {
+    const chars = Array.from(text);
+    const [shown, setShown] = useState(chars);
+    const [hiero, setHiero] = useState(() => chars.map(() => false));
+    const timers = useRef([]);
+    const wrapRef = useRef(null);
+    const [minW, setMinW] = useState(null);
+    const finals = useRef(chars.map((_, i) => HIERO_POOL[(i * 7 + 3) % HIERO_POOL.length]));
+
+    useEffect(() => {
+        let alive = true;
+        const measure = () => { if (alive && wrapRef.current) setMinW(wrapRef.current.getBoundingClientRect().width); };
+        (document.fonts?.ready ?? Promise.resolve()).then(measure);
+        return () => { alive = false; timers.current.forEach(clearTimeout); };
+    }, []);
+
+    const run = (toHiero) => {
+        timers.current.forEach(clearTimeout);
+        timers.current = [];
+        chars.forEach((ch, i) => {
+            if (ch === ' ') return;
+            const start = i * 55;
+            const frames = 5;
+            for (let f = 0; f <= frames; f++) {
+                timers.current.push(setTimeout(() => {
+                    const last = f === frames;
+                    setShown(prev => {
+                        const n = prev.slice();
+                        n[i] = last ? (toHiero ? finals.current[i] : ch) : HIERO_POOL[Math.floor(Math.random() * HIERO_POOL.length)];
+                        return n;
+                    });
+                    setHiero(prev => {
+                        const n = prev.slice();
+                        n[i] = last ? toHiero : true;
+                        return n;
+                    });
+                }, start + f * 50));
+            }
+        });
+    };
+
+    // تشغيل تلقائي: عند فتح الموقع وكل مرة يظهر فيها العنوان في الشاشة
+    const hovering = useRef(false);
+    const autoTimer = useRef(null);
+    useEffect(() => {
+        const el = wrapRef.current;
+        if (!el || typeof IntersectionObserver === 'undefined') return;
+        const io = new IntersectionObserver(([entry]) => {
+            if (entry.isIntersecting) {
+                run(true);
+                clearTimeout(autoTimer.current);
+                autoTimer.current = setTimeout(() => { if (!hovering.current) run(false); }, chars.length * 55 + 300 + 1400);
+            } else {
+                clearTimeout(autoTimer.current);
+                if (!hovering.current) run(false);
+            }
+        }, { threshold: 0.6 });
+        io.observe(el);
+        return () => { io.disconnect(); clearTimeout(autoTimer.current); };
+    }, []);
+
+    return (
+        <span
+            ref={wrapRef}
+            onMouseEnter={() => { hovering.current = true; run(true); }}
+            onMouseLeave={() => { hovering.current = false; run(false); }}
+            style={{ display:'inline-block', minWidth: minW || undefined, textAlign:'start', cursor:'default' }}
+        >
+            {(() => {
+                const sp = chars.indexOf(' ');
+                const render = (from, to, grad) => (
+                    <span style={grad ? { background:'linear-gradient(135deg,#C9A96A,#E8DCC1)', WebkitBackgroundClip:'text', WebkitTextFillColor:'transparent', backgroundClip:'text' } : undefined}>
+                        {shown.slice(from, to).map((c, k) => (
+                            <span key={from + k} style={hiero[from + k]
+                                ? { fontFamily:"'Noto Sans Egyptian Hieroglyphs',serif", fontSize:'.78em', fontWeight:400, letterSpacing:'.06em', color:'#E8C784', textShadow:'0 0 22px rgba(201,169,106,.6)' }
+                                : undefined}>{c}</span>
+                        ))}
+                    </span>
+                );
+                return sp < 0 ? render(0, chars.length, true) : <>{render(0, sp, false)}{' '}{render(sp + 1, chars.length, true)}</>;
+            })()}
+        </span>
+    );
+}
+
+/* ═══════════════════════════════════════════════════════════════
    LOCATION CARD — center branch
 ═══════════════════════════════════════════════════════════════ */
 function LocationCard({ name, num, icon, address, detail, featured, dark }) {
@@ -438,90 +581,48 @@ function LocationCard({ name, num, icon, address, detail, featured, dark }) {
         <div
             onMouseEnter={() => setHovered(true)}
             onMouseLeave={() => setHovered(false)}
-            style={{ position:'relative', direction:'rtl', cursor:'default', transform: active ? 'translateY(-6px)' : 'none', transition:'transform .45s cubic-bezier(.22,1,.36,1)' }}
+            style={{
+                position:'relative', direction:'rtl', cursor:'default',
+                width:'100%', aspectRatio:'1 / 1',
+                backgroundImage:'url(/images/location.png)', backgroundSize:'100% 100%', backgroundRepeat:'no-repeat',
+                filter:`drop-shadow(0 ${active?26:16}px ${active?38:26}px rgba(0,0,0,${dark?'.65':'.28'}))`,
+                transform: active ? 'translateY(-6px) rotate(-.6deg)' : 'none',
+                transition:'transform .5s cubic-bezier(.22,1,.36,1), filter .5s ease',
+            }}
         >
-            {/* زخارف أركان رفيعة بجوهرة صغيرة — طراز تذهيب المخطوطات */}
-            {['tl','tr','bl','br'].map(pos => {
-                const hFlip = pos[1] === 'r', vFlip = pos[0] === 'b';
-                return (
-                    <div key={pos} style={{
-                        position:'absolute', width:24, height:24, zIndex:3, color:accent,
-                        opacity: active ? 1 : .55, transition:'opacity .4s ease',
-                        top: pos[0]==='t' ? 6 : 'auto', bottom: pos[0]==='b' ? 6 : 'auto',
-                        right: pos[1]==='r' ? 6 : 'auto', left: pos[1]==='l' ? 6 : 'auto',
-                        transform:`scale(${hFlip?-1:1},${vFlip?-1:1})`,
-                    }}>
-                        <svg viewBox="0 0 30 30" width="24" height="24">
-                            <path d="M3,19 L3,3 L19,3" stroke="currentColor" strokeWidth="1.4" fill="none" strokeLinecap="round"/>
-                            <rect x="0" y="0" width="7" height="7" transform="rotate(45 3.2 3.2)" fill="currentColor"/>
-                        </svg>
-                    </div>
-                );
-            })}
-
+            {/* المحتوى داخل المساحة الفارغة من الرقّ */}
             <div style={{
-                position:'relative', overflow:'hidden', borderRadius:18, textAlign:'center',
-                padding: featured ? '36px 26px 30px' : '30px 24px 26px',
-                background: dark
-                    ? (active ? 'linear-gradient(155deg,#1A2A20,#171310)' : 'linear-gradient(155deg,#1C1916,#120F0B)')
-                    : (active ? 'linear-gradient(155deg,#F7F3E9,#F3ECDA)' : '#ffffff'),
-                border:`1px solid ${active ? accent+'99' : dark ? 'rgba(201,169,106,.16)' : 'rgba(201,169,106,.25)'}`,
-                boxShadow: active
-                    ? `0 18px 48px rgba(0,0,0,${dark?'.5':'.1'}), inset 0 1px 0 ${accent}22`
-                    : dark ? '0 4px 20px rgba(0,0,0,.3)' : '0 2px 16px rgba(14,58,46,.06)',
-                transition:'all .45s cubic-bezier(.22,1,.36,1)',
+                position:'absolute', top:'24%', bottom:'22%', right:'17%', left:'17%',
+                display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', textAlign:'center',
             }}>
-                {/* إطار داخلي مزدوج */}
-                <div style={{ position:'absolute', inset:7, borderRadius:11, border:`1px solid ${accent}`, opacity: active?.5:.2, pointerEvents:'none', transition:'opacity .5s ease' }}/>
-
-                {/* نسيج نجمة ثمانية */}
-                <svg style={{ position:'absolute', inset:0, width:'100%', height:'100%', opacity: active?.14:.05, transition:'opacity .5s ease', pointerEvents:'none' }}>
-                    <defs>
-                        <pattern id={patId} width="30" height="30" patternUnits="userSpaceOnUse">
-                            <g stroke={accent} fill="none" strokeWidth="1">
-                                <rect x="3" y="3" width="24" height="24"/>
-                                <rect x="3" y="3" width="24" height="24" transform="rotate(45 15 15)"/>
-                            </g>
-                        </pattern>
-                    </defs>
-                    <rect width="100%" height="100%" fill={`url(#${patId})`}/>
-                </svg>
-
-                {/* رقم عربي صغير */}
-                <div style={{ position:'relative', zIndex:2, fontSize:11, fontWeight:800, color:accent, opacity:.65, letterSpacing:'.14em', marginBottom:14 }}>{arNum}</div>
-
                 {/* شمسة الأيقونة */}
-                <div style={{ position:'relative', width:66, height:66, margin:'0 auto 18px', display:'flex', alignItems:'center', justifyContent:'center', transform: active?'scale(1.06)':'scale(1)', transition:'transform .4s cubic-bezier(.22,1,.36,1)', zIndex:2 }}>
-                    <svg width="66" height="66" viewBox="0 0 66 66" style={{ position:'absolute', inset:0 }}>
-                        <circle cx="33" cy="33" r="30" fill="none" stroke={accent} strokeWidth=".7" opacity={active?.7:.4}/>
-                        <g stroke={accent} strokeWidth="1" fill="none" opacity={active?.9:.5}>
+                <div style={{ position:'relative', width:58, height:58, marginBottom:12, display:'flex', alignItems:'center', justifyContent:'center', transform: active?'scale(1.06)':'scale(1)', transition:'transform .4s cubic-bezier(.22,1,.36,1)' }}>
+                    <svg width="58" height="58" viewBox="0 0 66 66" style={{ position:'absolute', inset:0 }}>
+                        <circle cx="33" cy="33" r="30" fill="none" stroke="#6B4423" strokeWidth=".8" opacity=".55"/>
+                        <g stroke="#6B4423" strokeWidth="1" fill="none" opacity=".6">
                             <rect x="14" y="14" width="38" height="38"/>
                             <rect x="14" y="14" width="38" height="38" transform="rotate(45 33 33)"/>
                         </g>
-                        <circle cx="33" cy="33" r="20" fill={dark ? '#1C1916' : '#ffffff'} stroke={accent} strokeWidth="1.3"/>
+                        <circle cx="33" cy="33" r="20" fill="rgba(243,228,190,.55)" stroke="#6B4423" strokeWidth="1.3"/>
                     </svg>
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={accent} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" style={{ position:'relative', zIndex:1 }}>
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#5A3A1C" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" style={{ position:'relative', zIndex:1 }}>
                         <path d={icon}/>
                     </svg>
                 </div>
 
                 {/* الاسم */}
-                <div style={{
-                    fontSize: featured ? 20 : 17, fontWeight:800, position:'relative', zIndex:2,
-                    color: active ? accent : (dark ? 'rgba(226,232,240,.8)' : C.navy),
-                    marginBottom:10, transition:'color .3s ease',
-                }}>{name}</div>
+                <div style={{ fontSize:22, fontWeight:800, color:'#4A2C12', marginBottom:8, textShadow:'0 1px 0 rgba(255,244,214,.6)' }}>{name}</div>
 
                 {/* فاصل ماسي */}
-                <div style={{ display:'flex', alignItems:'center', justifyContent:'center', gap:7, marginBottom:12, position:'relative', zIndex:2 }}>
-                    <div style={{ width: active?30:18, height:1, background:`linear-gradient(90deg,transparent,${accent})`, transition:'width .4s ease' }}/>
-                    <svg width="8" height="8" viewBox="0 0 18 18"><rect x="4" y="4" width="10" height="10" transform="rotate(45 9 9)" fill={accent}/></svg>
-                    <div style={{ width: active?30:18, height:1, background:`linear-gradient(90deg,${accent},transparent)`, transition:'width .4s ease' }}/>
+                <div style={{ display:'flex', alignItems:'center', justifyContent:'center', gap:7, marginBottom:10 }}>
+                    <div style={{ width:active?34:22, height:1, background:'linear-gradient(90deg,transparent,#6B4423)', transition:'width .4s ease' }}/>
+                    <svg width="8" height="8" viewBox="0 0 18 18"><rect x="4" y="4" width="10" height="10" transform="rotate(45 9 9)" fill="#6B4423"/></svg>
+                    <div style={{ width:active?34:22, height:1, background:'linear-gradient(90deg,#6B4423,transparent)', transition:'width .4s ease' }}/>
                 </div>
 
                 {/* العنوان والتفاصيل */}
-                <div style={{ fontSize:13, fontWeight:700, color: dark ? 'rgba(226,232,240,.75)' : C.navy, marginBottom:5, lineHeight:1.55, position:'relative', zIndex:2 }}>{address}</div>
-                <div style={{ fontSize:12, color: dark ? 'rgba(226,232,240,.44)' : 'rgba(14,58,46,.55)', lineHeight:1.8, position:'relative', zIndex:2 }}>{detail}</div>
+                <div style={{ fontSize:14, fontWeight:700, color:'#3B2410', lineHeight:1.75 }}>{address}</div>
+                {detail ? <div style={{ fontSize:12, color:'rgba(59,36,16,.7)', lineHeight:1.8, marginTop:4 }}>{detail}</div> : null}
             </div>
         </div>
     );
@@ -995,7 +1096,7 @@ function NavLogo({ dark = true }) {
 
     return (
         <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexShrink: 0 }}>
-            <div className="nav-logo-box" style={{ height: 52, width: 62, overflow: 'hidden', flexShrink: 0 }}>
+            <div className="nav-logo-box" style={{ height: 68, width: 80, overflow: 'hidden', flexShrink: 0 }}>
                 <img
                     src="/images/ahmed-elshaarawy-logo-transparent.png"
                     alt="أحمد الشعراوي"
@@ -1037,7 +1138,7 @@ function MorphingNavMenu({ items, T }) {
                     style={{
                         color: T.navLink, background: 'none', border: 'none', cursor: 'pointer',
                         fontFamily: "'Amiri','Cairo',serif",
-                        fontSize: 13, fontWeight: 600, padding: '8px 14px', borderRadius: 8,
+                        fontSize: 16, fontWeight: 700, padding: '10px 18px', borderRadius: 8,
                         display: 'flex', alignItems: 'center', gap: 5,
                         transition: 'color .2s ease',
                     }}
@@ -1378,21 +1479,23 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
                 display:        'flex',
                 alignItems:     'center',
                 justifyContent: 'space-between',
-                padding:        '0 clamp(16px,4vw,32px)',
-                height:         88, // الارتفاع المتناسق والمريح للوجو الكبير
-                borderRadius:   20, // الحواف الدائرية الكبيرة المتناسقة مع الارتفاع
+                padding:        '0 clamp(20px,4.5vw,40px)',
+                height:         110, // ناف بار أتخن وأوضح
+                borderRadius:   26, // الحواف الدائرية الكبيرة المتناسقة مع الارتفاع
                 // زجاج شفاف أكثر ليمرر ألوان الـ 3D والخلفيات بوضوح ونقاء (Glassmorphic)
-                background:     darkMode ? 'rgba(20, 18, 16, 0.45)' : 'rgba(255, 252, 245, 0.55)',
-                // إزالة الحدود تماماً بناءً على طلبك
-                border:         'none', 
+                background:     darkMode ? 'rgba(20, 18, 16, 0.5)' : 'rgba(255, 252, 245, 0.6)',
+                // حد ذهبي رفيع جدًا يضيف لمسة احترافية بدل الحد الصفري
+                border:         darkMode ? '1px solid rgba(201,169,106,.16)' : '1px solid rgba(201,169,106,.28)',
                 // التظليل العميق والناعم متعدد الطبقات لتظهر الـ Navbar كأنها طافية فوق الصفحة
                 boxShadow:      darkMode
-                    ? '0 24px 60px rgba(0,0,0,0.75), 0 6px 16px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.12)'
+                    ? '0 24px 60px rgba(0,0,0,0.75), 0 6px 16px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.12), inset 0 0 0 1px rgba(201,169,106,.06)'
                     : '0 20px 44px rgba(14,58,46,0.18), 0 4px 12px rgba(14,58,46,0.08), inset 0 1px 0 rgba(255,255,255,0.65)',
                 backdropFilter: 'blur(30px) saturate(1.7)',
                 WebkitBackdropFilter: 'blur(30px) saturate(1.7)',
                 transition:     'background .4s ease, box-shadow .4s ease',
             }}>
+                <NavScrollBorder />
+
                 {/* Right group: logo + toggle */}
                 <div className="nav-right-group" style={{ display:'flex', alignItems:'center', gap:14 }}>
                     <NavLogo dark={darkMode} />
@@ -1404,7 +1507,7 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
                     <a href="#" className="nav-link-item" style={{
                         color:T.navLink, textDecoration:'none',
                         fontFamily:"'Amiri','Cairo',serif",
-                        fontSize:13, fontWeight:600, padding:'8px 14px', borderRadius:8,
+                        fontSize:16, fontWeight:700, padding:'10px 18px', borderRadius:8,
                         transition:'color .2s ease',
                     }}
                     onMouseEnter={e=>{e.currentTarget.style.color=C.gold;}}
@@ -1484,39 +1587,39 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
                 <div className="nav-ctas" style={{ display:'flex', alignItems:'center', gap:10 }}>
                     {auth?.user ? (
                         <Link href="/student/dashboard" className="nav-cta-btn" style={{
-                            display:'inline-flex', alignItems:'center', gap:7,
-                            padding:'9px 24px', borderRadius:999,
+                            display:'inline-flex', alignItems:'center', gap:8,
+                            padding:'13px 28px', borderRadius:999,
                             background:`linear-gradient(135deg,${C.gold},${C.amber})`,
-                            color:C.dark, fontWeight:800, fontSize:13, textDecoration:'none',
+                            color:C.dark, fontWeight:800, fontSize:15, textDecoration:'none',
                             boxShadow:`0 4px 18px rgba(201,169,106,.4), inset 0 1px 0 rgba(255,255,255,.3)`,
                             transition:'transform .3s cubic-bezier(.22,1,.36,1), box-shadow .3s cubic-bezier(.22,1,.36,1)',
                         }}>
-                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>
+                            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>
                             لوحة التحكم
                         </Link>
                     ) : (<>
                         <Link href="/student/login" className="nav-login-btn" style={{
-                            display:'inline-flex', alignItems:'center', gap:7,
-                            padding:'9px 20px', borderRadius:999,
+                            display:'inline-flex', alignItems:'center', gap:8,
+                            padding:'13px 24px', borderRadius:999,
                             border:`1.5px solid ${T.authBorder}`,
                             background:'transparent',
-                            color:T.authText, fontSize:13, fontWeight:700,
+                            color:T.authText, fontSize:15, fontWeight:700,
                             textDecoration:'none', transition:'all .3s cubic-bezier(.22,1,.36,1)',
                         }}>
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
                             تسجيل الدخول
                         </Link>
 
                         <Link href="/register" className="nav-cta-btn" style={{
-                            display:'inline-flex', alignItems:'center', gap:7,
-                            padding:'9px 24px', borderRadius:999,
+                            display:'inline-flex', alignItems:'center', gap:8,
+                            padding:'13px 28px', borderRadius:999,
                             background:`linear-gradient(135deg,${C.gold},${C.amber})`,
-                            color:C.dark, fontWeight:800, fontSize:13,
+                            color:C.dark, fontWeight:800, fontSize:15,
                             textDecoration:'none',
                             boxShadow:`0 4px 18px rgba(201,169,106,.4), inset 0 1px 0 rgba(255,255,255,.3)`,
                             transition:'transform .3s cubic-bezier(.22,1,.36,1), box-shadow .3s cubic-bezier(.22,1,.36,1)',
                         }}>
-                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="16" y1="11" x2="22" y2="11"/></svg>
+                            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="16" y1="11" x2="22" y2="11"/></svg>
                             حساب جديد
                         </Link>
                     </>)}
@@ -1573,17 +1676,13 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
                                     textShadow:'0 0 34px rgba(201,169,106,.45)',
                                     whiteSpace:'nowrap',
                                 }}>
-                                    رحلة{' '}
-                                    <span style={{
-                                        background:'linear-gradient(135deg,#C9A96A,#E8DCC1)',
-                                        WebkitBackgroundClip:'text', WebkitTextFillColor:'transparent', backgroundClip:'text',
-                                    }}>الشعراوي</span>
+                                    <HieroglyphTitle text="رحلة الشعراوي" />
                                 </span>
-                                <svg width="100%" viewBox="0 0 230 34" style={{ display:'block', marginTop:10, maxWidth:230, aspectRatio:'230/34', animation:'waveGlowPulse 1.8s ease-in-out infinite' }}>
-                                    <path d="M15,17 Q35,2 55,17 T95,17 T135,17 T175,17 T215,17" stroke="#C9A96A" strokeWidth="4.5" fill="none" strokeLinecap="round"/>
-                                    <rect x="5"   y="7" width="20" height="20" rx="6" fill="#C9A96A" transform="rotate(45 15 17)"/>
-                                    <rect x="205" y="7" width="20" height="20" rx="6" fill="#C9A96A" transform="rotate(45 215 17)"/>
-                                </svg>
+                                <div style={{ display:'flex', alignItems:'center', gap:10, marginTop:14, maxWidth:260 }}>
+                                    <div style={{ flex:1, height:1.5, background:'linear-gradient(90deg,transparent,#C9A96A)' }}/>
+                                    <svg width="12" height="12" viewBox="0 0 18 18"><rect x="4" y="4" width="10" height="10" transform="rotate(45 9 9)" fill="#C9A96A"/></svg>
+                                    <div style={{ flex:1, height:1.5, background:'linear-gradient(90deg,#C9A96A,transparent)' }}/>
+                                </div>
                             </div>
                         </div>
 
@@ -1604,22 +1703,42 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
 
                         {/* ── شريط الإحصائيات — تحت الأزرار في نفس عمود الكلام ── */}
                         <div className="hero-highlights-ribbon" style={{
-                            display:'flex', gap:12, textAlign:'center', marginTop:95,
+                            display:'flex', gap:14, textAlign:'center', marginTop:95, alignItems:'stretch',
                         }}>
                             {[
-                                { t:'التاريخ',   s:'من الفراعنة لعصرنا الحديث' },
-                                { t:'المادة',    s:'تاريخ مصر والعالم' },
-                                { t:'3 صفوف',   s:'أولى · ثانية · تالتة ثانوي' },
+                                { t:'التاريخ',  s:'من الفراعنة لعصرنا الحديث', icon:<><path d="M3 21h18M5 21V10l7-5 7 5v11M9 21v-6h6v6"/></> },
+                                { t:'المادة',   s:'تاريخ مصر والعالم',         icon:<><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.2 3 14.8 0 18M12 3c-3 3.2-3 14.8 0 18"/></>, mid:true },
+                                { t:'3 صفوف',  s:'أولى · ثانية · تالتة ثانوي', icon:<><path d="M4 19V6a2 2 0 012-2h12v15H6a2 2 0 00-2 2M8 8h6M8 12h6"/></> },
                             ].map((item,i) => (
-                                <div key={i} className="hero-highlights-item" style={{
-                                    flex:1, padding:'16px 10px',
-                                    background:'rgba(10,9,8,.42)', backdropFilter:'blur(6px)', WebkitBackdropFilter:'blur(6px)',
-                                    border:'1px solid rgba(201,169,106,.3)', borderRadius:14,
-                                    boxShadow:'0 8px 22px rgba(0,0,0,.3)',
-                                    transition:'transform .25s ease, border-color .25s ease, box-shadow .25s ease, background .25s ease',
+                                <div key={i} className={`hero-highlights-item ${item.mid ? 'hi-mid' : 'hi-side'}`} style={{
+                                    flex:1, padding: item.mid ? '22px 12px 20px' : '20px 12px 18px',
+                                    marginTop: item.mid ? -8 : 0, marginBottom: item.mid ? -8 : 0,
+                                    background: item.mid
+                                        ? 'linear-gradient(150deg,#F0DDA8 0%,#C9A96A 55%,#9C6B3F 100%)'
+                                        : 'linear-gradient(160deg,rgba(28,26,22,.66),rgba(10,9,8,.5))',
+                                    backdropFilter:'blur(10px)', WebkitBackdropFilter:'blur(10px)',
+                                    border: item.mid ? '1px solid rgba(255,240,200,.55)' : '1px solid rgba(201,169,106,.32)',
+                                    borderRadius:16,
+                                    boxShadow: item.mid
+                                        ? '0 18px 40px rgba(139,94,60,.42), 0 0 28px rgba(201,169,106,.22), inset 0 1px 0 rgba(255,255,255,.4)'
+                                        : '0 10px 26px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.06)',
+                                    transition:'transform .35s cubic-bezier(.22,1,.36,1), border-color .3s ease, box-shadow .35s ease',
                                 }}>
-                                    <div style={{ fontFamily:"'Amiri','Cairo',serif", fontWeight:900, fontSize:'clamp(16px,1.9vw,22px)', color:'#C9A96A', marginBottom:4 }}>{item.t}</div>
-                                    <div style={{ fontSize:11.5, color:'rgba(232,220,193,.85)' }}>{item.s}</div>
+                                    <div style={{
+                                        width:38, height:38, margin:'0 auto 10px', borderRadius:'50%',
+                                        display:'flex', alignItems:'center', justifyContent:'center',
+                                        background: item.mid ? 'rgba(20,14,8,.16)' : 'rgba(201,169,106,.1)',
+                                        border: item.mid ? '1px solid rgba(20,14,8,.35)' : '1px solid rgba(201,169,106,.4)',
+                                    }}>
+                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={item.mid ? '#2A1A0A' : '#E8C784'} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">{item.icon}</svg>
+                                    </div>
+                                    <div style={{ fontFamily:"'Amiri','Cairo',serif", fontWeight:900, fontSize:'clamp(17px,2vw,24px)', color: item.mid ? '#1E1208' : '#E8C784', marginBottom:8, lineHeight:1.2 }}>{item.t}</div>
+                                    <div style={{ display:'flex', alignItems:'center', justifyContent:'center', gap:6, marginBottom:8 }}>
+                                        <div style={{ width:18, height:1, background: item.mid ? 'linear-gradient(90deg,transparent,#2A1A0A)' : 'linear-gradient(90deg,transparent,#C9A96A)' }}/>
+                                        <svg width="6" height="6" viewBox="0 0 18 18"><rect x="4" y="4" width="10" height="10" transform="rotate(45 9 9)" fill={item.mid ? '#2A1A0A' : '#C9A96A'}/></svg>
+                                        <div style={{ width:18, height:1, background: item.mid ? 'linear-gradient(90deg,#2A1A0A,transparent)' : 'linear-gradient(90deg,#C9A96A,transparent)' }}/>
+                                    </div>
+                                    <div style={{ fontSize:12, fontWeight: item.mid ? 700 : 500, color: item.mid ? 'rgba(30,18,8,.85)' : 'rgba(232,220,193,.85)' }}>{item.s}</div>
                                 </div>
                             ))}
                         </div>
@@ -1648,19 +1767,37 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
                         <div style={{ width:40, height:1, background:`linear-gradient(90deg,${C.gold},transparent)` }}/>
                     </div>
                 </div>
-                <div className="why-grid">
-                    <div className="why-left">
-                        <WhySideCard {...WHY_FEATURES.around[0]} dark={darkMode} />
-                        <WhySideCard {...WHY_FEATURES.around[1]} dark={darkMode} />
-                    </div>
-                    <div className="why-center">
-                        <WhyCenterCard {...WHY_FEATURES.center} dark={darkMode} />
-                    </div>
-                    <div className="why-right">
-                        <WhySideCard {...WHY_FEATURES.around[2]} dark={darkMode} />
-                        <WhySideCard {...WHY_FEATURES.around[3]} dark={darkMode} />
-                    </div>
-                </div>
+                {/* تجربة: 4 لوحات حجرية — عمودين (يمين وشمال) في كل عمود لوحتين (الكروت القديمة WhySideCard/WhyCenterCard لسه في الملف) */}
+                {(() => {
+                    const slabs = [
+                        { src:'/images/9c16c967-bdd7-42ea-9c0d-e562aed34d60.jpg', alt:'منصّة تاريخ — كنوز الماضي' },
+                        { src:'/images/398128e6-8b26-43f0-98c1-2c2e7eb00778.jpg', alt:'مجموعة تراث — رحلة العمر' },
+                        { src:'/images/462e98b0-00b0-481e-b453-eb0fd7c88f12.jpg', alt:'رؤية لمستقبل — تبني الأجيال' },
+                        { src:'/images/100d9a18-6cc9-4d68-a34d-a12c7b0cfdea.jpg', alt:'إرث الحضارة — رحلة المعرفة' },
+                    ];
+                    const col = (items) => (
+                        <div style={{ flex:'1 1 480px', minWidth:0, display:'flex', flexDirection:'column', gap:'clamp(28px,4.5vw,72px)' }}>
+                            {items.map(({ src, alt }) => (
+                                <img
+                                    key={src} src={src} alt={alt} loading="lazy" data-reveal
+                                    style={{
+                                        width:'100%', height:'auto', display:'block', borderRadius:16,
+                                        boxShadow: darkMode ? '0 18px 44px rgba(0,0,0,.55)' : '0 14px 34px rgba(14,58,46,.18)',
+                                        transition:'transform .5s cubic-bezier(.22,1,.36,1)',
+                                    }}
+                                    onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-6px)'; }}
+                                    onMouseLeave={e => { e.currentTarget.style.transform = 'none'; }}
+                                />
+                            ))}
+                        </div>
+                    );
+                    return (
+                        <div style={{ display:'flex', flexWrap:'wrap', direction:'rtl', gap:'clamp(28px,5vw,88px)', maxWidth:1560, margin:'0 auto', alignItems:'flex-start' }}>
+                            {col(slabs.slice(0, 2))}
+                            {col(slabs.slice(2, 4))}
+                        </div>
+                    );
+                })()}
             </section>
 
             {/* ══════════════════════════════════════════════════════
@@ -2013,9 +2150,23 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
                     <rect width="100%" height="100%" fill="url(#locGrid)"/>
                 </svg>
 
+                {/* صورة الأستاذ منصور — على اليمين، شفافة ومتداخلة مع الخلفية */}
+                <div aria-hidden="true" style={{
+                    position:'absolute', top:0, bottom:0, right:0, width:'min(62%, 1000px)',
+                    backgroundImage:'url(/images/locations-mansour.jpg)',
+                    backgroundSize:'cover', backgroundPosition:'right center', backgroundRepeat:'no-repeat',
+                    opacity: darkMode ? .5 : .28,
+                    WebkitMaskImage:'linear-gradient(to left, #000 35%, transparent 100%), linear-gradient(to bottom, transparent 0%, #000 22%, #000 78%, transparent 100%)',
+                    maskImage:'linear-gradient(to left, #000 35%, transparent 100%), linear-gradient(to bottom, transparent 0%, #000 22%, #000 78%, transparent 100%)',
+                    WebkitMaskComposite:'source-in', maskComposite:'intersect',
+                    pointerEvents:'none',
+                }}/>
+
                 {/* Ambient orb */}
                 <div style={{ position:'absolute', top:'20%', left:'50%', transform:'translateX(-50%)', width:600, height:300, background:`radial-gradient(ellipse, rgba(201,169,106,.${darkMode?'06':'09'}) 0%, transparent 70%)`, pointerEvents:'none' }}/>
 
+                {/* عمود الكلام + الكارت — على الشمال قصاد الصورة */}
+                <div style={{ width:'min(440px,100%)', marginRight:'auto', marginLeft:'clamp(0px,9vw,160px)', position:'relative' }}>
                 {/* ── Header ── */}
                 <div style={{ textAlign:'center', marginBottom:'clamp(44px,7vh,72px)', position:'relative' }} data-reveal>
                     <p style={{ fontSize:12, color:C.gold, letterSpacing:'.22em', marginBottom:12 }}>▸ تواجدنا</p>
@@ -2033,7 +2184,7 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
                 </div>
 
                 {/* ── Location card — مقر الأستاذ منصور ── */}
-                <div style={{ display:'grid', gridTemplateColumns:'1fr', gap:22, maxWidth:380, margin:'0 auto', position:'relative' }}>
+                <div style={{ display:'grid', gridTemplateColumns:'1fr', gap:22, maxWidth:440, margin:'0 auto', position:'relative' }}>
                     {[
                         {
                             name:    'مقر الأستاذ منصور',
@@ -2046,6 +2197,7 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
                     ].map(({ name, num, icon, address, detail, featured }, i) => (
                         <LocationCard key={i} name={name} num={num} icon={icon} address={address} detail={detail} featured={!!featured} dark={darkMode} />
                     ))}
+                </div>
                 </div>
             </section>
 

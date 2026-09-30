@@ -7,7 +7,7 @@ const EASE  = 'cubic-bezier(.22,1,.36,1)';
 
 export default function PopOutCard({ hero, icon, title, text, zoom = 1, num = '01', featured = false, dark = true, screenBlend = false }) {
     const [hovered, setHovered] = useState(false);
-    const imgH = hero ? (featured ? 540 : 460) : (featured ? 240 : 210);
+    const imgH = hero ? 500 : (featured ? 240 : 210);
 
     /* ── Theme-aware tokens ── */
     const card = {
@@ -90,63 +90,111 @@ export default function PopOutCard({ hero, icon, title, text, zoom = 1, num = '0
                 )}
             </div>
 
-            {/* ── Glass info card ── */}
-            <div style={{
-                width:'100%', marginTop:18,
-                padding: featured ? '26px 28px 30px' : '20px 22px 24px',
-                borderRadius:20,
-                background: card.bg,
-                backdropFilter:'blur(24px)',
-                border:`1px solid ${card.border}`,
-                boxShadow: card.shadow,
-                transition:`all 0.5s ${EASE}`,
-                textAlign:'center', position:'relative', overflow:'hidden',
-            }}>
-                {/* Top shimmer */}
-                <div style={{
-                    position:'absolute', top:0, left:'20%', right:'20%', height:1,
-                    background:`linear-gradient(90deg,transparent,${card.divider},transparent)`,
-                    opacity: hovered ? 1 : 0.25,
-                    transition:'opacity 0.4s ease',
-                }}/>
+            {/* ── Info card — هوية الموقع: ذهبي على داكن، نسيج نجمة ثمانية، أركان مزخرفة ── */}
+            {(() => {
+                const acc   = featured ? '#E8C784' : '#C9A96A';
+                const deep  = featured ? '#B98A4B' : '#8B5E3C';
+                const ar    = { '01':'١', '02':'٢', '03':'٣', '04':'٤' }[num] ?? num;
+                const patId = `popPat-${num}`;
+                const bgCard = dark
+                    ? (hovered ? 'linear-gradient(160deg,#1E2A22 0%,#16120E 70%)' : 'linear-gradient(160deg,#1A1714 0%,#100D0A 75%)')
+                    : (hovered ? 'linear-gradient(160deg,#FBF6E8,#F1E6C8)' : 'linear-gradient(160deg,#FFFDF6,#F6EEDA)');
+                return (
+                    <div style={{
+                        position:'relative', width:'100%', marginTop:30,
+                        transform: hovered ? 'translateY(-4px)' : 'none',
+                        transition:`transform .5s ${EASE}`,
+                    }}>
+                        {/* ختم الرقم — معين ذهبي يعلو حافة الكارت */}
+                        <div style={{
+                            position:'absolute', top:-21, left:'50%', transform:'translateX(-50%)',
+                            width:42, height:42, zIndex:4,
+                        }}>
+                            <div style={{
+                                position:'absolute', inset:0, transform:`rotate(${hovered ? 135 : 45}deg)`, borderRadius:8,
+                                background:`linear-gradient(145deg,#F0DDA8,${acc} 55%,${deep})`,
+                                boxShadow:`0 8px 20px rgba(0,0,0,.45), 0 0 ${hovered ? 22 : 8}px ${acc}66, inset 0 1px 0 rgba(255,255,255,.5)`,
+                                transition:`transform .6s ${EASE}, box-shadow .4s ease`,
+                            }}/>
+                        </div>
+                        <div style={{
+                            position:'absolute', top:-21, left:'50%', transform:'translateX(-50%)', width:42, height:42, zIndex:5,
+                            display:'flex', alignItems:'center', justifyContent:'center',
+                            fontFamily:"'Amiri','Cairo',serif", fontWeight:800, fontSize:17, color:'#2A1A0A',
+                        }}>{ar}</div>
 
-                {/* Number badge */}
-                <div style={{
-                    display:'inline-block', marginBottom:14,
-                    fontSize:10, fontWeight:900, letterSpacing:'.3em',
-                    color: card.numColor,
-                    padding:'5px 14px', borderRadius:99,
-                    border:`1px solid ${card.numBorder}`,
-                    background: card.numBg,
-                    transition:`all 0.35s ease`,
-                }}>{num}</div>
+                        {/* جسم الكارت */}
+                        <div style={{
+                            position:'relative', overflow:'hidden', textAlign:'center',
+                            padding: featured ? '44px 30px 34px' : '40px 26px 30px',
+                            borderRadius:20,
+                            background: bgCard,
+                            border:`1px solid ${hovered ? acc + (featured ? 'CC' : '99') : (dark ? 'rgba(201,169,106,.22)' : 'rgba(139,94,60,.25)')}`,
+                            boxShadow: hovered
+                                ? `0 26px 60px rgba(0,0,0,${dark?.6:.18}), 0 0 ${featured ? 46 : 30}px ${acc}${featured ? '33' : '1F'}, inset 0 1px 0 ${acc}40`
+                                : `0 10px 30px rgba(0,0,0,${dark?.42:.1}), inset 0 1px 0 ${acc}1F`,
+                            transition:`background .5s ease, border-color .4s ease, box-shadow .5s ease`,
+                        }}>
+                            {/* نسيج نجمة ثمانية */}
+                            <svg style={{ position:'absolute', inset:0, width:'100%', height:'100%', opacity: hovered ? .12 : .06, transition:'opacity .5s ease', pointerEvents:'none' }}>
+                                <defs>
+                                    <pattern id={patId} width="34" height="34" patternUnits="userSpaceOnUse">
+                                        <g stroke={acc} fill="none" strokeWidth="1">
+                                            <rect x="4" y="4" width="26" height="26"/>
+                                            <rect x="4" y="4" width="26" height="26" transform="rotate(45 17 17)"/>
+                                        </g>
+                                    </pattern>
+                                </defs>
+                                <rect width="100%" height="100%" fill={`url(#${patId})`}/>
+                            </svg>
 
-                {/* Title */}
-                <div style={{
-                    fontSize: featured ? 19 : 16, fontWeight:800,
-                    color: card.titleColor,
-                    marginBottom:12, lineHeight:1.5,
-                    transition:'color 0.3s ease, text-shadow 0.3s ease',
-                    textShadow: card.titleShadow,
-                    letterSpacing:'.02em',
-                }}>{title}</div>
+                            {/* توهج علوي */}
+                            <div style={{ position:'absolute', top:-60, left:'50%', transform:'translateX(-50%)', width:'70%', height:120, background:`radial-gradient(ellipse,${acc}${hovered?'3A':'1A'} 0%,transparent 70%)`, transition:'background .5s ease', pointerEvents:'none' }}/>
 
-                {/* Divider */}
-                <div style={{
-                    height:1, borderRadius:1, margin:'0 auto 14px',
-                    width: hovered ? 52 : 26,
-                    background:`linear-gradient(90deg,transparent,${card.divider},transparent)`,
-                    transition:`width 0.5s ${EASE}`,
-                }}/>
+                            {/* إطار داخلي */}
+                            <div style={{ position:'absolute', inset:8, borderRadius:13, border:`1px solid ${acc}`, opacity: hovered ? .45 : .18, transition:'opacity .5s ease', pointerEvents:'none' }}/>
 
-                {/* Body text */}
-                <div style={{
-                    fontSize:13, lineHeight:2,
-                    color: card.bodyColor,
-                    maxWidth:290, margin:'0 auto',
-                    transition:'color 0.4s ease',
-                }}>{text}</div>
-            </div>
+                            {/* أركان مزخرفة */}
+                            {['tl','tr','bl','br'].map(pos => (
+                                <svg key={pos} viewBox="0 0 30 30" width="20" height="20" style={{
+                                    position:'absolute', color:acc, opacity: hovered ? 1 : .5, transition:'opacity .4s ease', pointerEvents:'none',
+                                    top: pos[0]==='t' ? 12 : 'auto', bottom: pos[0]==='b' ? 12 : 'auto',
+                                    right: pos[1]==='r' ? 12 : 'auto', left: pos[1]==='l' ? 12 : 'auto',
+                                    transform:`scale(${pos[1]==='r'?-1:1},${pos[0]==='b'?-1:1})`,
+                                }}>
+                                    <path d="M3,19 L3,3 L19,3" stroke="currentColor" strokeWidth="1.4" fill="none" strokeLinecap="round"/>
+                                    <rect x="0" y="0" width="7" height="7" transform="rotate(45 3.2 3.2)" fill="currentColor"/>
+                                </svg>
+                            ))}
+
+                            {/* العنوان */}
+                            <div style={{
+                                position:'relative', zIndex:2,
+                                fontFamily:"'Amiri','Cairo',serif", fontWeight:700,
+                                fontSize: featured ? 24 : 21, lineHeight:1.45, marginBottom:14,
+                                color: dark ? (hovered ? '#F3D98F' : '#E8C784') : (hovered ? '#7A4E1F' : '#8B5E3C'),
+                                textShadow: dark && hovered ? '0 0 22px rgba(232,199,132,.45)' : 'none',
+                                transition:'color .3s ease, text-shadow .3s ease',
+                            }}>{title}</div>
+
+                            {/* فاصل ماسي */}
+                            <div style={{ position:'relative', zIndex:2, display:'flex', alignItems:'center', justifyContent:'center', gap:8, marginBottom:16 }}>
+                                <div style={{ width: hovered ? 46 : 26, height:1, background:`linear-gradient(90deg,transparent,${acc})`, transition:`width .5s ${EASE}` }}/>
+                                <svg width="8" height="8" viewBox="0 0 18 18"><rect x="4" y="4" width="10" height="10" transform="rotate(45 9 9)" fill={acc}/></svg>
+                                <div style={{ width: hovered ? 46 : 26, height:1, background:`linear-gradient(90deg,${acc},transparent)`, transition:`width .5s ${EASE}` }}/>
+                            </div>
+
+                            {/* النص */}
+                            <div style={{
+                                position:'relative', zIndex:2,
+                                fontSize:14, lineHeight:2, maxWidth:300, margin:'0 auto',
+                                color: dark ? (hovered ? 'rgba(245,239,223,.92)' : 'rgba(232,220,193,.72)') : 'rgba(42,26,10,.78)',
+                                transition:'color .4s ease',
+                            }}>{text}</div>
+                        </div>
+                    </div>
+                );
+            })()}
         </div>
     );
 }
