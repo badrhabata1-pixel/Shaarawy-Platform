@@ -277,7 +277,8 @@ function PosterCard({ lesson, index, isCurrent, onUnlock, mode }) {
             >
                 {/* الملصق (poster) */}
                 <div style={{
-                    position: 'relative', aspectRatio: '16/9', background: '#141210',
+                    position: 'relative', background: '#141210',
+                    aspectRatio: lesson.thumbnail_url ? 'auto' : '16/9', // مع وجود صورة: الارتفاع حسب الصورة نفسها
                     overflow: 'hidden', flexShrink: 0,
                 }}>
                     <ReelBadge lesson={lesson} isLocked={isLocked} isExamLocked={isExamLocked} isCompleted={isCompleted} isCurrent={isCurrent} />
@@ -289,7 +290,8 @@ function PosterCard({ lesson, index, isCurrent, onUnlock, mode }) {
                             src={fileUrl(lesson.thumbnail_url)}
                             alt={lesson.title}
                             style={{
-                                width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top center',
+                                display: 'block', width: '100%', height: 'auto', maxHeight: 460,
+                                objectFit: 'contain', objectPosition: 'center',
                                 opacity: isLocked ? 0.3 : 1,
                                 transition: 'all 0.6s cubic-bezier(0.22, 1, 0.36, 1)',
                             }}

@@ -611,7 +611,7 @@ function LocationCard({ name, num, icon, address, detail, featured, dark }) {
                 </div>
 
                 {/* الاسم */}
-                <div style={{ fontSize:22, fontWeight:800, color:'#4A2C12', marginBottom:8, textShadow:'0 1px 0 rgba(255,244,214,.6)' }}>{name}</div>
+                <div style={{ fontSize:'clamp(24px,2.4vw,30px)', fontWeight:900, color:'#2E1707', lineHeight:1.35, marginBottom:10, textShadow:'0 1px 0 rgba(255,244,214,.7), 0 0 1px rgba(46,23,7,.5)' }}>{name}</div>
 
                 {/* فاصل ماسي */}
                 <div style={{ display:'flex', alignItems:'center', justifyContent:'center', gap:7, marginBottom:10 }}>
@@ -621,10 +621,80 @@ function LocationCard({ name, num, icon, address, detail, featured, dark }) {
                 </div>
 
                 {/* العنوان والتفاصيل */}
-                <div style={{ fontSize:14, fontWeight:700, color:'#3B2410', lineHeight:1.75 }}>{address}</div>
+                <div style={{ fontSize:16, fontWeight:800, color:'#2E1707', lineHeight:1.8 }}>{address}</div>
                 {detail ? <div style={{ fontSize:12, color:'rgba(59,36,16,.7)', lineHeight:1.8, marginTop:4 }}>{detail}</div> : null}
             </div>
         </div>
+    );
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   FACEBOOK BAR — شريط تواصل أفقي (فيسبوك) بدل كروت السوشيال
+═══════════════════════════════════════════════════════════════ */
+function FacebookBar({ href, handle, dark = true }) {
+    const [hovered, setHovered] = useState(false);
+    return (
+        <a
+            href={href} target="_blank" rel="noopener noreferrer"
+            onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}
+            style={{
+                position:'relative', display:'flex', alignItems:'center', gap:18, direction:'rtl',
+                width:'100%', maxWidth:520, margin:'0 auto', padding:'16px 22px',
+                borderRadius:999, textDecoration:'none', overflow:'hidden',
+                background: dark
+                    ? (hovered ? 'linear-gradient(100deg,#16233A 0%,#16120E 70%)' : 'linear-gradient(100deg,#111A2B 0%,#120F0B 70%)')
+                    : (hovered ? 'linear-gradient(100deg,#EAF1FD,#F7F3E9)' : '#ffffff'),
+                border:`1px solid ${hovered ? 'rgba(66,133,244,.65)' : (dark ? 'rgba(201,169,106,.3)' : 'rgba(14,58,46,.15)')}`,
+                boxShadow: hovered
+                    ? `0 18px 44px rgba(0,0,0,${dark?'.5':'.12'}), 0 0 34px rgba(24,119,242,.28)`
+                    : (dark ? '0 8px 26px rgba(0,0,0,.35)' : '0 4px 18px rgba(14,58,46,.08)'),
+                transform: hovered ? 'translateY(-4px)' : 'none',
+                transition:'all .4s cubic-bezier(.22,1,.36,1)',
+            }}
+        >
+            {/* لمعة تعدّي عند المرور */}
+            <span style={{
+                position:'absolute', top:0, bottom:0, width:'35%', left: hovered ? '120%' : '-60%',
+                background:'linear-gradient(105deg,transparent,rgba(255,255,255,.13),transparent)', transform:'skewX(-18deg)',
+                transition:'left .8s cubic-bezier(.22,1,.36,1)', pointerEvents:'none',
+            }}/>
+
+            {/* ميدالية الأيقونة */}
+            <span style={{
+                position:'relative', flexShrink:0, width:54, height:54, borderRadius:'50%',
+                display:'flex', alignItems:'center', justifyContent:'center',
+                background:'linear-gradient(145deg,#4C8DF6,#1877F2 60%,#0B4FB3)',
+                boxShadow:`0 6px 18px rgba(24,119,242,${hovered?.55:.35}), inset 0 1px 0 rgba(255,255,255,.35)`,
+                outline:'1px solid rgba(201,169,106,.55)', outlineOffset:3,
+                transform: hovered ? 'rotate(-8deg) scale(1.06)' : 'none',
+                transition:'transform .4s cubic-bezier(.22,1,.36,1), box-shadow .4s ease',
+            }}>
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="#fff">
+                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                </svg>
+            </span>
+
+            {/* النص */}
+            <span style={{ position:'relative', flex:1, minWidth:0, textAlign:'right' }}>
+                <span style={{ display:'block', fontSize:11, color: dark ? 'rgba(201,169,106,.7)' : 'rgba(14,58,46,.55)', letterSpacing:'.2em', fontWeight:700, marginBottom:4 }}>تابعنا على</span>
+                <span style={{ display:'block', fontFamily:"'Amiri','Cairo',serif", fontSize:20, fontWeight:700, color: dark ? '#F5EFDF' : C.navy, lineHeight:1.2 }}>صفحة الأستاذ أحمد الشعراوي</span>
+                <span dir="ltr" style={{ display:'block', fontSize:12, marginTop:4, color: dark ? 'rgba(226,232,240,.45)' : 'rgba(14,58,46,.5)', textAlign:'right' }}>@Mrahmedelsharawy22</span>
+            </span>
+
+            {/* سهم */}
+            <span style={{
+                position:'relative', flexShrink:0, width:38, height:38, borderRadius:'50%',
+                display:'flex', alignItems:'center', justifyContent:'center',
+                border:`1px solid ${hovered ? 'rgba(66,133,244,.8)' : 'rgba(201,169,106,.45)'}`,
+                color: hovered ? '#fff' : C.gold,
+                background: hovered ? '#1877F2' : 'transparent',
+                transition:'all .35s ease',
+            }}>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" style={{ transform: hovered ? 'translateX(-2px)' : 'none', transition:'transform .3s ease' }}>
+                    <line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/>
+                </svg>
+            </span>
+        </a>
     );
 }
 
@@ -807,10 +877,10 @@ function CourseCard({ unit, dark, auth }) {
             }}
         >
             {/* ── الوسائط / الشمسة الزخرفية ── */}
-            <div style={{ position:'relative', height:190, overflow:'hidden', flexShrink:0 }}>
+            <div style={{ position:'relative', height: imgSrc ? 'auto' : 190, overflow:'hidden', flexShrink:0, background: imgSrc ? '#141210' : undefined }}>
                 {imgSrc ? (
                     <img src={imgSrc} alt={unit.title} onError={() => setImgError(true)} style={{
-                        width:'100%', height:'100%', objectFit:'cover', objectPosition:'center',
+                        display:'block', width:'100%', height:'auto', maxHeight:460, objectFit:'contain', objectPosition:'center',
                         transform: hovered ? 'scale(1.07)' : 'scale(1)',
                         transition:'transform .6s cubic-bezier(.22,1,.36,1)',
                     }}/>
@@ -2174,7 +2244,7 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
                         أماكن تواجدنا
                     </h2>
                     <p style={{ fontSize:14, color: darkMode ? 'rgba(226,232,240,.5)' : 'rgba(14,58,46,.55)', maxWidth:440, margin:'0 auto 18px' }}>
-                        زوروا مقرّنا وابدأوا رحلتكم مع الأستاذ منصور
+                        زوروا مقرّنا وابدأوا رحلتكم مع الأستاذ أحمد الشعراوي
                     </p>
                     <div style={{ display:'flex', alignItems:'center', justifyContent:'center', gap:10 }}>
                         <div style={{ width:40, height:1, background:`linear-gradient(90deg,transparent,${C.gold})` }}/>
@@ -2187,10 +2257,10 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
                 <div style={{ display:'grid', gridTemplateColumns:'1fr', gap:22, maxWidth:440, margin:'0 auto', position:'relative' }}>
                     {[
                         {
-                            name:    'مقر الأستاذ منصور',
+                            name:    'مقر الأستاذ أحمد الشعراوي',
                             num:     '01',
                             icon:    'M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z M9 22V12h6v10',
-                            address: 'المحلة الكبرى — خلف مول الشيشيني — شارع صيدلية الطبال، المقابل لمدرسة الصنايع',
+                            address: 'مول الشيشيني أمام الملجأ بجوار شركة المصطفى',
                             detail:  '',
                             featured: true,
                         },
@@ -2281,38 +2351,10 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
                     <span style={{ fontSize:11, color: darkMode ? 'rgba(201,169,106,.6)' : 'rgba(14,58,46,.5)', letterSpacing:'.24em', fontWeight:700 }}>تابعونا</span>
                     <div style={{ width:36, height:1, background:'linear-gradient(90deg,rgba(201,169,106,.5),transparent)' }}/>
                 </div>
-                <div className="foot-social-grid" style={{
-                    display:'grid', gridTemplateColumns:'repeat(2,1fr)',
-                    gap:20, maxWidth:640, margin:'clamp(22px,3vh,30px) auto 0',
-                    padding:'0 clamp(24px,5vw,72px)',
-                }}>
-                    {/* Facebook */}
-                    <SocialCard
+                <div style={{ margin:'clamp(22px,3vh,30px) auto 0', padding:'0 clamp(24px,5vw,72px)' }}>
+                    <FacebookBar
                         dark={darkMode}
-                        href="https://www.facebook.com/share/1CCyqXVvxq/?mibextid=wwXIfr"
-                        label="فيسبوك"
-                        handle="خواطر المنصور"
-                        glow="rgba(24,119,242,.28)"
-                        borderHover="rgba(24,119,242,.55)"
-                        icon={
-                            <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-                            </svg>
-                        }
-                    />
-                    {/* YouTube */}
-                    <SocialCard
-                        dark={darkMode}
-                        href="https://youtube.com/channel/UCmocXEAuiOe1OpEhIjFQA8A?si=osmKAW5VEvem_0jO"
-                        label="يوتيوب"
-                        handle="خواطر المنصور"
-                        glow="rgba(255,0,0,.22)"
-                        borderHover="rgba(255,60,60,.55)"
-                        icon={
-                            <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
-                            </svg>
-                        }
+                        href="https://www.facebook.com/Mrahmedelsharawy22?locale=ar_AR"
                     />
                 </div>
 
@@ -2323,8 +2365,8 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
                     padding:'0 clamp(24px,5vw,72px)',
                 }}>
                     {[
-                        ['01097694425', '+201097694425'],
-                        ['0402239520',  '+20402239520'],
+                        ['+20 10 09192740', '+201009192740'],
+                        ['+20 12 83228684', '+201283228684'],
                     ].map(([display, tel]) => (
                         <a key={tel} href={`tel:${tel}`} style={{
                             display:'inline-flex', alignItems:'center', gap:8,
@@ -2430,7 +2472,7 @@ function WelcomeWhatsAppBtn() {
                 .wa-float-w:hover { transform: scale(1.1) !important; }
             `}</style>
             <a
-                href="https://wa.me/201097694425"
+                href="https://wa.me/201283228684"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="wa-float-w"
