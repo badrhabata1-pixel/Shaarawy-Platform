@@ -247,6 +247,16 @@ function PageStyles() {
             .feat-card:hover .feat-div-line { opacity:.8; }
             .port-grid  { display:grid; grid-template-columns:repeat(3,1fr); gap:32px; align-items:end; }
             .about-grid { display:grid; grid-template-columns:1fr 1fr; gap:32px; align-items:start; }
+            /* أماكن التواجد على الموبايل: الصورة كاملة فوق، والكلام والكارت تحتها */
+            @media (max-width: 860px) {
+                .loc-photo {
+                    width:100% !important; height:380px !important; bottom:auto !important;
+                    background-position:80% top !important; opacity:.8 !important;
+                    -webkit-mask-image:linear-gradient(to bottom,#000 55%,transparent 100%) !important;
+                    mask-image:linear-gradient(to bottom,#000 55%,transparent 100%) !important;
+                }
+                .loc-col { margin:300px auto 0 !important; }
+            }
             .foot-grid  { display:grid; grid-template-columns:1.6fr 1fr 1fr 1fr; gap:40px; }
             .nav-links  { display:flex; }
 
@@ -2221,7 +2231,7 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
                 </svg>
 
                 {/* صورة الأستاذ منصور — على اليمين، شفافة ومتداخلة مع الخلفية */}
-                <div aria-hidden="true" style={{
+                <div aria-hidden="true" className="loc-photo" style={{
                     position:'absolute', top:0, bottom:0, right:0, width:'min(62%, 1000px)',
                     backgroundImage:'url(/images/locations-mansour.jpg)',
                     backgroundSize:'cover', backgroundPosition:'right center', backgroundRepeat:'no-repeat',
@@ -2236,7 +2246,7 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
                 <div style={{ position:'absolute', top:'20%', left:'50%', transform:'translateX(-50%)', width:600, height:300, background:`radial-gradient(ellipse, rgba(201,169,106,.${darkMode?'06':'09'}) 0%, transparent 70%)`, pointerEvents:'none' }}/>
 
                 {/* عمود الكلام + الكارت — على الشمال قصاد الصورة */}
-                <div style={{ width:'min(440px,100%)', marginRight:'auto', marginLeft:'clamp(0px,9vw,160px)', position:'relative' }}>
+                <div className="loc-col" style={{ width:'min(440px,100%)', marginRight:'auto', marginLeft:'clamp(0px,9vw,160px)', position:'relative' }}>
                 {/* ── Header ── */}
                 <div style={{ textAlign:'center', marginBottom:'clamp(44px,7vh,72px)', position:'relative' }} data-reveal>
                     <p style={{ fontSize:12, color:C.gold, letterSpacing:'.22em', marginBottom:12 }}>▸ تواجدنا</p>
