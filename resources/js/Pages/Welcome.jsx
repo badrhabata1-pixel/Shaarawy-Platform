@@ -1524,7 +1524,7 @@ export default function Welcome({ auth, units = [], topStudents = [] }) {
 
     return (
         <>
-            <Head title="الأستاذ منصور — منصة اللغة العربية" />
+            <Head title="الأستاذ أحمد الشعراوي — منصة التاريخ" />
             <PageStyles />
             <Preloader visible={loading} />
 
