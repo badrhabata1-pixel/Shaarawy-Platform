@@ -25,7 +25,7 @@ export default function GradeExamForm({ assistant, examResult, responses = [] })
         const temp = {};
         responses.forEach(r => {
             temp[r.id] = {
-                response_id: r.id,
+                question_id: r.question_id,
                 question_type: r.question_type,
                 is_correct: r.is_correct,
                 teacher_note: r.teacher_note || '',

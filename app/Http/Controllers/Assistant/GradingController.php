@@ -184,23 +184,59 @@ class GradingController extends Controller
         $assistant  = Auth::guard('assistant')->user();
         $examResult = ExamResult::with([
             'student:id,name,image',
-            'exam:id,title,total_marks',
+            'exam.questions',
             'responses.question',
         ])->findOrFail($id);
 
-        $essayResponses = $examResult->responses
-            ->map(fn($r) => [
-                'id'             => $r->id,
-                'question_id'    => $r->question_id,
-                'question_type'  => $r->question?->question_type ?? 'essay',
-                'question_text'  => $r->question?->question_text ?? 'السؤال المقالي للامتحان الدوري',
-                'model_answer'   => $r->question?->correct_answer ?? 'الإجابة النموذجية المحددة للامتحان',
-                'max_marks'      => $r->question?->marks ?? 5,
-                'student_answer' => $r->selected_answer ?? $r->student_answer ?? 'لم يجب الطالب',
-                'is_correct'     => $r->is_correct,
-                'marks_awarded'  => $r->marks_awarded,
-                'teacher_note'   => $r->teacher_note,
-            ])->values();
+        $responsesByQuestion = $examResult->responses->keyBy('question_id');
+        $examQuestions = $examResult->exam?->questions ?? collect();
+        $knownMcqScore = $examResult->responses->sum(function ($response) {
+            return $response->question?->question_type === 'mcq' && $response->is_correct
+                ? (int) ($response->question?->marks ?? 0)
+                : 0;
+        });
+        $previousEssayScore = $examResult->responses->sum(function ($response) {
+            return $response->question?->question_type !== 'mcq'
+                ? (int) ($response->marks_awarded ?? 0)
+                : 0;
+        });
+        $missingMcqQuestions = $examQuestions->filter(
+            fn ($question) => $question->question_type === 'mcq' && !$responsesByQuestion->has($question->id)
+        );
+        $unmatchedMcqScore = max(0, (int) $examResult->score - $knownMcqScore - $previousEssayScore);
+        $inferredMissingMcqResult = null;
+        if ($examResult->status === 'pending' && $missingMcqQuestions->count() === 1) {
+            $missingQuestion = $missingMcqQuestions->first();
+            $inferredMissingMcqResult = [
+                'question_id' => $missingQuestion->id,
+                'is_correct' => $unmatchedMcqScore >= (int) $missingQuestion->marks,
+            ];
+        }
+
+        $essayResponses = $examQuestions->map(function ($question) use ($responsesByQuestion, $inferredMissingMcqResult) {
+            $response = $responsesByQuestion->get($question->id);
+            $inferredCorrect = !$response
+                && $inferredMissingMcqResult
+                && $inferredMissingMcqResult['question_id'] === $question->id
+                    ? $inferredMissingMcqResult['is_correct']
+                    : null;
+
+            return [
+                // The question id is the stable key, even if an old attempt has
+                // no response row for an unanswered question.
+                'id'             => $question->id,
+                'question_id'    => $question->id,
+                'response_id'    => $response?->id,
+                'question_type'  => $question->question_type,
+                'question_text'  => $question->question_text,
+                'model_answer'   => $question->correct_answer,
+                'max_marks'      => $question->marks,
+                'student_answer' => $response?->selected_answer ?? 'لم تُسجل الإجابة في المحاولة',
+                'is_correct'     => $response?->is_correct ?? $inferredCorrect,
+                'marks_awarded'  => $response?->marks_awarded ?? ($inferredCorrect === null ? null : ($inferredCorrect ? $question->marks : 0)),
+                'teacher_note'   => $response?->teacher_note,
+            ];
+        })->values();
 
         return Inertia::render('Assistant/Grading/GradeExamForm', [
             'examResult' => [
@@ -224,60 +260,112 @@ class GradingController extends Controller
     {
         $validated = $request->validate([
             'grades'               => ['required', 'array'],
-            'grades.*.response_id' => ['required', 'integer', 'distinct'],
+            'grades.*.question_id' => ['required', 'integer', 'distinct'],
             'grades.*.is_correct'  => ['required', 'boolean'],
             'grades.*.teacher_note'=> ['nullable', 'string', 'max:500'],
         ]);
 
         $assistant  = Auth::guard('assistant')->user();
         DB::transaction(function () use ($id, $assistant, $validated) {
-            $examResult = ExamResult::with(['exam', 'responses.question'])
+            $examResult = ExamResult::with(['exam.questions', 'responses.question'])
                 ->lockForUpdate()
                 ->findOrFail($id);
 
-            $essayResponses = $examResult->responses->filter(
-                fn ($response) => ($response->question?->question_type ?? 'essay') !== 'mcq'
+            $questions = $examResult->exam?->questions ?? collect();
+            $essayQuestions = $questions->filter(
+                fn ($question) => $question->question_type !== 'mcq'
             );
-            $grades = collect($validated['grades'])->keyBy('response_id');
+            $grades = collect($validated['grades'])->keyBy('question_id');
 
-            foreach ($essayResponses as $response) {
-                if (!$grades->has($response->id)) {
+            foreach ($essayQuestions as $question) {
+                if (!$grades->has($question->id)) {
                     throw ValidationException::withMessages([
                         'grades' => 'يجب تصحيح كل الأسئلة المقالية قبل حفظ النتيجة.',
                     ]);
                 }
             }
 
-            $essayIds = $essayResponses->pluck('id')->map(fn ($value) => (int) $value)->all();
-            if ($grades->keys()->diff($essayIds)->isNotEmpty()) {
+            $questionIds = $questions->pluck('id')->map(fn ($value) => (int) $value)->all();
+            if ($grades->keys()->diff($questionIds)->isNotEmpty()) {
                 throw ValidationException::withMessages([
                     'grades' => 'يمكن تعديل تصحيح الأسئلة المقالية فقط.',
                 ]);
             }
 
-            $totalScore = 0;
-            foreach ($examResult->responses as $response) {
-                $maxMarks = (int) ($response->question?->marks ?? 0);
-                $isMcq = ($response->question?->question_type ?? 'essay') === 'mcq';
+            $responsesByQuestion = $examResult->responses->keyBy('question_id');
+            $knownMcqScore = $examResult->responses->sum(function ($response) {
+                return $response->question?->question_type === 'mcq' && $response->is_correct
+                    ? (int) ($response->question?->marks ?? 0)
+                    : 0;
+            });
+            $previousEssayScore = $examResult->responses->sum(function ($response) {
+                return $response->question?->question_type !== 'mcq'
+                    ? (int) ($response->marks_awarded ?? 0)
+                    : 0;
+            });
+            $missingMcqQuestions = $questions->filter(
+                fn ($question) => $question->question_type === 'mcq' && !$responsesByQuestion->has($question->id)
+            );
+            $unmatchedMcqScore = max(0, (int) $examResult->score - $knownMcqScore - $previousEssayScore);
+            $inferredMissingMcq = null;
+            if ($examResult->status === 'pending' && $missingMcqQuestions->count() === 1) {
+                $inferredMissingMcq = $unmatchedMcqScore >= (int) $missingMcqQuestions->first()->marks;
+            }
+            $autoScore = max($knownMcqScore, (int) $examResult->score - $previousEssayScore);
+            $essayScore = 0;
+            foreach ($questions as $question) {
+                $response = $responsesByQuestion->get($question->id);
+                $maxMarks = (int) $question->marks;
+                $isMcq = $question->question_type === 'mcq';
 
                 if ($isMcq) {
-                    $isCorrect = (bool) $response->is_correct;
+                    $isCorrect = (bool) ($response?->is_correct ?? false);
                     $marksAwarded = $isCorrect ? $maxMarks : 0;
-                    $response->update(['marks_awarded' => $marksAwarded]);
+                    if ($response) {
+                        $response->update(['marks_awarded' => $marksAwarded]);
+                    } elseif ($missingMcqQuestions->count() === 1 && $inferredMissingMcq !== null) {
+                        $marksAwarded = $inferredMissingMcq ? $maxMarks : 0;
+                        ExamResponse::create([
+                            'exam_result_id' => $examResult->id,
+                            'question_id'    => $question->id,
+                            'selected_answer'=> $inferredMissingMcq ? $question->correct_answer : null,
+                            'is_correct'     => $inferredMissingMcq,
+                            'marks_awarded'  => $marksAwarded,
+                        ]);
+                    } else {
+                        ExamResponse::create([
+                            'exam_result_id' => $examResult->id,
+                            'question_id'    => $question->id,
+                            'selected_answer'=> null,
+                            'is_correct'     => null,
+                            'marks_awarded'  => null,
+                        ]);
+                    }
                 } else {
-                    $grade = $grades->get($response->id);
+                    $grade = $grades->get($question->id);
                     $isCorrect = (bool) $grade['is_correct'];
                     $marksAwarded = $isCorrect ? $maxMarks : 0;
-                    $response->update([
+                    $responseData = [
                         'is_correct'    => $isCorrect,
                         'marks_awarded' => $marksAwarded,
                         'teacher_note'  => $grade['teacher_note'] ?? null,
                         'graded_by'     => $assistant->id,
                         'graded_at'     => now(),
-                    ]);
+                    ];
+                    if ($response) {
+                        $response->update($responseData);
+                    } else {
+                        ExamResponse::create($responseData + [
+                            'exam_result_id' => $examResult->id,
+                            'question_id'    => $question->id,
+                            'selected_answer'=> null,
+                        ]);
+                    }
                 }
 
-                $totalScore += $marksAwarded;
+                if (!$isMcq) {
+                    $essayScore += $marksAwarded;
+                }
             }
 
             $exam = $examResult->exam;
@@ -285,8 +373,8 @@ class GradingController extends Controller
             $passMark = (float) ($exam?->total_marks ?? 0) * $passRatio;
 
             $examResult->update([
-                'score'  => $totalScore,
-                'status' => $totalScore >= $passMark ? 'passed' : 'failed',
+                'score'  => $autoScore + $essayScore,
+                'status' => ($autoScore + $essayScore) >= $passMark ? 'passed' : 'failed',
             ]);
         });
 
