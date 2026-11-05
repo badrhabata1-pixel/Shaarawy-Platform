@@ -59,6 +59,7 @@ const NAV = [
         items: [
             { label: 'تصحيح الشيتات',   icon: 'sheet', href: '/assistant/pending-sheets' },
             { label: 'تصحيح الامتحانات',icon: 'exam',  href: '/assistant/pending-exams' },
+            { label: 'درجات الامتحانات', icon: 'exam', href: '/assistant/exam-grades' },
         ],
     },
     {

@@ -169,6 +169,7 @@ Route::middleware(['auth:assistant', 'no.cache'])->prefix('assistant')->name('as
     Route::get('/pending-exams', [App\Http\Controllers\Assistant\GradingController::class, 'pendingExams'])->name('exams.pending');
     Route::get('/grade-exam/{id}', [App\Http\Controllers\Assistant\GradingController::class, 'gradeExamForm'])->name('exams.grade.form');
     Route::post('/grade-exam/{id}', [App\Http\Controllers\Assistant\GradingController::class, 'saveExamGrade'])->name('exams.grade.save');
+    Route::get('/exam-grades', [App\Http\Controllers\Assistant\ExamGradeController::class, 'index'])->name('exam-grades.index');
 
     // مسار أكواد تفعيل شحن المحاضرات للسكرتارية
     Route::post('/promo-codes/generate',   [AssistantPromoCodeController::class, 'generate'])->name('promo.generate');
@@ -262,6 +263,7 @@ Route::middleware(['auth', 'no.cache'])->prefix('admin')->name('admin.')->group(
     Route::delete('/comments/{id}',  [CommentAdminController::class,   'destroy'])->name('comments.destroy');
     Route::get('/sheet-grades',      [SheetGradeController::class,     'index'])->name('sheet-grades.index');
     Route::get('/exam-grades',       [ExamGradeController::class,      'index'])->name('exam-grades.index');
+    Route::delete('/exam-grades/{id}', [ExamGradeController::class,    'destroy'])->name('exam-grades.destroy');
     Route::get('/top-students',      [TopStudentAdminController::class, 'index'])->name('top-students.index');
     Route::post('/top-students',     [TopStudentAdminController::class, 'store'])->name('top-students.store');
     Route::delete('/top-students/{id}', [TopStudentAdminController::class, 'destroy'])->name('top-students.destroy');

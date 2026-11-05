@@ -17,7 +17,9 @@ class ExamAdminController extends Controller
     public function index()
     {
         return Inertia::render('Admin/Exams/Index', [
-            'exams'   => Exam::with(['lesson:id,title', 'academicYear:id,name'])->orderByDesc('id')->get(),
+            'exams'   => Exam::with(['lesson:id,title', 'academicYear:id,name'])
+                ->withCount('questions')
+                ->orderByDesc('id')->get(),
             'lessons' => Lesson::orderByDesc('id')->get(['id', 'title']),
         ]);
     }

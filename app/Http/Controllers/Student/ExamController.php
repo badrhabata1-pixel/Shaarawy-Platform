@@ -29,10 +29,7 @@ class ExamController extends Controller
             $result    = $exam->results->first();
             $examMode  = $exam->exam_mode ?? 'final';
             $passMark  = $exam->total_marks * ($examMode === 'gate' ? 0.5 : 0.7);
-            // For gate exams: show "can retake" if latest result is failed
-            $canRetake = $examMode === 'gate'
-                && $result
-                && $result->status === 'failed';
+            $canRetake = false;
 
             if ($exam->start_time && $exam->end_time) {
                 if ($now->lt($exam->start_time)) {
@@ -92,7 +89,7 @@ class ExamController extends Controller
             'exam'   => array_merge($exam->toArray(), [
                 'exam_mode' => $examMode,
                 'pass_mark' => $passMark,
-                'can_retake' => $examMode === 'gate' && $result && $result->status === 'failed',
+                'can_retake' => false,
             ]),
             'result' => $result ? [
                 'id'          => $result->id,
@@ -118,23 +115,12 @@ class ExamController extends Controller
             ->with('questions.choices')
             ->findOrFail($id);
 
-        // Block based on exam mode
-        $examMode = $exam->exam_mode ?? 'final';
-        if ($examMode === 'final') {
-            // Final exam: one attempt only
-            if (ExamResult::where('exam_id', $exam->id)->where('student_id', $student->id)->exists()) {
-                return redirect()->route('student.exams.show', $exam->id);
-            }
-        } else {
-            // Gate exam: allow retakes until passed
-            $alreadyPassed = ExamResult::where('exam_id', $exam->id)
-                ->where('student_id', $student->id)
-                ->where('status', 'passed')
-                ->exists();
-            if ($alreadyPassed) {
-                return redirect()->route('student.exams.show', $exam->id);
-            }
+        // A submitted result locks the attempt until an administrator deletes it.
+        if (ExamResult::where('exam_id', $exam->id)->where('student_id', $student->id)->exists()) {
+            return redirect()->route('student.exams.show', $exam->id);
         }
+
+        $examMode = $exam->exam_mode ?? 'final';
 
         $answers   = $request->input('answers', []);
         $mcqScore  = 0;

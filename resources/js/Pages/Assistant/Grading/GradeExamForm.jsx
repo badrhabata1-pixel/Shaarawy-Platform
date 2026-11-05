@@ -24,7 +24,7 @@ export default function GradeExamForm({ assistant, examResult, responses = [] })
     const [localGrades, setLocalGrades] = useState(() => {
         const temp = {};
         responses.forEach(r => {
-            temp[r.id] = {
+            temp[r.question_id] = {
                 question_id: r.question_id,
                 question_type: r.question_type,
                 is_correct: r.is_correct,
@@ -39,12 +39,10 @@ export default function GradeExamForm({ assistant, examResult, responses = [] })
         if (response.question_type !== 'mcq') return total;
         return total + (response.is_correct ? Number(response.max_marks) : 0);
     }, 0);
-    const [manualScore, setManualScore] = useState(() => responses.reduce((total, response) => {
-        if (response.question_type === 'mcq') {
-            return total + (response.is_correct ? Number(response.max_marks) : 0);
-        }
-        return total + (response.is_correct ? Number(response.marks_awarded ?? response.max_marks) : 0);
-    }, 0));
+    const manualScore = autoScore + Object.values(localGrades).reduce((total, grade) => {
+        if (grade.question_type === 'mcq' || !grade.is_correct) return total;
+        return total + Number(grade.max_marks);
+    }, 0);
     const { processing } = useForm();
 
     const handleStatusChange = (responseId, isCorrect) => {
@@ -53,11 +51,6 @@ export default function GradeExamForm({ assistant, examResult, responses = [] })
             [responseId]: { ...localGrades[responseId], is_correct: isCorrect }
         };
         setLocalGrades(nextGrades);
-        const essayScore = Object.values(nextGrades).reduce((total, grade) => {
-            if (grade.question_type === 'mcq' || !grade.is_correct) return total;
-            return total + Number(grade.max_marks);
-        }, 0);
-        setManualScore(autoScore + essayScore);
     };
 
     const handleNoteChange = (responseId, note) => {

@@ -1,4 +1,4 @@
-import { Head } from '@inertiajs/react';
+import { Head, router } from '@inertiajs/react';
 import AdminLayout from '@/Layouts/AdminLayout';
 
 const STATUS = {
@@ -67,7 +67,7 @@ export default function Index({ grades }) {
                         }}>
                             <thead>
                                 <tr style={{ background: 'var(--a-th)', borderBottom: '2px solid var(--a-border)' }}>
-                                    {['#', 'الطالب', 'الامتحان', 'الدرجة', 'الحالة', 'بدأ في', 'انتهى في'].map(h => (
+                                    {['#', 'الطالب', 'الامتحان', 'الدرجة', 'الحالة', 'بدأ في', 'انتهى في', 'إجراء'].map(h => (
                                         <th key={h} style={{
                                             padding: '12px 16px', textAlign: 'right',
                                             fontWeight: 800, color: 'var(--a-text-4)',
@@ -124,6 +124,15 @@ export default function Index({ grades }) {
                                             </td>
                                             <td style={{ ...td, color: 'var(--a-text-4)', fontSize: 11 }}>
                                                 {g.finished_at ?? '—'}
+                                            </td>
+                                            <td style={td}>
+                                                <button type="button" onClick={() => {
+                                                    if (window.confirm('سيتم حذف محاولات الطالب ودرجاته في هذا الامتحان، وسيتمكن من البدء من جديد. هل تريد المتابعة؟')) {
+                                                        router.delete(`/admin/exam-grades/${g.id}`);
+                                                    }
+                                                }} style={{ border: 0, borderRadius: 8, padding: '7px 12px', background: '#fee2e2', color: '#dc2626', fontWeight: 800, cursor: 'pointer' }}>
+                                                    حذف النتيجة
+                                                </button>
                                             </td>
                                         </tr>
                                     );
