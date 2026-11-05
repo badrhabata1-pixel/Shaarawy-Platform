@@ -170,6 +170,7 @@ Route::middleware(['auth:assistant', 'no.cache'])->prefix('assistant')->name('as
     Route::get('/grade-exam/{id}', [App\Http\Controllers\Assistant\GradingController::class, 'gradeExamForm'])->name('exams.grade.form');
     Route::post('/grade-exam/{id}', [App\Http\Controllers\Assistant\GradingController::class, 'saveExamGrade'])->name('exams.grade.save');
     Route::get('/exam-grades', [App\Http\Controllers\Assistant\ExamGradeController::class, 'index'])->name('exam-grades.index');
+    Route::delete('/exam-grades/{id}', [App\Http\Controllers\Assistant\ExamGradeController::class, 'destroy'])->name('exam-grades.destroy');
 
     // مسار أكواد تفعيل شحن المحاضرات للسكرتارية
     Route::post('/promo-codes/generate',   [AssistantPromoCodeController::class, 'generate'])->name('promo.generate');

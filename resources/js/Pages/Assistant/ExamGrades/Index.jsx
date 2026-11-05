@@ -25,7 +25,7 @@ export default function ExamGradesIndex({ assistant, grades = [], filters = {} }
                 <div style={{ overflowX: 'auto', background: '#fff', borderRadius: 16, border: '1px solid #eee5d5' }}>
                     <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: 650 }}>
                         <thead><tr style={{ background: '#f8f4eb', color: '#8b806c', textAlign: 'right' }}>
-                            {['الطالب', 'الامتحان', 'الدرجة', 'الحالة', 'تاريخ التسليم'].map(label => <th key={label} style={{ padding: 14 }}>{label}</th>)}
+                            {['الطالب', 'الامتحان', 'الدرجة', 'الحالة', 'تاريخ التسليم', 'إجراء'].map(label => <th key={label} style={{ padding: 14 }}>{label}</th>)}
                         </tr></thead>
                         <tbody>
                             {grades.map(grade => <tr key={grade.id} style={{ borderTop: '1px solid #eee8dc', color: '#0E3A2E' }}>
@@ -34,8 +34,17 @@ export default function ExamGradesIndex({ assistant, grades = [], filters = {} }
                                 <td style={{ padding: 14, fontWeight: 900 }}>{grade.score ?? 0} / {grade.exam?.total_marks ?? '—'}</td>
                                 <td style={{ padding: 14 }}>{grade.status === 'pending' ? 'قيد المراجعة' : grade.status === 'passed' ? 'ناجح' : 'راسب'}</td>
                                 <td style={{ padding: 14 }}>{grade.finished_at ? new Date(grade.finished_at).toLocaleString('ar-EG') : '—'}</td>
+                                <td style={{ padding: 14 }}>
+                                    <button type="button" onClick={() => {
+                                        if (window.confirm('سيتم حذف محاولات الطالب ودرجاته في هذا الامتحان، وسيتمكن من البدء من جديد. هل تريد المتابعة؟')) {
+                                            router.delete(`/assistant/exam-grades/${grade.id}`);
+                                        }
+                                    }} style={{ border: 0, borderRadius: 8, padding: '7px 12px', background: '#fee2e2', color: '#dc2626', fontWeight: 800, cursor: 'pointer' }}>
+                                        حذف النتيجة
+                                    </button>
+                                </td>
                             </tr>)}
-                            {grades.length === 0 && <tr><td colSpan="5" style={{ padding: 30, textAlign: 'center', color: '#8b806c' }}>لا توجد نتائج مطابقة للبحث</td></tr>}
+                            {grades.length === 0 && <tr><td colSpan="6" style={{ padding: 30, textAlign: 'center', color: '#8b806c' }}>لا توجد نتائج مطابقة للبحث</td></tr>}
                         </tbody>
                     </table>
                 </div>
