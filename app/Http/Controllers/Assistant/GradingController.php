@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\SheetAnswer;
 use App\Models\SheetResponse;
 use App\Models\ExamResult;
+use App\Models\ExamResponse;
 use App\Models\Group;
 use App\Models\Exam;
 use Illuminate\Http\Request;

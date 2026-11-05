@@ -116,67 +116,8 @@ function StatCard({ label, value, color, icon, href, delay = 0, theme }) {
 }
 
 /* ─── Group Card ──────────────────────────────────── */
-function GroupCard({ group, delay, theme }) {
-    const [hov, setHov] = useState(false);
-    const ref = useRef(null);
-
-    useEffect(() => {
-        if (!ref.current) return;
-        ref.current.style.opacity = '0';
-        ref.current.style.transform = 'translateX(16px)';
-        const t = setTimeout(() => {
-            if (!ref.current) return;
-            ref.current.style.transition = 'opacity .4s ease, transform .4s ease';
-            ref.current.style.opacity = '1';
-            ref.current.style.transform = 'translateX(0)';
-        }, delay);
-        return () => clearTimeout(t);
-    }, [delay]);
-
-    return (
-        <div ref={ref} style={{
-            background: theme.bgCard,
-            border: theme.borderCard,
-            borderRadius: 12,
-            padding: '16px 18px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            boxShadow: theme.darkMode ? '0 2px 10px rgba(0,0,0,.25)' : '0 2px 10px rgba(20,33,61,.04)',
-            transition: 'all 0.3s ease',
-            position: 'relative',
-            overflow: 'hidden',
-        }}>
-            <CardOrnaments color={C.orange} soft />
-            <div style={{ position: 'absolute', inset: 0, background: `linear-gradient(135deg, ${C.orange}0f, transparent 65%)`, pointerEvents: 'none' }} />
-            <div style={{ display: 'flex', alignItems: 'center', gap: 12, position: 'relative', zIndex: 1 }}>
-                <div style={{
-                    width: 42, height: 42, borderRadius: 10,
-                    background: `linear-gradient(135deg, ${C.navy}, ${C.navyL})`,
-                    display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    color: C.gold, fontSize: 18,
-                }}>
-                    👥
-                </div>
-                <div>
-                    <div style={{ fontWeight: 700, color: theme.textMain, fontSize: 14 }}>{group.name}</div>
-                    <div style={{ fontSize: 12, color: theme.textMuted }}>{group.year} {group.hour ? `• ${group.hour}` : ''}</div>
-                </div>
-            </div>
-            <div style={{
-                background: `${C.orange}15`, color: C.orange,
-                borderRadius: 20, padding: '4px 12px',
-                fontSize: 13, fontWeight: 700,
-                position: 'relative', zIndex: 1,
-            }}>
-                {group.students_count} طالب
-            </div>
-        </div>
-    );
-}
-
 /* ─── Dashboard Page ──────────────────────────────── */
-export default function AssistantDashboard({ assistant, stats, my_groups = [], receipts = [] }) {
+export default function AssistantDashboard({ assistant, stats, receipts = [] }) {
     const [darkMode, setDarkMode] = useState(false);
     const [showReceipts, setShowReceipts] = useState(false);
     const pendingReceiptsCount = receipts.filter(r => r.status === 'pending').length;
@@ -308,35 +249,7 @@ export default function AssistantDashboard({ assistant, stats, my_groups = [], r
             </div>
 
             {/* ── Two-column: Groups + Quick Actions ── */}
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 20, marginBottom: 28 }}>
-                {/* My Groups */}
-                <div style={{
-                    background: bgCard, borderRadius: 16, padding: '20px 22px',
-                    border: borderCard,
-                    boxShadow: '0 4px 20px rgba(0,0,0,.02)',
-                    transition: 'all 0.3s ease',
-                    position: 'relative',
-                    overflow: 'hidden',
-                }}>
-                    <CardOrnaments color={C.orange} soft />
-                    <div style={{ position: 'absolute', inset: 0, background: `linear-gradient(160deg, ${C.orange}0d, transparent 70%)`, pointerEvents: 'none' }} />
-                    <h3 style={{ color: textMain, fontSize: 16, fontWeight: 800, marginBottom: 16, display: 'flex', alignItems: 'center', gap: 8, position: 'relative', zIndex: 1 }}>
-                        <span style={{ background: `${C.orange}18`, color: C.orange, borderRadius: 8, padding: '4px 8px' }}>👥</span>
-                        مجموعاتي
-                    </h3>
-                    {my_groups.length === 0 ? (
-                        <p style={{ color: '#A89A78', textAlign: 'center', padding: '20px 0', fontSize: 14 }}>
-                            لا توجد مجموعات مُعيّنة لك بعد
-                        </p>
-                    ) : (
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: 10, position: 'relative', zIndex: 1 }}>
-                            {my_groups.map((group, i) => (
-                                <GroupCard key={group.id} group={group} delay={i * 60} theme={theme} />
-                            ))}
-                        </div>
-                    )}
-                </div>
-
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: 20, marginBottom: 28 }}>
                 {/* Quick Actions */}
                 <div style={{
                     background: bgCard, borderRadius: 16, padding: '20px 22px',
