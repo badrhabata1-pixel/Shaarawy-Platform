@@ -26,6 +26,7 @@ export default function GradeExamForm({ assistant, examResult, responses = [] })
         responses.forEach(r => {
             temp[r.id] = {
                 response_id: r.id,
+                question_type: r.question_type,
                 is_correct: r.is_correct,
                 teacher_note: r.teacher_note || '',
                 max_marks: r.max_marks
@@ -34,27 +35,29 @@ export default function GradeExamForm({ assistant, examResult, responses = [] })
         return temp;
     });
 
-    const [manualScore, setManualScore] = useState(examResult.current_score || 0);
+    const autoScore = responses.reduce((total, response) => {
+        if (response.question_type !== 'mcq') return total;
+        return total + (response.is_correct ? Number(response.max_marks) : 0);
+    }, 0);
+    const [manualScore, setManualScore] = useState(() => responses.reduce((total, response) => {
+        if (response.question_type === 'mcq') {
+            return total + (response.is_correct ? Number(response.max_marks) : 0);
+        }
+        return total + (response.is_correct ? Number(response.marks_awarded ?? response.max_marks) : 0);
+    }, 0));
     const { processing } = useForm();
 
     const handleStatusChange = (responseId, isCorrect) => {
-        setLocalGrades(prev => {
-            const current = prev[responseId];
-            return {
-                ...prev,
-                [responseId]: { ...current, is_correct: isCorrect }
-            };
-        });
-
-        let tempScore = 0;
-        Object.keys(localGrades).forEach(id => {
-            const gradeItem = localGrades[id];
-            const isItemCorrect = id == responseId ? isCorrect : gradeItem.is_correct;
-            if (isItemCorrect) {
-                tempScore += gradeItem.max_marks;
-            }
-        });
-        setManualScore(tempScore);
+        const nextGrades = {
+            ...localGrades,
+            [responseId]: { ...localGrades[responseId], is_correct: isCorrect }
+        };
+        setLocalGrades(nextGrades);
+        const essayScore = Object.values(nextGrades).reduce((total, grade) => {
+            if (grade.question_type === 'mcq' || !grade.is_correct) return total;
+            return total + Number(grade.max_marks);
+        }, 0);
+        setManualScore(autoScore + essayScore);
     };
 
     const handleNoteChange = (responseId, note) => {
@@ -67,11 +70,10 @@ export default function GradeExamForm({ assistant, examResult, responses = [] })
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        const gradesArray = Object.values(localGrades);
+        const gradesArray = Object.values(localGrades).filter(grade => grade.question_type !== 'mcq');
 
         router.post(route('assistant.exams.grade.save', examResult.id), {
             grades: gradesArray,
-            manual_total_score: parseInt(manualScore),
         }, {
             onSuccess: () => alert('تم تعديل وحفظ ورقة إجابة ورصد درجات الطالب بنجاح! ✅')
         });
@@ -92,13 +94,13 @@ export default function GradeExamForm({ assistant, examResult, responses = [] })
                     </div>
                     <div className="text-left">
                         <span className="text-xs text-gray-400 font-bold block mb-1">درجة الطالب الحالية:</span>
-                        <span className="text-2xl font-black text-[#C9A96A]">{examResult.current_score} / {examResult.total_marks}</span>
+                        <span className="text-2xl font-black text-[#C9A96A]">{manualScore} / {examResult.total_marks}</span>
                     </div>
                 </div>
 
                 <form onSubmit={handleSubmit} className="space-y-6">
                     {responses.map((q, idx) => {
-                        const gradeItem = localGrades[q.id] || { is_correct: false, teacher_note: '' };
+                        const gradeItem = localGrades[q.id] || { is_correct: null, teacher_note: '' };
                         const isCorrect = gradeItem.is_correct;
 
                         return (
@@ -127,6 +129,11 @@ export default function GradeExamForm({ assistant, examResult, responses = [] })
                                 </div>
 
                                 {/* أزرار التعديل الفورية على تصحيح السؤال مع توحيد لون الخط الأسود */}
+                                {q.question_type === 'mcq' ? (
+                                    <div className="p-3 rounded-xl border bg-green-50 border-green-200 text-green-700 text-xs font-black">
+                                        تم تصحيح هذا السؤال تلقائيًا ({q.marks_awarded ?? (isCorrect ? q.max_marks : 0)} / {q.max_marks})
+                                    </div>
+                                ) : (
                                 <div className="flex flex-col md:flex-row items-center gap-4 bg-gray-50/60 p-4 rounded-xl border border-gray-100">
                                     <span className="text-xs font-bold text-gray-500">تعديل التقييم:</span>
                                     <div className="flex space-x-2 rtl:space-x-reverse">
@@ -140,7 +147,7 @@ export default function GradeExamForm({ assistant, examResult, responses = [] })
                                         <button
                                             type="button"
                                             onClick={() => handleStatusChange(q.id, false)}
-                                            className={`px-4 py-2 rounded-lg font-bold text-xs transition ${!isCorrect ? 'bg-red-600 text-white' : 'border border-red-500 text-red-500'}`}
+                                            className={`px-4 py-2 rounded-lg font-bold text-xs transition ${isCorrect === false ? 'bg-red-600 text-white' : 'border border-red-500 text-red-500'}`}
                                         >
                                             إجابة خاطئة (✕)
                                         </button>
@@ -155,6 +162,7 @@ export default function GradeExamForm({ assistant, examResult, responses = [] })
                                         className="flex-1 border border-gray-200 bg-white dark:bg-[#141210] text-gray-900 dark:text-white rounded-lg p-2 text-xs focus:border-[#C9A96A] focus:ring-0 outline-none transition font-bold"
                                     />
                                 </div>
+                                )}
                             </div>
                         );
                     })}
@@ -166,15 +174,8 @@ export default function GradeExamForm({ assistant, examResult, responses = [] })
                             <p className="text-xs text-gray-400">يمكنك تعديل هذه الخانة وكتابة الدرجة التي تراها مناسبة مباشرة بيدك.</p>
                         </div>
                         <div className="flex items-center gap-3">
-                            <span className="text-xs font-bold text-gray-400">درجة الطالب:</span>
-                            <input
-                                type="number"
-                                min="0"
-                                max={examResult.total_marks}
-                                value={manualScore}
-                                onChange={e => setManualScore(e.target.value)}
-                                className="w-24 text-center border-2 border-green-500 bg-white dark:bg-[#141210] text-gray-900 dark:text-white rounded-xl p-3 text-lg font-black focus:ring-0 focus:border-green-600 transition"
-                            />
+                                <span className="text-xs font-bold text-gray-400">درجة الطالب:</span>
+                            <span className="w-24 text-center border-2 border-green-500 bg-white dark:bg-[#141210] text-gray-900 dark:text-white rounded-xl p-3 text-lg font-black">{manualScore}</span>
                             <span className="text-lg font-black text-gray-400">من {examResult.total_marks}</span>
                         </div>
                     </div>

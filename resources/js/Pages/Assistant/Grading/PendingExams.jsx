@@ -96,7 +96,7 @@ export default function PendingExams({ assistant, pending = [], exams_list = [],
                 {pending.length === 0 ? (
                     <div className="bg-white dark:bg-[#1C1916] rounded-2xl p-16 text-center border border-gray-100 dark:border-gray-800 shadow-md">
                         <span className="text-5xl block mb-4">🎉</span>
-                        <h3 className="text-lg font-bold text-gray-500 mb-1">لا توجد نتائج مطابقة لفلترة البحث</h3>
+                        <h3 className="text-lg font-bold text-gray-500 mb-1">لا توجد إجابات مسلّمة مطابقة للبحث أو الامتحان المحدد</h3>
                     </div>
                 ) : (
                     <div ref={listRef} className="grid md:grid-cols-2 gap-6">
@@ -124,8 +124,8 @@ export default function PendingExams({ assistant, pending = [], exams_list = [],
                                     </div>
                                     <div className="flex justify-between items-center text-xs">
                                         <span className="text-gray-400 font-bold">الدرجة المرصودة حالياً:</span>
-                                        <span className={`px-2 py-0.5 rounded font-black text-[10px] ${exam.status === 'passed' ? 'bg-green-500/10 text-green-600' : 'bg-red-500/10 text-red-600'}`}>
-                                            {exam.score} / {exam.total_marks} ({exam.status === 'passed' ? 'ناجح ✅' : 'لم يجتز'})
+                                        <span className={`px-2 py-0.5 rounded font-black text-[10px] ${exam.status === 'passed' ? 'bg-green-500/10 text-green-600' : exam.status === 'pending' ? 'bg-amber-500/10 text-amber-600' : 'bg-red-500/10 text-red-600'}`}>
+                                            {exam.score} / {exam.total_marks} ({exam.status === 'pending' ? 'قيد المراجعة' : exam.status === 'passed' ? 'ناجح ✅' : 'لم يجتز'})
                                         </span>
                                     </div>
                                 </div>

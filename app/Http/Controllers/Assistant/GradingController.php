@@ -6,11 +6,12 @@ use App\Http\Controllers\Controller;
 use App\Models\SheetAnswer;
 use App\Models\SheetResponse;
 use App\Models\ExamResult;
-use App\Models\ExamResponse;
 use App\Models\Group;
 use App\Models\Exam;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
 
 class GradingController extends Controller
@@ -131,17 +132,17 @@ class GradingController extends Controller
     {
         /** @var \App\Models\AdminModel $assistant */
         $assistant = Auth::guard('assistant')->user();
-        $groupIds  = Group::where('assistant_id', $assistant->id)->pluck('id');
 
         $search = $request->input('search');
         $selectedExamId = $request->input('exam_id');
 
-        // استعلام شامل يربط طلاب السناتر بالمساعد الحالي وطلاب الأونلاين المفتوحين لجميع السكرتارية
+        // Exam results are already submitted attempts. Keep this list global so
+        // the secretary can review students outside their assigned center groups.
         $query = ExamResult::with(['student:id,name,image', 'exam:id,title,total_marks'])
-            ->whereHas('student', function($q) use ($groupIds) {
-                $q->whereIn('group_id', $groupIds)
-                  ->orWhere('student_type', 'online'); // إدراج طلاب الأونلاين بنجاح!
-            });
+            ->where('status', 'pending')
+            ->whereNotNull('finished_at')
+            ->whereHas('student')
+            ->whereHas('exam');
 
         if (!empty($search)) {
             $query->whereHas('student', fn($q) => $q->where('name', 'LIKE', "%{$search}%"));
@@ -158,7 +159,7 @@ class GradingController extends Controller
             'status'       => $er->status,
             'score'        => $er->score,
             'total_marks'  => $er->exam?->total_marks ?? 10,
-            'finished_at'  => $er->created_at?->format('Y-m-d H:i'),
+            'finished_at'  => $er->finished_at?->format('Y-m-d H:i'),
         ]);
 
         // جلب قائمة الامتحانات لعرضها في قائمة الاختيار
@@ -192,12 +193,13 @@ class GradingController extends Controller
             ->map(fn($r) => [
                 'id'             => $r->id,
                 'question_id'    => $r->question_id,
+                'question_type'  => $r->question?->question_type ?? 'essay',
                 'question_text'  => $r->question?->question_text ?? 'السؤال المقالي للامتحان الدوري',
                 'model_answer'   => $r->question?->correct_answer ?? 'الإجابة النموذجية المحددة للامتحان',
                 'max_marks'      => $r->question?->marks ?? 5,
                 'student_answer' => $r->selected_answer ?? $r->student_answer ?? 'لم يجب الطالب',
-                'is_correct'     => $r->is_correct ?? false,
-                'marks_awarded'  => $r->marks_awarded ?? 0,
+                'is_correct'     => $r->is_correct,
+                'marks_awarded'  => $r->marks_awarded,
                 'teacher_note'   => $r->teacher_note,
             ])->values();
 
@@ -223,36 +225,71 @@ class GradingController extends Controller
     {
         $validated = $request->validate([
             'grades'               => ['required', 'array'],
-            'grades.*.response_id' => ['required', 'integer'],
+            'grades.*.response_id' => ['required', 'integer', 'distinct'],
             'grades.*.is_correct'  => ['required', 'boolean'],
             'grades.*.teacher_note'=> ['nullable', 'string', 'max:500'],
-            'manual_total_score'   => ['required', 'integer', 'min:0'],
         ]);
 
-        $examResult = ExamResult::findOrFail($id);
         $assistant  = Auth::guard('assistant')->user();
+        DB::transaction(function () use ($id, $assistant, $validated) {
+            $examResult = ExamResult::with(['exam', 'responses.question'])
+                ->lockForUpdate()
+                ->findOrFail($id);
 
-        $essayScore = 0;
+            $essayResponses = $examResult->responses->filter(
+                fn ($response) => ($response->question?->question_type ?? 'essay') !== 'mcq'
+            );
+            $grades = collect($validated['grades'])->keyBy('response_id');
 
-        foreach ($validated['grades'] as $grade) {
-            $response = ExamResponse::find($grade['response_id']);
-            if (!$response) continue;
+            foreach ($essayResponses as $response) {
+                if (!$grades->has($response->id)) {
+                    throw ValidationException::withMessages([
+                        'grades' => 'يجب تصحيح كل الأسئلة المقالية قبل حفظ النتيجة.',
+                    ]);
+                }
+            }
 
-            $maxMarks     = 5;
-            $marksAwarded = $grade['is_correct'] ? $maxMarks : 0;
+            $essayIds = $essayResponses->pluck('id')->map(fn ($value) => (int) $value)->all();
+            if ($grades->keys()->diff($essayIds)->isNotEmpty()) {
+                throw ValidationException::withMessages([
+                    'grades' => 'يمكن تعديل تصحيح الأسئلة المقالية فقط.',
+                ]);
+            }
 
-            $response->update([
-                'teacher_note'  => $grade['teacher_note'] ?? null,
-                'graded_at'     => now(),
+            $totalScore = 0;
+            foreach ($examResult->responses as $response) {
+                $maxMarks = (int) ($response->question?->marks ?? 0);
+                $isMcq = ($response->question?->question_type ?? 'essay') === 'mcq';
+
+                if ($isMcq) {
+                    $isCorrect = (bool) $response->is_correct;
+                    $marksAwarded = $isCorrect ? $maxMarks : 0;
+                    $response->update(['marks_awarded' => $marksAwarded]);
+                } else {
+                    $grade = $grades->get($response->id);
+                    $isCorrect = (bool) $grade['is_correct'];
+                    $marksAwarded = $isCorrect ? $maxMarks : 0;
+                    $response->update([
+                        'is_correct'    => $isCorrect,
+                        'marks_awarded' => $marksAwarded,
+                        'teacher_note'  => $grade['teacher_note'] ?? null,
+                        'graded_by'     => $assistant->id,
+                        'graded_at'     => now(),
+                    ]);
+                }
+
+                $totalScore += $marksAwarded;
+            }
+
+            $exam = $examResult->exam;
+            $passRatio = ($exam?->exam_mode ?? 'final') === 'gate' ? 0.5 : 0.7;
+            $passMark = (float) ($exam?->total_marks ?? 0) * $passRatio;
+
+            $examResult->update([
+                'score'  => $totalScore,
+                'status' => $totalScore >= $passMark ? 'passed' : 'failed',
             ]);
-
-            $essayScore += $marksAwarded;
-        }
-
-        $examResult->update([
-            'score'  => $essayScore,
-            'status' => 'passed',
-        ]);
+        });
 
         return redirect()->route('assistant.exams.pending')
             ->with('success', 'تم حفظ درجات الامتحان بنجاح ✅');
