@@ -44,6 +44,16 @@ class DashboardController extends Controller
         // حساب عدد الطلاب الذين لم يشاهدوا الفيديوهات بشكل تقريبي للـ Badge
         $unwatchedCount = Student::whereIn('group_id', $groupIds)->count();
 
+        $myGroups = Group::whereIn('id', $groupIds)
+            ->with('academicYear:id,name')
+            ->get(['id', 'name', 'hour', 'academic_year_id'])
+            ->map(fn ($group) => [
+                'id'   => $group->id,
+                'name' => $group->name,
+                'hour' => $group->hour,
+                'year' => $group->academicYear?->name,
+            ]);
+
         $receipts = collect();
         if (Schema::hasTable('payment_requests')) {
             $receipts = PaymentRequest::with(['student:id,name,phone,email,image', 'unit:id,title'])
@@ -74,6 +84,7 @@ class DashboardController extends Controller
                 'pending_sheets' => $pendingSheetsCount,
                 'unwatched_count'=> $unwatchedCount,
             ],
+            'my_groups' => $myGroups,
             'receipts'  => $receipts,
         ]);
     }

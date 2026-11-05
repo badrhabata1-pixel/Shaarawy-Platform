@@ -116,8 +116,31 @@ function StatCard({ label, value, color, icon, href, delay = 0, theme }) {
 }
 
 /* ─── Group Card ──────────────────────────────────── */
+function GroupCard({ group, theme }) {
+    return (
+        <div style={{
+            background: theme.bgCard,
+            border: theme.borderCard,
+            borderRadius: 12,
+            padding: '14px 16px',
+            display: 'flex',
+            alignItems: 'center',
+            gap: 12,
+            position: 'relative',
+            overflow: 'hidden',
+        }}>
+            <CardOrnaments color={C.orange} soft />
+            <div style={{ width: 42, height: 42, borderRadius: 10, background: `linear-gradient(135deg, ${C.navy}, ${C.navyL})`, display: 'flex', alignItems: 'center', justifyContent: 'center', color: C.gold, fontSize: 18, position: 'relative', zIndex: 1 }}>👥</div>
+            <div style={{ position: 'relative', zIndex: 1 }}>
+                <div style={{ fontWeight: 700, color: theme.textMain, fontSize: 14 }}>{group.name}</div>
+                <div style={{ fontSize: 12, color: theme.textMuted }}>{group.year} {group.hour ? `• ${group.hour}` : ''}</div>
+            </div>
+        </div>
+    );
+}
+
 /* ─── Dashboard Page ──────────────────────────────── */
-export default function AssistantDashboard({ assistant, stats, receipts = [] }) {
+export default function AssistantDashboard({ assistant, stats, my_groups = [], receipts = [] }) {
     const [darkMode, setDarkMode] = useState(false);
     const [showReceipts, setShowReceipts] = useState(false);
     const pendingReceiptsCount = receipts.filter(r => r.status === 'pending').length;
@@ -249,7 +272,22 @@ export default function AssistantDashboard({ assistant, stats, receipts = [] }) 
             </div>
 
             {/* ── Two-column: Groups + Quick Actions ── */}
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: 20, marginBottom: 28 }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 20, marginBottom: 28 }}>
+                <div style={{ background: bgCard, borderRadius: 16, padding: '20px 22px', border: borderCard, boxShadow: '0 4px 20px rgba(0,0,0,.02)', position: 'relative', overflow: 'hidden' }}>
+                    <CardOrnaments color={C.orange} soft />
+                    <div style={{ position: 'absolute', inset: 0, background: `linear-gradient(160deg, ${C.orange}0d, transparent 70%)`, pointerEvents: 'none' }} />
+                    <h3 style={{ color: textMain, fontSize: 16, fontWeight: 800, marginBottom: 16, display: 'flex', alignItems: 'center', gap: 8, position: 'relative', zIndex: 1 }}>
+                        <span style={{ background: `${C.orange}18`, color: C.orange, borderRadius: 8, padding: '4px 8px' }}>👥</span>
+                        مجموعاتي
+                    </h3>
+                    {my_groups.length === 0 ? (
+                        <p style={{ color: '#A89A78', textAlign: 'center', padding: '20px 0', fontSize: 14 }}>لا توجد مجموعات مُعيّنة لك بعد</p>
+                    ) : (
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: 10, position: 'relative', zIndex: 1 }}>
+                            {my_groups.map(group => <GroupCard key={group.id} group={group} theme={theme} />)}
+                        </div>
+                    )}
+                </div>
                 {/* Quick Actions */}
                 <div style={{
                     background: bgCard, borderRadius: 16, padding: '20px 22px',
