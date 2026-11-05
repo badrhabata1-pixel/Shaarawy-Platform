@@ -137,9 +137,8 @@ class GradingController extends Controller
         $selectedExamId = $request->input('exam_id');
 
         // Exam results are already submitted attempts. Keep this list global so
-        // the secretary can review students outside their assigned center groups.
+        // the secretary can review and reopen students outside assigned groups.
         $query = ExamResult::with(['student:id,name,image', 'exam:id,title,total_marks'])
-            ->where('status', 'pending')
             ->whereNotNull('finished_at')
             ->whereHas('student')
             ->whereHas('exam');

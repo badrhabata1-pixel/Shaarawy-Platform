@@ -103,6 +103,7 @@ class ExamController extends Controller
                     'question_id'     => $r->question_id,
                     'selected_answer' => $r->selected_answer,
                     'is_correct'      => $r->is_correct,
+                    'marks_awarded'   => $r->marks_awarded,
                 ]),
             ] : null,
         ]);

@@ -299,11 +299,13 @@ function QuestionResult({ question, response, index }) {
     const answered  = response?.selected_answer;
     const isCorrect = response?.is_correct;
     const isMcq     = question.question_type === 'mcq';
+    const hasGrade  = typeof isCorrect === 'boolean';
+    const awardedMarks = response?.marks_awarded ?? (isCorrect ? question.marks : 0);
 
-    const headerBg = isMcq && answered
+    const headerBg = hasGrade
         ? (isCorrect ? '#f0fdf4' : '#fef2f2')
         : '#F7F3E9';
-    const borderColor = isMcq && answered
+    const borderColor = hasGrade
         ? (isCorrect ? '#86efac' : '#fca5a5')
         : '#E3D9C4';
 
@@ -322,20 +324,20 @@ function QuestionResult({ question, response, index }) {
                 <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
                     <div style={{
                         width: 28, height: 28, borderRadius: '50%', flexShrink: 0,
-                        background: isMcq && answered
+                        background: hasGrade
                             ? (isCorrect ? '#059669' : '#dc2626')
                             : '#E3D9C4',
-                        color: isMcq && answered ? '#fff' : '#A89A78',
+                        color: hasGrade ? '#fff' : '#A89A78',
                         display: 'flex', alignItems: 'center', justifyContent: 'center',
                         fontSize: 11, fontWeight: 900,
                     }}>
-                        {isMcq && answered ? (isCorrect ? '✓' : '✗') : index + 1}
+                        {hasGrade ? (isCorrect ? '✓' : '✗') : index + 1}
                     </div>
                     <span style={{ fontSize: 13, fontWeight: 800, color: N }}>
-                        سؤال {index + 1} · {question.marks} درجة
+                        سؤال {index + 1} · {hasGrade ? `${awardedMarks} / ${question.marks} درجة` : 'قيد التصحيح'}
                     </span>
                 </div>
-                {isMcq && answered && (
+                {hasGrade && (
                     <span style={{
                         fontSize: 12, fontWeight: 800,
                         color: isCorrect ? '#059669' : '#dc2626',
