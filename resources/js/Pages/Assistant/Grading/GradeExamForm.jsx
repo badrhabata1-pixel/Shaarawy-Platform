@@ -21,6 +21,8 @@ export default function GradeExamForm({ assistant, examResult, responses = [] })
         return () => observer.disconnect();
     }, []);
 
+    const gradesRef = useRef({});
+    const scoreRef = useRef(Number(examResult.current_score ?? 0));
     const [localGrades, setLocalGrades] = useState(() => {
         const temp = {};
         responses.forEach(r => {
@@ -33,6 +35,7 @@ export default function GradeExamForm({ assistant, examResult, responses = [] })
                 max_marks: r.max_marks
             };
         });
+        gradesRef.current = temp;
         return temp;
     });
 
@@ -52,44 +55,49 @@ export default function GradeExamForm({ assistant, examResult, responses = [] })
     };
 
     const handleStatusChange = (responseId, isCorrect) => {
-        const currentGrade = localGrades[responseId];
-        const previousMarks = Number(currentGrade?.marks_awarded ?? 0);
-        const nextMarks = isCorrect ? Number(currentGrade?.max_marks ?? 0) : 0;
+        const currentGrade = gradesRef.current[responseId];
         const nextGrades = {
-            ...localGrades,
-            [responseId]: { ...localGrades[responseId], is_correct: isCorrect, marks_awarded: nextMarks }
+            ...gradesRef.current,
+            [responseId]: { ...currentGrade, is_correct: isCorrect }
         };
+        gradesRef.current = nextGrades;
         setLocalGrades(nextGrades);
-        if (previousMarks !== nextMarks) {
-            const markChange = nextMarks - previousMarks;
-            setManualScore(score => Math.max(0, Number(score) + markChange));
-        }
 
-        const selectionKey = `${responseId}:${isCorrect}`;
-        const sameSelection = currentGrade?.is_correct === isCorrect;
-        selectionClicks.current = sameSelection
-            ? { ...selectionClicks.current, [selectionKey]: (selectionClicks.current[selectionKey] || 0) + 1 }
-            : { ...selectionClicks.current, [selectionKey]: 1 };
-        if (selectionClicks.current[selectionKey] >= 2) {
-            selectionClicks.current[selectionKey] = 0;
+        const previousClick = selectionClicks.current[responseId];
+        const clicks = previousClick?.selection === isCorrect ? previousClick.count + 1 : 1;
+        selectionClicks.current[responseId] = { selection: isCorrect, count: clicks };
+
+        if (clicks >= 2) {
+            selectionClicks.current[responseId].count = 0;
+            const previousMarks = Number(currentGrade?.marks_awarded ?? 0);
+            const nextMarks = isCorrect ? Number(currentGrade?.max_marks ?? 0) : 0;
             const nextScore = previousMarks !== nextMarks
-                ? Math.max(0, Number(manualScore) + nextMarks - previousMarks)
-                : Number(manualScore);
-            saveGrades(nextGrades, nextScore, () => alert('تم حفظ تقييم السؤال والدرجة في نتيجة الطالب.'));
+                ? Math.min(Number(examResult.total_marks), Math.max(0, scoreRef.current + nextMarks - previousMarks))
+                : scoreRef.current;
+            const awardedGrades = {
+                ...nextGrades,
+                [responseId]: { ...nextGrades[responseId], marks_awarded: nextMarks }
+            };
+            gradesRef.current = awardedGrades;
+            scoreRef.current = nextScore;
+            setLocalGrades(awardedGrades);
+            setManualScore(nextScore);
         }
     };
 
     const handleNoteChange = (responseId, note) => {
-        setLocalGrades(prev => ({
-            ...prev,
-            [responseId]: { ...prev[responseId], teacher_note: note }
-        }));
+        const nextGrades = {
+            ...gradesRef.current,
+            [responseId]: { ...gradesRef.current[responseId], teacher_note: note }
+        };
+        gradesRef.current = nextGrades;
+        setLocalGrades(nextGrades);
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        saveGrades(localGrades, manualScore, () => alert('تم تعديل وحفظ ورقة إجابة ورصد درجات الطالب بنجاح! ✅'));
+        saveGrades(gradesRef.current, scoreRef.current, () => alert('تم تعديل وحفظ ورقة إجابة ورصد درجات الطالب بنجاح! ✅'));
     };
 
     return (
@@ -148,12 +156,12 @@ export default function GradeExamForm({ assistant, examResult, responses = [] })
                                     </div>
                                 ) : (
                                 <div className="flex flex-col md:flex-row items-center gap-4 bg-gray-50/60 p-4 rounded-xl border border-gray-100">
-                                    <span className="text-xs font-bold text-gray-500">تعديل التقييم:</span>
+                                    <span className="text-xs font-bold text-gray-500">اضغط مرتين على الاختيار لرصد درجته في الإجمالي:</span>
                                     <div className="flex space-x-2 rtl:space-x-reverse">
                                         <button
                                             type="button"
                                             onClick={() => handleStatusChange(q.id, true)}
-                                            title="اضغط مرتين لحفظ الدرجة في نتيجة الطالب"
+                                            title="اضغط مرتين لإضافة درجة السؤال إلى الإجمالي"
                                             className={`px-4 py-2 rounded-lg font-bold text-xs transition ${isCorrect ? 'bg-green-600 text-white' : 'border border-green-500 text-green-600'}`}
                                         >
                                             إجابة صحيحة (✓)
@@ -161,7 +169,7 @@ export default function GradeExamForm({ assistant, examResult, responses = [] })
                                         <button
                                             type="button"
                                             onClick={() => handleStatusChange(q.id, false)}
-                                            title="اضغط مرتين لحفظ الدرجة في نتيجة الطالب"
+                                            title="اضغط مرتين لخصم درجة السؤال من الإجمالي"
                                             className={`px-4 py-2 rounded-lg font-bold text-xs transition ${isCorrect === false ? 'bg-red-600 text-white' : 'border border-red-500 text-red-500'}`}
                                         >
                                             إجابة خاطئة (✕)
@@ -196,7 +204,11 @@ export default function GradeExamForm({ assistant, examResult, responses = [] })
                                 max={examResult.total_marks}
                                 step="any"
                                 value={manualScore}
-                                onChange={e => setManualScore(Math.min(Number(examResult.total_marks), Math.max(0, Number(e.target.value) || 0)))}
+                                onChange={e => {
+                                    const score = Math.min(Number(examResult.total_marks), Math.max(0, Number(e.target.value) || 0));
+                                    scoreRef.current = score;
+                                    setManualScore(score);
+                                }}
                                 className="w-24 text-center border-2 border-green-500 bg-white dark:bg-[#141210] text-gray-900 dark:text-white rounded-xl p-3 text-lg font-black outline-none"
                                 aria-label="الدرجة الكلية للطالب"
                             />

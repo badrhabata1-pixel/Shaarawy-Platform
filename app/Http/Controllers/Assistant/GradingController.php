@@ -191,6 +191,10 @@ class GradingController extends Controller
 
         $responsesByQuestion = $examResult->responses->keyBy('question_id');
         $examQuestions = $examResult->exam?->questions ?? collect();
+        $questionTotalMarks = (float) $examQuestions->sum('marks');
+        $actualTotalMarks = $questionTotalMarks > 0
+            ? $questionTotalMarks
+            : (float) ($examResult->exam?->total_marks ?? 10);
         $knownMcqScore = $examResult->responses->sum(function ($response) {
             return $response->question?->question_type === 'mcq' && $response->is_correct
                 ? (int) ($response->question?->marks ?? 0)
@@ -243,7 +247,7 @@ class GradingController extends Controller
             'examResult' => [
                 'id'           => $examResult->id,
                 'exam_title'   => $examResult->exam?->title,
-                'total_marks'  => $examResult->exam?->total_marks ?? 10,
+                'total_marks'  => $actualTotalMarks,
                 'student_name' => $examResult->student?->name,
                 'student_image'=> $examResult->student?->image,
                 'current_score'=> $examResult->score,
@@ -369,11 +373,15 @@ class GradingController extends Controller
             }
 
             $exam = $examResult->exam;
+            $actualTotalMarks = max(1, (float) $questions->sum('marks'));
+            if ($exam && (float) $exam->total_marks !== $actualTotalMarks) {
+                $exam->update(['total_marks' => $actualTotalMarks]);
+            }
             $passRatio = ($exam?->exam_mode ?? 'final') === 'gate' ? 0.5 : 0.7;
-            $passMark = (float) ($exam?->total_marks ?? 0) * $passRatio;
+            $passMark = $actualTotalMarks * $passRatio;
             $calculatedScore = $autoScore + $essayScore;
             $finalScore = array_key_exists('final_score', $validated) && $validated['final_score'] !== null
-                ? min((float) $validated['final_score'], (float) ($exam?->total_marks ?? $calculatedScore))
+                ? min((float) $validated['final_score'], $actualTotalMarks)
                 : $calculatedScore;
 
             $examResult->update([
