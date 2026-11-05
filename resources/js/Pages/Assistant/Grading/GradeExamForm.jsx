@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Head, useForm, Link, router } from '@inertiajs/react';
 import AssistantLayout from '@/Layouts/AssistantLayout';
 
@@ -38,6 +38,18 @@ export default function GradeExamForm({ assistant, examResult, responses = [] })
 
     const [manualScore, setManualScore] = useState(Number(examResult.current_score ?? 0));
     const { processing } = useForm();
+    const selectionClicks = useRef({});
+
+    const saveGrades = (grades, score, onSuccess) => {
+        const gradesArray = Object.values(grades)
+            .filter(grade => grade.question_type !== 'mcq' && grade.is_correct !== null)
+            .map(({ question_id, is_correct, teacher_note }) => ({ question_id, is_correct, teacher_note }));
+
+        router.post(route('assistant.exams.grade.save', examResult.id), {
+            grades: gradesArray,
+            final_score: Number(score),
+        }, { onSuccess });
+    };
 
     const handleStatusChange = (responseId, isCorrect) => {
         const currentGrade = localGrades[responseId];
@@ -52,6 +64,19 @@ export default function GradeExamForm({ assistant, examResult, responses = [] })
             const markChange = nextMarks - previousMarks;
             setManualScore(score => Math.max(0, Number(score) + markChange));
         }
+
+        const selectionKey = `${responseId}:${isCorrect}`;
+        const sameSelection = currentGrade?.is_correct === isCorrect;
+        selectionClicks.current = sameSelection
+            ? { ...selectionClicks.current, [selectionKey]: (selectionClicks.current[selectionKey] || 0) + 1 }
+            : { ...selectionClicks.current, [selectionKey]: 1 };
+        if (selectionClicks.current[selectionKey] >= 2) {
+            selectionClicks.current[selectionKey] = 0;
+            const nextScore = previousMarks !== nextMarks
+                ? Math.max(0, Number(manualScore) + nextMarks - previousMarks)
+                : Number(manualScore);
+            saveGrades(nextGrades, nextScore, () => alert('تم حفظ تقييم السؤال والدرجة في نتيجة الطالب.'));
+        }
     };
 
     const handleNoteChange = (responseId, note) => {
@@ -64,14 +89,7 @@ export default function GradeExamForm({ assistant, examResult, responses = [] })
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        const gradesArray = Object.values(localGrades).filter(grade => grade.question_type !== 'mcq');
-
-        router.post(route('assistant.exams.grade.save', examResult.id), {
-            grades: gradesArray,
-            final_score: Number(manualScore),
-        }, {
-            onSuccess: () => alert('تم تعديل وحفظ ورقة إجابة ورصد درجات الطالب بنجاح! ✅')
-        });
+        saveGrades(localGrades, manualScore, () => alert('تم تعديل وحفظ ورقة إجابة ورصد درجات الطالب بنجاح! ✅'));
     };
 
     return (
@@ -135,6 +153,7 @@ export default function GradeExamForm({ assistant, examResult, responses = [] })
                                         <button
                                             type="button"
                                             onClick={() => handleStatusChange(q.id, true)}
+                                            title="اضغط مرتين لحفظ الدرجة في نتيجة الطالب"
                                             className={`px-4 py-2 rounded-lg font-bold text-xs transition ${isCorrect ? 'bg-green-600 text-white' : 'border border-green-500 text-green-600'}`}
                                         >
                                             إجابة صحيحة (✓)
@@ -142,6 +161,7 @@ export default function GradeExamForm({ assistant, examResult, responses = [] })
                                         <button
                                             type="button"
                                             onClick={() => handleStatusChange(q.id, false)}
+                                            title="اضغط مرتين لحفظ الدرجة في نتيجة الطالب"
                                             className={`px-4 py-2 rounded-lg font-bold text-xs transition ${isCorrect === false ? 'bg-red-600 text-white' : 'border border-red-500 text-red-500'}`}
                                         >
                                             إجابة خاطئة (✕)

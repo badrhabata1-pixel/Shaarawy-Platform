@@ -260,7 +260,7 @@ class GradingController extends Controller
     public function saveExamGrade(Request $request, $id)
     {
         $validated = $request->validate([
-            'grades'               => ['required', 'array'],
+            'grades'               => ['nullable', 'array'],
             'grades.*.question_id' => ['required', 'integer', 'distinct'],
             'grades.*.is_correct'  => ['required', 'boolean'],
             'grades.*.teacher_note'=> ['nullable', 'string', 'max:500'],
@@ -274,18 +274,7 @@ class GradingController extends Controller
                 ->findOrFail($id);
 
             $questions = $examResult->exam?->questions ?? collect();
-            $essayQuestions = $questions->filter(
-                fn ($question) => $question->question_type !== 'mcq'
-            );
-            $grades = collect($validated['grades'])->keyBy('question_id');
-
-            foreach ($essayQuestions as $question) {
-                if (!$grades->has($question->id)) {
-                    throw ValidationException::withMessages([
-                        'grades' => 'يجب تصحيح كل الأسئلة المقالية قبل حفظ النتيجة.',
-                    ]);
-                }
-            }
+            $grades = collect($validated['grades'] ?? [])->keyBy('question_id');
 
             $questionIds = $questions->pluck('id')->map(fn ($value) => (int) $value)->all();
             if ($grades->keys()->diff($questionIds)->isNotEmpty()) {
@@ -315,6 +304,7 @@ class GradingController extends Controller
             }
             $autoScore = max($knownMcqScore, (int) $examResult->score - $previousEssayScore);
             $essayScore = 0;
+            $allEssaysGraded = true;
             foreach ($questions as $question) {
                 $response = $responsesByQuestion->get($question->id);
                 $maxMarks = (int) $question->marks;
@@ -345,6 +335,14 @@ class GradingController extends Controller
                     }
                 } else {
                     $grade = $grades->get($question->id);
+                    if (!$grade) {
+                        if (!$response || !$response->graded_at) {
+                            $allEssaysGraded = false;
+                        }
+                        $essayScore += (int) ($response?->marks_awarded ?? 0);
+                        continue;
+                    }
+
                     $isCorrect = (bool) $grade['is_correct'];
                     $marksAwarded = $isCorrect ? $maxMarks : 0;
                     $responseData = [
@@ -380,7 +378,9 @@ class GradingController extends Controller
 
             $examResult->update([
                 'score'  => $finalScore,
-                'status' => $finalScore >= $passMark ? 'passed' : 'failed',
+                'status' => !$allEssaysGraded
+                    ? 'pending'
+                    : ($finalScore >= $passMark ? 'passed' : 'failed'),
             ]);
         });
 
