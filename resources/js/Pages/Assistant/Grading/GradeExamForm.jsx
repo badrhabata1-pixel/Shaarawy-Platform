@@ -28,6 +28,7 @@ export default function GradeExamForm({ assistant, examResult, responses = [] })
                 question_id: r.question_id,
                 question_type: r.question_type,
                 is_correct: r.is_correct,
+                marks_awarded: r.marks_awarded,
                 teacher_note: r.teacher_note || '',
                 max_marks: r.max_marks
             };
@@ -40,14 +41,15 @@ export default function GradeExamForm({ assistant, examResult, responses = [] })
 
     const handleStatusChange = (responseId, isCorrect) => {
         const currentGrade = localGrades[responseId];
-        const wasCorrect = Boolean(currentGrade?.is_correct);
+        const previousMarks = Number(currentGrade?.marks_awarded ?? 0);
+        const nextMarks = isCorrect ? Number(currentGrade?.max_marks ?? 0) : 0;
         const nextGrades = {
             ...localGrades,
-            [responseId]: { ...localGrades[responseId], is_correct: isCorrect }
+            [responseId]: { ...localGrades[responseId], is_correct: isCorrect, marks_awarded: nextMarks }
         };
         setLocalGrades(nextGrades);
-        if (wasCorrect !== isCorrect) {
-            const markChange = Number(currentGrade?.max_marks || 0) * (isCorrect ? 1 : -1);
+        if (previousMarks !== nextMarks) {
+            const markChange = nextMarks - previousMarks;
             setManualScore(score => Math.max(0, Number(score) + markChange));
         }
     };
