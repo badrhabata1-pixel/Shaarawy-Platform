@@ -264,6 +264,7 @@ class GradingController extends Controller
             'grades.*.question_id' => ['required', 'integer', 'distinct'],
             'grades.*.is_correct'  => ['required', 'boolean'],
             'grades.*.teacher_note'=> ['nullable', 'string', 'max:500'],
+            'final_score'          => ['nullable', 'numeric', 'min:0'],
         ]);
 
         $assistant  = Auth::guard('assistant')->user();
@@ -372,10 +373,14 @@ class GradingController extends Controller
             $exam = $examResult->exam;
             $passRatio = ($exam?->exam_mode ?? 'final') === 'gate' ? 0.5 : 0.7;
             $passMark = (float) ($exam?->total_marks ?? 0) * $passRatio;
+            $calculatedScore = $autoScore + $essayScore;
+            $finalScore = array_key_exists('final_score', $validated) && $validated['final_score'] !== null
+                ? min((float) $validated['final_score'], (float) ($exam?->total_marks ?? $calculatedScore))
+                : $calculatedScore;
 
             $examResult->update([
-                'score'  => $autoScore + $essayScore,
-                'status' => ($autoScore + $essayScore) >= $passMark ? 'passed' : 'failed',
+                'score'  => $finalScore,
+                'status' => $finalScore >= $passMark ? 'passed' : 'failed',
             ]);
         });
 

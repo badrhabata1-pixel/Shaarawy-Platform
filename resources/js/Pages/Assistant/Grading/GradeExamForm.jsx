@@ -35,22 +35,21 @@ export default function GradeExamForm({ assistant, examResult, responses = [] })
         return temp;
     });
 
-    const autoScore = responses.reduce((total, response) => {
-        if (response.question_type !== 'mcq') return total;
-        return total + (response.is_correct ? Number(response.max_marks) : 0);
-    }, 0);
-    const manualScore = autoScore + Object.values(localGrades).reduce((total, grade) => {
-        if (grade.question_type === 'mcq' || !grade.is_correct) return total;
-        return total + Number(grade.max_marks);
-    }, 0);
+    const [manualScore, setManualScore] = useState(Number(examResult.current_score ?? 0));
     const { processing } = useForm();
 
     const handleStatusChange = (responseId, isCorrect) => {
+        const currentGrade = localGrades[responseId];
+        const wasCorrect = Boolean(currentGrade?.is_correct);
         const nextGrades = {
             ...localGrades,
             [responseId]: { ...localGrades[responseId], is_correct: isCorrect }
         };
         setLocalGrades(nextGrades);
+        if (wasCorrect !== isCorrect) {
+            const markChange = Number(currentGrade?.max_marks || 0) * (isCorrect ? 1 : -1);
+            setManualScore(score => Math.max(0, Number(score) + markChange));
+        }
     };
 
     const handleNoteChange = (responseId, note) => {
@@ -67,6 +66,7 @@ export default function GradeExamForm({ assistant, examResult, responses = [] })
 
         router.post(route('assistant.exams.grade.save', examResult.id), {
             grades: gradesArray,
+            final_score: Number(manualScore),
         }, {
             onSuccess: () => alert('تم تعديل وحفظ ورقة إجابة ورصد درجات الطالب بنجاح! ✅')
         });
@@ -168,7 +168,16 @@ export default function GradeExamForm({ assistant, examResult, responses = [] })
                         </div>
                         <div className="flex items-center gap-3">
                                 <span className="text-xs font-bold text-gray-400">درجة الطالب:</span>
-                            <span className="w-24 text-center border-2 border-green-500 bg-white dark:bg-[#141210] text-gray-900 dark:text-white rounded-xl p-3 text-lg font-black">{manualScore}</span>
+                            <input
+                                type="number"
+                                min="0"
+                                max={examResult.total_marks}
+                                step="any"
+                                value={manualScore}
+                                onChange={e => setManualScore(Math.min(Number(examResult.total_marks), Math.max(0, Number(e.target.value) || 0)))}
+                                className="w-24 text-center border-2 border-green-500 bg-white dark:bg-[#141210] text-gray-900 dark:text-white rounded-xl p-3 text-lg font-black outline-none"
+                                aria-label="الدرجة الكلية للطالب"
+                            />
                             <span className="text-lg font-black text-gray-400">من {examResult.total_marks}</span>
                         </div>
                     </div>
