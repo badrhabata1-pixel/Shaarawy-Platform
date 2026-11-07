@@ -920,7 +920,11 @@ function ExamRow({ exam }) {
     })[exam.status] ?? { label:exam.status, bg:'#F7F3E9', c:'#6B6255' };
 
     return (
-        <Link href={route('student.exams.show', exam.id)} style={{ textDecoration:'none', display:'block', marginBottom:8 }}>
+        <Link
+            href={route('student.exams.show', exam.id)}
+            onClick={(e) => { if (exam.status === 'upcoming' || exam.status === 'ended') e.preventDefault(); }}
+            style={{ textDecoration:'none', display:'block', marginBottom:8, cursor: (exam.status === 'upcoming' || exam.status === 'ended') ? 'not-allowed' : 'pointer' }}
+        >
             <div
                 onMouseEnter={()=>setHov(true)}
                 onMouseLeave={()=>setHov(false)}

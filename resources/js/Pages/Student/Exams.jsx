@@ -1,4 +1,4 @@
-import { Head, Link } from '@inertiajs/react';
+import { Head, Link, usePage } from '@inertiajs/react';
 import { useState, useEffect } from 'react';
 import StudentLayout from '@/Layouts/StudentLayout';
 
@@ -36,6 +36,7 @@ const GROUP_HEADERS = {
 };
 
 export default function Exams({ exams }) {
+    const { flash } = usePage().props;
     const dark = useStudentDark();
 
     const groups = {
@@ -93,6 +94,15 @@ export default function Exams({ exams }) {
                     </Link>
                 </div>
             </div>
+
+            {flash?.error && (
+                <div className="eu" style={{
+                    background: 'rgba(220,38,38,.1)', border: '1px solid rgba(220,38,38,.35)', color: '#f87171',
+                    borderRadius: 14, padding: '12px 18px', marginBottom: '1.25rem', fontSize: 14, fontWeight: 700,
+                }}>
+                    🔒 {flash.error}
+                </div>
+            )}
 
             {exams.length === 0 ? (
                 <EmptyState dark={dark} />

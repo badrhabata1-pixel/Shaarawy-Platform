@@ -16,7 +16,6 @@ class ExamController extends Controller
         /** @var \App\Models\Student $student */
         $student = Auth::guard('student')->user();
 
-        $now   = now();
         $exams = Exam::where('class_id', $student->academic_year_id)
             ->with(['lesson:id,title', 'results' => fn ($q) =>
                 $q->where('student_id', $student->id)->orderByDesc('id')
@@ -24,24 +23,14 @@ class ExamController extends Controller
             ->orderByDesc('start_time')
             ->get();
 
-        $list = $exams->map(function (Exam $exam) use ($now) {
+        $list = $exams->map(function (Exam $exam) {
             // Latest result (not first attempt)
             $result    = $exam->results->first();
             $examMode  = $exam->exam_mode ?? 'final';
             $passMark  = $exam->total_marks * ($examMode === 'gate' ? 0.5 : 0.7);
             $canRetake = false;
 
-            if ($exam->start_time && $exam->end_time) {
-                if ($now->lt($exam->start_time)) {
-                    $status = 'upcoming';
-                } elseif ($now->gt($exam->end_time)) {
-                    $status = 'ended';
-                } else {
-                    $status = 'active';
-                }
-            } else {
-                $status = 'open';
-            }
+            $status = $exam->availability();
 
             return [
                 'id'               => $exam->id,
@@ -85,6 +74,14 @@ class ExamController extends Controller
         $examMode = $exam->exam_mode ?? 'final';
         $passMark = $exam->total_marks * ($examMode === 'gate' ? 0.5 : 0.7);
 
+        // الامتحان مقفول قبل ميعاده وبعد انتهائه — الطالب يشوف نتيجته لو سلّم قبل كده بس
+        if (!$result && !$exam->isAvailable()) {
+            return redirect()->route('student.exams')
+                ->with('error', $exam->availability() === 'upcoming'
+                    ? 'الامتحان لسه ما بدأش — هيفتح في ' . $exam->start_time?->format('Y-m-d H:i')
+                    : 'انتهى وقت هذا الامتحان.');
+        }
+
         return Inertia::render('Student/ExamShow', [
             'exam'   => array_merge($exam->toArray(), [
                 'exam_mode' => $examMode,
@@ -118,6 +115,13 @@ class ExamController extends Controller
         // A submitted result locks the attempt until an administrator deletes it.
         if (ExamResult::where('exam_id', $exam->id)->where('student_id', $student->id)->exists()) {
             return redirect()->route('student.exams.show', $exam->id);
+        }
+
+        if (!$exam->isAvailable()) {
+            return redirect()->route('student.exams')
+                ->with('error', $exam->availability() === 'upcoming'
+                    ? 'الامتحان لسه ما بدأش.'
+                    : 'انتهى وقت هذا الامتحان ولا يمكن التسليم الآن.');
         }
 
         $examMode = $exam->exam_mode ?? 'final';

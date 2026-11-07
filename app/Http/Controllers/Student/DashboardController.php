@@ -58,7 +58,7 @@ class DashboardController extends Controller
         });
 
         // Upcoming / active exams (next 3)
-        $now            = now();
+        $now            = Exam::localNow();
         $upcomingExams  = Exam::where('class_id', $student->academic_year_id)
             ->where(fn ($q) => $q
                 ->whereNull('end_time')
@@ -67,14 +67,7 @@ class DashboardController extends Controller
             ->orderBy('start_time')
             ->limit(3)
             ->get(['id', 'title', 'start_time', 'end_time', 'time_limit_minutes', 'total_marks'])
-            ->map(function (Exam $exam) use ($now) {
-                if ($exam->start_time && $now->lt($exam->start_time)) {
-                    $status = 'upcoming';
-                } elseif ($exam->end_time && $now->gt($exam->end_time)) {
-                    $status = 'ended';
-                } else {
-                    $status = 'active';
-                }
+            ->map(function (Exam $exam) {
                 return [
                     'id'         => $exam->id,
                     'title'      => $exam->title,
@@ -82,7 +75,7 @@ class DashboardController extends Controller
                     'end_time'   => $exam->end_time?->format('Y-m-d H:i'),
                     'time_limit' => $exam->time_limit_minutes,
                     'marks'      => $exam->total_marks,
-                    'status'     => $status,
+                    'status'     => $exam->availability(),
                 ];
             });
 

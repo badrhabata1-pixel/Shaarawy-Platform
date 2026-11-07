@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 
 class Exam extends Model
 {
@@ -35,5 +36,39 @@ class Exam extends Model
     public function results()
     {
         return $this->hasMany(ExamResult::class);
+    }
+
+    /**
+     * "الآن" بتوقيت مصر بنفس صيغة التواريخ المحفوظة.
+     * مواعيد الامتحان بتتكتب من لوحة الأدمن بالتوقيت المحلي وبتتخزن كما هي (إعداد التطبيق UTC)،
+     * فلازم نقارنها بالساعة المحلية مش بـ UTC وإلا الامتحان يفتح ويقفل متأخر ساعتين.
+     */
+    public static function localNow(): Carbon
+    {
+        return Carbon::createFromFormat('Y-m-d H:i:s', now('Africa/Cairo')->format('Y-m-d H:i:s'), 'UTC');
+    }
+
+    /** upcoming | active | ended | open (open = من غير مواعيد) */
+    public function availability(): string
+    {
+        if (!$this->start_time && !$this->end_time) {
+            return 'open';
+        }
+
+        $now = static::localNow();
+
+        if ($this->start_time && $now->lt($this->start_time)) {
+            return 'upcoming';
+        }
+        if ($this->end_time && $now->gt($this->end_time)) {
+            return 'ended';
+        }
+
+        return 'active';
+    }
+
+    public function isAvailable(): bool
+    {
+        return in_array($this->availability(), ['open', 'active'], true);
     }
 }
