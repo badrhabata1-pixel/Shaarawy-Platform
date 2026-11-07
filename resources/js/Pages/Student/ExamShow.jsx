@@ -62,7 +62,7 @@ export default function ExamShow({ exam, result }) {
                 <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', position: 'relative' }}>
                     <MetaBadge icon="⏱" label={`${exam.time_limit_minutes} دقيقة`} />
                     <MetaBadge icon="🏆" label={`${exam.total_marks} درجة`} />
-                    <MetaBadge icon="📋" label={`${exam.questions?.length ?? 0} سؤال`} />
+                    <MetaBadge icon="📋" label={`${exam.questions?.length || exam.questions_count || 0} سؤال`} />
                 </div>
             </div>
 
@@ -181,8 +181,28 @@ function ResultView({ exam, result }) {
                 )}
             </div>
 
+            {/* مراجعة الإجابات — مقفولة لحد ما وقت الامتحان ينتهي */}
+            {!exam.review_open && (
+                <div style={{
+                    display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 14, flexWrap: 'wrap',
+                    background: 'rgba(255,252,245,.30)', border: '1.5px dashed #C9A96A', borderRadius: 16,
+                    padding: '18px 22px', marginBottom: 16,
+                }}>
+                    <button type="button" disabled style={{
+                        display: 'inline-flex', alignItems: 'center', gap: 8, cursor: 'not-allowed',
+                        background: '#E3D9C4', color: '#8a7d63', border: 'none', borderRadius: 12,
+                        padding: '11px 24px', fontSize: 14, fontWeight: 800, fontFamily: 'Cairo, sans-serif', opacity: .85,
+                    }}>
+                        🔒 مراجعة الإجابات
+                    </button>
+                    <span style={{ fontSize: 12.5, color: '#6B6255', fontWeight: 600 }}>
+                        هتتفتح بعد انتهاء وقت الامتحان{exam.review_opens_at ? ` (${exam.review_opens_at})` : ''}
+                    </span>
+                </div>
+            )}
+
             {/* Questions review */}
-            {exam.questions?.length > 0 && (
+            {exam.review_open && exam.questions?.length > 0 && (
                 <>
                     <div style={{
                         display: 'flex', alignItems: 'center', gap: 10, marginBottom: 16,

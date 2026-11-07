@@ -82,23 +82,45 @@ class ExamController extends Controller
                     : 'انتهى وقت هذا الامتحان.');
         }
 
+        $reviewOpen = $exam->reviewOpen();
+
+        $examData = $exam->toArray();
+        // الإجابات الصحيحة ما تتبعتش للمتصفح إلا بعد انتهاء الامتحان (حتى أثناء الحل)
+        $examData['questions'] = collect($examData['questions'] ?? [])
+            ->map(function ($q) use ($reviewOpen) {
+                if (!$reviewOpen) {
+                    unset($q['correct_answer']);
+                }
+                return $q;
+            })->values()->all();
+
+        if ($result && !$reviewOpen) {
+            // سلّم قبل كده والمراجعة لسه مقفولة: الدرجة بس، من غير أسئلة ولا إجابات
+            $examData['questions_count'] = count($examData['questions']);
+            $examData['questions']       = [];
+        }
+
         return Inertia::render('Student/ExamShow', [
-            'exam'   => array_merge($exam->toArray(), [
-                'exam_mode' => $examMode,
-                'pass_mark' => $passMark,
-                'can_retake' => false,
+            'exam'   => array_merge($examData, [
+                'exam_mode'       => $examMode,
+                'pass_mark'       => $passMark,
+                'can_retake'      => false,
+                'review_open'     => $reviewOpen,
+                'review_opens_at' => $exam->end_time?->format('Y-m-d H:i'),
             ]),
             'result' => $result ? [
                 'id'          => $result->id,
                 'score'       => $result->score,
                 'status'      => $result->status,
                 'finished_at' => $result->finished_at?->format('Y-m-d H:i'),
-                'responses'   => $result->responses->map(fn ($r) => [
-                    'question_id'     => $r->question_id,
-                    'selected_answer' => $r->selected_answer,
-                    'is_correct'      => $r->is_correct,
-                    'marks_awarded'   => $r->marks_awarded,
-                ]),
+                'responses'   => $reviewOpen
+                    ? $result->responses->map(fn ($r) => [
+                        'question_id'     => $r->question_id,
+                        'selected_answer' => $r->selected_answer,
+                        'is_correct'      => $r->is_correct,
+                        'marks_awarded'   => $r->marks_awarded,
+                    ])
+                    : [],
             ] : null,
         ]);
     }

@@ -67,6 +67,15 @@ class Exam extends Model
         return 'active';
     }
 
+    /**
+     * مراجعة الإجابات (الإجابات الصحيحة وإجابات الطالب) تفتح بس بعد انتهاء وقت الامتحان.
+     * امتحان من غير ميعاد نهاية مفيش وقت ينتظره، فالمراجعة مفتوحة.
+     */
+    public function reviewOpen(): bool
+    {
+        return !$this->end_time || static::localNow()->gt($this->end_time);
+    }
+
     public function isAvailable(): bool
     {
         return in_array($this->availability(), ['open', 'active'], true);
