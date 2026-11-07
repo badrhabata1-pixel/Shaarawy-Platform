@@ -133,8 +133,9 @@ function GroupCard({ group, theme }) {
             <div style={{ width: 42, height: 42, borderRadius: 10, background: `linear-gradient(135deg, ${C.navy}, ${C.navyL})`, display: 'flex', alignItems: 'center', justifyContent: 'center', color: C.gold, fontSize: 18, position: 'relative', zIndex: 1 }}>👥</div>
             <div style={{ position: 'relative', zIndex: 1 }}>
                 <div style={{ fontWeight: 700, color: theme.textMain, fontSize: 14 }}>{group.name}</div>
-                <div style={{ fontSize: 12, color: theme.textMuted }}>{group.year} {group.hour ? `• ${group.hour}` : ''}</div>
+                <div style={{ fontSize: 12, color: theme.textMuted }}>طلاب مسجلون</div>
             </div>
+            <div style={{ marginInlineStart: 'auto', position: 'relative', zIndex: 1, fontSize: 24, fontWeight: 900, color: theme.textMain }}>{group.students_count ?? 0}</div>
         </div>
     );
 }
@@ -281,7 +282,7 @@ export default function AssistantDashboard({ assistant, stats, my_groups = [], r
                         مجموعاتي
                     </h3>
                     {my_groups.length === 0 ? (
-                        <p style={{ color: '#A89A78', textAlign: 'center', padding: '20px 0', fontSize: 14 }}>لا توجد مجموعات مُعيّنة لك بعد</p>
+                        <p style={{ color: '#A89A78', textAlign: 'center', padding: '20px 0', fontSize: 14 }}>لا توجد صفوف دراسية مضافة بعد</p>
                     ) : (
                         <div style={{ display: 'flex', flexDirection: 'column', gap: 10, position: 'relative', zIndex: 1 }}>
                             {my_groups.map(group => <GroupCard key={group.id} group={group} theme={theme} />)}

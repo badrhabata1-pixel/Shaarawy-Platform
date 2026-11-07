@@ -27,7 +27,6 @@ class GradingController extends Controller
 
         $pending = SheetAnswer::with(['student:id,name,image', 'sheet:id,title'])
             ->where('status', 'pending')
-            ->whereHas('student', fn($q) => $q->whereIn('group_id', $groupIds))
             ->orderByDesc('id')
             ->get()
             ->map(fn($sa) => [

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Assistant;
 
 use App\Http\Controllers\Controller;
+use App\Models\AcademicYear;
 use App\Models\Group;
 use App\Models\Student;
 use App\Models\SheetAnswer;
@@ -25,33 +26,21 @@ class DashboardController extends Controller
         /** @var \App\Models\AdminModel $assistant */
         $assistant = Auth::guard('assistant')->user()->load('groups');
 
-        $groupIds = $assistant->groups->pluck('id');
+        // الإحصائيات على مستوى المنصة كلها (نفس نطاق قائمة الطلاب وصفحات التصحيح عند السكرتارية)
+        $activeStudentsCount = Student::where('is_active', true)->where('status', 'active')->count();
+        $pendingExamsCount   = ExamResult::where('status', 'pending')->count();
+        $pendingSheetsCount  = SheetAnswer::where('status', 'pending')->count();
+        [$never, $partial]   = $this->watchBuckets();
+        $unwatchedCount      = count($never) + count($partial);
 
-        // حساب الإحصائيات العامة السريعة
-        $studentsCount = Student::whereIn('group_id', $groupIds)->count();
-
-        $pendingExamsCount = StudentLessonProgress::where('quiz_passed', false)
-            ->whereNotNull('quiz_score')
-            ->whereIn('student_id', function ($query) use ($groupIds) {
-                $query->select('id')->from('students')->whereIn('group_id', $groupIds);
-            })->count();
-
-        $pendingSheetsCount = StudentLessonProgress::where('is_completed', false)
-            ->whereIn('student_id', function ($query) use ($groupIds) {
-                $query->select('id')->from('students')->whereIn('group_id', $groupIds);
-            })->count();
-
-        // حساب عدد الطلاب الذين لم يشاهدوا الفيديوهات بشكل تقريبي للـ Badge
-        $unwatchedCount = Student::whereIn('group_id', $groupIds)->count();
-
-        $myGroups = Group::whereIn('id', $groupIds)
-            ->with('academicYear:id,name')
-            ->get(['id', 'name', 'hour', 'academic_year_id'])
-            ->map(fn ($group) => [
-                'id'   => $group->id,
-                'name' => $group->name,
-                'hour' => $group->hour,
-                'year' => $group->academicYear?->name,
+        // عدد الطلاب المسجلين في كل صف دراسي
+        $myGroups = AcademicYear::withCount('students')
+            ->orderBy('level')
+            ->get(['id', 'name'])
+            ->map(fn ($year) => [
+                'id'             => $year->id,
+                'name'           => $year->name,
+                'students_count' => $year->students_count,
             ]);
 
         $receipts = collect();
@@ -79,7 +68,7 @@ class DashboardController extends Controller
         return Inertia::render('Assistant/Dashboard', [
             'assistant' => $assistant,
             'stats'     => [
-                'my_students'    => $studentsCount,
+                'my_students'    => $activeStudentsCount,
                 'pending_exams'  => $pendingExamsCount,
                 'pending_sheets' => $pendingSheetsCount,
                 'unwatched_count'=> $unwatchedCount,
@@ -96,88 +85,74 @@ class DashboardController extends Controller
     {
         /** @var \App\Models\AdminModel $assistant */
         $assistant = Auth::guard('assistant')->user();
-        $groupIds = Group::where('assistant_id', $assistant->id)->pluck('id');
-        
-        $search = $request->input('search');
+        $search    = $request->input('search');
 
-        // جلب طلاب مجموعات المساعد مع دعم الفلترة والبحث بالاسم أو الهاتف
-        $myStudentsQuery = Student::whereIn('group_id', $groupIds)
+        [$never, $partial] = $this->watchBuckets($search);
+
+        return Inertia::render('Assistant/Students/WatchTracker', [
+            'assistant'                  => $assistant,
+            'never_watched_students'     => $never,
+            'partially_watched_students' => $partial,
+            'filters'                    => ['search' => $search],
+        ]);
+    }
+
+    /**
+     * الطلاب المفعّلون المتأخرون في الفيديوهات: [لم يشاهدوا إطلاقًا، شاهدوا أقل من 90%].
+     * نفس المنطق يستخدمه كارت لوحة التحكم وصفحة المتابعة عشان الرقم يطابق القائمة.
+     */
+    private function watchBuckets(?string $search = null): array
+    {
+        $query = Student::with('group:id,name')
             ->where('is_active', true)
             ->where('status', 'active');
 
         if (!empty($search)) {
-            $myStudentsQuery->where(function($q) use ($search) {
+            $query->where(function ($q) use ($search) {
                 $q->where('name', 'LIKE', "%{$search}%")
                   ->orWhere('phone', 'LIKE', "%{$search}%");
             });
         }
 
-        $myStudents = $myStudentsQuery->select('id', 'name', 'phone', 'parent_phone', 'group_id', 'image')->get();
-        $myStudentIds = $myStudents->pluck('id');
+        $students  = $query->select('id', 'name', 'phone', 'parent_phone', 'group_id', 'image')->get();
+        $lessonIds = Lesson::where('is_published', true)->where('is_locked', false)->pluck('id');
+        $progress  = ($lessonIds->isNotEmpty() && $students->isNotEmpty())
+            ? StudentLessonProgress::whereIn('student_id', $students->pluck('id'))
+                ->whereIn('lesson_id', $lessonIds)->get()->groupBy('student_id')
+            : collect();
 
-        $availableLessonIds = Lesson::where('is_published', true)
-            ->where('is_locked', false)
-            ->pluck('id');
+        $never = [];
+        $partial = [];
 
-        $neverWatchedStudents = []; // 0% مشاهدة
-        $partiallyWatchedStudents = []; // أقل من 90% مشاهدة
+        foreach ($students as $student) {
+            $row = [
+                'id'            => $student->id,
+                'name'          => $student->name,
+                'phone'         => $student->phone,
+                'parent_phone'  => $student->parent_phone,
+                'group_name'    => $student->group?->name ?? '—',
+                'watch_percent' => 0,
+                'image'         => $student->image,
+            ];
 
-        if ($availableLessonIds->isNotEmpty() && $myStudentIds->isNotEmpty()) {
-            $progressRecords = StudentLessonProgress::whereIn('student_id', $myStudentIds)
-                ->whereIn('lesson_id', $availableLessonIds)
-                ->get()
-                ->groupBy('student_id');
-
-            foreach ($myStudents as $student) {
-                $group = Group::find($student->group_id);
-                $studentData = [
-                    'id'            => $student->id,
-                    'name'          => $student->name,
-                    'phone'         => $student->phone,
-                    'parent_phone'  => $student->parent_phone,
-                    'group_name'    => $group?->name ?? '—',
-                    'watch_percent' => 0,
-                    'image'         => $student->image,
-                ];
-
-                if (!isset($progressRecords[$student->id])) {
-                    $neverWatchedStudents[] = $studentData;
-                } else {
-                    $latestProgress = $progressRecords[$student->id]->sortByDesc('last_watched_at')->first();
-                    $watchPercent = $latestProgress->watch_percentage ?? 0;
-                    $studentData['watch_percent'] = $watchPercent;
-
-                    if ($watchPercent == 0) {
-                        $neverWatchedStudents[] = $studentData;
-                    } elseif ($watchPercent < 90) {
-                        $partiallyWatchedStudents[] = $studentData;
-                    }
-                }
+            if (!isset($progress[$student->id])) {
+                $never[] = $row;
+                continue;
             }
-        } else {
-            foreach ($myStudents as $student) {
-                $group = Group::find($student->group_id);
-                $neverWatchedStudents[] = [
-                    'id'            => $student->id,
-                    'name'          => $student->name,
-                    'phone'         => $student->phone,
-                    'parent_phone'  => $student->parent_phone,
-                    'group_name'    => $group?->name ?? '—',
-                    'watch_percent' => 0,
-                    'image'         => $student->image,
-                ];
+
+            $percent = $progress[$student->id]->sortByDesc('last_watched_at')->first()->watch_percentage ?? 0;
+            $row['watch_percent'] = $percent;
+
+            if ($percent == 0) {
+                $never[] = $row;
+            } elseif ($percent < 90) {
+                $partial[] = $row;
             }
         }
 
-        // ترتيب الأقل مشاهدة أولاً لمتابعتهم
-        usort($neverWatchedStudents, fn($a, $b) => $a['watch_percent'] <=> $b['watch_percent']);
-        usort($partiallyWatchedStudents, fn($a, $b) => $a['watch_percent'] <=> $b['watch_percent']);
+        usort($never, fn ($a, $b) => $a['watch_percent'] <=> $b['watch_percent']);
+        usort($partial, fn ($a, $b) => $a['watch_percent'] <=> $b['watch_percent']);
 
-        return Inertia::render('Assistant/Students/WatchTracker', [
-            'assistant'                  => $assistant,
-            'never_watched_students'     => $neverWatchedStudents,
-            'partially_watched_students' => $partiallyWatchedStudents,
-            'filters'                    => ['search' => $search]
-        ]);
+        return [$never, $partial];
     }
 }

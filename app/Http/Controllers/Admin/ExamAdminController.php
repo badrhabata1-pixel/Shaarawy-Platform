@@ -126,7 +126,7 @@ class ExamAdminController extends Controller
             'exam_type'           => ['nullable', 'in:open,closed'],
             'exam_mode'           => ['nullable', 'in:gate,final'],
             'start_time'          => ['nullable', 'date'],
-            'end_time'            => ['nullable', 'date'],
+            'end_time'            => ['nullable', 'date', 'after:start_time'],
             'image'               => ['nullable', 'image', 'max:3072'],
         ]);
 
@@ -145,8 +145,14 @@ class ExamAdminController extends Controller
     public function edit(Exam $exam)
     {
         $exam->load('questions.choices');
+        // datetime-local لا يقبل صيغة ISO/UTC (…Z)، فلازم نبعت التاريخ بصيغة Y-m-dTH:i وإلا الخانة تظهر فاضية
+        // وأي حفظ بعدها يمسح التاريخ.
+        $item = $exam->toArray();
+        $item['start_time'] = $exam->start_time?->format('Y-m-d\TH:i');
+        $item['end_time']   = $exam->end_time?->format('Y-m-d\TH:i');
+
         return Inertia::render('Admin/Exams/Form', [
-            'item'          => $exam,
+            'item'          => $item,
             'lessons'       => Lesson::orderByDesc('id')->get(['id', 'title']),
             'academicYears' => AcademicYear::orderByDesc('id')->get(['id', 'name']),
         ]);
@@ -164,7 +170,7 @@ class ExamAdminController extends Controller
             'exam_type'           => ['nullable', 'in:open,closed'],
             'exam_mode'           => ['nullable', 'in:gate,final'],
             'start_time'          => ['nullable', 'date'],
-            'end_time'            => ['nullable', 'date'],
+            'end_time'            => ['nullable', 'date', 'after:start_time'],
             'image'               => ['nullable', 'image', 'max:3072'],
         ]);
 
