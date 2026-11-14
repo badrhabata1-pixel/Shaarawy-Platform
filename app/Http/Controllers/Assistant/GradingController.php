@@ -8,6 +8,7 @@ use App\Models\SheetResponse;
 use App\Models\ExamResult;
 use App\Models\ExamResponse;
 use App\Models\Group;
+use App\Models\Student;
 use App\Models\Exam;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -135,6 +136,7 @@ class GradingController extends Controller
 
         $search = $request->input('search');
         $selectedExamId = $request->input('exam_id');
+        $grading = in_array($request->input('grading'), ['graded', 'pending'], true) ? $request->input('grading') : 'all';
 
         // Exam results are already submitted attempts. Keep this list global so
         // the secretary can review and reopen students outside assigned groups.
@@ -151,6 +153,19 @@ class GradingController extends Controller
             $query->where('exam_id', $selectedExamId);
         }
 
+        // أعداد الفلتر (بنفس البحث والامتحان المختار)
+        $counts = [
+            'all'     => (clone $query)->count(),
+            'graded'  => (clone $query)->where('status', '!=', 'pending')->count(),
+            'pending' => (clone $query)->where('status', 'pending')->count(),
+        ];
+
+        if ($grading === 'graded') {
+            $query->where('status', '!=', 'pending');
+        } elseif ($grading === 'pending') {
+            $query->where('status', 'pending');
+        }
+
         $pending = $query->orderByDesc('id')->get()->map(fn($er) => [
             'id'           => $er->id,
             'exam_title'   => $er->exam?->title ?? 'اختبار دوري',
@@ -164,13 +179,55 @@ class GradingController extends Controller
         // جلب قائمة الامتحانات لعرضها في قائمة الاختيار
         $examsList = Exam::get(['id', 'title']);
 
+        // إحصائيات الدخول: المفروض عليهم الامتحان (طلاب نفس الصف المفعّلين) ومين دخل ومين لأ
+        $statsExams = Exam::when($selectedExamId, fn ($q) => $q->where('id', $selectedExamId))
+            ->orderByDesc('id')
+            ->get(['id', 'title', 'class_id']);
+
+        $enteredByExam = ExamResult::whereNotNull('finished_at')
+            ->whereIn('exam_id', $statsExams->pluck('id'))
+            ->get(['exam_id', 'student_id'])
+            ->groupBy('exam_id')
+            ->map(fn ($rows) => $rows->pluck('student_id')->unique()->all());
+
+        $studentsByYear = Student::with('group:id,name')
+            ->where('is_active', true)
+            ->where('status', 'active')
+            ->whereIn('academic_year_id', $statsExams->pluck('class_id')->unique())
+            ->get(['id', 'name', 'phone', 'parent_phone', 'group_id', 'academic_year_id'])
+            ->groupBy('academic_year_id');
+
+        $examStats = $statsExams->map(function ($exam) use ($enteredByExam, $studentsByYear) {
+            $expected  = $studentsByYear->get($exam->class_id, collect());
+            $enteredIds = $enteredByExam->get($exam->id, []);
+            $missing   = $expected->reject(fn ($st) => in_array($st->id, $enteredIds, true))->values();
+
+            return [
+                'id'            => $exam->id,
+                'title'         => $exam->title,
+                'expected'      => $expected->count(),
+                'entered'       => $expected->count() - $missing->count(),
+                'missing_count' => $missing->count(),
+                'missing'       => $missing->map(fn ($st) => [
+                    'id'           => $st->id,
+                    'name'         => $st->name,
+                    'phone'        => $st->phone,
+                    'parent_phone' => $st->parent_phone,
+                    'group'        => $st->group?->name,
+                ])->all(),
+            ];
+        })->values();
+
         return Inertia::render('Assistant/Grading/PendingExams', [
             'pending'    => $pending,
             'assistant'  => $assistant,
             'exams_list' => $examsList,
+            'exam_stats' => $examStats,
+            'counts'     => $counts,
             'filters'    => [
                 'search'  => $search,
                 'exam_id' => $selectedExamId ? (int)$selectedExamId : null,
+                'grading' => $grading,
             ]
         ]);
     }

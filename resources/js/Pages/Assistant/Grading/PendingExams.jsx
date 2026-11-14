@@ -7,10 +7,12 @@ const O = '#1F5A45'; // برتقالي
 const N = '#0E3A2E'; // كحلي
 const B = '#E8DCC1'; // ذهبي
 
-export default function PendingExams({ assistant, pending = [], exams_list = [], filters = {} }) {
+export default function PendingExams({ assistant, pending = [], exams_list = [], exam_stats = [], counts = {}, filters = {} }) {
     const listRef = useRef(null);
     const [search, setSearch] = useState(filters.search || '');
     const [examId, setExamId] = useState(filters.exam_id || '');
+    const [grading, setGrading] = useState(filters.grading || 'all');
+    const [openMissing, setOpenMissing] = useState({});
     const [darkMode, setDarkMode] = useState(false);
 
     useEffect(() => {
@@ -26,20 +28,26 @@ export default function PendingExams({ assistant, pending = [], exams_list = [],
         return () => observer.disconnect();
     }, []);
 
-    const handleSearchSubmit = (e) => {
-        e.preventDefault();
-        router.get(route('assistant.exams.pending'), { search, exam_id: examId }, {
+    const go = (params) => {
+        router.get(route('assistant.exams.pending'), { search, exam_id: examId, grading, ...params }, {
             preserveState: true,
             preserveScroll: true
         });
     };
 
+    const handleSearchSubmit = (e) => {
+        e.preventDefault();
+        go({});
+    };
+
     const handleExamChange = (selectedExam) => {
         setExamId(selectedExam);
-        router.get(route('assistant.exams.pending'), { search, exam_id: selectedExam }, {
-            preserveState: true,
-            preserveScroll: true
-        });
+        go({ exam_id: selectedExam });
+    };
+
+    const handleGradingChange = (value) => {
+        setGrading(value);
+        go({ grading: value });
     };
 
     useEffect(() => {
@@ -91,6 +99,105 @@ export default function PendingExams({ assistant, pending = [], exams_list = [],
                         </button>
                     </form>
                 </div>
+
+                {/* فلتر حالة التصحيح */}
+                <div className="flex flex-wrap items-center gap-3">
+                    {[
+                        { key: 'all',     label: 'كل الطلاب',          count: counts.all },
+                        { key: 'pending', label: 'لسه متصححش',         count: counts.pending },
+                        { key: 'graded',  label: 'اتصحح فقط',          count: counts.graded },
+                    ].map(f => (
+                        <button
+                            key={f.key}
+                            type="button"
+                            onClick={() => handleGradingChange(f.key)}
+                            className={`px-5 py-2.5 rounded-xl text-sm font-black border transition ${
+                                grading === f.key
+                                    ? 'bg-[#0E3A2E] text-[#E8DCC1] border-[#C9A96A] shadow-md'
+                                    : 'bg-white dark:bg-[#1C1916] text-[#0E3A2E] dark:text-[#E8DCC1] border-gray-200 dark:border-gray-800 hover:border-[#C9A96A]'
+                            }`}
+                        >
+                            {f.label} <span className="mr-1 opacity-70">({f.count ?? 0})</span>
+                        </button>
+                    ))}
+                </div>
+
+                {/* إحصائيات الدخول لكل امتحان */}
+                {exam_stats.length > 0 && (
+                    <div className="space-y-4">
+                        <h3 className="text-sm font-black text-[#0E3A2E] dark:text-[#E8DCC1]">📊 إحصائيات دخول الامتحانات</h3>
+                        {exam_stats.map(st => {
+                            const open = !!openMissing[st.id];
+                            return (
+                                <div key={st.id} className="bg-white dark:bg-[#1C1916] rounded-2xl border border-gray-100 dark:border-gray-800 shadow-md p-5">
+                                    <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
+                                        <h4 className="font-black text-sm text-[#0E3A2E] dark:text-[#E8DCC1]">{st.title}</h4>
+                                        <div className="flex flex-wrap gap-3 text-center">
+                                            <div className="px-4 py-2 rounded-xl bg-gray-50 dark:bg-gray-900/40 border border-gray-100 dark:border-gray-800">
+                                                <div className="text-lg font-black text-[#0E3A2E] dark:text-[#E8DCC1]">{st.expected}</div>
+                                                <div className="text-[10px] font-bold text-gray-400">المفروض يدخلوا</div>
+                                            </div>
+                                            <div className="px-4 py-2 rounded-xl bg-green-500/10 border border-green-500/20">
+                                                <div className="text-lg font-black text-green-600">{st.entered}</div>
+                                                <div className="text-[10px] font-bold text-green-600/70">دخلوا</div>
+                                            </div>
+                                            <div className="px-4 py-2 rounded-xl bg-red-500/10 border border-red-500/20">
+                                                <div className="text-lg font-black text-red-600">{st.missing_count}</div>
+                                                <div className="text-[10px] font-bold text-red-600/70">مدخلوش</div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {st.expected > 0 && (
+                                        <div className="h-2 rounded-full bg-gray-100 dark:bg-gray-800 overflow-hidden mb-4">
+                                            <div className="h-full bg-gradient-to-l from-[#C9A96A] to-[#0E3A2E]" style={{ width: `${Math.round((st.entered / st.expected) * 100)}%` }} />
+                                        </div>
+                                    )}
+
+                                    <button
+                                        type="button"
+                                        disabled={st.missing_count === 0}
+                                        onClick={() => setOpenMissing(prev => ({ ...prev, [st.id]: !prev[st.id] }))}
+                                        className={`px-5 py-2 rounded-lg text-xs font-black border transition ${
+                                            st.missing_count === 0
+                                                ? 'opacity-50 cursor-not-allowed border-gray-200 text-gray-400'
+                                                : 'border-red-500/40 text-red-600 hover:bg-red-500/10'
+                                        }`}
+                                    >
+                                        {st.missing_count === 0 ? 'كل الطلاب دخلوا ✅' : open ? 'إخفاء الطلاب اللي مدخلوش' : `👥 عرض الطلاب اللي مدخلوش (${st.missing_count})`}
+                                    </button>
+
+                                    {open && (
+                                        <div className="mt-4 overflow-x-auto">
+                                            <table className="w-full text-xs text-right">
+                                                <thead>
+                                                    <tr className="text-gray-400 font-bold border-b border-gray-100 dark:border-gray-800">
+                                                        <th className="py-2 px-2">#</th>
+                                                        <th className="py-2 px-2">الطالب</th>
+                                                        <th className="py-2 px-2">الهاتف</th>
+                                                        <th className="py-2 px-2">هاتف ولي الأمر</th>
+                                                        <th className="py-2 px-2">المجموعة</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {st.missing.map((m, i) => (
+                                                        <tr key={m.id} className="border-b border-gray-50 dark:border-gray-900 text-[#0E3A2E] dark:text-[#E8DCC1]">
+                                                            <td className="py-2 px-2">{i + 1}</td>
+                                                            <td className="py-2 px-2 font-black">{m.name}</td>
+                                                            <td className="py-2 px-2" dir="ltr">{m.phone || '—'}</td>
+                                                            <td className="py-2 px-2" dir="ltr">{m.parent_phone || '—'}</td>
+                                                            <td className="py-2 px-2">{m.group || '—'}</td>
+                                                        </tr>
+                                                    ))}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    )}
+                                </div>
+                            );
+                        })}
+                    </div>
+                )}
 
                 {/* قائمة كروت عرض نتائج الحل والدرجات */}
                 {pending.length === 0 ? (
